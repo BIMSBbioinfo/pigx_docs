@@ -1,3 +1,8 @@
-# Table of content
+# Summary
 
-* [First Chapter](chapter1.md)
+* [Introduction](README.md)
+* [PiGx RNA-seq](chapter1.md)
+* [PiGx ChIP-seq](pigx-chip-seq.md)
+* [PiGx BS-seq](pigx-bs-seq.md)
+* [PiGx scRNA-seq](pigx-scrna-seq.md)
+
