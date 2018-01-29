@@ -6,9 +6,10 @@ cache:
   - node_modules
 install: npm install gitbook-cli -g
 before_script: gitbook install
-script: gitbook build
+script: gitbook build -o gitbook-output
 deploy:
   provider: pages
+  local-dir: gitbook-output
   skip-cleanup: true
   github-token: $GITHUB_API_TOKEN
   keep-history: true
