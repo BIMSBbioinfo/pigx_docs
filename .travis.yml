@@ -1,0 +1,19 @@
+language: node_js
+node_js:
+- '4.1'
+install: npm install gitbook-cli -g
+before_script: gitbook install
+script: gitbook build
+after_success: |
+  if [ -n "$GITHUB_API_KEY" ]; then
+    cd "$TRAVIS_BUILD_DIR"
+    make web
+    cd web
+    git init
+    git checkout -b gh-pages
+    git add .
+    git -c user.name='travis' -c user.email='travis' commit -m 'Update docs'
+    # Make sure to make the output quiet, or else the API token will leak!
+    git push -f -q https://rekado:$GITHUB_API_KEY@github.com/BIMSBbioinfo/pigx_docs-gh-pages gh-pages &2>/dev/null
+    cd "$TRAVIS_BUILD_DIR"
+  fi
