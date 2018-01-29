@@ -14,6 +14,6 @@ after_success: |
     git add .
     git -c user.name='travis' -c user.email='travis' commit -m 'Update docs'
     # Make sure to make the output quiet, or else the API token will leak!
-    git push -f -q https://rekado:$GITHUB_API_TOKEN@github.com/BIMSBbioinfo/pigx_docs-gh-pages gh-pages &2>/dev/null
+    git push -f -q https://rekado:$GITHUB_API_TOKEN@github.com/BIMSBbioinfo/pigx_docs gh-pages &2>/dev/null
     cd "$TRAVIS_BUILD_DIR"
   fi
