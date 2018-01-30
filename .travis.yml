@@ -9,6 +9,7 @@ before_script: gitbook install
 script: gitbook build
 deploy:
   provider: pages
+  local-dir: _book
   skip-cleanup: true
   github-token: $GITHUB_API_TOKEN
   keep-history: true
