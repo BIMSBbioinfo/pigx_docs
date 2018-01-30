@@ -19,6 +19,13 @@ After editting the above input files, the bsseq pipeline can be executed with th
 `./pigx-bsseq  [sample sheet]  -s  [settings file]`
 with further options, described in the README (for example, the flag "--dryrun" can be added to confirm valid input settings before execution).
 Once the pipeline is executed, the desired output directory is created, along with various sub-directories for intermediate steps in the process,  each of which are named with prefixes to indicate their (approximate) order in sequence, and usually have their own interim reports and log files. For example, `06_sorting` contains the sorted .bam file after alignements, and `07_methyl_calls` contains information on average methylation in various formats, while `01_raw_QC` is the earliest step. 
-The dependency graph of rules does have branches, however, and so the rules are not always performed in _exactly_ this order. Nevertheless, in cases of interrupted calculation, it may be useful to inspect the log files from the last (or second-to-last) directory created to check for error messages.
+
+## Trouble-shotting:
+
+The dependency graph of rules contains branches; as such, the rules are not always performed in _exactly_ the order indicated by directory prefix labels. Nevertheless, in cases of interrupted calculation, it may be useful to inspect the log files from the last (or second-to-last) directory created to check for error messages. 
+
+Alongside these directories, the directory `pigx_work` is also created, with its contents described in the file `CONTENTS` --here one can see links to the original data files for traceability. In case a run of PiGx was done a long time ago, under conditions that have been forgotten, the subfolder `pigx_work/input/` contains links to each of the raw data files, `pigx_work/refGenome` links to the reference genome that was mapped do during exection, and `pigx_work/bin` contains links to the versions of binary executables that were used in the process.
+
+# Final report:
 
 Finally, the directory Final_report is created with the final report of the pipeline, it consolidates information from the reports in the other steps, and provides links to files storing more comprehensive data on the samples.
