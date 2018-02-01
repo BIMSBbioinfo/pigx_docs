@@ -200,10 +200,198 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="pigx-rna-seq">PiGx RNA-seq</h1>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquam est vel libero accumsan, vel egestas eros hendrerit. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi consequat convallis urna, eu feugiat eros vehicula ut. Praesent hendrerit imperdiet elit, vitae ornare risus aliquet sed. Integer sollicitudin commodo laoreet. Pellentesque id iaculis nibh. Nunc ac lacus purus. In tempus, mi eget vehicula gravida, libero augue ullamcorper ex, in rutrum nulla turpis nec eros. Nulla maximus quam a malesuada malesuada. Donec interdum fermentum iaculis. Vestibulum hendrerit lobortis diam eu bibendum.</p>
-<p>Proin lacus tellus, efficitur eget mattis in, dapibus sit amet elit. Ut tincidunt massa quam, elementum laoreet lorem ullamcorper sit amet. Pellentesque erat justo, elementum vel pretium eu, faucibus a est. Cras tincidunt fermentum leo, nec elementum ligula gravida ut. Duis turpis lacus, viverra non ultricies in, vulputate id enim. Nam sit amet efficitur est, sed aliquet nulla. Aliquam venenatis ac lorem a sollicitudin. Nulla facilisi. Proin a volutpat mi. Pellentesque vulputate arcu non odio porttitor rutrum.</p>
-<p>Aliquam erat volutpat. Nulla ac vulputate urna. Vivamus mollis sagittis vulputate. Suspendisse consectetur laoreet nisi, tristique euismod lorem feugiat vel. Maecenas vel pellentesque felis, vitae mollis sapien. Donec bibendum tristique auctor. Quisque pharetra tortor in auctor cursus. Sed molestie eu elit condimentum vehicula. Proin sollicitudin facilisis pretium. Pellentesque non feugiat urna.</p>
-<p>Pellentesque metus lorem, lacinia quis laoreet ac, tincidunt eu tortor. Nulla elementum tempus placerat. Nulla ac euismod neque. Pellentesque vulputate libero fringilla nisl consequat, ullamcorper sodales elit dapibus. Fusce dictum, tortor ac tincidunt blandit, magna mi ultrices nibh, non euismod lectus nibh in lorem. Fusce sit amet tristique arcu. Sed feugiat felis in euismod blandit. Etiam blandit, nisl ac porta semper, enim erat pulvinar arcu, sit amet tempor purus odio et risus. Donec vitae nulla eget erat rhoncus cursus quis id justo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec sed est id dui molestie rhoncus vel a erat. Vestibulum tempor leo eget ipsum tempor convallis. Donec id ante arcu. Sed ultricies sapien ex, rutrum accumsan augue luctus sit amet. Donec et nibh vel magna ornare lobortis.</p>
+<h1 id="introcuction">Introcuction</h1>
+<p>PiGx RNAseq is a preprocessing and analysis pipeline. It takes <code>fastq</code> files containing fragment reads, and does all the necessary preprocessing to get analysis-ready gene expression levels. It also performs quality control steps and outputs comprehensive quality statistics. Finally, it performs a differential expression analysis and outputs a stand-alone HTML report with tables and figures summarizing any differential gene expression between samples as specified in the experiment design.</p>
+<h2 id="the-workflow">The workflow</h2>
+<p>PiGx RNAseq follows academic best practices for preprocessing and analysis of RNAseq data. Figure 1 provides an overview of the different steps of the pipeline, as well as the outputs.</p>
+<p>First, raw reads are trimmed using <a href="https://www.bioinformatics.babraham.ac.uk/projects/trim_galore/" target="_blank">TrimGalore!</a> to ensure a minimum read quality, and removal of adapter sequences. Next, reads are aligned to a reference genome using <a href="https://github.com/alexdobin/STAR" target="_blank">STAR</a>, and the depth of coverage is computed using <a href="http://bedtools.readthedocs.io/en/latest/" target="_blank">BEDTools</a>, outputing <code>bedgraph</code> files. Gene-level expression counts is obtained from <em>STAR</em>, and transcript-level quantification is produced using <a href="https://combine-lab.github.io/salmon/" target="_blank">Salmon</a>. Statistical analysis for differential expression analysis is performed using <a href="https://bioconductor.org/packages/release/bioc/html/DESeq2.html" target="_blank">DESeq2</a>, and the results are used to compile a custom report.</p>
+<p><img src="figures/pigx-rnaseq.png" alt="PiGx RNAseq workflow">
+<em>Figure 1: An overview of the PiGx RNAseq workflow</em></p>
+<h1 id="preparation">Preparation</h1>
+<p>In order to run the pipeline, the user must supply</p>
+<ul>
+<li>a sample sheet</li>
+<li>a settings file</li>
+</ul>
+<p>both files are described below.</p>
+<p>In order to generate template settings and sample sheet files, type</p>
+<pre><code class="lang-bash">pigx rnaseq --init
+</code></pre>
+<p>in the shell, and a boilerplate <code>sample_sheet.csv</code> and <code>settings.yaml</code> will be written to your current directory.</p>
+<h2 id="sample-sheet">Sample sheet</h2>
+<p>The sample sheet is a tabular file (<code>csv</code> format) describing the experiment. The table has the following columns:</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>reads</th>
+<th>reads2</th>
+<th>sample_type</th>
+<th>(covariate1)</th>
+<th>...</th>
+<th>(covatiateN)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ctrl</td>
+<td>ctrl_R1.fastq.gz</td>
+<td>ctrl_R2.fastq.gz</td>
+<td>control</td>
+<td>.</td>
+<td>.</td>
+<td>.</td>
+</tr>
+<tr>
+<td>trtA</td>
+<td>trtA_R1.fastq.gz</td>
+<td>trtA_R2.fastq.gz</td>
+<td>treatment A</td>
+<td>.</td>
+<td>.</td>
+<td>.</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 1: example sample sheet</em></p>
+<h3 id="column-descriptions">Column descriptions</h3>
+<ul>
+<li><em>name</em> is the name for the sample</li>
+<li><em>reads1/2</em> are the fastq file names of paired end reads<ul>
+<li>the location of these files is specified in <code>settings.yaml</code></li>
+<li>for single-end data, leave the reads2 column in place, but have it empty</li>
+</ul>
+</li>
+<li><em>sample_type</em> can be anything. For instance, a group of biologial replicates.</li>
+</ul>
+<p>Additional columns may be included which may be used as covariates in the differential expression analysis (sex, age, batch).</p>
+<h2 id="settings-file">Settings file</h2>
+<p>The settings file is a <em>YAML</em> file which specifies:</p>
+<ul>
+<li>Locations:<ul>
+<li>The locations of the reads (directory where <code>fastq</code> files are)</li>
+<li>The location of the outputs for the pipeline</li>
+<li>The location of the <code>fasta</code> file with the reference genome (must be prepared by the user)</li>
+<li>The locations of the transcriptome assembly (for alignment with salmon)</li>
+<li>The location of a <code>GTF</code> file with genome annotations</li>
+</ul>
+</li>
+<li>Organism (for GO-term analysis using <code>gProfileR</code>)</li>
+<li>Differential Expression analyses to be run<ul>
+<li>Which samples to compare (by <code>sample_type</code> in the sample sheet)</li>
+<li>Which covariates to include in the DE analysis (from additional columns in the sample sheet)</li>
+</ul>
+</li>
+</ul>
+<p>In order to get started, enter <code>pigx-rnaseq --init-settings my_settings.yaml</code>. This will create a file called <code>my_settings.yaml</code> with the default structure. The file will look like this:</p>
+<pre><code class="lang-yaml"><span class="hljs-attr">locations:</span>
+<span class="hljs-attr">  reads-dir:</span> sample_data/reads/
+<span class="hljs-attr">  output-dir:</span> output/
+<span class="hljs-attr">  genome-fasta:</span> sample_data/sample.fasta
+<span class="hljs-attr">  cdna-fasta:</span> sample_data/sample.cdna.fasta
+<span class="hljs-attr">  gtf-file:</span> sample_data/sample.gtf
+
+<span class="hljs-attr">organism:</span> hsapiens
+
+<span class="hljs-attr">DEanalyses:</span>
+  <span class="hljs-comment">#names of analyses can be anything but they have to be unique for each combination of case control group comparisons.</span>
+<span class="hljs-attr">  analysis1:</span>
+    <span class="hljs-comment">#if multiple sample names are provided, they must be separated by comma</span>
+<span class="hljs-attr">    case_sample_groups:</span> <span class="hljs-string">&quot;HBR&quot;</span>
+<span class="hljs-attr">    control_sample_groups:</span> <span class="hljs-string">&quot;UHR&quot;</span>
+<span class="hljs-attr">    covariates:</span> <span class="hljs-string">&apos;&apos;</span>
+
+<span class="hljs-attr">execution:</span>
+<span class="hljs-attr">  submit-to-cluster:</span> <span class="hljs-literal">no</span>
+<span class="hljs-attr">  jobs:</span> <span class="hljs-number">6</span>
+<span class="hljs-attr">  nice:</span> <span class="hljs-number">19</span>
+</code></pre>
+<h3 id="reference-and-annotations">Reference and annotations</h3>
+<p>The user must supply paths pointing to a reference genome for the organism, as well as annotated genes and a transcriptome reference. These might for example be downloaded from <a href="https://www.ensembl.org/info/data/ftp/index.html" target="_blank">Ensembl</a>. The reference genomoe is listed under <em>DNA</em> <code>FASTA</code>, the gene annotations under <em>Gene sets</em> <code>GTF</code>, and the transcriptome reference sequence is specified under <em>cDNA</em> <code>FASTA</code>.</p>
+<h3 id="organism-for-go-term-analysis">Organism (for GO-term analysis)</h3>
+<p>GO term analysis is performed based on the organism specified in the settings file. Some popular organisms include <code>hsapiens</code>, <code>mmusculus</code>, <code>celegans</code>, <code>dmelanogaster</code>. The full list of organism IDs is available on the <em>gProfiler</em> documentation, <a href="https://biit.cs.ut.ee/gprofiler/help.cgi?help_id=64" target="_blank">here</a>.</p>
+<h3 id="deanalysis">DEanalysis</h3>
+<p>The section named <code>DEanalyses</code> in the settings file allows the user to specify a number of differential expression analyses to be performed. In the example above, <code>analysis1</code> will be the name of the only analysis specified. In that analysis, samples with <code>sample_type</code> <em>HBR</em> will be compared with those with <code>sample_type</code> <em>UHR</em>, with no covariates included in the analysis.</p>
+<h4 id="using-multiple-sampletypes-as-cases-or-controls">Using multiple <code>sample_type</code>s as cases or controls</h4>
+<p>The user may include more than one <code>sample_type</code> as the controls or cases for any DE analysis by specifiying a comma-spearated list. For example, the following block specified an analysis which compares samples belonging to <em>mut1</em> and <em>mut2</em> to the <em>WT</em> samples:</p>
+<pre><code class="lang-yaml"><span class="hljs-attr">DEanalyses:</span>
+<span class="hljs-attr">  two_cases_analysis:</span>
+<span class="hljs-attr">    case_sample_groups:</span> <span class="hljs-string">&quot;mut1,mut2&quot;</span>
+<span class="hljs-attr">    case_control_groups:</span> <span class="hljs-string">&quot;WT&quot;</span>
+</code></pre>
+<p>The same may be done to specify several <code>sample_type</code>s for the controls.</p>
+<h4 id="covariates-in-de-analysis">Covariates in DE analysis</h4>
+<p>Any number of additional columns may be added to the sample sheet and used as covariates in the DE analysis. The following sample sheet includes a column indicating the sex of the sample:</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>reads</th>
+<th>reads2</th>
+<th>sample_type</th>
+<th>sex</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>treatment1</td>
+<td>treatment1.r1.fastq</td>
+<td>treatment1.r2.fastq</td>
+<td>treatment</td>
+<td>m</td>
+</tr>
+<tr>
+<td>treatment2</td>
+<td>treatment2.r1.fastq</td>
+<td>treatment2.r2.fastq</td>
+<td>treatment</td>
+<td>m</td>
+</tr>
+<tr>
+<td>control1</td>
+<td>control1.r1.fastq</td>
+<td>control1.r2.fastq</td>
+<td>control</td>
+<td>m</td>
+</tr>
+<tr>
+<td>control2</td>
+<td>control2.r1.fastq</td>
+<td>control2.r2.fastq</td>
+<td>control</td>
+<td>f</td>
+</tr>
+</tbody>
+</table>
+<p>With the use of the following block in the settings file, the sex will be used as a covariate in the differential expression analysis:</p>
+<pre><code class="lang-yaml"><span class="hljs-attr">DEanalyses:</span>
+<span class="hljs-attr">  analysis_with_covariate:</span>
+<span class="hljs-attr">    case_sample_groups:</span> <span class="hljs-string">&quot;treatment&quot;</span>
+<span class="hljs-attr">    case_control_groups:</span> <span class="hljs-string">&quot;control&quot;</span>
+<span class="hljs-attr">    covariates:</span> <span class="hljs-string">&quot;sex&quot;</span>
+</code></pre>
+<p>Multiple covariates may be specified by providing a comma-separated list, such as</p>
+<pre><code class="lang-yaml"><span class="hljs-attr">covariates:</span> <span class="hljs-string">&quot;sex,age,smoking_history&quot;</span>
+</code></pre>
+<h1 id="execution">Execution</h1>
+<p>PiGx RNAseq is executed using the command <code>pigx-rnaseq -s settings.yaml sample_sheet.csv</code>. See `pigx-rnaseq --help for information about additional command line arguments.</p>
+<p>The <code>execution</code> section of the settings file provides some control over the execution of the pipeline.</p>
+<h2 id="local--cluster-execution">Local / cluster execution</h2>
+<p>The workflow may be executed locally (on a single computer), or, if a Sun Grid Engine-compatible HPC environment is available, supports cluster execution. In order to enable cluster execution, specify <code>submit-to-cluster: yes</code> in the settings file.</p>
+<h2 id="parallel-execution">Parallel execution</h2>
+<p>If the workflow is run on a cluster, or a single computer with sufficient resources, some of the tasks may be computed in parallel. To specify the allowed level or parallelism, set the <code>jobs</code> setting under <code>execution</code> in the settings file. For instance,</p>
+<pre><code class="lang-yaml"><span class="hljs-attr">execution:</span>
+<span class="hljs-attr">  submit-to-cluster:</span> <span class="hljs-literal">yes</span>
+<span class="hljs-attr">  jobs:</span> <span class="hljs-number">40</span>
+</code></pre>
+<p>in the settings file, will submit up to 40 simultaneous compute jobs on the cluster.</p>
+<h1 id="results">Results</h1>
+<h2 id="quality-control">Quality control</h2>
+<h2 id="gene-expression">Gene expression</h2>
+<h2 id="depth-of-coverage">Depth of coverage</h2>
+<h2 id="differential-expression-report">Differential expression report</h2>
+<h3 id="go-term-analysis">GO-term analysis</h3>
+<h1 id="troubleshooting">Troubleshooting</h1>
 
                                 
                                 </section>
@@ -247,7 +435,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"PiGx RNA-seq","level":"1.2","depth":1,"next":{"title":"PiGx ChIP-seq","level":"1.3","depth":1,"path":"pigx-chip-seq.md","ref":"pigx-chip-seq.md","articles":[]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"pigx-rna-seq.md","mtime":"2018-02-01T11:47:30.051Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-02-01T11:48:47.539Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"PiGx RNA-seq","level":"1.2","depth":1,"next":{"title":"PiGx ChIP-seq","level":"1.3","depth":1,"path":"pigx-chip-seq.md","ref":"pigx-chip-seq.md","articles":[]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"pigx-rna-seq.md","mtime":"2018-02-01T15:26:30.283Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-02-01T15:28:00.152Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
