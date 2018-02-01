@@ -5,10 +5,10 @@
 ## Preparation
 PiGx-bsseq processes raw fastq read files and generates a final report for each sample provided by the user. To use the pipeline, the user must first edit two files: the sample sheet and the settings file. 
 
-### Sample sheet (`.xls` -> `.csv`)
+### Sample Sheet (`.xls` -> `.csv`)
 The sample sheet can be produced by editing the included file `test/sample_sheet.xls` and saving it in `.csv` format with fields separated by commas (`,`). In this file, each row of entries (below the header) corresponds to a sample; the first column contains the filename of a samples fastq input file, while the second column should contain the second fastq input file (if it exists, in the case of paired-end reads; otherwise this column should be left empty). The third column should contain a sample ID, some descriptive name (without white spaces) for the sample. The fourth column describes the type of read (e.g. "WGBS" for whole-genome bisulfite sequencing), while the 5th column contains a treatment label---generally an integer that is used for reference in differential methylation (see below). 
 
-### Settings file (`.yaml`)
+### Settings File (`.yaml`)
 In the settings file, various parameters are saved, in YAML format, to configure the execution of PiGx-bsseq. The values stored in the settings input file are used to overwrite the default settings, which are described below. An example settings file is available in the `test/` directory as `settings.yaml`. Here, you can see several fields that _will_, in many cases, require editing on the part of the user. For example, the field `locations` defines the path to the directories containing the input files, the desired output files, and the reference genome being mapped to. Note in particular the field `differential-methylation`:`treatment-groups`; below this there may be arbitrarily lines in the format 
 `- ['A', 'B']`
 where `A` and `B` are integers referring to the treatment values from the sample sheet. Each such line represents a command to carry-out pair-wise comparison between the samples with the corresponding treatment values `A` and `B`. The remaining fields in the example settings file comprise most of the settings that a typical user might want to access, while the more basic settings that are saved as defaults in `etc/settings.yaml.in` will not need to be modified by most users (although users may freely re-define any such variables in their own settings file, and by so doing, overwrite them).
@@ -26,6 +26,11 @@ The dependency graph of rules contains branches; as such, the rules are not alwa
 
 Alongside these directories, the directory `pigx_work` is also created, with its contents described in the file `CONTENTS`---here one can see links to the original data files for traceability. In case a run of PiGx was done a long time ago, under conditions that have been forgotten, the subfolder `pigx_work/input/` contains links to each of the raw data files, `pigx_work/refGenome` links to the reference genome that was mapped do during exection, and `pigx_work/bin` contains links to the versions of binary executables that were used in the process.
 
-# Final report
+### Cluster Submission
+
+In the settings files, under the section `execution: cluster: rules:` there are various parameters related to resource consumption (e.g. number of threads, memory required, etc.) to ensure sufficient resources are allocated when PiGx is submitted to a cluster via SGE (Sun Grid Engine, a standard queueing system). These parameters were chosen and tested on the human hg19 genome, since it is larger (and therefore requires a larger RAM footprint) than most other model organisms (e.g. Drosophila, mouse, etc.). 
+This is not an exhaustive test, however, and it remains possible that PiGx users studying exotic genomes may yet exceed resource allowance. In such cases, a job execution will be aborted and an email will be sent to the address supplied by the user detailing circumstances of the failed job (such as start time, stop time, `Max vmem` = maximum memory consumed), and resource requests can be adjusted accordingly. 
+
+# Final Report
 
 Finally, the directory `Final_report` is created with the final report of the pipeline, it consolidates information from the reports in the other steps, and provides links to files storing more comprehensive data on the samples.
