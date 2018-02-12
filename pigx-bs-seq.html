@@ -200,27 +200,179 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="pigx-bs-seq">PiGx BS-seq</h1>
-<h2 id="preparation">Preparation</h2>
-<p>PiGx-bsseq processes raw fastq read files and generates a final report for each sample provided by the user. To use the pipeline, the user must first edit two files: the sample sheet and the settings file. </p>
+<h2 id="introduction">Introduction</h2>
+<p>PiGx-bsseq is a preprocessing and analysis pipeline that takes raw <code>fastq</code> read files and performs all necessary steps to present the full methylome for analysis. Quality control, and differential methylation are also performed, and a final report provides a summary for each sample provided by the user.</p>
+<h2 id="the-workflow">The workflow</h2>
+<p>Figure ** provides an overview of the various stages of the pipeline, as well as the outputs and expected inputs.</p>
+<p><img src="figures/pigx-bsseq_workflow.png" alt="PiGx BSseq workflow"></p>
+<p>In addition to fastq read files, a necessary input to the pipeline is a
+reference genome to be mapped to.  If such a genome has not already undergone
+bisulfite conversion, such a conversion can be prepared automatically by PiGx.
+At the same time, reads are trimmed for quality and adapter sequences using
+[TrimGalore!][trimgalore], with quality control analysis applied both before
+and after.  Once these steps are completed, reads can then be mapped to the
+genome using [Bismark][bismark], before alignments are filtered for duplication
+and sorted.  Methylation-calling is then carried out using
+[MethylKit][Methylkit] before initial post-mapping analysis such as
+segmentation and differential methylation between samples.</p>
+<h2 id="input-preparation">Input preparation</h2>
+<p>To use the pipeline, the user must first edit two files: the sample sheet and the settings file. </p>
 <h3 id="sample-sheet-xls---csv">Sample Sheet (<code>.xls</code> -&gt; <code>.csv</code>)</h3>
-<p>The sample sheet can be produced by editing the included file <code>test/sample_sheet.xls</code> and saving it in <code>.csv</code> format with fields separated by commas (<code>,</code>). In this file, each row of entries (below the header) corresponds to a sample; the first column contains the filename of a samples fastq input file, while the second column should contain the second fastq input file (if it exists, in the case of paired-end reads; otherwise this column should be left empty). The third column should contain a sample ID, some descriptive name (without white spaces) for the sample. The fourth column describes the type of read (e.g. &quot;WGBS&quot; for whole-genome bisulfite sequencing), while the 5th column contains a treatment label---generally an integer that is used for reference in differential methylation (see below). </p>
+<p>The sample sheet is a tabular file (<code>csv</code> format) describing the experiment.
+The table has the following columns:</p>
+<table>
+<thead>
+<tr>
+<th>reads</th>
+<th>reads(2)</th>
+<th>sample_ID</th>
+<th>protocol</th>
+<th>treatment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SA_R1.fastq.gz</td>
+<td>SA_R2.fastq.gz</td>
+<td>sample_A</td>
+<td>WGBS</td>
+<td>0</td>
+</tr>
+<tr>
+<td>SB.fastq.gz</td>
+<td></td>
+<td>sample_B</td>
+<td>WGBS</td>
+<td>1</td>
+</tr>
+<tr>
+<td>...</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Here, each row of entries (below the header) corresponds to a sample. In this
+example, <code>sample A</code> is a paired-end experiment with two <code>fastq</code> files, whereas
+<code>sample B</code> is single end; thus, the <code>read 2</code> column for the latter is left blank.
+The third column, <code>sample ID</code>, contains some descriptive name (without
+white spaces) for the sample. The fourth column refers to the experimantal
+protocol (e.g. &quot;WGBS&quot; / &quot;RRBS&quot; for whole-genome/reduced-representation
+bisulfite sequencing, respectively), while the 5th column contains a treatment
+label--generally an integer-- that is used for reference in differential
+methylation (see below).</p>
+<p>The above sample sheet can be produced by editing the included file
+<code>test/sample_sheet.xls</code> and saving it in <code>.csv</code> format with fields separated by
+commas (<code>,</code>).</p>
 <h3 id="settings-file-yaml">Settings File (<code>.yaml</code>)</h3>
-<p>In the settings file, various parameters are saved, in YAML format, to configure the execution of PiGx-bsseq. The values stored in the settings input file are used to overwrite the default settings, which are described below. An example settings file is available in the <code>test/</code> directory as <code>settings.yaml</code>. Here, you can see several fields that <em>will</em>, in many cases, require editing on the part of the user. For example, the field <code>locations</code> defines the path to the directories containing the input files, the desired output files, and the reference genome being mapped to. Note in particular the field <code>differential-methylation</code>:<code>treatment-groups</code>; below this there may be arbitrarily lines in the format 
-<code>- [&apos;A&apos;, &apos;B&apos;]</code>
-where <code>A</code> and <code>B</code> are integers referring to the treatment values from the sample sheet. Each such line represents a command to carry-out pair-wise comparison between the samples with the corresponding treatment values <code>A</code> and <code>B</code>. The remaining fields in the example settings file comprise most of the settings that a typical user might want to access, while the more basic settings that are saved as defaults in <code>etc/settings.yaml.in</code> will not need to be modified by most users (although users may freely re-define any such variables in their own settings file, and by so doing, overwrite them).</p>
+<p>In the settings file, various parameters are saved, in YAML format, to configure the execution of PiGx-bsseq. 
+The entries are stored hierarchically, and a brief description is provided below, along with possible default value in parenthesis:</p>
+<ul>
+<li><p><code>locations</code>: </p>
+<ul>
+<li><code>input-dir</code>: path to directory containing the input <code>fastq</code> files (./in)</li>
+<li><code>output-dir</code>: path to desired output directory, which PiGx will create if necessary (./out)</li>
+<li><code>genome-dir</code>: path to directory containing the reference genome. (./genome)</li>
+</ul>
+</li>
+<li><p>general:</p>
+<ul>
+<li><code>assembly</code>: reference genome name (&apos;hg19&apos;) </li>
+<li>methylation-calling:<ul>
+<li><code>minimum-coverage</code>: minimum number of read-hits required for inclusion in analysis (10).</li>
+<li><code>minimum-quality</code>:  minimum read quality required for mapping (10)</li>
+</ul>
+</li>
+<li>differential-methylation:<ul>
+<li><code>cores</code>: number of cpu threads for differential methylation (1)</li>
+<li><code>treatment-groups</code>: a series of pairings specifying comparisons to be performed between samples, based on the treatment vector supplied in the sample sheet (no default, but an example compatible with the above sample sheet is provided in the following line)<ul>
+<li>[&apos;0&apos;, &apos;1&apos;]</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>annotation:<ul>
+<li><code>CpGfile</code>:  file (with path) specifying CpG annotations for differential methylation (genome/cpgIslandExt.hg19.bed.gz).</li>
+<li><code>refGenfile</code>: file (with path) specifying reference genes for differential methylation (genome/refGene.hg19.bed.gz).</li>
+<li><code>webfetch</code>: Boolean instruction as to whether PiGx should attempt to fetch the above files from the internet if they are unavailable locally (no).</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>The values stored in the settings input file are used to overwrite the default
+settings, described below. An example settings file is available in
+the <code>test/</code> directory as <code>settings.yaml</code>. 
+The fields in <code>locations</code>, for example, will almost certainly require user input
+to over-write the default locations.</p>
+<p>Note in particular the field <code>differential-methylation</code>:<code>treatment-groups</code>; below
+this there may be arbitrarily lines in the format <code>- [&apos;A&apos;, &apos;B&apos;]</code> where <code>A</code> and
+<code>B</code> are integers referring to the treatment values from the sample sheet. Each
+such line represents a command to carry-out pair-wise comparison between the
+samples with the corresponding treatment values <code>A</code> and <code>B</code>. i</p>
+<p>The remaining fields provided here (and in the example settings file)
+ comprise most of the settings that a
+typical user might want to access, while the more basic settings that are saved
+as defaults in <code>etc/settings.yaml.in</code> will not need to be modified by most
+users (although advanced users may freely re-define any such variables in their own
+settings file, and by so doing, overwrite them).</p>
 <h2 id="execution">Execution</h2>
-<p>After editting the above input files, the bsseq pipeline can be executed with the command:
-<code>./pigx-bsseq [sample sheet] -s [settings file]</code>
-with further options, described in the README (for example, the flag <code>--dry-run</code> can be added to confirm valid input settings before execution).
-Once the pipeline is executed, the desired output directory is created, along with various sub-directories for intermediate steps in the process, each of which are named with prefixes to indicate their (approximate) order in sequence, and usually have their own interim reports and log files. For example, <code>06_sorting</code> contains the sorted <code>.bam</code> file after alignments, and <code>07_methyl_calls</code> contains information on average methylation in various formats, while <code>01_raw_QC</code> is the earliest step. </p>
+<p>After editting the above input files, the bsseq pipeline can be executed with
+the command: <code>./pigx-bsseq [sample sheet] -s [settings file]</code> with further
+options, described in the README (for example, the flag <code>--dry-run</code> can be
+added to confirm valid input settings before execution).  Once the pipeline is
+executed, the desired output directory is created, along with various
+sub-directories for intermediate steps in the process, each of which are named
+with prefixes to indicate their (approximate) order in sequence.  In most
+cases, these processes have their own interim reports and log files. For
+example, <code>06_sorting</code> contains the sorted <code>.bam</code> file after alignments, and
+<code>07_methyl_calls</code> contains information on average methylation in various
+formats, while <code>01_raw_QC</code> is the earliest step --quality control of the raw
+inputs. </p>
+<h2 id="analysis-in-the-out-dir-folder-pigx-will-create-a-sub-directory">Analysis In the <code>out-dir</code> folder, PiGx will create a sub-directory</h2>
+<p><code>Final_Reports/</code> in which a final report for each sample is provided, along
+with a report on the differential methylation observations for each pair of
+samples that was provided in the sample sheet under <code>general:
+differential-methylation: treatment-groups:</code> Further analysis can be performed
+on the aligned data using the sorted <code>.bam</code> file in <code>06_sorting</code>, or the bigwig
+file in <code>08_bigwig_files</code>, although for simple methylation percentages, it
+should be suffice to consult the column-separated files in <code>07_methyl_calls</code>.
+In each case, the specific file names will refer to the sample IDs provided in
+the original sample sheet.</p>
 <h2 id="troubleshooting">Troubleshooting</h2>
-<p>The dependency graph of rules contains branches; as such, the rules are not always performed in <em>exactly</em> the order indicated by directory prefix labels. Nevertheless, in cases of interrupted calculation, it may be useful to inspect the log files from the last (or second-to-last) directory created to check for error messages. </p>
-<p>Alongside these directories, the directory <code>pigx_work</code> is also created, with its contents described in the file <code>CONTENTS</code>---here one can see links to the original data files for traceability. In case a run of PiGx was done a long time ago, under conditions that have been forgotten, the subfolder <code>pigx_work/input/</code> contains links to each of the raw data files, <code>pigx_work/refGenome</code> links to the reference genome that was mapped do during exection, and <code>pigx_work/bin</code> contains links to the versions of binary executables that were used in the process.</p>
+<p>The dependency graph of rules contains branches; as such, the rules are not
+always performed in <em>exactly</em> the order indicated by directory prefix labels.
+Nevertheless, in cases of interrupted calculation, it may be useful to inspect
+the log files from the last (or second-to-last) directory created to check for
+error messages. </p>
+<p>Alongside these directories, the directory <code>pigx_work</code> is also created, with
+its contents described in the file <code>CONTENTS</code>---here one can see links to the
+original data files for traceability. In case a run of PiGx was done a long
+time ago, under conditions that have been forgotten, the subfolder
+<code>pigx_work/input/</code> contains links to each of the raw data files,
+<code>pigx_work/refGenome</code> links to the reference genome that was mapped do during
+exection, and <code>pigx_work/bin</code> contains links to the versions of binary
+executables that were used in the process.</p>
 <h3 id="cluster-submission">Cluster Submission</h3>
-<p>In the settings files, under the section <code>execution: cluster: rules:</code> there are various parameters related to resource consumption (e.g. number of threads, memory required, etc.) to ensure sufficient resources are allocated when PiGx is submitted to a cluster via SGE (Sun Grid Engine, a standard queueing system). These parameters were chosen and tested on the human hg19 genome, since it is larger (and therefore requires a larger RAM footprint) than most other model organisms (e.g. Drosophila, mouse, etc.). 
-This is not an exhaustive test, however, and it remains possible that PiGx users studying exotic genomes may yet exceed resource allowance. In such cases, a job execution will be aborted and an email will be sent to the address supplied by the user detailing circumstances of the failed job (such as start time, stop time, <code>Max vmem</code> = maximum memory consumed), and resource requests can be adjusted accordingly. </p>
-<h1 id="final-report">Final Report</h1>
-<p>Finally, the directory <code>Final_report</code> is created with the final report of the pipeline, it consolidates information from the reports in the other steps, and provides links to files storing more comprehensive data on the samples.</p>
+<p>The settings file allows for fields that will serve to optimize resource usage
+when PiGx is submitted to a cluster via SGE (Sun Grid Engine, a standard
+queueing system). For example, under the section <code>execution: rules:</code> various
+parameters can be supplied regarding resource consumption (e.g. number of
+threads, memory required, etc.) for each rule individually, or, alternatively,
+<code>execution: cluster: queue</code> can specify a single queue for all jobs. </p>
+<p>The default parameters were chosen and tested on the human hg19 genome, since
+it is larger (and therefore requires a larger RAM footprint) than most other
+model organisms (e.g. Drosophila, mouse, etc.).  This is not an exhaustive
+test, however, and it remains possible that PiGx users studying exotic genomes
+may yet exceed resource allowance. In such cases, a job execution will be
+aborted and an email will be sent to the address supplied by the user detailing
+circumstances of the failed job (such as start time, stop time, <code>Max vmem</code> =
+maximum memory consumed), and resource requests can be adjusted accordingly.
+Advanced users may consult <code>etc/settings.yaml.in</code> to see which values can be
+fine-tuned; novice users who are studying either the human genome, or a smaller
+one, should simply ignore this section and allow PiGx to assign the default
+values.</p>
 
                                 
                                 </section>
@@ -264,7 +416,7 @@ This is not an exhaustive test, however, and it remains possible that PiGx users
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"PiGx BS-seq","level":"1.4","depth":1,"next":{"title":"PiGx scRNA-seq","level":"1.5","depth":1,"path":"pigx-scrna-seq.md","ref":"pigx-scrna-seq.md","articles":[]},"previous":{"title":"PiGx ChIP-seq","level":"1.3","depth":1,"path":"pigx-chip-seq.md","ref":"pigx-chip-seq.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"pigx-bs-seq.md","mtime":"2018-02-01T15:26:30.283Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-02-01T15:28:00.152Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"PiGx BS-seq","level":"1.4","depth":1,"next":{"title":"PiGx scRNA-seq","level":"1.5","depth":1,"path":"pigx-scrna-seq.md","ref":"pigx-scrna-seq.md","articles":[]},"previous":{"title":"PiGx ChIP-seq","level":"1.3","depth":1,"path":"pigx-chip-seq.md","ref":"pigx-chip-seq.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"pigx-bs-seq.md","mtime":"2018-02-12T17:26:29.508Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-02-12T17:28:30.034Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
