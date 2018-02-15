@@ -16,11 +16,12 @@ Additionally, we also provide users with high quality reports and figures that c
 
 
 ##Contributors
-Ricardo Wurmus [Contributor to all pipelines]
-Vedran Franke [Contributor to ChIP-seq, scRNA-seq]
-Bora Uyar [Contributor to RNA-seq, scRNA-seq]
-Alexander Gosdschan [Contributor to ChIP-seq, BS-seq]
-Brendan Osberg [Contributor to BS-seq]
-Katarzyna Wreczycka [Contributor to BS-seq]
-Jonathan Ronen [Contributor to RNA-seq ]
-Altuna Akalin [Concept design, supervision]
+
+- Ricardo Wurmus [Contributor to all pipelines]
+- Vedran Franke [Contributor to ChIP-seq, scRNA-seq]
+- Bora Uyar [Contributor to RNA-seq, scRNA-seq]
+- Alexander Gosdschan [Contributor to ChIP-seq, BS-seq]
+- Brendan Osberg [Contributor to BS-seq]
+- Katarzyna Wreczycka [Contributor to BS-seq]
+- Jonathan Ronen [Contributor to RNA-seq ]
+- Altuna Akalin [Concept design, supervision]
