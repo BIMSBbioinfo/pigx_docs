@@ -1,0 +1,8 @@
+{
+  "plugins": [
+    "anchor-nav-x"
+  ],
+  "pluginsConfig": {
+    "toolTipMode": "click" // or "hover"
+  }
+}
