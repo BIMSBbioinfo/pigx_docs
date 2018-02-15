@@ -15,7 +15,7 @@ Additionally, we also provide users with high quality reports and figures that c
 
 
 
-##Contributors
+## Contributors
 
 - Ricardo Wurmus [Contributor to all pipelines]
 - Vedran Franke [Contributor to ChIP-seq, scRNA-seq]
