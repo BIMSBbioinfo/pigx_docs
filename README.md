@@ -1,6 +1,6 @@
 # Introduction to PiGx
 
-![PiGx Logo]([http://bioinformatics.mdc-berlin.de/pigx/images/logo.svg)
+![PiGx Logo](http://bioinformatics.mdc-berlin.de/pigx/images/logo.svg)
 
 The primary aim of PiGx was to provide genomics data processing tools that are relatively 1) easy to use, 2) easy to install, 4) easy distribute and most importantly 3) reproducible. Data processing is the major bottleneck for analyzing large number of samples. We want to make first-pass analysis as painless and as quick as possible for the users. So that, they will have more time to spend on data integration, visualization and statistical modeling.
 
