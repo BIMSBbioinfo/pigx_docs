@@ -1,10 +1,17 @@
 # Introduction to PiGx
 
-PiGx is bla bla
+![PiGx Logo]([http://bioinformatics.mdc-berlin.de/pigx/images/logo.svg)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquam est vel libero accumsan, vel egestas eros hendrerit. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi consequat convallis urna, eu feugiat eros vehicula ut. Praesent hendrerit imperdiet elit, vitae ornare risus aliquet sed. Integer sollicitudin commodo laoreet. Pellentesque id iaculis nibh. Nunc ac lacus purus. In tempus, mi eget vehicula gravida, libero augue ullamcorper ex, in rutrum nulla turpis nec eros. Nulla maximus quam a malesuada malesuada. Donec interdum fermentum iaculis. Vestibulum hendrerit lobortis diam eu bibendum.
+The primary aim of PiGx was to provide genomics data processing tools that are relatively 1) easy to use, 2) easy to install, 4) easy distribute and most importantly 3) reproducible. Data processing is the major bottleneck for analyzing large number of samples. We want to make first-pass analysis as painless and as quick as possible for the users. So that, they will have more time to spend on data integration, visualization and statistical modeling.
 
-Proin lacus tellus, efficitur eget mattis in, dapibus sit amet elit. Ut tincidunt massa quam, elementum laoreet lorem ullamcorper sit amet. Pellentesque erat justo, elementum vel pretium eu, faucibus a est. Cras tincidunt fermentum leo, nec elementum ligula gravida ut. Duis turpis lacus, viverra non ultricies in, vulputate id enim. Nam sit amet efficitur est, sed aliquet nulla. Aliquam venenatis ac lorem a sollicitudin. Nulla facilisi. Proin a volutpat mi. Pellentesque vulputate arcu non odio porttitor rutrum.
+All the pipelines have similar interface. For the end-user, each pipeline has the same input types: a sample sheet and a settings file. The sample sheet contains the information on samples such as names, locations of raw files, covariates etc. The settings file contains the extra arguments for the tools in the pipelines.  The users can in general run pipelines as follows: 
+
+```
+$./pigx [pipeline_name] [sample_sheet] -s [settings_file]
+```
+
+Additionally, we also provide users with high quality reports and figures that contains results from basic analyses and data quality check. The following chapters provide detailed documentation for the pipelines available in PiGx.
+
 
 
 
