@@ -1,6 +1,47 @@
 # PiGx ChIP-seq
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquam est vel libero accumsan, vel egestas eros hendrerit. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi consequat convallis urna, eu feugiat eros vehicula ut. Praesent hendrerit imperdiet elit, vitae ornare risus aliquet sed. Integer sollicitudin commodo laoreet. Pellentesque id iaculis nibh. Nunc ac lacus purus. In tempus, mi eget vehicula gravida, libero augue ullamcorper ex, in rutrum nulla turpis nec eros. Nulla maximus quam a malesuada malesuada. Donec interdum fermentum iaculis. Vestibulum hendrerit lobortis diam eu bibendum.
+## Introduction
+PiGx-ChIPseq is a preprocessing and analysis pipeline that takes raw ChIP (Chromatin ImmunoPrecipitation) data and performs the necessary operations for analysis, including alignment and peak-finding. A final report is generated providing a summary for each sample provided by the user.
 
-Proin lacus tellus, efficitur eget mattis in, dapibus sit amet elit. Ut tincidunt massa quam, elementum laoreet lorem ullamcorper sit amet. Pellentesque erat justo, elementum vel pretium eu, faucibus a est. Cras tincidunt fermentum leo, nec elementum ligula gravida ut. Duis turpis lacus, viverra non ultricies in, vulputate id enim. Nam sit amet efficitur est, sed aliquet nulla. Aliquam venenatis ac lorem a sollicitudin. Nulla facilisi. Proin a volutpat mi. Pellentesque vulputate arcu non odio porttitor rutrum.
+
+## The workflow
+Figure ** provides an overview of the various stages of the pipeline, as well as the outputs and expected inputs.
+
+![PiGx Chipseq workflow](./figures/pigx-chipseq_workflow.png)
+
+
+Reads are aligned using [bowtie][bowtie], with quality control analysis 
+performed with [fastqc][fastqc]
+....
+
+## Input preparation
+To use the pipeline, the user must first edit two files: the sample sheet and the settings file. 
+
+### Sample Sheet 
+
+The sample sheet is a tabular file (`csv` format) describing the experiment.
+The table has the following columns:
+
+...
+
+Here, each row of entries (below the header) corresponds to a sample, and the columns correspond to ...
+
+ 
+### Settings File (`.yaml`)
+In the settings file, various parameters are saved, in YAML format, to configure the execution of PiGx-chipseq. 
+... describe them...
+
+## Execution
+
+After editting the above input files, the bsseq pipeline can be executed with
+the command: `./pigx-chipseq [sample sheet] -s [settings file]` 
+with further options...
+
+## Analysis 
+Where is the final report? where can necessary files be obtained for further analysis?
+
+## Troubleshooting
+
+What are some of the typical problems users might encounter, and how can they be solved?
+(e.g. during cluster submission)?
 
