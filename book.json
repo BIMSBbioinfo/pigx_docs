@@ -3,6 +3,6 @@
     "anchor-nav-x"
   ],
   "pluginsConfig": {
-    "toolTipMode": "click" // or "hover"
+    "toolTipMode": "click"
   }
 }
