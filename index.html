@@ -197,12 +197,23 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="introduction-to-pigx">Introduction to PiGx</h1>
-<p><img src="http://bioinformatics.mdc-berlin.de/pigx/images/logo.svg" alt="PiGx Logo"></p>
+                                <p><img src="http://bioinformatics.mdc-berlin.de/pigx/images/logo.svg" alt="PiGx Logo"></p>
+<h1 id="introduction">Introduction</h1>
 <p>The primary aim of PiGx was to provide genomics data processing tools that are relatively 1) easy to use, 2) easy to install, 4) easy distribute and most importantly 3) reproducible. Data processing is the major bottleneck for analyzing large number of samples. We want to make first-pass analysis as painless and as quick as possible for the users. So that, they will have more time to spend on data integration, visualization and statistical modeling.</p>
 <p>All the pipelines have similar interface. For the end-user, each pipeline has the same input types: a sample sheet and a settings file. The sample sheet contains the information on samples such as names, locations of raw files, covariates etc. The settings file contains the extra arguments for the tools in the pipelines.  The users can in general run pipelines as follows: </p>
 <pre><code>$./pigx [pipeline_name] [sample_sheet] -s [settings_file]
 </code></pre><p>Additionally, we also provide users with high quality reports and figures that contains results from basic analyses and data quality check. The following chapters provide detailed documentation for the pipelines available in PiGx.</p>
+<h2 id="contributors">Contributors</h2>
+<ul>
+<li>Ricardo Wurmus [Contributor to all pipelines]</li>
+<li>Vedran Franke [Contributor to ChIP-seq, scRNA-seq]</li>
+<li>Bora Uyar [Contributor to RNA-seq, scRNA-seq]</li>
+<li>Alexander Gosdschan [Contributor to ChIP-seq, BS-seq]</li>
+<li>Brendan Osberg [Contributor to BS-seq]</li>
+<li>Katarzyna Wreczycka [Contributor to BS-seq]</li>
+<li>Jonathan Ronen [Contributor to RNA-seq ]</li>
+<li>Altuna Akalin [Concept design, supervision]</li>
+</ul>
 
                                 
                                 </section>
@@ -242,7 +253,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"next":{"title":"PiGx RNA-seq","level":"1.2","depth":1,"path":"pigx-rna-seq.md","ref":"pigx-rna-seq.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"README.md","mtime":"2018-02-15T21:18:51.614Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-02-15T21:20:01.684Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"next":{"title":"PiGx RNA-seq","level":"1.2","depth":1,"path":"pigx-rna-seq.md","ref":"pigx-rna-seq.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"README.md","mtime":"2018-02-21T13:06:50.898Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-02-21T13:08:18.864Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

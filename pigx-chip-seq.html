@@ -200,8 +200,113 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="pigx-chip-seq">PiGx ChIP-seq</h1>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquam est vel libero accumsan, vel egestas eros hendrerit. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi consequat convallis urna, eu feugiat eros vehicula ut. Praesent hendrerit imperdiet elit, vitae ornare risus aliquet sed. Integer sollicitudin commodo laoreet. Pellentesque id iaculis nibh. Nunc ac lacus purus. In tempus, mi eget vehicula gravida, libero augue ullamcorper ex, in rutrum nulla turpis nec eros. Nulla maximus quam a malesuada malesuada. Donec interdum fermentum iaculis. Vestibulum hendrerit lobortis diam eu bibendum.</p>
-<p>Proin lacus tellus, efficitur eget mattis in, dapibus sit amet elit. Ut tincidunt massa quam, elementum laoreet lorem ullamcorper sit amet. Pellentesque erat justo, elementum vel pretium eu, faucibus a est. Cras tincidunt fermentum leo, nec elementum ligula gravida ut. Duis turpis lacus, viverra non ultricies in, vulputate id enim. Nam sit amet efficitur est, sed aliquet nulla. Aliquam venenatis ac lorem a sollicitudin. Nulla facilisi. Proin a volutpat mi. Pellentesque vulputate arcu non odio porttitor rutrum.</p>
+<h1 id="introduction">Introduction</h1>
+<p>PiGx-ChIPseq is a preprocessing and analysis pipeline that
+takes raw data from ChIP (Chromatin ImmunoPrecipitation) experiments and
+produces illuminating figures.  The pipeline performs quality control on
+experimental data, multiple peak-finding/alignment, and UCSC track hub
+generation. A single final report is generated for each sample provided by the
+user summarizing a standard set of key findings, while processed data is made
+available for further analysis.</p>
+<h2 id="the-workflow">The workflow</h2>
+<h2 id="figure-1-provides-an-overview-of-the-various-stages-of-the">Figure <em>1</em> provides an overview of the various stages of the</h2>
+<p>pipeline, as well as the outputs and expected inputs.</p>
+<p><img src="figures/pigx-chipseq_workflow.png" alt="PiGx_Chipseq_workflow"></p>
+<p>[Writing the workflow out would be helped very much by a single snakemake script that shows the order of operations. At the moment, the DAG output is convoluted and difficult to follow]</p>
+<p>Reads are aligned using [bowtie][bowtie], with quality control analysis
+performed with [fastqc][fastqc] ....</p>
+<hr>
+<h1 id="preparation">Preparation</h1>
+<p>To use the pipeline, the user must suply two files:</p>
+<ul>
+<li>a sample sheet</li>
+<li>a settings file</li>
+</ul>
+<h2 id="sample-sheet">Sample Sheet</h2>
+<p>The sample sheet is a tabular file (<code>csv</code> format) describing the experiment.
+The table has the following columns:</p>
+<p>[Need to finally clarify what the sample sheet is going to look like]</p>
+<p>...</p>
+<p>Here, each row of entries (below the header) corresponds to a sample, and the
+columns correspond to ...</p>
+<h2 id="settings-file-yaml-in-the-settings-file-various-parameters-are-saved">Settings File (<code>.yaml</code>) In the settings file, various parameters are saved,</h2>
+<p>in YAML format, to configure the execution of PiGx-chipseq. Values marked with
+an * are required; the remainder are optional (i.e. and can therefore  be left
+blank).  For a full list of possible parameters, see <code>etc/settings.yaml.in</code> to
+review the default values that will be supplied by PiGx --all values supplied
+in this file can be over-written, should the user supply an alternate value
+in their settings file.</p>
+<p>Altogether, these parameters are organized into the following sub-categories:</p>
+<h3 id="locations">Locations</h3>
+<p>Defines paths to be used in the pipeline. :</p>
+<ul>
+<li>input-dir*:     directory of the input files (fastq files)</li>
+<li>output-dir*:     output directory for the pipeline</li>
+<li>genome-file*:     path to the reference genome in fasta forma</li>
+<li>index-dir:     directory containing pre-built mapping indices for the given reference genome (created with bowtie2-build)</li>
+<li>gff-file:     location of a GTF file with genome annotations for the given reference genome</li>
+</ul>
+<h3 id="general">General</h3>
+<p>The section contains settings that apply to all analysis (unless adjusted in single analysis):</p>
+<ul>
+<li>assembly*:     version of reference genome (e.g. hg19,mm9, ...)</li>
+<li>params:     list of default parameters for tools and scripts (for tools check respective manual for available parameters)</li>
+</ul>
+<h3 id="execution">Execution</h3>
+<p>The execution section in the settings file allows the user to
+specify how the pipeline should be executed: e.g., whether the pipeline is to
+be submitted to a cluster, or run locally, and the degree of parallelization.
+Furthermore, for cluster runs, advanced users can specify resource allocation
+for specific rules. Further possible parameters include, e.g. an 
+email address for notification of aborted jobs. 
+A typical settings file might look like the following example:</p>
+<pre><code class="lang-yaml"><span class="hljs-attr">locations:</span>
+<span class="hljs-attr">  input-dir:</span> in/reads/
+<span class="hljs-attr">  output-dir:</span> out/
+<span class="hljs-attr">  genome-file:</span> genome/my_genome.fa
+<span class="hljs-attr">  index-dir:</span>
+<span class="hljs-attr">  gff-file:</span> genome/mm_chr19.gtf
+
+<span class="hljs-attr">general:</span>
+<span class="hljs-attr">  assembly:</span> hg19
+<span class="hljs-attr">  params:</span>
+<span class="hljs-attr">    extend:</span> <span class="hljs-number">200</span>
+<span class="hljs-attr">    scale_bw:</span> <span class="hljs-string">&apos;yes&apos;</span>
+<span class="hljs-attr">    bowtie2:</span>
+<span class="hljs-attr">        k:</span> <span class="hljs-number">1</span>
+<span class="hljs-attr">    idr:</span>
+<span class="hljs-attr">        idr-threshold:</span> <span class="hljs-number">0.1</span>
+<span class="hljs-attr">    macs2:</span>
+<span class="hljs-attr">        g:</span> hs
+<span class="hljs-attr">        keep-dup:</span> auto
+<span class="hljs-attr">        q:</span> <span class="hljs-number">0.05</span>
+<span class="hljs-attr">    extract_signal:</span>
+<span class="hljs-attr">        expand_peak:</span> <span class="hljs-number">200</span>
+<span class="hljs-attr">        bin_num:</span> <span class="hljs-number">20</span>
+
+<span class="hljs-attr">execution:</span>
+<span class="hljs-attr">  submit-to-cluster:</span> <span class="hljs-literal">no</span>
+<span class="hljs-attr">  rules:</span>
+<span class="hljs-attr">    __default__:</span>
+<span class="hljs-attr">      queue:</span> all.q
+<span class="hljs-attr">      memory:</span> <span class="hljs-number">8</span>G
+<span class="hljs-attr">    bowtie2:</span>
+<span class="hljs-attr">      queue:</span> all.q
+<span class="hljs-attr">      memory:</span> <span class="hljs-number">16</span>G
+<span class="hljs-attr">  cluster:</span>
+<span class="hljs-attr">    contact-email:</span> example@domain.de
+<span class="hljs-attr">    missing-file-timeout:</span> <span class="hljs-number">120</span>
+</code></pre>
+<h2 id="execution">Execution</h2>
+<p>After editting the above input files, the bsseq pipeline can be executed with
+the command: <code>./pigx-chipseq [sample sheet] -s [settings file]</code> with further
+options...</p>
+<h2 id="analysis">Analysis</h2>
+<p>Where is the final report? What does it look like? where can necessary files be obtained
+for further analysis?</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p>What are some of the typical problems users might encounter, and how can they
+be solved?  (e.g. during cluster submission)?</p>
 
                                 
                                 </section>
@@ -245,7 +350,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"PiGx ChIP-seq","level":"1.3","depth":1,"next":{"title":"PiGx BS-seq","level":"1.4","depth":1,"path":"pigx-bs-seq.md","ref":"pigx-bs-seq.md","articles":[]},"previous":{"title":"PiGx RNA-seq","level":"1.2","depth":1,"path":"pigx-rna-seq.md","ref":"pigx-rna-seq.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"pigx-chip-seq.md","mtime":"2018-02-15T21:18:51.622Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-02-15T21:20:01.684Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"PiGx ChIP-seq","level":"1.3","depth":1,"next":{"title":"PiGx BS-seq","level":"1.4","depth":1,"path":"pigx-bs-seq.md","ref":"pigx-bs-seq.md","articles":[]},"previous":{"title":"PiGx RNA-seq","level":"1.2","depth":1,"path":"pigx-rna-seq.md","ref":"pigx-rna-seq.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"pigx-chip-seq.md","mtime":"2018-02-21T13:06:50.906Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-02-21T13:08:18.864Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
