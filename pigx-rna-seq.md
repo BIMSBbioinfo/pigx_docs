@@ -1,7 +1,7 @@
 # PiGx RNA-seq
 
-# Introcuction
-PiGx RNAseq is a preprocessing and analysis pipeline. It takes `fastq` files containing fragment reads, and does all the necessary preprocessing to get analysis-ready gene expression levels. It also performs quality control steps and outputs comprehensive quality statistics. Finally, it performs a differential expression analysis and outputs a stand-alone HTML report with tables and figures summarizing any differential gene expression between samples as specified in the experiment design.
+# Introduction
+PiGx RNAseq is a preprocessing and analysis pipeline. It takes single-end or paired-end `fastq` files containing fragment reads, and does all the necessary preprocessing to get analysis-ready gene expression levels. It also performs quality control steps and outputs comprehensive quality statistics. Finally, it performs a differential expression analysis and outputs a stand-alone HTML report with tables and figures summarizing any differential gene expression between samples as specified in the experiment design.
 
 ## The workflow
 PiGx RNAseq follows academic best practices for preprocessing and analysis of RNAseq data. Figure 1 provides an overview of the different steps of the pipeline, as well as the outputs.
@@ -38,7 +38,7 @@ The sample sheet is a tabular file (`csv` format) describing the experiment. The
 _Table 1: example sample sheet_
 
 ### Column descriptions
-- _name_ is the name for the sample
+- _name_ is the name for the sample, which must be unique to each row of the table. 
 - _reads1/2_ are the fastq file names of paired end reads
   - the location of these files is specified in `settings.yaml`
   - for single-end data, leave the reads2 column in place, but have it empty
@@ -49,14 +49,18 @@ Additional columns may be included which may be used as covariates in the differ
 ## Settings file
 The settings file is a _YAML_ file which specifies:
 
-- Locations:
+**Locations**:
+
   - The locations of the reads (directory where `fastq` files are)
-  - The location of the outputs for the pipeline
+  - The location of the outputs for the pipeline 
   - The location of the `fasta` file with the reference genome (must be prepared by the user)
   - The locations of the transcriptome assembly (for alignment with salmon)
   - The location of a `GTF` file with genome annotations
-- Organism (for GO-term analysis using `gProfileR`)
-- Differential Expression analyses to be run
+  
+**Organism** (for GO-term analysis using `gProfileR`): 
+
+**Differential Expression (DE) analyses** to perform: 
+
   - Which samples to compare (by `sample_type` in the sample sheet)
   - Which covariates to include in the DE analysis (from additional columns in the sample sheet)
 
@@ -88,7 +92,7 @@ execution:
 
 ### Reference and annotations
 
-The user must supply paths pointing to a reference genome for the organism, as well as annotated genes and a transcriptome reference. These might for example be downloaded from [Ensembl](https://www.ensembl.org/info/data/ftp/index.html). The reference genomoe is listed under _DNA_ `FASTA`, the gene annotations under _Gene sets_ `GTF`, and the transcriptome reference sequence is specified under _cDNA_ `FASTA`.
+The user must supply paths pointing to a reference genome for the organism, as well as annotated genes and a transcriptome reference. These might for example be downloaded from [Ensembl](https://www.ensembl.org/info/data/ftp/index.html). The reference genomoe is listed under _DNA_ `FASTA`, the gene annotations under _Gene sets_ `GTF`, and the transcriptome reference sequence is specified under _cDNA_ `FASTA`. The user is free to choose any resource for these annotation files, however it is very important to note that the chromosome naming styles must match between different annotation files (e.g. chromosome 21 is named as *chr21* in UCSC style, but *21* in NCBI/Ensemble style). 
 
 ### Organism (for GO-term analysis)
 GO term analysis is performed based on the organism specified in the settings file. Some popular organisms include `hsapiens`, `mmusculus`, `celegans`, `dmelanogaster`. The full list of organism IDs is available on the _gProfiler_ documentation, [here](https://biit.cs.ut.ee/gprofiler/help.cgi?help_id=64).
@@ -117,7 +121,7 @@ Any number of additional columns may be added to the sample sheet and used as co
 | name       | reads               | reads2              | sample_type | sex |
 |------------|---------------------|---------------------|-------------|-----|
 | treatment1 | treatment1.r1.fastq | treatment1.r2.fastq | treatment   | m   |
-| treatment2 | treatment2.r1.fastq | treatment2.r2.fastq | treatment   | m   |
+| treatment2 | treatment2.r1.fastq | treatment2.r2.fastq | treatment   | f   |
 | control1   | control1.r1.fastq   | control1.r2.fastq   | control     | m   |
 | control2   | control2.r1.fastq   | control2.r2.fastq   | control     | f   |
 
@@ -136,6 +140,7 @@ Multiple covariates may be specified by providing a comma-separated list, such a
 ```yaml
 covariates: "sex,age,smoking_history"
 ```
+**Warning**: It is important to be aware of a common error that is thrown by _DESeq2_ when additional covariates are listed. In some cases, one or more  covariates contain redundant information, or perfectly confounded by other covariates that are used to construct a design formula. In such cases, _DESeq2_ will throw this error: "the model matrix is not full rank, so the model cannot be fit as specified.". This error signals the user to re-consider the list of covariates used and eliminate those that are redundant from this list. For more information on this topic, please refer to the vignette from _DESeq2_, [here](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html).  
 
 # Execution
 PiGx RNAseq is executed using the command `pigx-rnaseq -s settings.yaml sample_sheet.csv`. See `pigx-rnaseq --help for information about additional command line arguments.
