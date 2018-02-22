@@ -200,8 +200,8 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="pigx-rna-seq">PiGx RNA-seq</h1>
-<h1 id="introcuction">Introcuction</h1>
-<p>PiGx RNAseq is a preprocessing and analysis pipeline. It takes <code>fastq</code> files containing fragment reads, and does all the necessary preprocessing to get analysis-ready gene expression levels. It also performs quality control steps and outputs comprehensive quality statistics. Finally, it performs a differential expression analysis and outputs a stand-alone HTML report with tables and figures summarizing any differential gene expression between samples as specified in the experiment design.</p>
+<h1 id="introduction">Introduction</h1>
+<p>PiGx RNAseq is a preprocessing and analysis pipeline. It takes single-end or paired-end <code>fastq</code> files containing fragment reads, and does all the necessary preprocessing to get analysis-ready gene expression levels. It also performs quality control steps and outputs comprehensive quality statistics. Finally, it performs a differential expression analysis and outputs a stand-alone HTML report with tables and figures summarizing any differential gene expression between samples as specified in the experiment design.</p>
 <h2 id="the-workflow">The workflow</h2>
 <p>PiGx RNAseq follows academic best practices for preprocessing and analysis of RNAseq data. Figure 1 provides an overview of the different steps of the pipeline, as well as the outputs.</p>
 <p>First, raw reads are trimmed using <a href="https://www.bioinformatics.babraham.ac.uk/projects/trim_galore/" target="_blank">TrimGalore!</a> to ensure a minimum read quality, and removal of adapter sequences. Next, reads are aligned to a reference genome using <a href="https://github.com/alexdobin/STAR" target="_blank">STAR</a>, and the depth of coverage is computed using <a href="http://bedtools.readthedocs.io/en/latest/" target="_blank">BEDTools</a>, outputing <code>bedgraph</code> files. Gene-level expression counts is obtained from <em>STAR</em>, and transcript-level quantification is produced using <a href="https://combine-lab.github.io/salmon/" target="_blank">Salmon</a>. Statistical analysis for differential expression analysis is performed using <a href="https://bioconductor.org/packages/release/bioc/html/DESeq2.html" target="_blank">DESeq2</a>, and the results are used to compile a custom report.</p>
@@ -256,7 +256,7 @@
 <p><em>Table 1: example sample sheet</em></p>
 <h3 id="column-descriptions">Column descriptions</h3>
 <ul>
-<li><em>name</em> is the name for the sample</li>
+<li><em>name</em> is the name for the sample, which must be unique to each row of the table. </li>
 <li><em>reads1/2</em> are the fastq file names of paired end reads<ul>
 <li>the location of these files is specified in <code>settings.yaml</code></li>
 <li>for single-end data, leave the reads2 column in place, but have it empty</li>
@@ -267,21 +267,19 @@
 <p>Additional columns may be included which may be used as covariates in the differential expression analysis (sex, age, batch).</p>
 <h2 id="settings-file">Settings file</h2>
 <p>The settings file is a <em>YAML</em> file which specifies:</p>
+<p><strong>Locations</strong>:</p>
 <ul>
-<li>Locations:<ul>
 <li>The locations of the reads (directory where <code>fastq</code> files are)</li>
-<li>The location of the outputs for the pipeline</li>
+<li>The location of the outputs for the pipeline </li>
 <li>The location of the <code>fasta</code> file with the reference genome (must be prepared by the user)</li>
 <li>The locations of the transcriptome assembly (for alignment with salmon)</li>
 <li>The location of a <code>GTF</code> file with genome annotations</li>
 </ul>
-</li>
-<li>Organism (for GO-term analysis using <code>gProfileR</code>)</li>
-<li>Differential Expression analyses to be run<ul>
+<p><strong>Organism</strong> (for GO-term analysis using <code>gProfileR</code>): </p>
+<p><strong>Differential Expression (DE) analyses</strong> to perform: </p>
+<ul>
 <li>Which samples to compare (by <code>sample_type</code> in the sample sheet)</li>
 <li>Which covariates to include in the DE analysis (from additional columns in the sample sheet)</li>
-</ul>
-</li>
 </ul>
 <p>In order to get started, enter <code>pigx-rnaseq --init-settings my_settings.yaml</code>. This will create a file called <code>my_settings.yaml</code> with the default structure. The file will look like this:</p>
 <pre><code class="lang-yaml"><span class="hljs-attr">locations:</span>
@@ -307,7 +305,7 @@
 <span class="hljs-attr">  nice:</span> <span class="hljs-number">19</span>
 </code></pre>
 <h3 id="reference-and-annotations">Reference and annotations</h3>
-<p>The user must supply paths pointing to a reference genome for the organism, as well as annotated genes and a transcriptome reference. These might for example be downloaded from <a href="https://www.ensembl.org/info/data/ftp/index.html" target="_blank">Ensembl</a>. The reference genomoe is listed under <em>DNA</em> <code>FASTA</code>, the gene annotations under <em>Gene sets</em> <code>GTF</code>, and the transcriptome reference sequence is specified under <em>cDNA</em> <code>FASTA</code>.</p>
+<p>The user must supply paths pointing to a reference genome for the organism, as well as annotated genes and a transcriptome reference. These might for example be downloaded from <a href="https://www.ensembl.org/info/data/ftp/index.html" target="_blank">Ensembl</a>. The reference genomoe is listed under <em>DNA</em> <code>FASTA</code>, the gene annotations under <em>Gene sets</em> <code>GTF</code>, and the transcriptome reference sequence is specified under <em>cDNA</em> <code>FASTA</code>. The user is free to choose any resource for these annotation files, however it is very important to note that the chromosome naming styles must match between different annotation files (e.g. chromosome 21 is named as <em>chr21</em> in UCSC style, but <em>21</em> in NCBI/Ensemble style). </p>
 <h3 id="organism-for-go-term-analysis">Organism (for GO-term analysis)</h3>
 <p>GO term analysis is performed based on the organism specified in the settings file. Some popular organisms include <code>hsapiens</code>, <code>mmusculus</code>, <code>celegans</code>, <code>dmelanogaster</code>. The full list of organism IDs is available on the <em>gProfiler</em> documentation, <a href="https://biit.cs.ut.ee/gprofiler/help.cgi?help_id=64" target="_blank">here</a>.</p>
 <h3 id="deanalysis">DEanalysis</h3>
@@ -345,7 +343,7 @@
 <td>treatment2.r1.fastq</td>
 <td>treatment2.r2.fastq</td>
 <td>treatment</td>
-<td>m</td>
+<td>f</td>
 </tr>
 <tr>
 <td>control1</td>
@@ -373,6 +371,7 @@
 <p>Multiple covariates may be specified by providing a comma-separated list, such as</p>
 <pre><code class="lang-yaml"><span class="hljs-attr">covariates:</span> <span class="hljs-string">&quot;sex,age,smoking_history&quot;</span>
 </code></pre>
+<p><strong>Warning</strong>: It is important to be aware of a common error that is thrown by <em>DESeq2</em> when additional covariates are listed. In some cases, one or more  covariates contain redundant information, or perfectly confounded by other covariates that are used to construct a design formula. In such cases, <em>DESeq2</em> will throw this error: &quot;the model matrix is not full rank, so the model cannot be fit as specified.&quot;. This error signals the user to re-consider the list of covariates used and eliminate those that are redundant from this list. For more information on this topic, please refer to the vignette from <em>DESeq2</em>, <a href="https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html" target="_blank">here</a>.  </p>
 <h1 id="execution">Execution</h1>
 <p>PiGx RNAseq is executed using the command <code>pigx-rnaseq -s settings.yaml sample_sheet.csv</code>. See `pigx-rnaseq --help for information about additional command line arguments.</p>
 <p>The <code>execution</code> section of the settings file provides some control over the execution of the pipeline.</p>
@@ -435,7 +434,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"PiGx RNA-seq","level":"1.2","depth":1,"next":{"title":"PiGx ChIP-seq","level":"1.3","depth":1,"path":"pigx-chip-seq.md","ref":"pigx-chip-seq.md","articles":[]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"pigx-rna-seq.md","mtime":"2018-02-21T13:06:50.906Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-02-21T13:08:18.864Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"PiGx RNA-seq","level":"1.2","depth":1,"next":{"title":"PiGx ChIP-seq","level":"1.3","depth":1,"path":"pigx-chip-seq.md","ref":"pigx-chip-seq.md","articles":[]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"pigx-rna-seq.md","mtime":"2018-02-22T09:43:32.260Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-02-22T09:44:58.951Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
