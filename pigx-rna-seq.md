@@ -58,6 +58,8 @@ The settings file is a _YAML_ file which specifies:
   - The location of a `GTF` file with genome annotations
   
 **Organism** (for GO-term analysis using `gProfileR`): 
+  
+  - Just append the species name to the initial of the genus name of the organism (e.g. hsapiens, mmusculus, celegans, dmelanogaster).   
 
 **Differential Expression (DE) analyses** to perform: 
 
