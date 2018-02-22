@@ -30,7 +30,7 @@ in the shell, and a boilerplate `sample_sheet.csv` and `settings.yaml` will be w
 ## Sample sheet
 The sample sheet is a tabular file (`csv` format) describing the experiment. The table has the following columns:
 
-| name | reads | reads2 | sample_type | (covariate1) | ... | (covatiateN) |
+| name | reads | reads2 | sample_type | (covariate1) | ... | (covariateN) |
 |------|-------|--------|-------------|------------|-----|--------------|
 | ctrl | ctrl_R1.fastq.gz | ctrl_R2.fastq.gz | control | . | . | . |
 | trtA | trtA_R1.fastq.gz | trtA_R2.fastq.gz | treatment A | . | . | . |
