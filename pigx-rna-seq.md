@@ -189,6 +189,12 @@ PiGx RNAseq computes coverage depth from the STAR-alignment of the reads, using 
 
 # Troubleshooting
 
+### Execution on a cluster
+Currently, PiGx only supports Sun Grid Engine for cluster execution. If you're uncertain about your cluster, try typing `qsub` in the shell (Sun Grid Engine uses `qsub` to submit jobs).
+
+##### Disappearing jobs on the cluster
+PiGx RNAseq comes with sensible defaults for resource requests when running on a cluster, but based on the genome version and other parameters, these might not be sufficient and your cluster might terminate your jobs. The cluster resource requests may be overridden in the settings file. See `etc/settings.yaml` for a full list.
+
 
 [trimgalore]: https://www.bioinformatics.babraham.ac.uk/projects/trim_galore/
 [star]: https://github.com/alexdobin/STAR
