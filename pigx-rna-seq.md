@@ -165,16 +165,27 @@ execution:
 in the settings file, will submit up to 40 simultaneous compute jobs on the cluster.
 
 # Results
+PiGx RNAseq creates an output folder, as specified in the settings file, that contains all of the following outputs.
 
 ## Quality control
+General quality control metrics are computed using [FastQC][fastqc] and [MultiQC][multiqc]. The MultiQC report is particularly useful, collating quality control metrics from many steps of the pipeline in a single html report, which may be found under the `multiqc` folder in the PiGx output folder.
 
 ## Gene expression
+PiGx RNAseq produces three variants of gene expression count matrices:
 
-## Depth of coverage
+| Kind of count matrix | output location |
+|------|-------|
+| Post-alignment reads-per-gene counts from [STAR][star] | in the `preprocessed_data` directory |
+| Pseudo-alignment reads-per-gene counts from [Salmon][salmon] | in the `salmon_output` directory |
+| Pseudo-alignment reads-per-transcript counts from [Salmon][salmon] | in the `salmon_output` directory |
 
 ## Differential expression report
+PiGx RNAseq produces differential expression reports for each comparison specified in the settings file, and using each of the expression quantification strategies specified above. I.e. for each contrast specified in the settings file, three reports will be produced; one based on counts-per-gene from STAR, one based on counts-per-gene from Salmon, and another based on counts-per-transcript from Salmon.
 
-### GO-term analysis
+The reports are all saved in the `reports` output directory.
+
+## Depth of coverage
+PiGx RNAseq computes coverage depth from the STAR-alignment of the reads, using [bedtools][bedtools]. The resulting `bedGraph` files are output in the `bedgraph_files` output folder.
 
 # Troubleshooting
 
@@ -185,3 +196,5 @@ in the settings file, will submit up to 40 simultaneous compute jobs on the clus
 [salmon]: https://combine-lab.github.io/salmon/
 [deseq2]: https://bioconductor.org/packages/release/bioc/html/DESeq2.html
 [snakemake]: http://snakemake.readthedocs.io/en/latest/
+[fastqc]: https://www.bioinformatics.babraham.ac.uk/projects/fastqc/
+[multiqc]: http://multiqc.info/
