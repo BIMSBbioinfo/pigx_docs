@@ -65,7 +65,7 @@ The entries are stored hierarchically, and a brief description is provided below
     -  `minimum-quality`:  minimum read quality required for mapping (10)
   -  differential-methylation:
     - `cores`: number of cpu threads for differential methylation (1)
-    - `treatment-groups`: a series of pairings specifying comparisons to be performed between samples, based on the treatment vector supplied in the sample sheet (no default, but an example compatible with the above sample sheet is provided in the following line)
+    - `treatment-groups`: a series of pairings specifying comparisons to be performed between samples, based on the treatment vector supplied in the sample sheet (no default, but an example compatible with the above sample sheet is provided in the following line). The index of the control group _must_ be provided first, followed by the treatment being studied. Final report output represents the status of the latter index, relative to the former.
         - ['0', '1']
   -    annotation:
     - `CpGfile`:  file (with path) specifying CpG annotations for differential methylation (genome/cpgIslandExt.hg19.bed.gz).
