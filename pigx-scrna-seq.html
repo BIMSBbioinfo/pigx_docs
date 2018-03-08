@@ -457,15 +457,24 @@ Structure of analysis results:</p>
 |   |-- star_gene_exon_tagged.bam
 |   |-- unaligned_tagged_Cellular.bam_summary.txt
 |   `-- unaligned_tagged_Molecular.bam_summary.txt
-</code></pre><p>-- Sample1.fastq.bam - contains merged barcode and sequence fq files</p>
-<p>-- Sample1_genome_name.<strong>bw</strong> - bigWig file constructed from selected cells. Files with <strong>m/p</strong>.bw contain strand separated signal</p>
-<p>-- Sample1<em>genome_name</em><strong>BAMTagHistogram</strong> - Number of reads in coressponding to each cell barcode.</p>
-<p>-- Sample1_genome_name_UMI.Matrix.<strong>txt/loom</strong> - UMI based digital expression matrix in txt and loom format</p>
-<p>-- Sample1_genome_name_READS.Matrix.txt - Read count digital expression matrix</p>
-<p>-- Sample1_genome_name_ReadCutoff.yaml - contains the UMI threshold for selecting high quality cells (obtained using <a href="https://github.com/rajewsky-lab/dropbead" target="_blank">dropbead</a>). The corresponding .png file visualizes the UMI curve and the threshold.</p>
-<p>-- star_gene_exon_tagged.bam - mapped and annotated reads. Each read is tagged by annotation based on it&apos;s mapping location.</p>
-<p>-- Sample1<em>genome_name</em><strong>ReadStatistics/Downstream</strong>.txt - quality control statistics used in the html report. They contain values such as number of reads in Exons/Introns, </p>
-<h1 id="detailed-pipeline-description">Detailed pipeline description</h1>
+</code></pre><ul>
+<li><p>Sample1.fastq.bam - contains merged barcode and sequence fq files</p>
+</li>
+<li><p>Sample1_genome_name.<strong>bw</strong> - bigWig file constructed from selected cells. Files with <strong>m/p</strong>.bw contain strand separated signal</p>
+</li>
+<li><p>Sample1<em>genome_name</em><strong>BAMTagHistogram</strong> - Number of reads in coressponding to each cell barcode.</p>
+</li>
+<li><p>Sample1_genome_name_UMI.Matrix.<strong>txt/loom</strong> - UMI based digital expression matrix in txt and loom format</p>
+</li>
+<li><p>Sample1_genome_name_READS.Matrix.txt - Read count digital expression matrix</p>
+</li>
+<li><p>Sample1_genome_name_ReadCutoff.yaml - contains the UMI threshold for selecting high quality cells (obtained using <a href="https://github.com/rajewsky-lab/dropbead" target="_blank">dropbead</a>). The corresponding .png file visualizes the UMI curve and the threshold.</p>
+</li>
+<li><p>star_gene_exon_tagged.bam - mapped and annotated reads. Each read is tagged by annotation based on it&apos;s mapping location.</p>
+</li>
+<li><p>Sample1<em>genome_name</em><strong>ReadStatistics/Downstream</strong>.txt - quality control statistics used in the html report. They contain values such as number of reads in Exons/Introns, </p>
+</li>
+</ul>
 <h1 id="downstream-analysis">Downstream analysis</h1>
 <p>The combined expression data are subsequently processed into a <a href="https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html" target="_blank">SingleCellExperiment</a> object. SingleCellExperiment is a Bioconductor class for storing expression values, along with the cell, and gene data, and experimental meta data in a single container. It is constructed on top of hdf5  file based arrays  (Pag&#xE8;s 2017), which enables exploration even on systems with limited memory capacity. 
 During the object construction, the pipeline performs expression normalization, dimensionallity reduction, identification of significantly variable genes, assigns the cells to the steps of the cell cycle, and calculates the quality statistics. The SingleCellExperiment object contains all of the necessary data needed for further exploration. The object connects the pigx-pipeline with the Bioconductor single cell computing environment, and enables integration with state of the art statistical, and machine learning mehods (<a href="https://bioconductor.org/packages/release/bioc/html/scran.html" target="_blank">scran</a>, <a href="https://bioconductor.org/packages/release/bioc/html/zinbwave.html" target="_blank">zinbwave</a>, <a href="https://github.com/BIMSBbioinfo/netSmooth" target="_blank">netSmooth</a>, <a href="https://github.com/csoneson/iSEE" target="_blank">iSEE</a>.</p>
@@ -515,7 +524,7 @@ During the object construction, the pipeline performs expression normalization, 
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"PiGx scRNA-seq","level":"1.5","depth":1,"previous":{"title":"PiGx BS-seq","level":"1.4","depth":1,"path":"pigx-bs-seq.md","ref":"pigx-bs-seq.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"pigx-scrna-seq.md","mtime":"2018-03-08T09:32:55.977Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-08T09:34:16.208Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"PiGx scRNA-seq","level":"1.5","depth":1,"previous":{"title":"PiGx BS-seq","level":"1.4","depth":1,"path":"pigx-bs-seq.md","ref":"pigx-bs-seq.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"pigx-scrna-seq.md","mtime":"2018-03-08T09:33:39.837Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-08T09:35:11.446Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
