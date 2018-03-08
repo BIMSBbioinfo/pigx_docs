@@ -13,7 +13,7 @@ available for further analysis.
 ## Figure *1* provides an overview of the various stages of the
 pipeline, as well as the outputs and expected inputs.
 
-![PiGx_Chipseq_workflow](./figures/pigx-chipseq_workflow.png)
+![PiGx_Chipseq_workflow](./figures/pigx-chipseq.svg)
 
 [Writing the workflow out would be helped very much by a single snakemake script that shows the order of operations. At the moment, the DAG output is convoluted and difficult to follow]
 
