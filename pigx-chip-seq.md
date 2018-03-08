@@ -1,15 +1,4 @@
-<a name="logo"/>
-<div align="center">
-<img src="figures/Logo_PiGx.png" alt="PiGx Logo"  width="30%" height="30%" ></img>
-</a>
-</div>
-
-**Copyright 2017-2018: Vedran Franke, Alexander Gosdschan, Ricardo Wurmus.**
-**This work is distributed under the terms of the GNU General Public License, version 3 or later.  It is free to use for all purposes.**
-
------------
-
-## Summary
+# Introduction
 
 PiGX ChIPseq is an analysis pipeline for preprocessing, peak calling and reporting for ChIP sequencing experiments. It is easy to use and produces high quality reports. The inputs are reads files from the sequencing experiment, and a configuration file which describes the experiment. In addition to quality control of the experiment, the pipeline enables to set up multiple peak calling analysis and allows the generation of a UCSC track hub in an easily configurable manner.
 
@@ -400,9 +389,5 @@ execution:
 ```
 
 
-
-
-
-## Reports
 
 
