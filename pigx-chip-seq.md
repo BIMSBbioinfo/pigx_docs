@@ -1,6 +1,6 @@
 <a name="logo"/>
 <div align="center">
-<img src="images/Logo_PiGx.png" alt="PiGx Logo"  width="30%" height="30%" ></img>
+<img src="figures/Logo_PiGx.png" alt="PiGx Logo"  width="30%" height="30%" ></img>
 </a>
 </div>
 
