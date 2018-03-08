@@ -197,22 +197,13 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="pigx-pipeline-for-single-cell-rnaseq">pigx pipeline for single-cell RNAseq</h1>
-<p><a name="logo"></a></p>
-<div align="center">
-<img src="images/Logo_PiGx.png" alt="PiGx Logo" width="30%" height="30%">
-
-</div>
-
-<p><strong>Copyright 2017-2018: Vedran Franke, Bora Uyar, Ricardo Wurmus, Altuna Akalin.</strong>
-<strong>This work is distributed under the terms of the GNU General Public License, version 3 or later.  It is free to use for all purposes.</strong></p>
-<hr>
-<h2 id="summary">Summary</h2>
+                                <h1 id="introduction">Introduction</h1>
 <p>PiGX scRNAseq is an analysis pipeline for preprocessing and quality control for single cell RNA sequencing experiments. 
 The inputs are read files from the sequencing experiment, and a configuration file which describes the experiment. 
 It produces processed files for downstream analysis and interactive quality reports. 
 The pipeline is designed to work with UMI based methods. It currently supports all methods which output paired
-adapter - read files.</p>
+adapter - read files.
+The pipeline was heavily influenced by the <a href="http://mccarrolllab.com/dropseq/" target="_blank">Dropseq</a> pipeline from the McCaroll lab.</p>
 <h2 id="what-does-it-do">What does it do</h2>
 <ul>
 <li>Quality control reads using fastQC and multiQC</li>
@@ -230,6 +221,9 @@ adapter - read files.</p>
 <li>Quality control report</li>
 <li>SingleCellExperiment object with pre-calculated statistics and dimensionallity reductions</li>
 </ul>
+<h2 id="pigx---scrna-seq-workflow">PiGx - scRNA-seq workflow</h2>
+<p><img src="figures/pigx-scrnaseq.svg" alt="PiGx scRNAseq workflow">
+<em>Figure 1: An overview of the PiGx scRNA-seq workflow</em></p>
 <h1 id="install">Install</h1>
 <p>At this time there are no ready-made packages for this pipeline, so
 you need to install PiGx from source.</p>
@@ -354,7 +348,7 @@ This pipeline was developed by the Akalin group at MDC in Berlin in 2017-2018.
 </ul>
 </li>
 <li><em>library</em> - sequencing platform on which the experiment was performed (i.e. dropseq)</li>
-<li><em>covariates</em> - variables which describe the samples</li>
+<li><em>covariates</em> - variables which describe the samples. For example: replicate, time, hour post infection, tissue ...</li>
 </ul>
 <p>Additional columns may be included which may be used as covariates in the differential expression analysis (sex, age, different treatments).</p>
 <h2 id="settings-file">Settings File</h2>
@@ -367,26 +361,32 @@ This pipeline was developed by the Akalin group at MDC in Berlin in 2017-2018.
 <li>The location of a <code>GTF</code> file with genome annotations</li>
 </ul>
 </li>
-<li>Organism name</li>
+<li><p>Genome assembly name (i.e. mm10)</p>
+</li>
+<li><p>covariates </p>
+</li>
 </ul>
 <p>In order to get started, enter <code>pigx-scrnaseq --init-settings my_settings.yaml</code>. This will create a file called <code>my_settings.yaml</code> with the default structure. The file will look like this:</p>
-<pre><code>locations:
-  output-dir: out/
-  reads-dir: sample_data/reads/
-  tempdir:
+<pre><code class="lang-yaml"><span class="hljs-attr">locations:</span>
+<span class="hljs-attr">  output-dir:</span> out/
+<span class="hljs-attr">  reads-dir:</span> sample_data/reads/
+<span class="hljs-attr">  tempdir:</span>
 
-annotation:
-  primary:
-    genome:
-      name: hg19
-      fasta: sample_data/genome.fa
-    gtf: sample_data/genome.gtf
+<span class="hljs-attr">covariates:</span> <span class="hljs-string">&apos;covariate1, covariate2, ...&apos;</span>
 
-execution:
-  submit-to-cluster: no
-  jobs: 6
-  nice: 19
-</code></pre><h1 id="resource-consideration">Resource consideration</h1>
+<span class="hljs-attr">annotation:</span>
+<span class="hljs-attr">  primary:</span>
+<span class="hljs-attr">    genome:</span>
+<span class="hljs-attr">      name:</span> hg19
+<span class="hljs-attr">      fasta:</span> sample_data/genome.fa
+<span class="hljs-attr">    gtf:</span> sample_data/genome.gtf
+
+<span class="hljs-attr">execution:</span>
+<span class="hljs-attr">  submit-to-cluster:</span> <span class="hljs-literal">no</span>
+<span class="hljs-attr">  jobs:</span> <span class="hljs-number">6</span>
+<span class="hljs-attr">  nice:</span> <span class="hljs-number">19</span>
+</code></pre>
+<h1 id="resource-consideration">Resource consideration</h1>
 <p>Single cell expression analysis is data intensive, and requires substantial computing resources. 
 The pipeline uses the <a href="https://github.com/alexdobin/STAR" target="_blank">STAR</a> aligner for read mapping, so the memory requirements will scale with the 
 size of the genome. 
@@ -397,9 +397,78 @@ that you have at least 30Gb of disk space per 100 milion sequenced reads.
 The location of the temporary directory can be controlled using the tempdir: variable in the settings.yaml.
 By default the tempdir is set to <strong>/tmp</strong>.</p>
 <p><strong>Important:</strong> please make sure that the temporary directory has adequate free space</p>
-<h1 id="output-structure-description">Output structure description</h1>
+<h1 id="output-directory-structure">Output directory structure</h1>
+<p>The output directory structure should look like the following tree</p>
+<pre><code>|-- Annotation
+|   `-- genome_name (i.e. mm10)
+|       `-- STAR_INDEX
+|-- Log
+|-- Mapped
+|   |-- Sample_1
+|   |   `-- genome_name
+|   |-- Sample_2
+|   |   `-- genome_name
+|   |-- Sample_3
+|   |   `-- genome_name
+|   `-- Sample_4
+|       `-- genome_name
+</code></pre><h3 id="annotation">Annotation</h3>
+<p>Contains pre-processed fasta and gtf file, along with the STAR genome index.
+The genome fasta file is processed into a dict header.
+The gtf file has gene_names replaced with gene_id.</p>
+<p><strong>Important</strong>: We sincerely advise that you check that the gtf file corresponds to the same organism
+and genome version as the genome fasta files.
+The chromosome names have to completely correspond between the two files.</p>
+<p>We encourage users to use both the genome annotation and the fasta file from the <a href="https://www.ensembl.org/info/data/ftp/index.html" target="_blank">ENSEMBL</a> database.</p>
+<h3 id="log">Log</h3>
+<p>Contains execution logs for every step of the pipeline.</p>
+<h3 id="mapped">Mapped</h3>
+<p>The <strong>Mapped</strong> folder contains per sample processed single cell samples.
+Additionally, it contains a <a href="http://linnarssonlab.org/loompy/" target="_blank">loom</a> file with merged expression values from all experiments,
+an RDS file with a saved <a href="https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html" target="_blank">SingleCellExperiment</a> object, and a quality control report in the html format.</p>
+<h4 id="mappedsample1">Mapped/Sample1</h4>
+<p>Analaysis results for each sample are done in a separate subdirectory under <strong>Mapped</strong>.
+Structure of analysis results:</p>
+<pre><code>|-- Sample1.fastq.bam
+|-- Sample1_1_fastqc.html
+|-- Sample1_1_fastqc.zip
+|-- Sample1_2_fastqc.html
+|-- Sample1_2_fastqc.zip
+|-- genome_name
+|   |-- adapter_trimming_report.txt
+|   |-- Sample1_genome_name.bw
+|   |-- Sample1_genome_name.m.bw
+|   |-- Sample1_genome_name.p.bw
+|   |-- Sample1_genome_name_BAMTagHistogram.txt
+|   |-- Sample1_genome_name_DownstreamStatistics.txt
+|   |-- Sample1_genome_name_READS.Matrix.txt
+|   |-- Sample1_genome_name_ReadCutoff.png
+|   |-- Sample1_genome_name_ReadCutoff.yaml
+|   |-- Sample1_genome_name_ReadStatistics.txt
+|   |-- Sample1_genome_name_Summary.txt
+|   |-- Sample1_genome_name_UMI.Matrix.loom
+|   |-- Sample1_genome_name_UMI.Matrix.txt
+|   |-- polyA_trimming_report.txt
+|   |-- star.Log.final.out
+|   |-- star.Log.out
+|   |-- star.Log.progress.out
+|   |-- star.SJ.out.tab
+|   |-- star_gene_exon_tagged.bai
+|   |-- star_gene_exon_tagged.bam
+|   |-- unaligned_tagged_Cellular.bam_summary.txt
+|   `-- unaligned_tagged_Molecular.bam_summary.txt
+</code></pre><p>-- Sample1.fastq.bam - contains merged barcode and sequence fq files
+-- Sample1<em>genome_name.<strong>bw</strong> - bigWig file constructed from selected cells. Files with <strong>m/p</strong>.bw contain strand separated signal
+-- Sample1_genome_name</em><strong>BAMTagHistogram</strong> - Number of reads in coressponding to each cell barcode.
+-- Sample1<em>genome_name_UMI.Matrix.<strong>txt/loom</strong> - UMI based digital expression matrix in txt and loom format
+-- Sample1_genome_name_READS.Matrix.txt - Read count digital expression matrix
+-- Sample1_genome_name_ReadCutoff.yaml - contains the UMI threshold for selecting high quality cells (obtained using <a href="https://github.com/rajewsky-lab/dropbead" target="_blank">dropbead</a>). The corresponding .png file visualizes the UMI curve and the threshold.
+-- star_gene_exon_tagged.bam - mapped and annotated reads. Each read is tagged by annotation based on it&apos;s mapping location.
+-- Sample1_genome_name</em><strong>ReadStatistics/Downstream</strong>.txt - quality control statistics used in the html report. They contain values such as number of reads in Exons/Introns, </p>
 <h1 id="detailed-pipeline-description">Detailed pipeline description</h1>
 <h1 id="downstream-analysis">Downstream analysis</h1>
+<p>The combined expression data are subsequently processed into a <a href="https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html" target="_blank">SingleCellExperiment</a> object. SingleCellExperiment is a Bioconductor class for storing expression values, along with the cell, and gene data, and experimental meta data in a single container. It is constructed on top of hdf5  file based arrays  (Pag&#xE8;s 2017), which enables exploration even on systems with limited memory capacity. 
+During the object construction, the pipeline performs expression normalization, dimensionallity reduction, identification of significantly variable genes, assigns the cells to the steps of the cell cycle, and calculates the quality statistics. The SingleCellExperiment object contains all of the necessary data needed for further exploration. The object connects the pigx-pipeline with the Bioconductor single cell computing environment, and enables integration with state of the art statistical, and machine learning mehods (<a href="https://bioconductor.org/packages/release/bioc/html/scran.html" target="_blank">scran</a>, <a href="https://bioconductor.org/packages/release/bioc/html/zinbwave.html" target="_blank">zinbwave</a>, <a href="https://github.com/BIMSBbioinfo/netSmooth" target="_blank">netSmooth</a>, <a href="https://github.com/csoneson/iSEE" target="_blank">iSEE</a>.</p>
 <h3 id="cluster-execution">Cluster Execution</h3>
 <p>The <code>execution</code> section in the settings file allows the user to specify whether the pipeline is to be submitted to a cluster, or run locally, and the degree of parallelism. For a full list of possible parameters, see <code>etc/settings.yaml</code>.</p>
 <h1 id="example">Example</h1>
@@ -446,7 +515,7 @@ By default the tempdir is set to <strong>/tmp</strong>.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"PiGx scRNA-seq","level":"1.5","depth":1,"previous":{"title":"PiGx BS-seq","level":"1.4","depth":1,"path":"pigx-bs-seq.md","ref":"pigx-bs-seq.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"pigx-scrna-seq.md","mtime":"2018-03-08T08:30:58.439Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-08T08:33:16.236Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"PiGx scRNA-seq","level":"1.5","depth":1,"previous":{"title":"PiGx BS-seq","level":"1.4","depth":1,"path":"pigx-bs-seq.md","ref":"pigx-bs-seq.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"pigx-scrna-seq.md","mtime":"2018-03-08T09:31:39.056Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-08T09:33:00.049Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
