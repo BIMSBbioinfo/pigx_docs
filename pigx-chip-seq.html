@@ -199,67 +199,412 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="pigx-chip-seq">PiGx ChIP-seq</h1>
-<h1 id="introduction">Introduction</h1>
-<p>PiGx-ChIPseq is a preprocessing and analysis pipeline that
-takes raw data from ChIP (Chromatin ImmunoPrecipitation) experiments and
-produces illuminating figures.  The pipeline performs quality control on
-experimental data, multiple peak-finding/alignment, and UCSC track hub
-generation. A single final report is generated for each sample provided by the
-user summarizing a standard set of key findings, while processed data is made
-available for further analysis.</p>
-<h2 id="the-workflow">The workflow</h2>
-<h2 id="figure-1-provides-an-overview-of-the-various-stages-of-the">Figure <em>1</em> provides an overview of the various stages of the</h2>
-<p>pipeline, as well as the outputs and expected inputs.</p>
-<p><img src="figures/pigx-chipseq.svg" alt="PiGx_Chipseq_workflow"></p>
-<p>[Writing the workflow out would be helped very much by a single snakemake script that shows the order of operations. At the moment, the DAG output is convoluted and difficult to follow]</p>
-<p>Reads are aligned using [bowtie][bowtie], with quality control analysis
-performed with [fastqc][fastqc] ....</p>
+                                <p><a name="logo"></a></p>
+<div align="center">
+<img src="images/Logo_PiGx.png" alt="PiGx Logo" width="30%" height="30%">
+
+</div>
+
+<p><strong>Copyright 2017-2018: Vedran Franke, Alexander Gosdschan, Ricardo Wurmus.</strong>
+<strong>This work is distributed under the terms of the GNU General Public License, version 3 or later.  It is free to use for all purposes.</strong></p>
 <hr>
-<h1 id="preparation">Preparation</h1>
-<p>To use the pipeline, the user must suply two files:</p>
+<h2 id="summary">Summary</h2>
+<p>PiGX ChIPseq is an analysis pipeline for preprocessing, peak calling and reporting for ChIP sequencing experiments. It is easy to use and produces high quality reports. The inputs are reads files from the sequencing experiment, and a configuration file which describes the experiment. In addition to quality control of the experiment, the pipeline enables to set up multiple peak calling analysis and allows the generation of a UCSC track hub in an easily configurable manner.</p>
+<h2 id="what-does-it-do">What does it do</h2>
 <ul>
-<li>a sample sheet</li>
-<li>a settings file</li>
+<li>Quality control reads using fastQC and multiQC</li>
+<li>Map reads to genome using Bowtie2</li>
+<li>Call peaks for multiple combinations of samples using MACS2</li>
+<li>Control reproducibility of experiments using IDR</li>
+<li>Generate a UCSC track hub to view in Genome Browser  </li>
 </ul>
-<h2 id="sample-sheet">Sample Sheet</h2>
-<p>The sample sheet is a tabular file (<code>csv</code> format) describing the experiment.
-The table has the following columns:</p>
-<p>[Need to finally clarify what the sample sheet is going to look like]</p>
-<p>...</p>
-<p>Here, each row of entries (below the header) corresponds to a sample, and the
-columns correspond to ...</p>
-<h2 id="settings-file-yaml-in-the-settings-file-various-parameters-are-saved">Settings File (<code>.yaml</code>) In the settings file, various parameters are saved,</h2>
-<p>in YAML format, to configure the execution of PiGx-chipseq. Values marked with
-an * are required; the remainder are optional (i.e. and can therefore  be left
-blank).  For a full list of possible parameters, see <code>etc/settings.yaml.in</code> to
-review the default values that will be supplied by PiGx --all values supplied
-in this file can be over-written, should the user supply an alternate value
-in their settings file.</p>
-<p>Altogether, these parameters are organized into the following sub-categories:</p>
-<h3 id="locations">Locations</h3>
-<p>Defines paths to be used in the pipeline. :</p>
+<h2 id="what-does-it-output">What does it output</h2>
 <ul>
-<li>input-dir*:     directory of the input files (fastq files)</li>
-<li>output-dir*:     output directory for the pipeline</li>
-<li>genome-file*:     path to the reference genome in fasta forma</li>
-<li>index-dir:     directory containing pre-built mapping indices for the given reference genome (created with bowtie2-build)</li>
-<li>gff-file:     location of a GTF file with genome annotations for the given reference genome</li>
+<li>QC reports</li>
+<li>bam files</li>
+<li>bigwig files</li>
+<li>narrowPeak files</li>
+<li>UCSC track hub folder</li>
 </ul>
-<h3 id="general">General</h3>
-<p>The section contains settings that apply to all analysis (unless adjusted in single analysis):</p>
-<ul>
-<li>assembly*:     version of reference genome (e.g. hg19,mm9, ...)</li>
-<li>params:     list of default parameters for tools and scripts (for tools check respective manual for available parameters)</li>
-</ul>
-<h3 id="execution">Execution</h3>
-<p>The execution section in the settings file allows the user to
-specify how the pipeline should be executed: e.g., whether the pipeline is to
-be submitted to a cluster, or run locally, and the degree of parallelization.
-Furthermore, for cluster runs, advanced users can specify resource allocation
-for specific rules. Further possible parameters include, e.g. an 
-email address for notification of aborted jobs. 
-A typical settings file might look like the following example:</p>
+<h2 id="pipeline-workflow">Pipeline workflow</h2>
+<p><img src="figures/pigx-chipseq.svg" alt="PiGx ChIP-seq workflow">
+<em>Figure 1: An overview of the PiGx ChIP-seq workflow</em></p>
+<h1 id="install">Install</h1>
+<p>At this time there are no ready-made packages for this pipeline, so
+you need to install PiGx from source.</p>
+<p>You can find the <a href="https://github.com/BIMSBbioinfo/pigx_chipseq/releases/latest" target="_blank">latest
+release</a>
+here.  PiGx uses the GNU build system.  Please make sure that all
+required dependencies are installed and then follow these steps after
+unpacking the latest release tarball:</p>
+<pre><code class="lang-sh">./configure --prefix=/some/<span class="hljs-built_in">where</span>
+make install
+</code></pre>
+<h1 id="dependencies">Dependencies</h1>
+<p>By default the <code>configure</code> script expects tools to be in a directory
+listed in the <code>PATH</code> environment variable.  If the tools are installed
+in a location that is not on the <code>PATH</code> you can tell the <code>configure</code>
+script about them with variables.  Run <code>./configure --help</code> for a list
+of all variables and options.</p>
+<p>You can prepare a suitable environment with Conda or with <a href="https://gnu.org/s/guix" target="_blank">GNU
+Guix</a>.  If you do not use one of these package
+managers, you will need to ensure that the following software is
+installed:</p>
+<details>
+<summary>Software dependencies</summary>
+
+- R
+    - argparser
+    - chipseq
+    - data.table
+    - genomation
+    - genomicranges
+    - rtracklayer
+    - rcas
+    - stringr
+    - jsonlite
+    - heatmaply
+    - ggplot2
+    - ggrepel
+    - plotly
+- python
+    - snakemake
+    - pyyaml
+- pandoc
+- fastqc
+- multiqc
+- bowtie
+- macs2
+- idr
+- samtools
+- bedtools
+- bedToBigBed
+- bamToBed
+
+
+</details>
+
+<h2 id="via-guix">Via Guix</h2>
+<p>Assuming you have Guix installed, the following command spawns a
+sub-shell in which all dependencies are available:</p>
+<pre><code class="lang-sh">guix environment <span class="hljs-_">-l</span> guix.scm
+</code></pre>
+<h1 id="getting-started">Getting started</h1>
+<p>To run PiGx on your experimental data, first enter the necessary parameters in the spreadsheet file (see following section), and then from the terminal type</p>
+<pre><code class="lang-sh">$ pigx-chipseq [options] sample_sheet.csv
+</code></pre>
+<p>To see all available options type the <code>--help</code> option</p>
+<pre><code class="lang-sh">$ pigx-chipseq --help
+
+usage: pigx-chipseq [-h] [-v] <span class="hljs-_">-s</span> SETTINGS [-c CONFIGFILE] [--target TARGET]
+                   [-n] [--graph GRAPH] [--force] [--reason] [--unlock]
+                   samplesheet
+
+PiGx ChIPseq Pipeline.
+
+PiGx ChIPseq is a data processing pipeline <span class="hljs-keyword">for</span> ChIPseq <span class="hljs-built_in">read</span> data.
+
+positional arguments:
+  samplesheet                             The sample sheet containing sample data <span class="hljs-keyword">in</span> yaml format.
+
+optional arguments:
+  -h, --help                              show this <span class="hljs-built_in">help</span> message and <span class="hljs-built_in">exit</span>
+  -v, --version                           show program version number and <span class="hljs-built_in">exit</span>
+  <span class="hljs-_">-s</span> SETTINGS, --settings SETTINGS        A YAML file <span class="hljs-keyword">for</span> settings that deviate from the defaults.
+  -c CONFIGFILE, --configfile CONFIGFILE  The config file used <span class="hljs-keyword">for</span> calling the underlying snakemake process.  By
+                                          default the file <span class="hljs-string">&apos;config.json&apos;</span> is dynamically created from the sample
+                                          sheet and the settings file.
+  --target TARGET                         Stop when the named target is completed instead of running the whole
+                                          pipeline.  The default target is <span class="hljs-string">&quot;final-report&quot;</span>.  Pass <span class="hljs-string">&quot;--target=help&quot;</span>
+                                          to describe all available targets.
+  -n, --dry-run                           Only show what work would be performed.  Do not actually run the
+                                          pipeline.
+  --graph GRAPH                           Output a graph <span class="hljs-keyword">in</span> Graphviz dot format showing the relations between
+                                          rules of this pipeline.  You must specify a graph file name such as
+                                          <span class="hljs-string">&quot;graph.pdf&quot;</span>.
+  --force                                 Force the execution of rules, even though the outputs are considered
+                                          fresh.
+  --reason                                Print the reason why a rule is executed.
+  --unlock                                Recover after a snakemake crash.
+
+This pipeline was developed by the Akalin group at MDC <span class="hljs-keyword">in</span> Berlin <span class="hljs-keyword">in</span> 2017-2018.
+</code></pre>
+<h2 id="input-parameters">Input Parameters</h2>
+<h3 id="sample-sheet">Sample Sheet</h3>
+<p>The sample sheet is a file in yaml format describing the experiment. It has following sections: </p>
+<table>
+<thead>
+<tr>
+<th>section</th>
+<th>required</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>samples</em></td>
+<td>yes</td>
+<td>describes the mapping of samples, specifying read file names and library type (<em>single</em>/<em>paired</em>) (<a href="#samples">see here for details</a>)</td>
+</tr>
+<tr>
+<td><em>peak_calling</em></td>
+<td>yes</td>
+<td>defines which samples will be used to detect regions of enriched binding ( multiple combinations and variations are possible, <a href="#peak_calling">see here for details</a> )</td>
+</tr>
+<tr>
+<td><em>idr</em></td>
+<td>no</td>
+<td>specifies pairs of <em>peak calling</em> analysis that are compared to determine the reproducibilty of the general experiment (<a href="#idr">see here for details</a>)</td>
+</tr>
+<tr>
+<td><em>hub</em></td>
+<td>no</td>
+<td>describes the general layout of a UCSC hub that can be created from the processed data and allows the visual inspection of results at a UCSC genome browser (<a href="#hub">see here for details</a>)</td>
+</tr>
+<tr>
+<td><em>feature_combination</em></td>
+<td>no</td>
+<td>defines for a list of <em>peak calling</em> and/or <em>idr</em> analysis the combination of regions shared among this list (<a href="#feature_combination">see here for details</a>)</td>
+</tr>
+</tbody>
+</table>
+<p>The creation of the sample sheet is straight forward considering the following snippets as template and put them into one file. Comments and examples within the snippets provide guidance of what is possible and what to take care of.</p>
+<h4 id="samples">Samples</h4>
+<p>The samples used for any subsequent analysis are defined in the <em>samples</em> section. </p>
+<pre><code class="lang-yaml"><span class="hljs-comment"># define mapping</span>
+<span class="hljs-attr">samples:</span>
+    <span class="hljs-comment"># samples can have any name, but the names have to be unique</span>
+<span class="hljs-attr">    ChIP1:</span> 
+<span class="hljs-attr">        fastq:</span>
+            <span class="hljs-comment"># file names of raw data in fastq format, either gzipped or not </span>
+<span class="hljs-bullet">            -</span> ChIP.fq.gz
+        <span class="hljs-comment"># map reads in single-end mode</span>
+<span class="hljs-attr">        library:</span> single
+<span class="hljs-attr">    Cont1:</span>
+<span class="hljs-attr">        fastq:</span>
+<span class="hljs-bullet">            -</span> Cont.fq.gz
+<span class="hljs-attr">        library:</span> single
+<span class="hljs-attr">    ChIPpe:</span>
+<span class="hljs-attr">        fastq:</span>
+<span class="hljs-bullet">            -</span> ChIPpe_R1.fq.gz
+<span class="hljs-bullet">            -</span> ChIPpe_R2.fq.gz
+        <span class="hljs-comment"># map reads in paired-end mode</span>
+<span class="hljs-attr">        library:</span> paired
+</code></pre>
+<h4 id="peak-calling">Peak Calling</h4>
+<p>The previously defined samples are used for subsequent peak calling analysis to detect regions of enriched binding. In this section any number of comparisons can be defined, while multiple combinations and variations are possible. In terms of peak calling the <strong>ChIP</strong> (also called treatment) is the sample in which we want to detect enriched regions compared to the <strong>Cont(rol)</strong> (or background) sample. Each analysis can be run with a unique set of parameters and default parameters for all analysis can be defined in the <a href="#settings-file">settings file</a> , check available parameters and description <a href="https://github.com/taoliu/MACS" target="_blank">here</a>.
+For more information have a look at the publication for the software we are using &quot;Zhang et al. Model-based Analysis of ChIP-Seq (MACS). Genome Biol (2008) vol. 9 (9) pp. R137&quot;.  </p>
+<pre><code class="lang-yaml"><span class="hljs-comment"># define peak calling analysis</span>
+<span class="hljs-attr">peak_calling:</span>
+    <span class="hljs-comment"># analysis can have any name, but the names have to be unique </span>
+<span class="hljs-attr">    Peaks1:</span> 
+        <span class="hljs-comment"># sample(s) to be used as treatment sample </span>
+<span class="hljs-attr">        ChIP:</span> ChIP1
+        <span class="hljs-comment"># sample(s) to be used as control sample</span>
+<span class="hljs-attr">        Cont:</span> Cont1
+<span class="hljs-attr">        params:</span>
+<span class="hljs-attr">            macs2:</span>
+                <span class="hljs-comment"># each analysis can be adjusted independently</span>
+                <span class="hljs-comment"># add/modify available parameters of the analysis</span>
+<span class="hljs-attr">                nomodel:</span> <span class="hljs-string">&apos;&apos;</span>
+<span class="hljs-attr">                extsize:</span> <span class="hljs-number">300</span>
+<span class="hljs-attr">    Peaks2:</span>
+<span class="hljs-attr">        ChIP:</span> ChIP2
+<span class="hljs-attr">        Cont:</span> Cont2
+<span class="hljs-attr">        params:</span>
+<span class="hljs-attr">            macs2:</span>
+                <span class="hljs-comment"># each analysis can be adjusted independently</span>
+<span class="hljs-attr">                nomodel:</span> <span class="hljs-string">&apos;&apos;</span>
+<span class="hljs-attr">                extsize:</span> <span class="hljs-number">147</span>
+<span class="hljs-attr">    Peaks4:</span>
+<span class="hljs-attr">        ChIP:</span>
+            <span class="hljs-comment"># multiple samples can be used as treatment</span>
+<span class="hljs-bullet">            -</span> ChIP1
+<span class="hljs-bullet">            -</span> ChIP2
+<span class="hljs-attr">        Cont:</span>
+            <span class="hljs-comment"># multiple samples can be used as control</span>
+<span class="hljs-bullet">            -</span> Cont1
+<span class="hljs-bullet">            -</span> Cont2
+<span class="hljs-attr">        params:</span>
+<span class="hljs-attr">            macs2:</span>
+<span class="hljs-attr">                nomodel:</span> <span class="hljs-string">&apos;&apos;</span>
+
+<span class="hljs-attr">    Peaks5:</span>
+        <span class="hljs-comment"># the number of samples per group can differ </span>
+<span class="hljs-attr">        ChIP:</span> ChIP2
+<span class="hljs-attr">        Cont:</span>
+<span class="hljs-bullet">            -</span> Cont1
+<span class="hljs-bullet">            -</span> Cont2
+<span class="hljs-attr">        params:</span>
+<span class="hljs-attr">            macs2:</span>
+<span class="hljs-attr">                nomodel:</span> <span class="hljs-string">&apos;&apos;</span>
+
+<span class="hljs-attr">    Peaks6:</span>
+        <span class="hljs-comment"># analysis can be performed without control</span>
+<span class="hljs-attr">        ChIP:</span> ChIP1
+<span class="hljs-attr">        Cont:</span>
+<span class="hljs-attr">        params:</span>
+<span class="hljs-attr">            macs2:</span>
+<span class="hljs-attr">                nomodel:</span> <span class="hljs-string">&apos;&apos;</span>
+</code></pre>
+<h4 id="optional-idr">(<em>optional</em>) IDR</h4>
+<p>Assuming that the some samples are (biological/technical) replicates, in order to measure the consistency between them use the irreproducible discovery rate (IDR)  &quot;Li, Q., Brown, J. B., Huang, H., &amp; Bickel, P. J. (2011). Measuring reproducibility of high-throughput experiments. The annals of applied statistics, 5(3), 1752-1779.&quot;, which is in general a good (but very stringent) quality control.</p>
+<pre><code class="lang-yaml"><span class="hljs-attr">idr:</span>
+    <span class="hljs-comment"># idr analysis can have any name, but the names have to be unique </span>
+<span class="hljs-attr">    ChIP_IDR:</span>
+        <span class="hljs-comment"># define the pair of samples, add more combinations for more replicates</span>
+<span class="hljs-attr">        ChIP1:</span> Peaks1
+<span class="hljs-attr">        ChIP2:</span> Peaks2
+</code></pre>
+<h4 id="optional-hub">(<em>optional</em>) Hub</h4>
+<p>In the <em>hub</em> section the general layout of a <a href="https://genome.ucsc.edu/goldenpath/help/hgTrackHubHelp.html#Intro" target="_blank">UCSC Track Hubs</a> is described with some minimal items. The track hub is generated from the processed data and allows the visual inspection of results at a UCSC genome browser (for supported genomes). </p>
+<p>The required items to define the hub are the following:</p>
+<table>
+<thead>
+<tr>
+<th>item</th>
+<th>example</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>Pix_Hub</td>
+<td>name of the hub directory</td>
+</tr>
+<tr>
+<td>shortLabel</td>
+<td>Pix_Short</td>
+<td>short name of hub is displayed as name above track groups</td>
+</tr>
+<tr>
+<td>longLabel</td>
+<td>Pix_Hub_Long</td>
+<td>descriptive longer label for hub is displayed as hub description</td>
+</tr>
+<tr>
+<td>email</td>
+<td>my.mail[at]domain.com</td>
+<td>whom to contact for questions about the hub or data</td>
+</tr>
+<tr>
+<td>descriptionUrl</td>
+<td>pix_hub.html</td>
+<td>URL to HTML page with a description of the hub&apos;s contents</td>
+</tr>
+<tr>
+<td>super_tracks</td>
+<td>see below</td>
+<td>specification of hub layout (track groups, tracks)</td>
+</tr>
+</tbody>
+</table>
+<p>This is a small example how this could look like:</p>
+<pre><code class="lang-yaml"><span class="hljs-attr">hub:</span>
+<span class="hljs-attr">    name:</span> Pix_Hub
+<span class="hljs-attr">    shortLabel:</span> Pix_Short
+<span class="hljs-attr">    longLabel:</span> Pix_Hub_Long
+<span class="hljs-attr">    email:</span> vedran.franke@mdc-berlin.de
+<span class="hljs-attr">    descriptionUrl:</span> pix_hub.html
+<span class="hljs-attr">    super_tracks:</span>
+        <span class="hljs-comment"># track groups can have any name, but the names have to be unique </span>
+<span class="hljs-attr">        Tracks1:</span>
+            <span class="hljs-comment"># tracks can have any name, but the names have to be unique </span>
+<span class="hljs-attr">            track11:</span>
+                <span class="hljs-comment"># to add peaks as a track, define &quot;type: macs&quot; </span>
+<span class="hljs-attr">                name:</span> Peaks1
+<span class="hljs-attr">                type:</span> macs
+<span class="hljs-attr">            track12:</span>
+                <span class="hljs-comment"># to add coverage signal as a track, define &quot;type: bigwig&quot;</span>
+<span class="hljs-attr">                name:</span> ChIP1
+<span class="hljs-attr">                type:</span> bigWig
+            <span class="hljs-comment"># descriptive longer label for track group is</span>
+            <span class="hljs-comment"># displayed as description in track settings</span>
+<span class="hljs-attr">            long_label:</span> Tracks1_long
+</code></pre>
+<h4 id="optional-feature-combination">(<em>optional</em>) Feature Combination</h4>
+<p>To find the combination of enriched binding regions, which is shared among a set of <em>peak calling</em> and/or <em>idr</em> analysis results, define a feature in the <em>feature_combination</em> section. Only items defined in the <em>peak_calling</em> and <em>idr</em> sections can be used here.  </p>
+<pre><code class="lang-yaml"><span class="hljs-attr">feature_combination:</span>
+    <span class="hljs-comment"># features can have any name, but the names have to be unique</span>
+<span class="hljs-attr">    Feature1:</span>
+        <span class="hljs-comment"># define feature based on only one result</span>
+<span class="hljs-bullet">        -</span> ChIP_IDR
+<span class="hljs-attr">    Feature2:</span>
+        <span class="hljs-comment"># define feature based on more than one result</span>
+<span class="hljs-bullet">        -</span> Peaks6
+<span class="hljs-bullet">        -</span> Peaks5
+<span class="hljs-attr">    Feature3:</span>
+        <span class="hljs-comment"># define feature based on different analysis types</span>
+<span class="hljs-bullet">        -</span> ChIP_IDR
+<span class="hljs-bullet">        -</span> Peaks5
+</code></pre>
+<h3 id="settings-file">Settings File</h3>
+<p>The settings file is a file in yaml format specifying general settings. It has the following sections: </p>
+<h4 id="locations">Locations</h4>
+<p>Defines paths to be used in the pipeline, some of the items are required and some optional (can stay blank): </p>
+<table>
+<thead>
+<tr>
+<th>item</th>
+<th>required</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>input-dir</em></td>
+<td>yes</td>
+<td>directory of the input files (<code>fastq</code> files)</td>
+</tr>
+<tr>
+<td><em>output-dir</em></td>
+<td>yes</td>
+<td>output directory for the pipeline</td>
+</tr>
+<tr>
+<td><em>genome-file</em></td>
+<td>yes</td>
+<td>path to the reference genome in <code>fasta</code> forma</td>
+</tr>
+<tr>
+<td><em>index-dir</em></td>
+<td>no</td>
+<td>directory containing pre-built mapping indices for the  given reference genome (created with <code>bowtie2-build</code>)</td>
+</tr>
+<tr>
+<td><em>gff-file</em></td>
+<td>no</td>
+<td>location of a <code>GTF</code> file with genome annotations for the  given reference genome</td>
+</tr>
+</tbody>
+</table>
+<h4 id="general">General</h4>
+<p>These are settings which apply to all analysis (unless adjusted in single analysis):</p>
+<table>
+<thead>
+<tr>
+<th>item</th>
+<th>required</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>assembly</em></td>
+<td>yes</td>
+<td>version of reference genome (e.g. hg19,mm9, ...)</td>
+</tr>
+<tr>
+<td><em>params</em></td>
+<td>no</td>
+<td>list of default parameters for tools and scripts (for tools check respective manual for available parameters)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="execution">Execution</h4>
+<p>The <code>execution</code> section in the settings file allows the user to specify whether the pipeline is to be submitted to a cluster, or run locally, and the degree of parallelism. For a full list of possible parameters, see <code>etc/settings.yaml</code>.</p>
+<p>The settings file could look like this:</p>
 <pre><code class="lang-yaml"><span class="hljs-attr">locations:</span>
 <span class="hljs-attr">  input-dir:</span> in/reads/
 <span class="hljs-attr">  output-dir:</span> out/
@@ -293,20 +638,8 @@ A typical settings file might look like the following example:</p>
 <span class="hljs-attr">    bowtie2:</span>
 <span class="hljs-attr">      queue:</span> all.q
 <span class="hljs-attr">      memory:</span> <span class="hljs-number">16</span>G
-<span class="hljs-attr">  cluster:</span>
-<span class="hljs-attr">    contact-email:</span> example@domain.de
-<span class="hljs-attr">    missing-file-timeout:</span> <span class="hljs-number">120</span>
 </code></pre>
-<h2 id="execution">Execution</h2>
-<p>After editting the above input files, the bsseq pipeline can be executed with
-the command: <code>./pigx-chipseq [sample sheet] -s [settings file]</code> with further
-options...</p>
-<h2 id="analysis">Analysis</h2>
-<p>Where is the final report? What does it look like? where can necessary files be obtained
-for further analysis?</p>
-<h2 id="troubleshooting">Troubleshooting</h2>
-<p>What are some of the typical problems users might encounter, and how can they
-be solved?  (e.g. during cluster submission)?</p>
+<h2 id="reports">Reports</h2>
 
                                 
                                 </section>
@@ -350,7 +683,7 @@ be solved?  (e.g. during cluster submission)?</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"PiGx ChIP-seq","level":"1.3","depth":1,"next":{"title":"PiGx BS-seq","level":"1.4","depth":1,"path":"pigx-bs-seq.md","ref":"pigx-bs-seq.md","articles":[]},"previous":{"title":"PiGx RNA-seq","level":"1.2","depth":1,"path":"pigx-rna-seq.md","ref":"pigx-rna-seq.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"pigx-chip-seq.md","mtime":"2018-03-08T08:22:01.983Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-08T08:23:43.100Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"PiGx ChIP-seq","level":"1.3","depth":1,"next":{"title":"PiGx BS-seq","level":"1.4","depth":1,"path":"pigx-bs-seq.md","ref":"pigx-bs-seq.md","articles":[]},"previous":{"title":"PiGx RNA-seq","level":"1.2","depth":1,"path":"pigx-rna-seq.md","ref":"pigx-rna-seq.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"pigx-chip-seq.md","mtime":"2018-03-08T08:28:46.152Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-08T08:30:12.346Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
