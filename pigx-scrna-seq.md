@@ -287,6 +287,8 @@ Structure of analysis results:
 |   `-- unaligned_tagged_Molecular.bam_summary.txt
 ```
 
+#### Description of relevant output files:
+
 - Sample1.fastq.bam - contains merged barcode and sequence fq files
 
 - Sample1_genome_name.**bw** - bigWig file constructed from selected cells. Files with **m/p**.bw contain strand separated signal
@@ -301,7 +303,7 @@ Structure of analysis results:
 
 - star_gene_exon_tagged.bam - mapped and annotated reads. Each read is tagged by annotation based on it's mapping location.
 
-- Sample1_genome_name_**ReadStatistics/Downstream**.txt - quality control statistics used in the html report. They contain values such as number of reads in Exons/Introns, 
+- Sample1_genome_name_**ReadStatistics/Downstream**.txt - quality control statistics used in the html report. They contain values such as number of reads in Exons/Introns.
 
 
 # Downstream analysis
