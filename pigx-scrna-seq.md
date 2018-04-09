@@ -199,7 +199,7 @@ execution:
   nice: 19
 ```
 
-# Resource consideration
+# Resource considerations
 
 Single cell expression analysis is data intensive, and requires substantial computing resources. 
 The pipeline uses the [STAR](https://github.com/alexdobin/STAR) aligner for read mapping, so the memory requirements will scale with the 
