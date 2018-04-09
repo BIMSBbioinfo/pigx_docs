@@ -225,14 +225,18 @@ The pipeline was heavily influenced by the <a href="http://mccarrolllab.com/drop
 <p><img src="figures/pigx-scrnaseq.svg" alt="PiGx scRNAseq workflow">
 <em>Figure 1: An overview of the PiGx scRNA-seq workflow</em></p>
 <h1 id="install">Install</h1>
-<p>At this time there are no ready-made packages for this pipeline, so
-you need to install PiGx from source.</p>
-<p>You can find the <a href="https://github.com/BIMSBbioinfo/pigx_scrnaseq/releases/latest" target="_blank">latest
+<p>You can install this pipeline and all of its dependencies through GNU
+Guix:</p>
+<pre><code>guix package -i pigx-scrnaseq
+</code></pre><p>You can also install it manually from source.  You can find the <a href="https://github.com/BIMSBbioinfo/pigx_scrnaseq/releases/latest" target="_blank">latest
 release</a>
 here.  PiGx uses the GNU build system.  Please make sure that all
 required dependencies are installed and then follow these steps after
 unpacking the latest release tarball:</p>
-<pre><code class="lang-sh">./configure --prefix=/some/<span class="hljs-built_in">where</span>
+<pre><code class="lang-sh">./configure                         \
+    --prefix=/some/<span class="hljs-built_in">where</span>            \
+    DROPSEQJAR=/path/to/dropseq.jar \
+    PICARDJAR=/path/to/picard.jar
 make install
 </code></pre>
 <h1 id="dependencies">Dependencies</h1>
@@ -242,7 +246,7 @@ in a location that is not on the <code>PATH</code> you can tell the <code>config
 script about them with variables.  Run <code>./configure --help</code> for a list
 of all variables and options.</p>
 <p>You can prepare a suitable environment with Conda or with <a href="https://gnu.org/s/guix" target="_blank">GNU
-Guix</a>.  </p>
+Guix</a>.</p>
 <h2 id="via-conda">Via Conda</h2>
 <ul>
 <li>Download pigx_scrnaseq source code <ul>
@@ -525,7 +529,7 @@ During the object construction, the pipeline performs expression normalization, 
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"PiGx scRNA-seq","level":"1.5","depth":1,"previous":{"title":"PiGx BS-seq","level":"1.4","depth":1,"path":"pigx-bs-seq.md","ref":"pigx-bs-seq.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"pigx-scrna-seq.md","mtime":"2018-03-20T07:30:17.732Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-20T07:32:11.929Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"PiGx scRNA-seq","level":"1.5","depth":1,"previous":{"title":"PiGx BS-seq","level":"1.4","depth":1,"path":"pigx-bs-seq.md","ref":"pigx-bs-seq.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"pigx-scrna-seq.md","mtime":"2018-04-09T19:04:32.747Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-09T19:05:52.515Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
