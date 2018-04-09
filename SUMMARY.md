@@ -6,7 +6,7 @@
     * [Preparation](pigx-rna-seq.md#preparation)
     * [Execution](pigx-rna-seq.md#execution)
     * [Results](pigx-rna-seq.md#results)
-    * [Results](pigx-rna-seq.md#troubleshooting)
+    * [Troubleshooting](pigx-rna-seq.md#troubleshooting)
 * [PiGx ChIP-seq](pigx-chip-seq.md)
     * [Introduction](pigx-chip-seq.md#introduction)
     * [Install](pigx-chip-seq.md#install)
