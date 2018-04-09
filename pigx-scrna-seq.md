@@ -34,17 +34,22 @@ _Figure 1: An overview of the PiGx scRNA-seq workflow_
 
 # Install
 
-At this time there are no ready-made packages for this pipeline, so
-you need to install PiGx from source.
+You can install this pipeline and all of its dependencies through GNU
+Guix:
 
-You can find the [latest
+    guix package -i pigx-scrnaseq
+
+You can also install it manually from source.  You can find the [latest
 release](https://github.com/BIMSBbioinfo/pigx_scrnaseq/releases/latest)
 here.  PiGx uses the GNU build system.  Please make sure that all
 required dependencies are installed and then follow these steps after
 unpacking the latest release tarball:
 
 ```sh
-./configure --prefix=/some/where
+./configure                         \
+    --prefix=/some/where            \
+    DROPSEQJAR=/path/to/dropseq.jar \
+    PICARDJAR=/path/to/picard.jar
 make install
 ```
 
@@ -57,7 +62,7 @@ script about them with variables.  Run `./configure --help` for a list
 of all variables and options.
 
 You can prepare a suitable environment with Conda or with [GNU
-Guix](https://gnu.org/s/guix).  
+Guix](https://gnu.org/s/guix).
 
 ## Via Conda
 
