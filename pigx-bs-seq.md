@@ -16,14 +16,14 @@ a reference genome to be mapped to.  If such a genome has not already
 undergone bisulfite conversion, such a conversion can be prepared
 automatically by PiGx.  At the same time, reads are trimmed for
 quality and adapter sequences using
-[TrimGalore!][http://www.bioinformatics.babraham.ac.uk/projects/trim_galore/],
+[TrimGalore!](http://www.bioinformatics.babraham.ac.uk/projects/trim_galore/),
 with quality control analysis applied both before and after.  Once
 these steps are completed, reads can then be mapped to the genome
 using
-[Bismark][http://www.bioinformatics.babraham.ac.uk/projects/bismark/],
+[Bismark](http://www.bioinformatics.babraham.ac.uk/projects/bismark/),
 before alignments are filtered for duplication and sorted.
 Methylation-calling is then carried out using
-[MethylKit][https://github.com/al2na/methylKit/Methylkit] before
+[MethylKit](https://github.com/al2na/methylKit/Methylkit) before
 initial post-mapping analysis such as segmentation and differential
 methylation between samples.
 
