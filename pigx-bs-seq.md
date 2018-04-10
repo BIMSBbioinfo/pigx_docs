@@ -5,20 +5,27 @@ PiGx-bsseq is a preprocessing and analysis pipeline that takes raw `fastq` read 
 
 
 ## The workflow
-Figure ** provides an overview of the various stages of the pipeline, as well as the outputs and expected inputs.
 
-![PiGx BSseq workflow](./figures/pigx-bsseq_workflow.png)
+This figure provides an overview of the various stages of the
+pipeline, as well as the outputs and expected inputs.
 
-In addition to fastq read files, a necessary input to the pipeline is a
-reference genome to be mapped to.  If such a genome has not already undergone
-bisulfite conversion, such a conversion can be prepared automatically by PiGx.
-At the same time, reads are trimmed for quality and adapter sequences using
-[TrimGalore!][trimgalore], with quality control analysis applied both before
-and after.  Once these steps are completed, reads can then be mapped to the
-genome using [Bismark][bismark], before alignments are filtered for duplication
-and sorted.  Methylation-calling is then carried out using
-[MethylKit][Methylkit] before initial post-mapping analysis such as
-segmentation and differential methylation between samples.
+![PiGx BSseq workflow](./figures/pigx-bsseq.svg)
+
+In addition to fastq read files, a necessary input to the pipeline is
+a reference genome to be mapped to.  If such a genome has not already
+undergone bisulfite conversion, such a conversion can be prepared
+automatically by PiGx.  At the same time, reads are trimmed for
+quality and adapter sequences using
+[TrimGalore!][http://www.bioinformatics.babraham.ac.uk/projects/trim_galore/],
+with quality control analysis applied both before and after.  Once
+these steps are completed, reads can then be mapped to the genome
+using
+[Bismark][http://www.bioinformatics.babraham.ac.uk/projects/bismark/],
+before alignments are filtered for duplication and sorted.
+Methylation-calling is then carried out using
+[MethylKit][https://github.com/al2na/methylKit/Methylkit] before
+initial post-mapping analysis such as segmentation and differential
+methylation between samples.
 
 ## Input preparation
 To use the pipeline, the user must first edit two files: the sample sheet and the settings file. 
