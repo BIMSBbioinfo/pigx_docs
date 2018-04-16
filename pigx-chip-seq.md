@@ -1,29 +1,29 @@
 # Introduction
 
-PiGX ChIPseq is an analysis pipeline for preprocessing, peak calling and reporting for ChIP sequencing experiments. It is easy to use and produces high quality reports. The inputs are reads files from the sequencing experiment, and a configuration file which describes the experiment. In addition to quality control of the experiment, the pipeline enables to set up multiple peak calling analysis and allows the generation of a UCSC track hub in an easily configurable manner.
+PiGX ChIPseq is an analysis pipeline for preprocessing, peak calling and reporting for ChIP sequencing experiments. It is easy to use and produces high quality reports. The inputs are `fastq` files containing reads from the sequencing experiment, and a configuration file which describes the experiment. In addition to quality control of the experiment, the pipeline enables to set up multiple peak calling analysis and allows the generation of a UCSC track hub in an easily configurable manner.
 
-## What does it do
+## Workflow
 
-- Quality control reads using fastQC and multiQC
-- Map reads to genome using Bowtie2
-- Call peaks for multiple combinations of samples using MACS2
-- Control reproducibility of experiments using IDR
-- Generate a UCSC track hub to view in Genome Browser  
+PiGx ChIPseq implements best practices for preprocessing and analysis of ChIPseq data. Figure 1 provides an overview of the different steps of the pipeline, as well as the outputs. 
 
-## What does it output
+First, raw reads are trimmed using [TrimGalore!][trimgalore] to ensure a minimum read quality, and removal of adapter sequences. Next, reads are aligned to a reference genome using [Bowtie2][bowtie2], and peaks are called for any combination of samples using [MACS2][macs2]. The reproducibility of peaks among experiments is controlled using [IDR][idr]. 
+Coverage `bigWig` files are calculated for the aligned reads using [rtracklayer][rtracklayer], and peak files are converted to `bigBed` format files using `bedToBigBed`, to be integrated together into a UCSC track hub to be viewed in the [UCSC Genome Browser](https://genome.ucsc.edu/).
+Finally, quality metrics are calculated for the ChIP experiments, such as inter strand cross correlation and GC content, and signal profiles are calculated for genomic features using [genomation][genomation]. Together with the frequency of reads in peaks and the distribution of peaks in genomic features these metrics are used to compile a custom ChIP quality control report.
 
-- QC reports
-- bam files
-- bigwig files
-- narrowPeak files
-- UCSC track hub folder
-
-## Pipeline workflow
 
 ![PiGx ChIP-seq workflow](./figures/pigx-chipseq.svg)
-_Figure 1: An overview of the PiGx ChIP-seq workflow_
+_Figure 1: An overview of the PiGx ChIPseq workflow_
 
-# Install
+## Output
+
+- `BAM` files
+- `bigWig` files
+- Peak files (`narrowPeak`, `broadPeak`)
+- UCSC track hub folder
+- Read QC reports
+- ChIP QC Report
+
+# Installation
 
 You can install this pipeline with all its dependencies using GNU Guix:
 
@@ -41,7 +41,7 @@ unpacking the latest release tarball:
 make install
 ```
 
-# Dependencies
+## Dependencies
 
 By default the `configure` script expects tools to be in a directory
 listed in the `PATH` environment variable.  If the tools are installed
@@ -59,24 +59,36 @@ installed:
 
 - R
     - argparser
+    - biocparallel
+    - biostrings
     - chipseq
     - data.table
+    - dyplr
     - genomation
+    - genomicalignments
     - genomicranges
+    - rsamtools
     - rtracklayer
-    - rcas
+    - s4vectors
     - stringr
     - jsonlite
     - heatmaply
+    - htmlwidgets
     - ggplot2
     - ggrepel
     - plotly
+    - rmarkdown
 - python
     - snakemake
+    - wrapper
     - pyyaml
+    - pytest
+    - xlrd
+    - magic
 - pandoc
 - fastqc
 - multiqc
+- trim-galore
 - bowtie
 - macs2
 - idr
@@ -97,95 +109,165 @@ sub-shell in which all dependencies are available:
 guix environment -l guix.scm
 ```
 
+# Quick Start
 
-# Getting started
+To check wether the pipeline was properly installed, run PiGx ChIPseq on a minimal test dataset, which we provide [here](https://github.com/BIMSBbioinfo/pigx_chipseq/releases/download/v0.0.14/test_data.tar.gz). 
 
-To run PiGx on your experimental data, first enter the necessary parameters in the spreadsheet file (see following section), and then from the terminal type
-
+Once downloaded run these commands to extract the data:
 ```sh
-$ pigx-chipseq [options] sample_sheet.csv
-```
-To see all available options type the `--help` option
-
-```sh
-$ pigx-chipseq --help
-
-usage: pigx-chipseq [-h] [-v] -s SETTINGS [-c CONFIGFILE] [--target TARGET]
-                   [-n] [--graph GRAPH] [--force] [--reason] [--unlock]
-                   samplesheet
-
-PiGx ChIPseq Pipeline.
-
-PiGx ChIPseq is a data processing pipeline for ChIPseq read data.
-
-positional arguments:
-  samplesheet                             The sample sheet containing sample data in yaml format.
-
-optional arguments:
-  -h, --help                              show this help message and exit
-  -v, --version                           show program version number and exit
-  -s SETTINGS, --settings SETTINGS        A YAML file for settings that deviate from the defaults.
-  -c CONFIGFILE, --configfile CONFIGFILE  The config file used for calling the underlying snakemake process.  By
-                                          default the file 'config.json' is dynamically created from the sample
-                                          sheet and the settings file.
-  --target TARGET                         Stop when the named target is completed instead of running the whole
-                                          pipeline.  The default target is "final-report".  Pass "--target=help"
-                                          to describe all available targets.
-  -n, --dry-run                           Only show what work would be performed.  Do not actually run the
-                                          pipeline.
-  --graph GRAPH                           Output a graph in Graphviz dot format showing the relations between
-                                          rules of this pipeline.  You must specify a graph file name such as
-                                          "graph.pdf".
-  --force                                 Force the execution of rules, even though the outputs are considered
-                                          fresh.
-  --reason                                Print the reason why a rule is executed.
-  --unlock                                Recover after a snakemake crash.
-
-This pipeline was developed by the Akalin group at MDC in Berlin in 2017-2018.
+mkdir test_dir
+tar -xzf test_data.tar.gz --directory test_dir/
+cd test_dir
 ```
 
-## Input Parameters
+Along with the data this tarball includes a settings file and a sample sheet file. 
+The pipeline can now be started using this command, which takes about 3 minutes to finish (system with 4 cores and 32GB of RAM).
+```sh
+pigx chipseq -s test_dir/settings.yaml test_dir/sample_sheet.csv
+```
 
-### Sample Sheet
+Inside `test_dir` a new directory `out` is created, which includes specific directories containing output data for the respective step of the pipeline.
 
-The sample sheet is a file in yaml format describing the experiment. It has following sections: 
+The `ChIP_Seq_Report.html` inside the `Reports` directory gives a general overview about the ChIP experiment and the peak calling. 
+
+
+# Preparing Input
+
+In order to run the pipeline, the user must supply
+
+- a sample sheet
+- a settings file
+
+both files are described below.
+
+In order to generate template settings and sample sheet files, type
+
+```sh
+pigx chipseq --init
+```
+
+in the shell, and a boilerplate `sample_sheet.csv` and `settings.yaml` will be written to your current directory.
+
+
+## Sample Sheet
+
+The sample sheet is a tabular file in `csv` format or an exel table (`xls`/`xlsx`) defining the samples used in any subsequent analysis. 
+
+| SampleName | Read | Read2 |
+|------|-------|--------|
+| ChIP1| ChIP.fq.gz|  |
+| Cont1| Cont.fq.gz|  |
+| ChIP2| ChIP.fq.gz|  |
+| Cont2| Cont.fq.gz|  |
+|ChIPpe| ChIPpe_R1.fq.gz| ChIPpe_R2.fq.gz|
+
+- SampleName is the name for the sample
+- _Read/Read2_ are the fastq file names of paired end reads
+  - the location of these files is specified in `settings.yaml`
+  - for single-end data, leave the Read2 column in place, but have it empty
+
+
+The creation of the sample sheet is straight forward using the following command: 
+```sh
+pigx chipseq --init=sample-sheet
+```
+This creates a template that can be filled with your own samples.
+
+### Technical Replicates
+
+The current sample sheet does not support multiple technical replicates for one sample, so replicates need to be combined prior to running the pipeline.   
+This could be done by concatenating the respective files (for uncompressed or compressed files):
+
+```sh
+cat sample_tecrep1.fq.gz sample_tecrep2.fq.gz [..] > sample.fq.gz
+```
+
+## Settings File
+
+The settings file is a file in yaml format specifying general settings and the details of the analysis. 
+
+The settings file is straight forward using the following command: 
+```sh
+pigx chipseq --init=settings
+```
+
+This settings file will have all lines commented out, you have to remove the trailing `#` from **Locations**, **General** and **Analysis** sections, then you can be modified it to fit your analysis.
+
+It has the following **required** sections: 
+
+### Locations
+
+Defines paths to be used in the pipeline, some of the items are required and some optional (can stay blank): 
+
+| item    | required | description |
+|---------|----------|-------------|
+| _input-dir_ | yes | directory of the input files (`fastq` files) |
+| _output-dir_    | yes | output directory for the pipeline |
+| _genome-file_    | yes | path to the reference genome in `fasta` forma |
+| _index-dir_    | no | directory containing pre-built mapping indices for the  given reference genome (created with `bowtie2-build`) |
+| _gff-file_    | no | location of a `GTF` file with genome annotations for the  given reference genome |
+
+### General
+
+These are settings which apply to all analysis (unless adjusted in single analysis):
+
+| item    | required | description |
+|---------|----------|-------------|
+| _assembly_ | yes | version of reference genome (e.g. hg19,mm9, ...) |
+| _params_    | no | list of default parameters for tools and scripts (for tools check respective manual for available parameters) |
+
+### Execution
+
+The `execution` section in the settings file allows the user to specify whether the pipeline is to be submitted to a cluster, or run locally, and the degree of parallelism. For a full list of possible parameters, see `etc/settings.yaml`.
+
+
+A minimal settings file could look like this, but please consider that no analysis will be performed without adding [analysis information](#analysis-sections) :
+
+```yaml
+locations:
+  input-dir: in/reads/
+  output-dir: out/
+  genome-file: genome/my_genome.fa
+  index-dir:
+  gff-file: genome/mm_chr19.gtf
+
+general:
+  assembly: hg19
+  params:
+    extend: 200
+    scale_bw: 'yes'
+    bowtie2:
+        k: 1
+    idr:
+        idr-threshold: 0.1
+    macs2:
+        g: hs
+        keep-dup: auto
+        q: 0.05
+    extract_signal:
+        expand_peak: 200
+        bin_num: 20
+
+execution:
+  submit-to-cluster: no
+  jobs: 6
+  nice: 19
+
+```
+
+### Analysis Sections
+
+The analysis part of the setting file describes the experiment. It has following sections: 
 
 | section | required | description |
 |---------|----------|-------------|
-| _samples_ | yes | describes the mapping of samples, specifying read file names and library type (_single_/_paired_) ([see here for details](#samples)) |
-| *peak_calling*  | yes | defines which samples will be used to detect regions of enriched binding ( multiple combinations and variations are possible, [see here for details](#peak_calling) ) |
-| _idr_ | no | specifies pairs of *peak calling* analysis that are compared to determine the reproducibilty of the general experiment ([see here for details](#idr)) |
-| _hub_ | no | describes the general layout of a UCSC hub that can be created from the processed data and allows the visual inspection of results at a UCSC genome browser ([see here for details](#hub)) |
-| *feature_combination* | no | defines for a list of *peak calling* and/or *idr* analysis the combination of regions shared among this list ([see here for details](#feature_combination)) |
+| *peak_calling*  | yes | defines which samples will be used to detect regions of enriched binding ( multiple combinations and variations are possible, [see here for details](#peak-calling) ) |
+| _idr_ | no | specifies pairs of *peak calling* analysis that are compared to determine the reproducibilty of the general experiment ([see here for details](#optionalidr)) |
+| _hub_ | no | describes the general layout of a UCSC hub that can be created from the processed data and allows the visual inspection of results at a UCSC genome browser ([see here for details](#optional-hub)) |
+| *feature_combination* | no | defines for a list of *peak calling* and/or *idr* analysis the combination of regions shared among this list ([see here for details](#optional-feature-combination)) |
 
 
-The creation of the sample sheet is straight forward considering the following snippets as template and put them into one file. Comments and examples within the snippets provide guidance of what is possible and what to take care of.
-
-#### Samples
-
-The samples used for any subsequent analysis are defined in the _samples_ section. 
-
-```yaml
-# define mapping
-samples:
-    # samples can have any name, but the names have to be unique
-    ChIP1: 
-        fastq:
-            # file names of raw data in fastq format, either gzipped or not 
-            - ChIP.fq.gz
-        # map reads in single-end mode
-        library: single
-    Cont1:
-        fastq:
-            - Cont.fq.gz
-        library: single
-    ChIPpe:
-        fastq:
-            - ChIPpe_R1.fq.gz
-            - ChIPpe_R2.fq.gz
-        # map reads in paired-end mode
-        library: paired
-```
+The creation of these sections is straight forward considering the following snippets as template. Comments and examples within the snippets provide guidance of what is possible and what to take care of.
 
 #### Peak Calling
 
@@ -268,22 +350,22 @@ The required items to define the hub are the following:
 
 | item    | example | description |
 |---------|----------|-------------|
-| name    | Pix_Hub | name of the hub directory |
-| shortLabel    | Pix_Short | short name of hub is displayed as name above track groups |
-| longLabel    | Pix_Hub_Long | descriptive longer label for hub is displayed as hub description |
+| name    | PiGx_Hub | name of the hub directory |
+| shortLabel    | PiGx_Short | short name of hub is displayed as name above track groups |
+| longLabel    | PiGx_Hub_Long | descriptive longer label for hub is displayed as hub description |
 | email    | my.mail[at]domain.com | whom to contact for questions about the hub or data |
-| descriptionUrl    | pix_hub.html | URL to HTML page with a description of the hub's contents |
+| descriptionUrl    | pigx_hub.html | URL to HTML page with a description of the hub's contents |
 | super_tracks    | see below | specification of hub layout (track groups, tracks) |
 
 This is a small example how this could look like:
 
 ```yaml
 hub:
-    name: Pix_Hub
-    shortLabel: Pix_Short
-    longLabel: Pix_Hub_Long
-    email: vedran.franke@mdc-berlin.de
-    descriptionUrl: pix_hub.html
+    name: PiGx_Hub
+    shortLabel: PiGx_Short
+    longLabel: PiGx_Hub_Long
+    email: my.mail@domain.com
+    descriptionUrl: pigx_hub.html
     super_tracks:
         # track groups can have any name, but the names have to be unique 
         Tracks1:
@@ -321,75 +403,74 @@ feature_combination:
         - Peaks5
 ```
 
-### Settings File
+# Running the pipeline
 
-The settings file is a file in yaml format specifying general settings. It has the following sections: 
+To run PiGx on your experimental data, first prepare the sample sheet and settings file (see [above](#preparing-input)), and then from the terminal type
 
-#### Locations
-
-Defines paths to be used in the pipeline, some of the items are required and some optional (can stay blank): 
-
-| item    | required | description |
-|---------|----------|-------------|
-| _input-dir_ | yes | directory of the input files (`fastq` files) |
-| _output-dir_    | yes | output directory for the pipeline |
-| _genome-file_    | yes | path to the reference genome in `fasta` forma |
-| _index-dir_    | no | directory containing pre-built mapping indices for the  given reference genome (created with `bowtie2-build`) |
-| _gff-file_    | no | location of a `GTF` file with genome annotations for the  given reference genome |
-
-#### General
-
-These are settings which apply to all analysis (unless adjusted in single analysis):
-
-| item    | required | description |
-|---------|----------|-------------|
-| _assembly_ | yes | version of reference genome (e.g. hg19,mm9, ...) |
-| _params_    | no | list of default parameters for tools and scripts (for tools check respective manual for available parameters) |
-
-#### Execution
-
-The `execution` section in the settings file allows the user to specify whether the pipeline is to be submitted to a cluster, or run locally, and the degree of parallelism. For a full list of possible parameters, see `etc/settings.yaml`.
-
-
-The settings file could look like this:
-
-```yaml
-locations:
-  input-dir: in/reads/
-  output-dir: out/
-  genome-file: genome/my_genome.fa
-  index-dir:
-  gff-file: genome/mm_chr19.gtf
-
-general:
-  assembly: hg19
-  params:
-    extend: 200
-    scale_bw: 'yes'
-    bowtie2:
-        k: 1
-    idr:
-        idr-threshold: 0.1
-    macs2:
-        g: hs
-        keep-dup: auto
-        q: 0.05
-    extract_signal:
-        expand_peak: 200
-        bin_num: 20
-
-execution:
-  submit-to-cluster: no
-  rules:
-    __default__:
-      queue: all.q
-      memory: 8G
-    bowtie2:
-      queue: all.q
-      memory: 16G
-
+```sh
+$ pigx-chipseq -s settings.yaml sample_sheet.csv
 ```
 
+If you are not sure wether you set everything up correctly, use the dryrun option which will only show what work would be performed, but does not actually run the pipeline.
+```sh
+$ pigx-chipseq -s settings.yaml sample_sheet.csv -n 
+```
+
+To see all available options type the `--help` option
+
+# Output Folder Structure
+
+The pipeline will create a specific directory structure, 
+the respective contents are explained below:
+```
+|-- Analysis
+|-- Annotation
+|-- BigWig
+|-- Bowtie2_Index
+|-- FastQC
+|-- Log
+|-- Mapped
+|-- Peaks
+|-- Reports
+|-- Trimmed
+|-- UCSC_HUB
+```
+
+| Folder    | description |
+|---------|-------------|
+|   Analysis     | Contains RDS files with intermediary analysis steps. RDS are binary files which efficiently store R objects. |
+|    Annotation    | Formatted GTF annotation. |
+|    BigWig    | Symbolic links to the bigWig signal files. |
+|    Bowtie2_Index    | Processed genome file along with the Bowtie2_Index. |
+|     FastQC   | FastQC sequencing quality report.  |
+|     Log   | Detailed output from execution of each step of the pipeline. |
+|   Mapped     | Mapped reads in .bam format, and corresponding bigWig files. |
+|   Peaks     | Peaks called with MACS2. Depending on the parameters, contains either narrowPeak or broadPeak format. The file **sample_qsort.bed** contains uniformly processed peaks, sorted by their corresponding p value. |
+|     Reports   | Contains MultiQC and ChIP quality reports in html format. |
+|     Trimmed   | Trimgalore adaptor and quality trimmed files. |
+|    UCSC_Hub    | Contains a completely formatted UCSC hub, with track descriptions, peaks and bigWig tracks. |
+
+# Troubleshooting/FAQ
+
+__Q:__ I get the following error:
+```Error: Directory cannot be locked. Please make sure that no other Snakemake process is trying to create the same files in the following directory:
+/home/agosdsc/projects/pigx_chipseq/test_dir/out
+If you are sure that no other instances of snakemake are running on this directory, the remaining lock was likely caused by a kill signal or a power loss. It can be removed with the --unlock argument.
+```
+What happend and what should I do?
+
+__A:__ The pipeline crashed at some point, possible reasons are mentioned by the error. Do as the error message proposes and pass the `--unlock` argument once and then run the pipeline again without `--unlock`.  
+
+# Questions
+If you have further questions please e-mail:
+pigx@googlegroups.com or use the web form to ask questions
+https://groups.google.com/forum/#!forum/pigx/
 
 
 
+[trimgalore]: https://www.bioinformatics.babraham.ac.uk/projects/trim_galore/
+[bowtie2]: http://bowtie-bio.sourceforge.net/bowtie2/
+[macs2]: https://github.com/taoliu/MACS
+[idr]: https://github.com/nboley/idr
+[genomation]: http://bioinformatics.mdc-berlin.de/genomation/
+[rtracklayer]: https://bioconductor.org/packages/release/bioc/html/rtracklayer.html
