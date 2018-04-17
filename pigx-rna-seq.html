@@ -543,6 +543,53 @@
 <p>First, raw reads are trimmed using <a href="https://www.bioinformatics.babraham.ac.uk/projects/trim_galore/" target="_blank">TrimGalore!</a> to ensure a minimum read quality, and removal of adapter sequences. Next, reads are aligned to a reference genome using <a href="https://github.com/alexdobin/STAR" target="_blank">STAR</a>, and the depth of coverage is computed using <a href="http://bedtools.readthedocs.io/en/latest/" target="_blank">BEDTools</a>, outputing <code>bedgraph</code> files. Gene-level expression counts is obtained from <em>STAR</em>, and transcript-level quantification is produced using <a href="https://combine-lab.github.io/salmon/" target="_blank">Salmon</a>. Statistical analysis for differential expression analysis is performed using <a href="https://bioconductor.org/packages/release/bioc/html/DESeq2.html" target="_blank">DESeq2</a>, and the results are used to compile a custom report.</p>
 <p><img src="figures/pigx-rnaseq.png" alt="PiGx RNAseq workflow">
 <em>Figure 1: An overview of the PiGx RNAseq workflow</em></p>
+<h1 id="outputs">Outputs</h1>
+<ul>
+<li>Quality Control reports</li>
+<li>Alignment results in BAM file format. </li>
+<li>BEDGRAPH files for genome-scale coverage analysis</li>
+<li>Transcripts per million (TPM) counts matrices at gene/transcript level. </li>
+<li>Differential expression analysis results<ul>
+<li>HTML reports</li>
+<li>Tab-separated file for log-transformed normalized counts</li>
+<li>DESeq2 differential expression results table sorted by adjusted p-values. </li>
+</ul>
+</li>
+</ul>
+<h1 id="installation">Installation</h1>
+<p>Pre-built binaries for PiGx are available through 
+<a href="https://gnu.org/software/guix" target="_blank">GNU Guix</a>, the
+functional package manager for reproducible, user-controlled software
+management.  Install the complete pipeline bundle with the following
+command:</p>
+<pre><code class="lang-sh">guix package -i pigx
+</code></pre>
+<p>If you want to install PiGx from source, please make sure that all
+required dependencies are installed and then follow the common GNU
+build system steps after unpacking the <a href="https://github.com/BIMSBbioinfo/pigx/releases/latest" target="_blank">latest release
+tarball</a>:</p>
+<pre><code class="lang-sh">./configure --prefix=/some/<span class="hljs-built_in">where</span>
+make install
+</code></pre>
+<p>You can enable or disable each of the pipelines with the
+<code>--enable-PIPELINE</code> and <code>--disable-PIPELINE</code> arguments to the
+<code>configure</code> script.  <code>PIPELINE</code> is one of <code>bsseq</code>, <code>rnaseq</code>,
+<code>scrnaseq</code>, <code>chipseq</code>, and <code>crispr</code>.  For more options run
+<code>./configure --help</code>.</p>
+<h1 id="quick-start">Quick Start</h1>
+<ol>
+<li><p>Download the zipped test data folder from <a href="https://bimsbstatic.mdc-berlin.de/public/akalin/PiGx/quick_start_data/rnaseq/test_data.tgz" target="_blank">here</a>: </p>
+</li>
+<li><p>Unzip the archive</p>
+<p> <code>tar -xzvf test_data.tgz</code></p>
+</li>
+<li><p>Change to the test_data folder</p>
+<p> <code>cd test_data</code></p>
+</li>
+<li><p>Run the pipeline</p>
+<p> <code>pigx rnaseq -s ./settings.yaml ./sample_sheet.csv</code></p>
+</li>
+</ol>
 <h1 id="preparation">Preparation</h1>
 <p>In order to run the pipeline, the user must supply</p>
 <ul>
@@ -711,7 +758,7 @@
 <pre><code class="lang-yaml"><span class="hljs-attr">covariates:</span> <span class="hljs-string">&quot;sex,age,smoking_history&quot;</span>
 </code></pre>
 <p><strong>Warning</strong>: It is important to be aware of a common error that is thrown by <em>DESeq2</em> when additional covariates are listed. In some cases, one or more  covariates contain redundant information, or perfectly confounded by other covariates that are used to construct a design formula. In such cases, <em>DESeq2</em> will throw this error: &quot;the model matrix is not full rank, so the model cannot be fit as specified.&quot;. This error signals the user to re-consider the list of covariates used and eliminate those that are redundant from this list. For more information on this topic, please refer to the vignette from <em>DESeq2</em>, <a href="https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html" target="_blank">here</a>.  </p>
-<h1 id="execution">Execution</h1>
+<h1 id="running-the-pipeline">Running the Pipeline</h1>
 <p>PiGx RNAseq is executed using the command <code>pigx-rnaseq -s settings.yaml sample_sheet.csv</code>. See `pigx-rnaseq --help for information about additional command line arguments.</p>
 <p>The <code>execution</code> section of the settings file provides some control over the execution of the pipeline.</p>
 <h2 id="local--cluster-execution">Local / cluster execution</h2>
@@ -723,7 +770,7 @@
 <span class="hljs-attr">  jobs:</span> <span class="hljs-number">40</span>
 </code></pre>
 <p>in the settings file, will submit up to 40 simultaneous compute jobs on the cluster.</p>
-<h1 id="results">Results</h1>
+<h1 id="output">Output</h1>
 <p>PiGx RNAseq creates an output folder, as specified in the settings file, that contains all of the following outputs.</p>
 <h2 id="quality-control">Quality control</h2>
 <p>General quality control metrics are computed using <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/" target="_blank">FastQC</a> and <a href="http://multiqc.info/" target="_blank">MultiQC</a>. The MultiQC report is particularly useful, collating quality control metrics from many steps of the pipeline in a single html report, which may be found under the <code>multiqc</code> folder in the PiGx output folder.</p>
@@ -751,9 +798,15 @@
 </tr>
 </tbody>
 </table>
-<h2 id="differential-expression-report">Differential expression report</h2>
-<p>PiGx RNAseq produces differential expression reports for each comparison specified in the settings file, and using each of the expression quantification strategies specified above. I.e. for each contrast specified in the settings file, three reports will be produced; one based on counts-per-gene from STAR, one based on counts-per-gene from Salmon, and another based on counts-per-transcript from Salmon.</p>
-<p>The reports are all saved in the <code>reports</code> output directory.</p>
+<h3 id="transcripts-per-million-tpm-counts-table">Transcripts per million (TPM) counts table</h3>
+<p>In order to enable comparison of gene/transcript expression across all samples outside of the context of differential expression analysis, PiGx RNAseq produces two matrices of normalized (TPM) counts:</p>
+<ul>
+<li><code>salmon_output/TPM_counts_from_SALMON.transcripts.tsv</code> for transcript-level normalized counts. </li>
+<li><code>salmon_output/TPM_counts_from_SALMON.genes.tsv</code> for gene-level normalized counts. </li>
+</ul>
+<h2 id="differential-expression-analysis-results">Differential expression analysis results</h2>
+<p>PiGx RNAseq produces differential expression reports for each comparison specified in the settings file, and using each of the expression quantification strategies specified above. I.e. for each contrast specified in the settings file, three reports will be produced; one based on counts-per-gene from STAR, one based on counts-per-gene from Salmon, and another based on counts-per-transcript from Salmon. Along with the HTML report will be produced two additional files per comparison: 1) a tab-separated file containing the DESeq2 differential expression results table, and 2) a tab-separated file containing the normalized expression values. Notice that these normalized values are on the logarithmic scale based on Variance Stabilizing Transformation method applied using DESeq2. Also, notice that these normalized values only apply in the context of the compared samples. In order to compare normalized values across all samples, please use the TPM counts table produced using <code>salmon</code>.  </p>
+<p>The reports and complementary tab-separated files are all saved in the <code>reports</code> output directory.</p>
 <h2 id="depth-of-coverage">Depth of coverage</h2>
 <p>PiGx RNAseq computes coverage depth from the STAR-alignment of the reads, using <a href="http://bedtools.readthedocs.io/en/latest/" target="_blank">bedtools</a>. The resulting <code>bedGraph</code> files are output in the <code>bedgraph_files</code> output folder.</p>
 <h1 id="troubleshooting">Troubleshooting</h1>
@@ -761,6 +814,10 @@
 <p>Currently, PiGx only supports Sun Grid Engine for cluster execution. If you&apos;re uncertain about your cluster, try typing <code>qsub</code> in the shell (Sun Grid Engine uses <code>qsub</code> to submit jobs).</p>
 <h5 id="disappearing-jobs-on-the-cluster">Disappearing jobs on the cluster</h5>
 <p>PiGx RNAseq comes with sensible defaults for resource requests when running on a cluster, but based on the genome version and other parameters, these might not be sufficient and your cluster might terminate your jobs. The cluster resource requests may be overridden in the settings file. See <code>etc/settings.yaml</code> for a full list.</p>
+<h1 id="questions">Questions</h1>
+<p>If you have further questions please e-mail:
+pigx@googlegroups.com or use the web form to ask questions
+<a href="https://groups.google.com/forum/#!forum/pigx/" target="_blank">https://groups.google.com/forum/#!forum/pigx/</a></p>
 
                                 
                                 </section>
@@ -804,7 +861,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"PiGx RNA-seq","level":"1.2","depth":1,"next":{"title":"Introduction","level":"1.2.1","depth":2,"anchor":"#introduction","path":"pigx-rna-seq.md","ref":"pigx-rna-seq.md#introduction","articles":[]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"pigx-rna-seq.md","mtime":"2018-04-10T11:35:22.003Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-10T11:36:49.928Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"PiGx RNA-seq","level":"1.2","depth":1,"next":{"title":"Introduction","level":"1.2.1","depth":2,"anchor":"#introduction","path":"pigx-rna-seq.md","ref":"pigx-rna-seq.md#introduction","articles":[]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"pigx-rna-seq.md","mtime":"2018-04-17T07:28:06.588Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-17T07:29:51.846Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
