@@ -11,7 +11,7 @@ First, raw reads are trimmed using [TrimGalore!][trimgalore] to ensure a minimum
 ![PiGx RNAseq workflow](./figures/pigx-rnaseq.png)
 _Figure 1: An overview of the PiGx RNAseq workflow_
 
-# Outputs
+## Output
 
 - Quality Control reports
 - Alignment results in BAM file format. 
@@ -66,7 +66,7 @@ You can enable or disable each of the pipelines with the
 
     `pigx rnaseq -s ./settings.yaml ./sample_sheet.csv`
     
-# Preparation
+# Preparing the input
 In order to run the pipeline, the user must supply
 
 - a sample sheet
@@ -199,7 +199,7 @@ covariates: "sex,age,smoking_history"
 ```
 **Warning**: It is important to be aware of a common error that is thrown by _DESeq2_ when additional covariates are listed. In some cases, one or more  covariates contain redundant information, or perfectly confounded by other covariates that are used to construct a design formula. In such cases, _DESeq2_ will throw this error: "the model matrix is not full rank, so the model cannot be fit as specified.". This error signals the user to re-consider the list of covariates used and eliminate those that are redundant from this list. For more information on this topic, please refer to the vignette from _DESeq2_, [here](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html).  
 
-# Running the Pipeline
+# Running the pipeline
 PiGx RNAseq is executed using the command `pigx-rnaseq -s settings.yaml sample_sheet.csv`. See `pigx-rnaseq --help for information about additional command line arguments.
 
 The `execution` section of the settings file provides some control over the execution of the pipeline.
@@ -219,7 +219,7 @@ execution:
 
 in the settings file, will submit up to 40 simultaneous compute jobs on the cluster.
 
-# Output
+# Output description
 PiGx RNAseq creates an output folder, as specified in the settings file, that contains all of the following outputs.
 
 ## Quality control
@@ -250,12 +250,12 @@ The reports and complementary tab-separated files are all saved in the `reports`
 ## Depth of coverage
 PiGx RNAseq computes coverage depth from the STAR-alignment of the reads, using [bedtools][bedtools]. The resulting `bedGraph` files are output in the `bedgraph_files` output folder.
 
-# Troubleshooting
+# Troubleshooting/FAQ
 
 ### Execution on a cluster
 Currently, PiGx only supports Sun Grid Engine for cluster execution. If you're uncertain about your cluster, try typing `qsub` in the shell (Sun Grid Engine uses `qsub` to submit jobs).
 
-##### Disappearing jobs on the cluster
+#### Disappearing jobs on the cluster
 PiGx RNAseq comes with sensible defaults for resource requests when running on a cluster, but based on the genome version and other parameters, these might not be sufficient and your cluster might terminate your jobs. The cluster resource requests may be overridden in the settings file. See `etc/settings.yaml` for a full list.
 
 
