@@ -52,7 +52,7 @@ You can enable or disable each of the pipelines with the
 
 # Quick start
 
-1. Download the zipped test data folder from [here](https://bimsbstatic.mdc-berlin.de/public/akalin/PiGx/quick_start_data/rnaseq/test_data.tgz): 
+1. Download the zipped test data folder from [here](https://bimsbstatic.mdc-berlin.de/akalin/PiGx/quick_start_data/rnaseq/test_data.tgz): 
 
 2. Unzip the archive
 
