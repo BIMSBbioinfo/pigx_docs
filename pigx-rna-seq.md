@@ -11,6 +11,61 @@ First, raw reads are trimmed using [TrimGalore!][trimgalore] to ensure a minimum
 ![PiGx RNAseq workflow](./figures/pigx-rnaseq.png)
 _Figure 1: An overview of the PiGx RNAseq workflow_
 
+# Outputs
+
+- Quality Control reports
+- Alignment results in BAM file format. 
+- BEDGRAPH files for genome-scale coverage analysis
+- Transcripts per million (TPM) counts matrices at gene/transcript level. 
+- Differential expression analysis results
+    - HTML reports
+    - Tab-separated file for log-transformed normalized counts
+    - DESeq2 differential expression results table sorted by adjusted p-values. 
+
+# Installation
+
+Pre-built binaries for PiGx are available through 
+[GNU Guix](https://gnu.org/software/guix), the
+functional package manager for reproducible, user-controlled software
+management.  Install the complete pipeline bundle with the following
+command:
+
+```sh
+guix package -i pigx
+```
+
+If you want to install PiGx from source, please make sure that all
+required dependencies are installed and then follow the common GNU
+build system steps after unpacking the [latest release
+tarball](https://github.com/BIMSBbioinfo/pigx/releases/latest):
+
+```sh
+./configure --prefix=/some/where
+make install
+```
+
+You can enable or disable each of the pipelines with the
+`--enable-PIPELINE` and `--disable-PIPELINE` arguments to the
+`configure` script.  `PIPELINE` is one of `bsseq`, `rnaseq`,
+`scrnaseq`, `chipseq`, and `crispr`.  For more options run
+`./configure --help`.
+
+# Quick Start
+
+1. Download the zipped test data folder from [here](https://bimsbstatic.mdc-berlin.de/public/akalin/PiGx/quick_start_data/rnaseq/test_data.tgz): 
+
+2. Unzip the archive
+
+    `tar -xzvf test_data.tgz`
+
+3. Change to the test_data folder
+
+    `cd test_data`
+    
+4. Run the pipeline
+
+    `pigx rnaseq -s ./settings.yaml ./sample_sheet.csv`
+    
 # Preparation
 In order to run the pipeline, the user must supply
 
@@ -144,7 +199,7 @@ covariates: "sex,age,smoking_history"
 ```
 **Warning**: It is important to be aware of a common error that is thrown by _DESeq2_ when additional covariates are listed. In some cases, one or more  covariates contain redundant information, or perfectly confounded by other covariates that are used to construct a design formula. In such cases, _DESeq2_ will throw this error: "the model matrix is not full rank, so the model cannot be fit as specified.". This error signals the user to re-consider the list of covariates used and eliminate those that are redundant from this list. For more information on this topic, please refer to the vignette from _DESeq2_, [here](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html).  
 
-# Execution
+# Running the Pipeline
 PiGx RNAseq is executed using the command `pigx-rnaseq -s settings.yaml sample_sheet.csv`. See `pigx-rnaseq --help for information about additional command line arguments.
 
 The `execution` section of the settings file provides some control over the execution of the pipeline.
@@ -164,7 +219,7 @@ execution:
 
 in the settings file, will submit up to 40 simultaneous compute jobs on the cluster.
 
-# Results
+# Output
 PiGx RNAseq creates an output folder, as specified in the settings file, that contains all of the following outputs.
 
 ## Quality control
@@ -179,10 +234,18 @@ PiGx RNAseq produces three variants of gene expression count matrices:
 | Pseudo-alignment reads-per-gene counts from [Salmon][salmon] | in the `salmon_output` directory |
 | Pseudo-alignment reads-per-transcript counts from [Salmon][salmon] | in the `salmon_output` directory |
 
-## Differential expression report
-PiGx RNAseq produces differential expression reports for each comparison specified in the settings file, and using each of the expression quantification strategies specified above. I.e. for each contrast specified in the settings file, three reports will be produced; one based on counts-per-gene from STAR, one based on counts-per-gene from Salmon, and another based on counts-per-transcript from Salmon.
+### Transcripts per million (TPM) counts table
 
-The reports are all saved in the `reports` output directory.
+In order to enable comparison of gene/transcript expression across all samples outside of the context of differential expression analysis, PiGx RNAseq produces two matrices of normalized (TPM) counts:
+
+   - `salmon_output/TPM_counts_from_SALMON.transcripts.tsv` for transcript-level normalized counts. 
+   - `salmon_output/TPM_counts_from_SALMON.genes.tsv` for gene-level normalized counts. 
+
+## Differential expression analysis results
+
+PiGx RNAseq produces differential expression reports for each comparison specified in the settings file, and using each of the expression quantification strategies specified above. I.e. for each contrast specified in the settings file, three reports will be produced; one based on counts-per-gene from STAR, one based on counts-per-gene from Salmon, and another based on counts-per-transcript from Salmon. Along with the HTML report will be produced two additional files per comparison: 1) a tab-separated file containing the DESeq2 differential expression results table, and 2) a tab-separated file containing the normalized expression values. Notice that these normalized values are on the logarithmic scale based on Variance Stabilizing Transformation method applied using DESeq2. Also, notice that these normalized values only apply in the context of the compared samples. In order to compare normalized values across all samples, please use the TPM counts table produced using `salmon`.  
+
+The reports and complementary tab-separated files are all saved in the `reports` output directory.
 
 ## Depth of coverage
 PiGx RNAseq computes coverage depth from the STAR-alignment of the reads, using [bedtools][bedtools]. The resulting `bedGraph` files are output in the `bedgraph_files` output folder.
@@ -204,3 +267,9 @@ PiGx RNAseq comes with sensible defaults for resource requests when running on a
 [snakemake]: http://snakemake.readthedocs.io/en/latest/
 [fastqc]: https://www.bioinformatics.babraham.ac.uk/projects/fastqc/
 [multiqc]: http://multiqc.info/
+
+
+# Questions
+If you have further questions please e-mail:
+pigx@googlegroups.com or use the web form to ask questions
+https://groups.google.com/forum/#!forum/pigx/
