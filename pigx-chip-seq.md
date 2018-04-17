@@ -197,7 +197,7 @@ It has the following **required** sections:
 
 ### Locations
 
-Defines paths to be used in the pipeline, some of the items are required and some optional (can stay blank): 
+Here you define paths to be used in the pipeline, some of the items are required and some optional (can stay blank): 
 
 | item    | required | description |
 |---------|----------|-------------|
@@ -218,7 +218,7 @@ These are settings which apply to all analysis (unless adjusted in single analys
 
 ### Execution
 
-The `execution` section in the settings file allows the user to specify whether the pipeline is to be submitted to a cluster, or run locally, and the degree of parallelism. For a full list of possible parameters, see `etc/settings.yaml`.
+The `execution` section in the settings file allows the user to specify whether the pipeline is to be submitted to a cluster, or run locally, and the degree of parallelism. For a full list of possible parameters, see the execution section of the settings file created with `pigx chipseq --init=settings`.
 
 
 A minimal settings file could look like this, but please consider that no analysis will be performed without adding [analysis information](#analysis-sections) :
@@ -262,7 +262,7 @@ The analysis part of the setting file describes the experiment. It has following
 | section | required | description |
 |---------|----------|-------------|
 | *peak_calling*  | yes | defines which samples will be used to detect regions of enriched binding ( multiple combinations and variations are possible, [see here for details](#peak-calling) ) |
-| _idr_ | no | specifies pairs of *peak calling* analysis that are compared to determine the reproducibilty of the general experiment ([see here for details](#optionalidr)) |
+| _idr_ | no | specifies pairs of *peak calling* analysis that are compared to determine the reproducibilty of the general experiment ([see here for details](#optional-idr)) |
 | _hub_ | no | describes the general layout of a UCSC hub that can be created from the processed data and allows the visual inspection of results at a UCSC genome browser ([see here for details](#optional-hub)) |
 | *feature_combination* | no | defines for a list of *peak calling* and/or *idr* analysis the combination of regions shared among this list ([see here for details](#optional-feature-combination)) |
 
@@ -418,7 +418,20 @@ $ pigx-chipseq -s settings.yaml sample_sheet.csv -n
 
 To see all available options type the `--help` option
 
-# Output Folder Structure
+# Output Description
+
+PiGx ChIPseq creates an output folder, with a specific directory structure (for details see [here](#output-folder-structure)) that contains the following outputs and more.
+
+### Quality control
+General quality control metrics are computed using [FastQC][fastqc] and [MultiQC][multiqc]. The MultiQC report is particularly useful, collating quality control metrics from many steps of the pipeline in a single html report, which may be found under the `Reports` folder in the PiGx output folder.
+
+A custom ChIP quality control report can be found in the `Reports` foler as well, presenting useful quality metrics for the ChIP experiments. 
+
+### Formatted UCSC Hub
+
+The `UCSC_Hub` directory contains a folder with the name specified in the **hub** section of the **analysis** part of the settings file. This folder might be copied to a web-accessible server to host the hub itself, which can then be accessed using the [UCSC Genome Browser][ucsc-genome-browser]. 
+
+## Output Folder Structure
 
 The pipeline will create a specific directory structure, 
 the respective contents are explained below:
@@ -450,10 +463,19 @@ the respective contents are explained below:
 |     Trimmed   | Trimgalore adaptor and quality trimmed files. |
 |    UCSC_Hub    | Contains a completely formatted UCSC hub, with track descriptions, peaks and bigWig tracks. |
 
-# Troubleshooting/FAQ
+# Troubleshooting
+
+## Execution on a cluster
+Currently, PiGx only supports Sun Grid Engine for cluster execution. If you're uncertain about your cluster, try typing `qsub` in the shell (Sun Grid Engine uses `qsub` to submit jobs).
+
+#### Disappearing jobs on the cluster
+PiGx ChIPseq comes with sensible defaults for resource requests when running on a cluster, but based on the genome version and other parameters, these might not be sufficient and your cluster might terminate your jobs. The cluster resource requests may be overridden in the settings file. See the execution section of the settings file created with `pigx chipseq --init=settings`.
+
+## FAQ
 
 __Q:__ I get the following error:
-```Error: Directory cannot be locked. Please make sure that no other Snakemake process is trying to create the same files in the following directory:
+```bash
+Error: Directory cannot be locked. Please make sure that no other Snakemake process is trying to create the same files in the following directory:
 /home/agosdsc/projects/pigx_chipseq/test_dir/out
 If you are sure that no other instances of snakemake are running on this directory, the remaining lock was likely caused by a kill signal or a power loss. It can be removed with the --unlock argument.
 ```
@@ -474,3 +496,6 @@ https://groups.google.com/forum/#!forum/pigx/
 [idr]: https://github.com/nboley/idr
 [genomation]: http://bioinformatics.mdc-berlin.de/genomation/
 [rtracklayer]: https://bioconductor.org/packages/release/bioc/html/rtracklayer.html
+[fastqc]: https://www.bioinformatics.babraham.ac.uk/projects/fastqc/
+[multiqc]: http://multiqc.info/
+[ucsc-genome-browser]: https://genome.ucsc.edu/
