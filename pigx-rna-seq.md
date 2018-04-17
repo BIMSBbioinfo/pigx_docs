@@ -50,7 +50,7 @@ You can enable or disable each of the pipelines with the
 `scrnaseq`, `chipseq`, and `crispr`.  For more options run
 `./configure --help`.
 
-# Quick Start
+# Quick start
 
 1. Download the zipped test data folder from [here](https://bimsbstatic.mdc-berlin.de/public/akalin/PiGx/quick_start_data/rnaseq/test_data.tgz): 
 
