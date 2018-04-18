@@ -10,7 +10,7 @@
     * [Output description](pigx-rna-seq.md#output-description)
     * [Troubleshooting/FAQ](pigx-rna-seq.md#troubleshootingfaq)
     * [Questions](pigx-rna-seq.md#questions)
-* [PiGx ChIP-seq](pigx-chip-seq.md#pigx-chipseq)
+* [PiGx ChIP-seq](pigx-chip-seq.md#pigx-chip-seq)
     * [Introduction](pigx-chip-seq.md#introduction)
     * [Installation](pigx-chip-seq.md#installation)
     * [Quick Start](pigx-chip-seq.md#quick-start)
