@@ -1,4 +1,4 @@
-# PiGX ChIPseq
+# PiGX ChIP-seq
 
 # Introduction
 
