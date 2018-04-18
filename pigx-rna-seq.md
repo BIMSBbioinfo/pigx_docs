@@ -200,7 +200,7 @@ covariates: "sex,age,smoking_history"
 **Warning**: It is important to be aware of a common error that is thrown by _DESeq2_ when additional covariates are listed. In some cases, one or more  covariates contain redundant information, or perfectly confounded by other covariates that are used to construct a design formula. In such cases, _DESeq2_ will throw this error: "the model matrix is not full rank, so the model cannot be fit as specified.". This error signals the user to re-consider the list of covariates used and eliminate those that are redundant from this list. For more information on this topic, please refer to the vignette from _DESeq2_, [here](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html).  
 
 # Running the pipeline
-PiGx RNAseq is executed using the command `pigx-rnaseq -s settings.yaml sample_sheet.csv`. See `pigx-rnaseq --help for information about additional command line arguments.
+PiGx RNAseq is executed using the command `pigx-rnaseq -s settings.yaml sample_sheet.csv`. See `pigx-rnaseq --help` for information about additional command line arguments.
 
 The `execution` section of the settings file provides some control over the execution of the pipeline.
 
