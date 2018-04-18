@@ -1,3 +1,5 @@
+# PiGx scRNA-seq
+
 
 # Introduction
 
@@ -8,8 +10,7 @@ The pipeline is designed to work with UMI based methods. It currently supports a
 adapter - read files.
 The pipeline was heavily influenced by the [Dropseq](http://mccarrolllab.com/dropseq/) pipeline from the McCaroll lab.
 
-
-## What does it do
+## Workflow
 
 - Quality control reads using fastQC and multiQC
 - Automatically determines the appropriate cell number
@@ -18,21 +19,10 @@ The pipeline was heavily influenced by the [Dropseq](http://mccarrolllab.com/dro
 - Prepares a quality control report
 - Normalizes data and does dimensionallity reduction
 
-
-## What does it output
-
-- bam files
-- bigwig files
-- UMI and read count matrices
-- Quality control report
-- SingleCellExperiment object with pre-calculated statistics and dimensionallity reductions
-
-## PiGx - scRNA-seq workflow
-
 ![PiGx scRNAseq workflow](./figures/pigx-scrnaseq.svg)
 _Figure 1: An overview of the PiGx scRNA-seq workflow_
 
-# Install
+# Installation
 
 You can install this pipeline and all of its dependencies through GNU
 Guix:
@@ -52,17 +42,6 @@ unpacking the latest release tarball:
     PICARDJAR=/path/to/picard.jar
 make install
 ```
-
-# Dependencies
-
-By default the `configure` script expects tools to be in a directory
-listed in the `PATH` environment variable.  If the tools are installed
-in a location that is not on the `PATH` you can tell the `configure`
-script about them with variables.  Run `./configure --help` for a list
-of all variables and options.
-
-You can prepare a suitable environment with Conda or with [GNU
-Guix](https://gnu.org/s/guix).
 
 ## Via Conda
 
@@ -94,58 +73,70 @@ installed:
 
 </details>
 
-# Getting started
 
-To run PiGx on your experimental data, first enter the necessary parameters in the spreadsheet file (see following section), and then from the terminal type.
-To run the pipeline, you will also need the appropriate genome sequence in fasta format, and the genome annotation in a 
-gtf format.
+## Dependencies
+
+By default the `configure` script expects tools to be in a directory
+listed in the `PATH` environment variable.  If the tools are installed
+in a location that is not on the `PATH` you can tell the `configure`
+script about them with variables.  Run `./configure --help` for a list
+of all variables and options.
+
+You can prepare a suitable environment with Conda or with [GNU
+Guix](https://gnu.org/s/guix).
+
+
+The pipeline currently depends on two external java programs, which can be found on the
+following links:
+
+1. [Picard tools](https://github.com/broadinstitute/picard/releases/tag/2.18.0)
+
+2. [Dropseq tools](http://mccarrolllab.com/download/1276/)
+
+During the configure step path to the **.jar** files needs to be provided.
+
+
+
+# Quick Start
+
+To check wether the pipeline was properly installed, run PiGx scRNAseq on a minimal test dataset, which we provide **PUT LINK TO THE DATASET**
+Once downloaded run these commands to extract the data:
 
 ```sh
-$ pigx-rscnaseq [options] sample_sheet.csv -s settings.yaml
+mkdir test_dir
+tar -xzf test_data.tar.gz --directory test_dir/
+cd test_dir
 ```
 
-To see all available options type the `--help` option
+The tarball includes a settings file and a sample sheet file. 
+The pipeline can now be started with the following command:
 
 ```sh
-$ pigx-scrnaseq --help
-
-usage: pigx-scrnaseq [-h] [-v] -s SETTINGS [-c CONFIGFILE] [--target TARGET]
-                   [-n] [--graph GRAPH] [--force] [--reason] [--unlock]
-                   samplesheet
-
-PiGx scRNAseq Pipeline.
-
-PiGx scRNAseq is a data processing pipeline for single cell RNAseq read data.
-
-positional arguments:
-  samplesheet                             The sample sheet containing sample data in CSV format.
-
-optional arguments:
-  -h, --help                              show this help message and exit
-  -v, --version                           show program's version number and exit
-  -s SETTINGS, --settings SETTINGS        A YAML file for settings that deviate from the defaults.
-  -c CONFIGFILE, --configfile CONFIGFILE  The config file used for calling the underlying snakemake process.  By
-                                          default the file 'config.json' is dynamically created from the sample
-                                          sheet and the settings file.
-  --target TARGET                         Stop when the named target is completed instead of running the whole
-                                          pipeline.  The default target is "final-report".  Pass "--target=help"
-                                          to describe all available targets.
-  -n, --dry-run                           Only show what work would be performed.  Do not actually run the
-                                          pipeline.
-  --graph GRAPH                           Output a graph in Graphviz dot format showing the relations between
-                                          rules of this pipeline.  You must specify a graph file name such as
-                                          "graph.pdf".
-  --force                                 Force the execution of rules, even though the outputs are considered
-                                          fresh.
-  --reason                                Print the reason why a rule is executed.
-  --unlock                                Recover after a snakemake crash.
-
-This pipeline was developed by the Akalin group at MDC in Berlin in 2017-2018.
+pigx scrnaseq -s test_dir/settings.yaml test_dir/sample_sheet.csv
 ```
 
+The output of the pipeline is located inside `test_dir/out` directory.
 
-# The input parameters
+**CHECK REPORT NAME**
+The `Report.html` inside the `Reports` directory gives a general overview about the single cell experiment and the peak calling. 
 
+
+# Preparing Input
+
+To run the pipeline, the user must supply
+
+- a sample sheet
+
+- a settings file
+
+both files are described below.
+
+To generate template `sample_sheet.csv` and `settings.yaml` files, in your current directory, type the following command 
+in the shell:
+
+```sh
+pigx scrnaseq --init
+```
 
 ## Sample Sheet
 
@@ -178,6 +169,7 @@ The settings file is a _YAML_ file which specifies:
 
 In order to get started, enter `pigx-scrnaseq --init-settings my_settings.yaml`. This will create a file called `my_settings.yaml` with the default structure. The file will look like this:
 
+
 ```yaml
 locations:
   output-dir: out/
@@ -199,23 +191,35 @@ execution:
   nice: 19
 ```
 
-# Resource considerations
+# Running the pipeline
 
-Single cell expression analysis is data intensive, and requires substantial computing resources. 
-The pipeline uses the [STAR](https://github.com/alexdobin/STAR) aligner for read mapping, so the memory requirements will scale with the 
-size of the genome. 
-Please look at the [STAR](https://github.com/alexdobin/STAR) manual for the concrete number about the memory requirements.
-For the human/mouse genome it requires ~ 40Gb of RAM. 
-The pipeline produces temporary files which require a substantial amount of disk space. Please ensure
-that you have at least 30Gb of disk space per 100 milion sequenced reads.
-The location of the temporary directory can be controlled using the tempdir: variable in the settings.yaml.
-By default the tempdir is set to **/tmp**.
+To run PiGx on your experimental data, first prepare the sample sheet and settings file (see [above](#preparing-input)), and then from the terminal type
 
-**Important:** please make sure that the temporary directory has adequate free space
+```sh
+$ pigx-scrnaseq -s settings.yaml sample_sheet.csv
+```
+
+If you are not sure wether you set everything up correctly, use the dryrun option which will only show what work would be performed, but does not actually run the pipeline.
+```sh
+$ pigx-scrnaseq -s settings.yaml sample_sheet.csv -n 
+```
+
+To see all available options type the `--help` option
+
+# Output Description
+
+PiGx scRNA-seq creates an output folder, with a specific directory structure (for details see [here](#output-folder-structure)), with the following results:
+
+- bam files
+- bigwig files
+- UMI and read count matrices
+- Quality control report
+- SingleCellExperiment object with pre-calculated statistics and dimensionallity reductions
 
 
-# Output directory structure
-The output directory structure should look like the following tree
+### Output Folder Structure
+
+The output directory structure has the following structure:
 
 ```
 |-- Annotation
@@ -233,7 +237,7 @@ The output directory structure should look like the following tree
 |       `-- genome_name
 ```
 
-### Annotation
+#### Annotation
 
 Contains pre-processed fasta and gtf file, along with the STAR genome index.
 The genome fasta file is processed into a dict header.
@@ -245,17 +249,17 @@ The chromosome names have to completely correspond between the two files.
 
 We encourage users to use both the genome annotation and the fasta file from the [ENSEMBL](https://www.ensembl.org/info/data/ftp/index.html) database.
 
-### Log
+#### Log
 
 Contains execution logs for every step of the pipeline.
 
-### Mapped
+#### Mapped
 
 The **Mapped** folder contains per sample processed single cell samples.
 Additionally, it contains a [loom](http://linnarssonlab.org/loompy/) file with merged expression values from all experiments,
 an RDS file with a saved [SingleCellExperiment](https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html) object, and a quality control report in the html format.
 
-#### Mapped/Sample1
+#### Sample output description
 
 Analaysis results for each sample are done in a separate subdirectory under **Mapped**.
 Structure of analysis results:
@@ -292,8 +296,6 @@ Structure of analysis results:
 |   `-- unaligned_tagged_Molecular.bam_summary.txt
 ```
 
-#### Description of relevant output files:
-
 - Sample1.fastq.bam - contains merged barcode and sequence fq files
 
 - Sample1_genome_name.**bw** - bigWig file constructed from selected cells. Files with **m/p**.bw contain strand separated signal
@@ -311,21 +313,32 @@ Structure of analysis results:
 - Sample1_genome_name_**ReadStatistics/Downstream**.txt - quality control statistics used in the html report. They contain values such as number of reads in Exons/Introns.
 
 
-# Downstream analysis
+## Downstream analysis
 
 The combined expression data are subsequently processed into a [SingleCellExperiment](https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html) object. SingleCellExperiment is a Bioconductor class for storing expression values, along with the cell, and gene data, and experimental meta data in a single container. It is constructed on top of hdf5  file based arrays  (Pagès 2017), which enables exploration even on systems with limited memory capacity. 
 During the object construction, the pipeline performs expression normalization, dimensionallity reduction, identification of significantly variable genes, assigns the cells to the steps of the cell cycle, and calculates the quality statistics. The SingleCellExperiment object contains all of the necessary data needed for further exploration. The object connects the pigx-pipeline with the Bioconductor single cell computing environment, and enables integration with state of the art statistical, and machine learning mehods ([scran](https://bioconductor.org/packages/release/bioc/html/scran.html), [zinbwave](https://bioconductor.org/packages/release/bioc/html/zinbwave.html), [netSmooth](https://github.com/BIMSBbioinfo/netSmooth), [iSEE](https://github.com/csoneson/iSEE).
 
+## Execution on a cluster
 
-### Cluster Execution
+Currently, PiGx only supports Sun Grid Engine for cluster execution. If you're uncertain about your cluster, try typing `qsub` in the shell (Sun Grid Engine uses `qsub` to submit jobs).
 
-The `execution` section in the settings file allows the user to specify whether the pipeline is to be submitted to a cluster, or run locally, and the degree of parallelism. For a full list of possible parameters, see `etc/settings.yaml`.
+#### Disappearing jobs on the cluster
+PiGx scRNA-seq comes with sensible defaults for resource requests when running on a cluster, but based on the genome version and other parameters, these might not be sufficient and your cluster might terminate your jobs. The cluster resource requests may be overridden in the settings file. See the execution section of the settings file created with `pigx scrnaseq --init=settings`.
 
-# Example
+## FAQ
 
-An example can be found in the `tests` directory.  The
-`sample_sheet.csv` file here specifies the following sample data:
+__Q:__ I get the following error:
+```bash
+Error: Directory cannot be locked. Please make sure that no other Snakemake process is trying to create the same files in the following directory:
+/home/agosdsc/projects/pigx_scrnaseq/test_dir/out
+If you are sure that no other instances of snakemake are running on this directory, the remaining lock was likely caused by a kill signal or a power loss. It can be removed with the --unlock argument.
+```
+What happend and what should I do?
 
- 
-----------------------------------------
-2018
+__A:__ The pipeline crashed at some point, possible reasons are mentioned by the error. Do as the error message proposes and pass the `--unlock` argument once and then run the pipeline again without `--unlock`.  
+
+# Questions
+If you have further questions please e-mail:
+pigx@googlegroups.com or use the web form to ask questions
+https://groups.google.com/forum/#!forum/pigx/
+
