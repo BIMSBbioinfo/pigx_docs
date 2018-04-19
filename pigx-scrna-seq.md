@@ -99,7 +99,7 @@ During the configure step path to the **.jar** files needs to be provided.
 
 # Quick Start
 
-To check wether the pipeline was properly installed, run PiGx scRNAseq on a minimal test dataset, which we provide **PUT LINK TO THE DATASET**
+To check wether the pipeline was properly installed, run PiGx scRNAseq on a minimal test dataset, which can be found on the following [link](https://github.com/BIMSBbioinfo/pigx_scrnaseq/releases/download/v0.0.3/test_data.tgz)
 Once downloaded run these commands to extract the data:
 
 ```sh
@@ -117,8 +117,7 @@ pigx scrnaseq -s test_dir/settings.yaml test_dir/sample_sheet.csv
 
 The output of the pipeline is located inside `test_dir/out` directory.
 
-**CHECK REPORT NAME**
-The `Report.html` inside the `Reports` directory gives a general overview about the single cell experiment and the peak calling. 
+The `scRNA-Seq.report.html` inside the `Mapped` directory gives a general overview about the single cell experiments.
 
 
 # Preparing Input
