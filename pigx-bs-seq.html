@@ -377,10 +377,10 @@
     
         <li class="chapter " data-level="1.4.2" data-path="pigx-bs-seq.html">
             
-                <a href="pigx-bs-seq.html#the-workflow">
+                <a href="pigx-bs-seq.html#installation">
             
                     
-                    Workflow
+                    Installation
             
                 </a>
             
@@ -390,10 +390,10 @@
     
         <li class="chapter " data-level="1.4.3" data-path="pigx-bs-seq.html">
             
-                <a href="pigx-bs-seq.html#input-preparation">
+                <a href="pigx-bs-seq.html#quick-start">
             
                     
-                    Input preparation
+                    Quick start
             
                 </a>
             
@@ -403,10 +403,10 @@
     
         <li class="chapter " data-level="1.4.4" data-path="pigx-bs-seq.html">
             
-                <a href="pigx-bs-seq.html#execution">
+                <a href="pigx-bs-seq.html#preparing-the-input">
             
                     
-                    Execution
+                    Preparing the input
             
                 </a>
             
@@ -416,10 +416,10 @@
     
         <li class="chapter " data-level="1.4.5" data-path="pigx-bs-seq.html">
             
-                <a href="pigx-bs-seq.html#analysis">
+                <a href="pigx-bs-seq.html#running-the-pipeline">
             
                     
-                    Analysis
+                    Running the pipeline
             
                 </a>
             
@@ -429,10 +429,36 @@
     
         <li class="chapter " data-level="1.4.6" data-path="pigx-bs-seq.html">
             
+                <a href="pigx-bs-seq.html#output-description">
+            
+                    
+                    Output description
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="pigx-bs-seq.html">
+            
                 <a href="pigx-bs-seq.html#troubleshooting">
             
                     
                     Troubleshooting
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="pigx-bs-seq.html">
+            
+                <a href="pigx-bs-seq.html#questions">
+            
+                    
+                    Questions
             
                 </a>
             
@@ -627,9 +653,13 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="pigx-bs-seq">PiGx BS-seq</h1>
-<h2 id="introduction">Introduction</h2>
-<p>PiGx-bsseq is a preprocessing and analysis pipeline that takes raw <code>fastq</code> read files and performs all necessary steps to present the full methylome for analysis. Quality control, and differential methylation are also performed, and a final report provides a summary for each sample provided by the user.</p>
-<h2 id="the-workflow">The workflow</h2>
+<h1 id="introduction">Introduction</h1>
+<p>PiGx-bsseq is a preprocessing and analysis pipeline that takes raw
+<code>fastq</code> read files and performs all necessary steps to present the
+full methylome for analysis. Quality control, and differential
+methylation are also performed, and a final report provides a summary
+for each sample provided by the user.</p>
+<h2 id="workflow">Workflow</h2>
 <p>This figure provides an overview of the various stages of the
 pipeline, as well as the outputs and expected inputs.</p>
 <p><img src="figures/pigx-bsseq.svg" alt="PiGx BSseq workflow"></p>
@@ -648,9 +678,33 @@ Methylation-calling is then carried out using
 <a href="https://github.com/al2na/methylKit/Methylkit" target="_blank">MethylKit</a> before
 initial post-mapping analysis such as segmentation and differential
 methylation between samples.</p>
-<h2 id="input-preparation">Input preparation</h2>
+<h1 id="installation">Installation</h1>
+<p>You can install this pipeline with all its dependencies using GNU Guix:</p>
+<pre><code>guix package -i pigx-bsseq
+</code></pre><p>You can also install it from source manually.  You can find the
+<a href="https://github.com/BIMSBbioinfo/pigx_bsseq/releases/latest" target="_blank">latest
+release</a>
+here.  PiGx uses the GNU build system.  Please make sure that all
+required dependencies are installed and then follow these steps after
+unpacking the latest release tarball:</p>
+<pre><code class="lang-sh">./configure --prefix=/some/<span class="hljs-built_in">where</span>
+make install
+</code></pre>
+<h1 id="quick-start">Quick start</h1>
+<ol>
+<li><p>Download the zipped test data:</p>
+<p> <code>wget https://github.com/BIMSBbioinfo/pigx_bsseq/releases/download/v0.0.8/test-data.tar.gz</code></p>
+</li>
+<li><p>Unzip the archive</p>
+<p> <code>tar xzvf test-data.tar.gz</code></p>
+</li>
+<li><p>Run the pipeline</p>
+<p> <code>cd tests &amp;&amp; pigx-bsseq -s settings.yaml sample_sheet.csv</code></p>
+</li>
+</ol>
+<h1 id="preparing-the-input">Preparing the input</h1>
 <p>To use the pipeline, the user must first edit two files: the sample sheet and the settings file. </p>
-<h3 id="sample-sheet-xls---csv">Sample Sheet (<code>.xls</code> -&gt; <code>.csv</code>)</h3>
+<h2 id="sample-sheet">Sample Sheet</h2>
 <p>The sample sheet is a tabular file (<code>csv</code> format) describing the experiment.
 The table has the following columns:</p>
 <table>
@@ -698,9 +752,11 @@ methylation (see below).</p>
 <p>The above sample sheet can be produced by editing the included file
 <code>test/sample_sheet.xls</code> and saving it in <code>.csv</code> format with fields separated by
 commas (<code>,</code>).</p>
-<h3 id="settings-file-yaml">Settings File (<code>.yaml</code>)</h3>
-<p>In the settings file, various parameters are saved, in YAML format, to configure the execution of PiGx-bsseq. 
-The entries are stored hierarchically, and a brief description is provided below, along with possible default value in parenthesis:</p>
+<h2 id="settings-file">Settings File</h2>
+<p>In the settings file, various parameters are saved, in YAML format, to
+configure the execution of PiGx-bsseq.  The entries are stored
+hierarchically, and a brief description is provided below, along with
+possible default value in parenthesis:</p>
 <ul>
 <li><p><code>locations</code>: </p>
 <ul>
@@ -750,19 +806,21 @@ typical user might want to access, while the more basic settings that are saved
 as defaults in <code>etc/settings.yaml.in</code> will not need to be modified by most
 users (although advanced users may freely re-define any such variables in their own
 settings file, and by so doing, overwrite them).</p>
-<h2 id="execution">Execution</h2>
+<h1 id="running-the-pipeline">Running the pipeline</h1>
 <p>After editting the above input files, the bsseq pipeline can be executed with
-the command: <code>./pigx-bsseq [sample sheet] -s [settings file]</code> with further
+the command: <code>pigx-bsseq [sample sheet] -s [settings file]</code> with further
 options, described in the README (for example, the flag <code>--dry-run</code> can be
-added to confirm valid input settings before execution).  Once the pipeline is
-executed, the desired output directory is created, along with various
-sub-directories for intermediate steps in the process, each of which are named
-with prefixes to indicate their (approximate) order in sequence.  In most
-cases, these processes have their own interim reports and log files. For
-example, <code>06_sorting</code> contains the sorted <code>.bam</code> file after alignments, and
-<code>07_methyl_calls</code> contains information on average methylation in various
-formats, while <code>01_raw_QC</code> is the earliest step --quality control of the raw
-inputs. </p>
+added to confirm valid input settings before execution).</p>
+<h1 id="output-description">Output description</h1>
+<p>Once the pipeline is executed, the desired output directory is
+created, along with various sub-directories for intermediate steps in
+the process, each of which are named with prefixes to indicate their
+(approximate) order in sequence.  In most cases, these processes have
+their own interim reports and log files. For example, <code>06_sorting</code>
+contains the sorted <code>.bam</code> file after alignments, and
+<code>07_methyl_calls</code> contains information on average methylation in
+various formats, while <code>01_raw_QC</code> is the earliest step --quality
+control of the raw inputs.</p>
 <h2 id="analysis">Analysis</h2>
 <p>In the <code>out-dir</code> folder, PiGx will create a sub-directory
 <code>Final_Reports/</code> in which a final report for each sample is provided, along
@@ -774,7 +832,7 @@ file in <code>08_bigwig_files</code>, although for simple methylation percentage
 should be suffice to consult the column-separated files in <code>07_methyl_calls</code>.
 In each case, the specific file names will refer to the sample IDs provided in
 the original sample sheet.</p>
-<h2 id="troubleshooting">Troubleshooting</h2>
+<h1 id="troubleshooting">Troubleshooting</h1>
 <p>The dependency graph of rules contains branches; as such, the rules are not
 always performed in <em>exactly</em> the order indicated by directory prefix labels.
 Nevertheless, in cases of interrupted calculation, it may be useful to inspect
@@ -807,6 +865,10 @@ Advanced users may consult <code>etc/settings.yaml.in</code> to see which values
 fine-tuned; novice users who are studying either the human genome, or a smaller
 one, should simply ignore this section and allow PiGx to assign the default
 values.</p>
+<h1 id="questions">Questions</h1>
+<p>If you have further questions please send e-mail to
+pigx@googlegroups.com or <a href="https://groups.google.com/forum/#!forum/pigx/" target="_blank">ask questions on the web
+forum</a>.</p>
 
                                 
                                 </section>
@@ -850,7 +912,7 @@ values.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"PiGx BS-seq","level":"1.4","depth":1,"next":{"title":"Introduction","level":"1.4.1","depth":2,"anchor":"#introduction","path":"pigx-bs-seq.md","ref":"pigx-bs-seq.md#introduction","articles":[]},"previous":{"title":"Questions","level":"1.3.8","depth":2,"anchor":"#questions","path":"pigx-chip-seq.md","ref":"pigx-chip-seq.md#questions","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"pigx-bs-seq.md","mtime":"2018-04-18T08:47:59.443Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-18T08:49:41.176Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"PiGx BS-seq","level":"1.4","depth":1,"next":{"title":"Introduction","level":"1.4.1","depth":2,"anchor":"#introduction","path":"pigx-bs-seq.md","ref":"pigx-bs-seq.md#introduction","articles":[]},"previous":{"title":"Questions","level":"1.3.8","depth":2,"anchor":"#questions","path":"pigx-chip-seq.md","ref":"pigx-chip-seq.md#questions","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"pigx-bs-seq.md","mtime":"2018-04-20T20:44:51.894Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-20T20:46:39.909Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
