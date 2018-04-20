@@ -652,14 +652,15 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="introduction">Introduction</h1>
+                                <h1 id="pigx-scrna-seq">PiGx scRNA-seq</h1>
+<h1 id="introduction">Introduction</h1>
 <p>PiGX scRNAseq is an analysis pipeline for preprocessing and quality control for single cell RNA sequencing experiments. 
 The inputs are read files from the sequencing experiment, and a configuration file which describes the experiment. 
 It produces processed files for downstream analysis and interactive quality reports. 
 The pipeline is designed to work with UMI based methods. It currently supports all methods which output paired
 adapter - read files.
 The pipeline was heavily influenced by the <a href="http://mccarrolllab.com/dropseq/" target="_blank">Dropseq</a> pipeline from the McCaroll lab.</p>
-<h2 id="what-does-it-do">What does it do</h2>
+<h2 id="workflow">Workflow</h2>
 <ul>
 <li>Quality control reads using fastQC and multiQC</li>
 <li>Automatically determines the appropriate cell number</li>
@@ -668,18 +669,9 @@ The pipeline was heavily influenced by the <a href="http://mccarrolllab.com/drop
 <li>Prepares a quality control report</li>
 <li>Normalizes data and does dimensionallity reduction</li>
 </ul>
-<h2 id="what-does-it-output">What does it output</h2>
-<ul>
-<li>bam files</li>
-<li>bigwig files</li>
-<li>UMI and read count matrices</li>
-<li>Quality control report</li>
-<li>SingleCellExperiment object with pre-calculated statistics and dimensionallity reductions</li>
-</ul>
-<h2 id="pigx---scrna-seq-workflow">PiGx - scRNA-seq workflow</h2>
 <p><img src="figures/pigx-scrnaseq.svg" alt="PiGx scRNAseq workflow">
 <em>Figure 1: An overview of the PiGx scRNA-seq workflow</em></p>
-<h1 id="install">Install</h1>
+<h1 id="installation">Installation</h1>
 <p>You can install this pipeline and all of its dependencies through GNU
 Guix:</p>
 <pre><code>guix package -i pigx-scrnaseq
@@ -694,14 +686,6 @@ unpacking the latest release tarball:</p>
     PICARDJAR=/path/to/picard.jar
 make install
 </code></pre>
-<h1 id="dependencies">Dependencies</h1>
-<p>By default the <code>configure</code> script expects tools to be in a directory
-listed in the <code>PATH</code> environment variable.  If the tools are installed
-in a location that is not on the <code>PATH</code> you can tell the <code>configure</code>
-script about them with variables.  Run <code>./configure --help</code> for a list
-of all variables and options.</p>
-<p>You can prepare a suitable environment with Conda or with <a href="https://gnu.org/s/guix" target="_blank">GNU
-Guix</a>.</p>
 <h2 id="via-conda">Via Conda</h2>
 <ul>
 <li>Download pigx_scrnaseq source code <ul>
@@ -737,49 +721,50 @@ installed:</p>
 
 </details>
 
-<h1 id="getting-started">Getting started</h1>
-<p>To run PiGx on your experimental data, first enter the necessary parameters in the spreadsheet file (see following section), and then from the terminal type.
-To run the pipeline, you will also need the appropriate genome sequence in fasta format, and the genome annotation in a 
-gtf format.</p>
-<pre><code class="lang-sh">$ pigx-rscnaseq [options] sample_sheet.csv <span class="hljs-_">-s</span> settings.yaml
+
+<h2 id="dependencies">Dependencies</h2>
+<p>By default the <code>configure</code> script expects tools to be in a directory
+listed in the <code>PATH</code> environment variable.  If the tools are installed
+in a location that is not on the <code>PATH</code> you can tell the <code>configure</code>
+script about them with variables.  Run <code>./configure --help</code> for a list
+of all variables and options.</p>
+<p>You can prepare a suitable environment with Conda or with <a href="https://gnu.org/s/guix" target="_blank">GNU
+Guix</a>.</p>
+<p>The pipeline currently depends on two external java programs, which can be found on the
+following links:</p>
+<ol>
+<li><p><a href="https://github.com/broadinstitute/picard/releases/tag/2.18.0" target="_blank">Picard tools</a></p>
+</li>
+<li><p><a href="http://mccarrolllab.com/download/1276/" target="_blank">Dropseq tools</a></p>
+</li>
+</ol>
+<p>During the configure step path to the <strong>.jar</strong> files needs to be provided.</p>
+<h1 id="quick-start">Quick Start</h1>
+<p>To check wether the pipeline was properly installed, run PiGx scRNAseq on a minimal test dataset, which can be found on the following <a href="https://github.com/BIMSBbioinfo/pigx_scrnaseq/releases/download/v0.0.3/test_data.tgz" target="_blank">link</a>
+Once downloaded run these commands to extract the data:</p>
+<pre><code class="lang-sh">mkdir <span class="hljs-built_in">test</span>_dir
+tar -xzf <span class="hljs-built_in">test</span>_data.tar.gz --directory <span class="hljs-built_in">test</span>_dir/
+<span class="hljs-built_in">cd</span> <span class="hljs-built_in">test</span>_dir
 </code></pre>
-<p>To see all available options type the <code>--help</code> option</p>
-<pre><code class="lang-sh">$ pigx-scrnaseq --help
-
-usage: pigx-scrnaseq [-h] [-v] <span class="hljs-_">-s</span> SETTINGS [-c CONFIGFILE] [--target TARGET]
-                   [-n] [--graph GRAPH] [--force] [--reason] [--unlock]
-                   samplesheet
-
-PiGx scRNAseq Pipeline.
-
-PiGx scRNAseq is a data processing pipeline <span class="hljs-keyword">for</span> single cell RNAseq <span class="hljs-built_in">read</span> data.
-
-positional arguments:
-  samplesheet                             The sample sheet containing sample data <span class="hljs-keyword">in</span> CSV format.
-
-optional arguments:
-  -h, --help                              show this <span class="hljs-built_in">help</span> message and <span class="hljs-built_in">exit</span>
-  -v, --version                           show program<span class="hljs-string">&apos;s version number and exit
-  -s SETTINGS, --settings SETTINGS        A YAML file for settings that deviate from the defaults.
-  -c CONFIGFILE, --configfile CONFIGFILE  The config file used for calling the underlying snakemake process.  By
-                                          default the file &apos;</span>config.json<span class="hljs-string">&apos; is dynamically created from the sample
-                                          sheet and the settings file.
-  --target TARGET                         Stop when the named target is completed instead of running the whole
-                                          pipeline.  The default target is &quot;final-report&quot;.  Pass &quot;--target=help&quot;
-                                          to describe all available targets.
-  -n, --dry-run                           Only show what work would be performed.  Do not actually run the
-                                          pipeline.
-  --graph GRAPH                           Output a graph in Graphviz dot format showing the relations between
-                                          rules of this pipeline.  You must specify a graph file name such as
-                                          &quot;graph.pdf&quot;.
-  --force                                 Force the execution of rules, even though the outputs are considered
-                                          fresh.
-  --reason                                Print the reason why a rule is executed.
-  --unlock                                Recover after a snakemake crash.
-
-This pipeline was developed by the Akalin group at MDC in Berlin in 2017-2018.
-</span></code></pre>
-<h1 id="the-input-parameters">The input parameters</h1>
+<p>The tarball includes a settings file and a sample sheet file. 
+The pipeline can now be started with the following command:</p>
+<pre><code class="lang-sh">pigx scrnaseq <span class="hljs-_">-s</span> <span class="hljs-built_in">test</span>_dir/settings.yaml <span class="hljs-built_in">test</span>_dir/sample_sheet.csv
+</code></pre>
+<p>The output of the pipeline is located inside <code>test_dir/out</code> directory.</p>
+<p>The <code>scRNA-Seq.report.html</code> inside the <code>Mapped</code> directory gives a general overview about the single cell experiments.</p>
+<h1 id="preparing-input">Preparing Input</h1>
+<p>To run the pipeline, the user must supply</p>
+<ul>
+<li><p>a sample sheet</p>
+</li>
+<li><p>a settings file</p>
+</li>
+</ul>
+<p>both files are described below.</p>
+<p>To generate template <code>sample_sheet.csv</code> and <code>settings.yaml</code> files, in your current directory, type the following command 
+in the shell:</p>
+<pre><code class="lang-sh">pigx scrnaseq --init
+</code></pre>
 <h2 id="sample-sheet">Sample Sheet</h2>
 <p>The sample sheet is a tabular file describing the experiment. The table has the following columns:</p>
 <table>
@@ -845,19 +830,25 @@ This pipeline was developed by the Akalin group at MDC in Berlin in 2017-2018.
 <span class="hljs-attr">  jobs:</span> <span class="hljs-number">6</span>
 <span class="hljs-attr">  nice:</span> <span class="hljs-number">19</span>
 </code></pre>
-<h1 id="resource-considerations">Resource considerations</h1>
-<p>Single cell expression analysis is data intensive, and requires substantial computing resources. 
-The pipeline uses the <a href="https://github.com/alexdobin/STAR" target="_blank">STAR</a> aligner for read mapping, so the memory requirements will scale with the 
-size of the genome. 
-Please look at the <a href="https://github.com/alexdobin/STAR" target="_blank">STAR</a> manual for the concrete number about the memory requirements.
-For the human/mouse genome it requires ~ 40Gb of RAM. 
-The pipeline produces temporary files which require a substantial amount of disk space. Please ensure
-that you have at least 30Gb of disk space per 100 milion sequenced reads.
-The location of the temporary directory can be controlled using the tempdir: variable in the settings.yaml.
-By default the tempdir is set to <strong>/tmp</strong>.</p>
-<p><strong>Important:</strong> please make sure that the temporary directory has adequate free space</p>
-<h1 id="output-directory-structure">Output directory structure</h1>
-<p>The output directory structure should look like the following tree</p>
+<h1 id="running-the-pipeline">Running the pipeline</h1>
+<p>To run PiGx on your experimental data, first prepare the sample sheet and settings file (see <a href="#preparing-input">above</a>), and then from the terminal type</p>
+<pre><code class="lang-sh">$ pigx-scrnaseq <span class="hljs-_">-s</span> settings.yaml sample_sheet.csv
+</code></pre>
+<p>If you are not sure wether you set everything up correctly, use the dryrun option which will only show what work would be performed, but does not actually run the pipeline.</p>
+<pre><code class="lang-sh">$ pigx-scrnaseq <span class="hljs-_">-s</span> settings.yaml sample_sheet.csv -n
+</code></pre>
+<p>To see all available options type the <code>--help</code> option</p>
+<h1 id="output-description">Output Description</h1>
+<p>PiGx scRNA-seq creates an output folder, with a specific directory structure (for details see <a href="#output-folder-structure">here</a>), with the following results:</p>
+<ul>
+<li>bam files</li>
+<li>bigwig files</li>
+<li>UMI and read count matrices</li>
+<li>Quality control report</li>
+<li>SingleCellExperiment object with pre-calculated statistics and dimensionallity reductions</li>
+</ul>
+<h3 id="output-folder-structure">Output Folder Structure</h3>
+<p>The output directory structure has the following structure:</p>
 <pre><code>|-- Annotation
 |   `-- genome_name (i.e. mm10)
 |       `-- STAR_INDEX
@@ -871,7 +862,7 @@ By default the tempdir is set to <strong>/tmp</strong>.</p>
 |   |   `-- genome_name
 |   `-- Sample_4
 |       `-- genome_name
-</code></pre><h3 id="annotation">Annotation</h3>
+</code></pre><h4 id="annotation">Annotation</h4>
 <p>Contains pre-processed fasta and gtf file, along with the STAR genome index.
 The genome fasta file is processed into a dict header.
 The gtf file has gene_names replaced with gene_id.</p>
@@ -879,13 +870,13 @@ The gtf file has gene_names replaced with gene_id.</p>
 and genome version as the genome fasta files.
 The chromosome names have to completely correspond between the two files.</p>
 <p>We encourage users to use both the genome annotation and the fasta file from the <a href="https://www.ensembl.org/info/data/ftp/index.html" target="_blank">ENSEMBL</a> database.</p>
-<h3 id="log">Log</h3>
+<h4 id="log">Log</h4>
 <p>Contains execution logs for every step of the pipeline.</p>
-<h3 id="mapped">Mapped</h3>
+<h4 id="mapped">Mapped</h4>
 <p>The <strong>Mapped</strong> folder contains per sample processed single cell samples.
 Additionally, it contains a <a href="http://linnarssonlab.org/loompy/" target="_blank">loom</a> file with merged expression values from all experiments,
 an RDS file with a saved <a href="https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html" target="_blank">SingleCellExperiment</a> object, and a quality control report in the html format.</p>
-<h4 id="mappedsample1">Mapped/Sample1</h4>
+<h4 id="sample-output-description">Sample output description</h4>
 <p>Analaysis results for each sample are done in a separate subdirectory under <strong>Mapped</strong>.
 Structure of analysis results:</p>
 <pre><code>|-- Sample1.fastq.bam
@@ -916,8 +907,7 @@ Structure of analysis results:</p>
 |   |-- star_gene_exon_tagged.bam
 |   |-- unaligned_tagged_Cellular.bam_summary.txt
 |   `-- unaligned_tagged_Molecular.bam_summary.txt
-</code></pre><h4 id="description-of-relevant-output-files">Description of relevant output files:</h4>
-<ul>
+</code></pre><ul>
 <li><p>Sample1.fastq.bam - contains merged barcode and sequence fq files</p>
 </li>
 <li><p>Sample1_genome_name.<strong>bw</strong> - bigWig file constructed from selected cells. Files with <strong>m/p</strong>.bw contain strand separated signal</p>
@@ -935,16 +925,25 @@ Structure of analysis results:</p>
 <li><p>Sample1<em>genome_name</em><strong>ReadStatistics/Downstream</strong>.txt - quality control statistics used in the html report. They contain values such as number of reads in Exons/Introns.</p>
 </li>
 </ul>
-<h1 id="downstream-analysis">Downstream analysis</h1>
+<h2 id="downstream-analysis">Downstream analysis</h2>
 <p>The combined expression data are subsequently processed into a <a href="https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html" target="_blank">SingleCellExperiment</a> object. SingleCellExperiment is a Bioconductor class for storing expression values, along with the cell, and gene data, and experimental meta data in a single container. It is constructed on top of hdf5  file based arrays  (Pag&#xE8;s 2017), which enables exploration even on systems with limited memory capacity. 
 During the object construction, the pipeline performs expression normalization, dimensionallity reduction, identification of significantly variable genes, assigns the cells to the steps of the cell cycle, and calculates the quality statistics. The SingleCellExperiment object contains all of the necessary data needed for further exploration. The object connects the pigx-pipeline with the Bioconductor single cell computing environment, and enables integration with state of the art statistical, and machine learning mehods (<a href="https://bioconductor.org/packages/release/bioc/html/scran.html" target="_blank">scran</a>, <a href="https://bioconductor.org/packages/release/bioc/html/zinbwave.html" target="_blank">zinbwave</a>, <a href="https://github.com/BIMSBbioinfo/netSmooth" target="_blank">netSmooth</a>, <a href="https://github.com/csoneson/iSEE" target="_blank">iSEE</a>.</p>
-<h3 id="cluster-execution">Cluster Execution</h3>
-<p>The <code>execution</code> section in the settings file allows the user to specify whether the pipeline is to be submitted to a cluster, or run locally, and the degree of parallelism. For a full list of possible parameters, see <code>etc/settings.yaml</code>.</p>
-<h1 id="example">Example</h1>
-<p>An example can be found in the <code>tests</code> directory.  The
-<code>sample_sheet.csv</code> file here specifies the following sample data:</p>
-<hr>
-<p>2018</p>
+<h2 id="execution-on-a-cluster">Execution on a cluster</h2>
+<p>Currently, PiGx only supports Sun Grid Engine for cluster execution. If you&apos;re uncertain about your cluster, try typing <code>qsub</code> in the shell (Sun Grid Engine uses <code>qsub</code> to submit jobs).</p>
+<h4 id="disappearing-jobs-on-the-cluster">Disappearing jobs on the cluster</h4>
+<p>PiGx scRNA-seq comes with sensible defaults for resource requests when running on a cluster, but based on the genome version and other parameters, these might not be sufficient and your cluster might terminate your jobs. The cluster resource requests may be overridden in the settings file. See the execution section of the settings file created with <code>pigx scrnaseq --init=settings</code>.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>Q:</strong> I get the following error:</p>
+<pre><code class="lang-bash">Error: Directory cannot be locked. Please make sure that no other Snakemake process is trying to create the same files <span class="hljs-keyword">in</span> the following directory:
+/home/agosdsc/projects/pigx_scrnaseq/<span class="hljs-built_in">test</span>_dir/out
+If you are sure that no other instances of snakemake are running on this directory, the remaining lock was likely caused by a <span class="hljs-built_in">kill</span> signal or a power loss. It can be removed with the --unlock argument.
+</code></pre>
+<p>What happend and what should I do?</p>
+<p><strong>A:</strong> The pipeline crashed at some point, possible reasons are mentioned by the error. Do as the error message proposes and pass the <code>--unlock</code> argument once and then run the pipeline again without <code>--unlock</code>.  </p>
+<h1 id="questions">Questions</h1>
+<p>If you have further questions please e-mail:
+pigx@googlegroups.com or use the web form to ask questions
+<a href="https://groups.google.com/forum/#!forum/pigx/" target="_blank">https://groups.google.com/forum/#!forum/pigx/</a></p>
 
                                 
                                 </section>
@@ -988,7 +987,7 @@ During the object construction, the pipeline performs expression normalization, 
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"PiGx scRNA-seq","level":"1.5","depth":1,"next":{"title":"Introduction","level":"1.5.1","depth":2,"anchor":"#introduction","path":"pigx-scrna-seq.md","ref":"pigx-scrna-seq.md#introduction","articles":[]},"previous":{"title":"Questions","level":"1.4.8","depth":2,"anchor":"#questions","path":"pigx-bs-seq.md","ref":"pigx-bs-seq.md#questions","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"pigx-scrna-seq.md","mtime":"2018-04-20T20:44:51.894Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-20T20:46:39.909Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"PiGx scRNA-seq","level":"1.5","depth":1,"next":{"title":"Introduction","level":"1.5.1","depth":2,"anchor":"#introduction","path":"pigx-scrna-seq.md","ref":"pigx-scrna-seq.md#introduction","articles":[]},"previous":{"title":"Questions","level":"1.4.8","depth":2,"anchor":"#questions","path":"pigx-bs-seq.md","ref":"pigx-bs-seq.md#questions","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"pigx-scrna-seq.md","mtime":"2018-04-20T20:48:11.403Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-20T20:49:44.745Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
