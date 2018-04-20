@@ -1,10 +1,14 @@
 # PiGx BS-seq
 
-## Introduction
-PiGx-bsseq is a preprocessing and analysis pipeline that takes raw `fastq` read files and performs all necessary steps to present the full methylome for analysis. Quality control, and differential methylation are also performed, and a final report provides a summary for each sample provided by the user.
+# Introduction
 
+PiGx-bsseq is a preprocessing and analysis pipeline that takes raw
+`fastq` read files and performs all necessary steps to present the
+full methylome for analysis. Quality control, and differential
+methylation are also performed, and a final report provides a summary
+for each sample provided by the user.
 
-## The workflow
+## Workflow
 
 This figure provides an overview of the various stages of the
 pipeline, as well as the outputs and expected inputs.
@@ -27,10 +31,44 @@ Methylation-calling is then carried out using
 initial post-mapping analysis such as segmentation and differential
 methylation between samples.
 
-## Input preparation
+# Installation
+
+You can install this pipeline with all its dependencies using GNU Guix:
+
+    guix package -i pigx-bsseq
+
+You can also install it from source manually.  You can find the
+[latest
+release](https://github.com/BIMSBbioinfo/pigx_bsseq/releases/latest)
+here.  PiGx uses the GNU build system.  Please make sure that all
+required dependencies are installed and then follow these steps after
+unpacking the latest release tarball:
+
+```sh
+./configure --prefix=/some/where
+make install
+```
+
+# Quick start
+
+1. Download the zipped test data:
+
+    `wget https://github.com/BIMSBbioinfo/pigx_bsseq/releases/download/v0.0.8/test-data.tar.gz`
+
+2. Unzip the archive
+
+    `tar xzvf test-data.tar.gz`
+
+3. Run the pipeline
+
+    `cd tests && pigx-bsseq -s settings.yaml sample_sheet.csv`
+
+
+# Preparing the input
+
 To use the pipeline, the user must first edit two files: the sample sheet and the settings file. 
 
-### Sample Sheet (`.xls` -> `.csv`)
+## Sample Sheet
 
 The sample sheet is a tabular file (`csv` format) describing the experiment.
 The table has the following columns:
@@ -56,9 +94,12 @@ The above sample sheet can be produced by editing the included file
 commas (`,`).
 
  
-### Settings File (`.yaml`)
-In the settings file, various parameters are saved, in YAML format, to configure the execution of PiGx-bsseq. 
-The entries are stored hierarchically, and a brief description is provided below, along with possible default value in parenthesis:
+## Settings File
+
+In the settings file, various parameters are saved, in YAML format, to
+configure the execution of PiGx-bsseq.  The entries are stored
+hierarchically, and a brief description is provided below, along with
+possible default value in parenthesis:
 
 - `locations`: 
   - `input-dir`: path to directory containing the input `fastq` files (./in)
@@ -99,20 +140,24 @@ as defaults in `etc/settings.yaml.in` will not need to be modified by most
 users (although advanced users may freely re-define any such variables in their own
 settings file, and by so doing, overwrite them).
 
-## Execution
+# Running the pipeline
 
 After editting the above input files, the bsseq pipeline can be executed with
-the command: `./pigx-bsseq [sample sheet] -s [settings file]` with further
+the command: `pigx-bsseq [sample sheet] -s [settings file]` with further
 options, described in the README (for example, the flag `--dry-run` can be
-added to confirm valid input settings before execution).  Once the pipeline is
-executed, the desired output directory is created, along with various
-sub-directories for intermediate steps in the process, each of which are named
-with prefixes to indicate their (approximate) order in sequence.  In most
-cases, these processes have their own interim reports and log files. For
-example, `06_sorting` contains the sorted `.bam` file after alignments, and
-`07_methyl_calls` contains information on average methylation in various
-formats, while `01_raw_QC` is the earliest step --quality control of the raw
-inputs. 
+added to confirm valid input settings before execution).
+
+# Output description
+
+Once the pipeline is executed, the desired output directory is
+created, along with various sub-directories for intermediate steps in
+the process, each of which are named with prefixes to indicate their
+(approximate) order in sequence.  In most cases, these processes have
+their own interim reports and log files. For example, `06_sorting`
+contains the sorted `.bam` file after alignments, and
+`07_methyl_calls` contains information on average methylation in
+various formats, while `01_raw_QC` is the earliest step --quality
+control of the raw inputs.
 
 ## Analysis 
 In the `out-dir` folder, PiGx will create a sub-directory
@@ -126,7 +171,7 @@ should be suffice to consult the column-separated files in `07_methyl_calls`.
 In each case, the specific file names will refer to the sample IDs provided in
 the original sample sheet.
 
-## Troubleshooting
+# Troubleshooting
 
 The dependency graph of rules contains branches; as such, the rules are not
 always performed in _exactly_ the order indicated by directory prefix labels.
@@ -165,4 +210,9 @@ fine-tuned; novice users who are studying either the human genome, or a smaller
 one, should simply ignore this section and allow PiGx to assign the default
 values.
 
+# Questions
+
+If you have further questions please send e-mail to
+pigx@googlegroups.com or [ask questions on the web
+forum](https://groups.google.com/forum/#!forum/pigx/).
 
