@@ -120,7 +120,7 @@ The output of the pipeline is located inside `test_dir/out` directory.
 The `scRNA-Seq.report.html` inside the `Mapped` directory gives a general overview about the single cell experiments.
 
 
-# Preparing Input
+# Preparing the input
 
 To run the pipeline, the user must supply
 
@@ -324,7 +324,7 @@ Currently, PiGx only supports Sun Grid Engine for cluster execution. If you're u
 #### Disappearing jobs on the cluster
 PiGx scRNA-seq comes with sensible defaults for resource requests when running on a cluster, but based on the genome version and other parameters, these might not be sufficient and your cluster might terminate your jobs. The cluster resource requests may be overridden in the settings file. See the execution section of the settings file created with `pigx scrnaseq --init=settings`.
 
-## FAQ
+# Troubleshooting
 
 __Q:__ I get the following error:
 ```bash
