@@ -196,10 +196,10 @@
     
         <li class="chapter " data-level="1.2.7" data-path="pigx-rna-seq.html">
             
-                <a href="pigx-rna-seq.html#troubleshootingfaq">
+                <a href="pigx-rna-seq.html#troubleshooting">
             
                     
-                    Troubleshooting/FAQ
+                    Troubleshooting
             
                 </a>
             
@@ -642,7 +642,7 @@
                                 <h1 id="pigx-rna-seq">PiGx RNA-seq</h1>
 <h1 id="introduction">Introduction</h1>
 <p>PiGx RNAseq is a preprocessing and analysis pipeline. It takes single-end or paired-end <code>fastq</code> files containing fragment reads, and does all the necessary preprocessing to get analysis-ready gene expression levels. It also performs quality control steps and outputs comprehensive quality statistics. Finally, it performs a differential expression analysis and outputs a stand-alone HTML report with tables and figures summarizing any differential gene expression between samples as specified in the experiment design.</p>
-<h2 id="the-workflow">The workflow</h2>
+<h2 id="workflow">Workflow</h2>
 <p>PiGx RNAseq follows academic best practices for preprocessing and analysis of RNAseq data. Figure 1 provides an overview of the different steps of the pipeline, as well as the outputs.</p>
 <p>First, raw reads are trimmed using <a href="https://www.bioinformatics.babraham.ac.uk/projects/trim_galore/" target="_blank">TrimGalore!</a> to ensure a minimum read quality, and removal of adapter sequences. Next, reads are aligned to a reference genome using <a href="https://github.com/alexdobin/STAR" target="_blank">STAR</a>, and the depth of coverage is computed using <a href="http://bedtools.readthedocs.io/en/latest/" target="_blank">BEDTools</a>, outputing <code>bedgraph</code> files. Gene-level expression counts is obtained from <em>STAR</em>, and transcript-level quantification is produced using <a href="https://combine-lab.github.io/salmon/" target="_blank">Salmon</a>. Statistical analysis for differential expression analysis is performed using <a href="https://bioconductor.org/packages/release/bioc/html/DESeq2.html" target="_blank">DESeq2</a>, and the results are used to compile a custom report.</p>
 <p><img src="figures/pigx-rnaseq.png" alt="PiGx RNAseq workflow">
@@ -668,18 +668,16 @@ management.  Install the complete pipeline bundle with the following
 command:</p>
 <pre><code class="lang-sh">guix package -i pigx
 </code></pre>
-<p>If you want to install PiGx from source, please make sure that all
+<p>You can also install just the RNAseq pipeline with</p>
+<pre><code class="lang-sh">guix package -i pigx-rnaseq
+</code></pre>
+<p>If you want to install PiGx RNAseq from source, please make sure that all
 required dependencies are installed and then follow the common GNU
-build system steps after unpacking the <a href="https://github.com/BIMSBbioinfo/pigx/releases/latest" target="_blank">latest release
+build system steps after unpacking the <a href="https://github.com/BIMSBbioinfo/pigx_rnaseq/releases/latest" target="_blank">latest release
 tarball</a>:</p>
 <pre><code class="lang-sh">./configure --prefix=/some/<span class="hljs-built_in">where</span>
 make install
 </code></pre>
-<p>You can enable or disable each of the pipelines with the
-<code>--enable-PIPELINE</code> and <code>--disable-PIPELINE</code> arguments to the
-<code>configure</code> script.  <code>PIPELINE</code> is one of <code>bsseq</code>, <code>rnaseq</code>,
-<code>scrnaseq</code>, <code>chipseq</code>, and <code>crispr</code>.  For more options run
-<code>./configure --help</code>.</p>
 <h1 id="quick-start">Quick start</h1>
 <ol>
 <li><p>Download the zipped test data folder from <a href="https://github.com/BIMSBbioinfo/pigx_rnaseq/releases/download/v0.0.3/test_data-0.0.3.tgz" target="_blank">here</a>: </p>
@@ -913,7 +911,7 @@ make install
 <p>The reports and complementary tab-separated files are all saved in the <code>reports</code> output directory.</p>
 <h2 id="depth-of-coverage">Depth of coverage</h2>
 <p>PiGx RNAseq computes coverage depth from the STAR-alignment of the reads, using <a href="http://bedtools.readthedocs.io/en/latest/" target="_blank">bedtools</a>. The resulting <code>bedGraph</code> files are output in the <code>bedgraph_files</code> output folder.</p>
-<h1 id="troubleshootingfaq">Troubleshooting/FAQ</h1>
+<h1 id="troubleshooting">Troubleshooting</h1>
 <h3 id="execution-on-a-cluster">Execution on a cluster</h3>
 <p>Currently, PiGx only supports Sun Grid Engine for cluster execution. If you&apos;re uncertain about your cluster, try typing <code>qsub</code> in the shell (Sun Grid Engine uses <code>qsub</code> to submit jobs).</p>
 <h4 id="disappearing-jobs-on-the-cluster">Disappearing jobs on the cluster</h4>
@@ -965,7 +963,7 @@ pigx@googlegroups.com or use the web form to ask questions
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"PiGx RNA-seq","level":"1.2","depth":1,"next":{"title":"Introduction","level":"1.2.1","depth":2,"anchor":"#introduction","path":"pigx-rna-seq.md","ref":"pigx-rna-seq.md#introduction","articles":[]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"pigx-rna-seq.md","mtime":"2018-04-21T03:55:33.185Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-21T03:56:58.328Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"PiGx RNA-seq","level":"1.2","depth":1,"next":{"title":"Introduction","level":"1.2.1","depth":2,"anchor":"#introduction","path":"pigx-rna-seq.md","ref":"pigx-rna-seq.md#introduction","articles":[]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"pigx-rna-seq.md","mtime":"2018-04-21T03:58:41.039Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-21T03:59:55.135Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
