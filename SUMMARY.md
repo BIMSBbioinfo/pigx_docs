@@ -8,7 +8,7 @@
     * [Preparing the input](pigx-rna-seq.md#preparing-the-input)
     * [Running the pipeline](pigx-rna-seq.md#running-the-pipeline)
     * [Output description](pigx-rna-seq.md#output-description)
-    * [Troubleshooting/FAQ](pigx-rna-seq.md#troubleshootingfaq)
+    * [Troubleshooting](pigx-rna-seq.md#troubleshooting)
     * [Questions](pigx-rna-seq.md#questions)
 * [PiGx ChIP-seq](pigx-chip-seq.md#pigx-chip-seq)
     * [Introduction](pigx-chip-seq.md#introduction)

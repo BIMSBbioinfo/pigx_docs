@@ -3,7 +3,7 @@
 # Introduction
 PiGx RNAseq is a preprocessing and analysis pipeline. It takes single-end or paired-end `fastq` files containing fragment reads, and does all the necessary preprocessing to get analysis-ready gene expression levels. It also performs quality control steps and outputs comprehensive quality statistics. Finally, it performs a differential expression analysis and outputs a stand-alone HTML report with tables and figures summarizing any differential gene expression between samples as specified in the experiment design.
 
-## The workflow
+## Workflow
 PiGx RNAseq follows academic best practices for preprocessing and analysis of RNAseq data. Figure 1 provides an overview of the different steps of the pipeline, as well as the outputs.
 
 First, raw reads are trimmed using [TrimGalore!][trimgalore] to ensure a minimum read quality, and removal of adapter sequences. Next, reads are aligned to a reference genome using [STAR][star], and the depth of coverage is computed using [BEDTools][bedtools], outputing `bedgraph` files. Gene-level expression counts is obtained from _STAR_, and transcript-level quantification is produced using [Salmon][salmon]. Statistical analysis for differential expression analysis is performed using [DESeq2][deseq2], and the results are used to compile a custom report.
@@ -34,21 +34,21 @@ command:
 guix package -i pigx
 ```
 
-If you want to install PiGx from source, please make sure that all
+You can also install just the RNAseq pipeline with
+
+```sh
+guix package -i pigx-rnaseq
+```
+
+If you want to install PiGx RNAseq from source, please make sure that all
 required dependencies are installed and then follow the common GNU
 build system steps after unpacking the [latest release
-tarball](https://github.com/BIMSBbioinfo/pigx/releases/latest):
+tarball](https://github.com/BIMSBbioinfo/pigx_rnaseq/releases/latest):
 
 ```sh
 ./configure --prefix=/some/where
 make install
 ```
-
-You can enable or disable each of the pipelines with the
-`--enable-PIPELINE` and `--disable-PIPELINE` arguments to the
-`configure` script.  `PIPELINE` is one of `bsseq`, `rnaseq`,
-`scrnaseq`, `chipseq`, and `crispr`.  For more options run
-`./configure --help`.
 
 # Quick start
 
@@ -250,7 +250,7 @@ The reports and complementary tab-separated files are all saved in the `reports`
 ## Depth of coverage
 PiGx RNAseq computes coverage depth from the STAR-alignment of the reads, using [bedtools][bedtools]. The resulting `bedGraph` files are output in the `bedgraph_files` output folder.
 
-# Troubleshooting/FAQ
+# Troubleshooting
 
 ### Execution on a cluster
 Currently, PiGx only supports Sun Grid Engine for cluster execution. If you're uncertain about your cluster, try typing `qsub` in the shell (Sun Grid Engine uses `qsub` to submit jobs).
