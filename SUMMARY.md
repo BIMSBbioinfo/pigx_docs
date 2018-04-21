@@ -36,5 +36,5 @@
     * [Running the pipeline](pigx-scrna-seq.md#running-the-pipeline)
     * [Output description](pigx-scrna-seq.md#output-description)
     * [Troubleshooting](pigx-scrna-seq.md#troubleshooting)
-    * [Example](pigx-scrna-seq.md#questions)
+    * [Questions](pigx-scrna-seq.md#questions)
 
