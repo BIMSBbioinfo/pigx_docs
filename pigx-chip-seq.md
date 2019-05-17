@@ -102,7 +102,7 @@ installed:
 
 </details>
 
-## Via Guix
+### Via Guix
 
 Assuming you have Guix installed, the following command spawns a
 sub-shell in which all dependencies are available:
@@ -175,14 +175,16 @@ pigx chipseq --init=sample-sheet
 ```
 This creates a template that can be filled with your own samples.
 
-### Technical Replicates
+#### Technical Replicates
 
-The current sample sheet does not support multiple technical replicates for one sample, so replicates need to be combined prior to running the pipeline.   
-This could be done by concatenating the respective files (for uncompressed or compressed files):
+The sample sheet offers support for technical replicates, by repeating the sample name (first column) for different input files (second,third column).
+The quality check will be performed for any input file and replicates will be merged during the mapping. 
 
-```sh
-cat sample_tecrep1.fq.gz sample_tecrep2.fq.gz [..] > sample.fq.gz
-```
+
+| SampleName | Read | Read2 |
+|------|-------|--------|
+|ChIPpe| ChIPpe_R1.fq.gz | ChIPpe_R2.fq.gz |
+|ChIPpe| ChIPpe_t2_R1.fq.gz | ChIPpe_t2_R2.fq.gz |
 
 ## Settings File
 
@@ -484,6 +486,15 @@ If you are sure that no other instances of snakemake are running on this directo
 What happend and what should I do?
 
 __A:__ The pipeline crashed at some point, possible reasons are mentioned by the error. Do as the error message proposes and pass the `--unlock` argument once and then run the pipeline again without `--unlock`.  
+
+__Q:__ command name?
+In my installation, the command appears to be pigx-chipseq and not pigx chipseq as the docs say.
+
+__A:__ The command that you have to use depends on the way the pipeline was installed, either as part of the pigx bundle (guix package -i pigx) or as a single pipeline (guix package -i pigx-chipseq)
+
+__Q:__ The docs mention how to deal with technical replicates, but how should biological replicates be handled?
+
+__A:__ Usually biological replicates are kept seperately, which means you should give them distinct names in the sample sheet to allow for distinct alignments, and then for peak-calling you pick up the sample names from the sample sheet to reenter them in the 'analysis' section of the settings file.
 
 # Questions
 If you have further questions please e-mail:
