@@ -211,6 +211,18 @@ Here you define paths to be used in the pipeline, some of the items are required
 | _index-dir_    | no | directory containing pre-built mapping indices for the  given reference genome (created with `bowtie2-build`) |
 | _gff-file_    | no | location of a `GTF` file with genome annotations for the  given reference genome |
 
+#### Reference and annotations
+
+The user must supply paths pointing to a reference genome for the organism, as well as annotated genes. These might for example be downloaded from:
+
+- [UCSC](http://genome.ucsc.edu/cgi-bin/hgTables): The reference genome can be retrieved by selecting the _group_ `Mapping and Sequencing` with _track_  `Assembly`, then choosing _region_ `genome` and _output format_ `Sequence` and finally clicking _Get output_ . The gene annotations can be retrieved by selecting the _group_ `Genes and Gene Predictions` with _track_  `NCBI Refseq` or `Ensembl Genes`, then choosing _region_ `genome` and _output format_ `GTF - gene transfer format` and finally clicking _Get output_ . 
+
+or 
+
+- [Ensembl](https://www.ensembl.org/info/data/ftp/index.html), where the reference genomoe is listed under _DNA_ `FASTA`, the gene annotations under _Gene sets_ `GTF`. 
+
+The user is free to choose any resource for these annotation files, however it is very important to note that the chromosome naming styles must match between different annotation files (e.g. chromosome 21 is named as *chr21* in UCSC style, but *21* in NCBI/Ensemble style). 
+
 ### General
 
 These are settings which apply to all analysis (unless adjusted in single analysis):
@@ -349,6 +361,8 @@ idr:
 #### (_optional_) Hub
 
 In the _hub_ section the general layout of a [UCSC Track Hubs](https://genome.ucsc.edu/goldenpath/help/hgTrackHubHelp.html#Intro) is described with some minimal items. The track hub is generated from the processed data and allows the visual inspection of results at a UCSC genome browser (for supported genomes). 
+
+__IMPORTANT__: In order to use the hub feature, make sure you downloaded the reference genome in UCSC style (see [here](#reference-and-annotations) for instructions ).
 
 The required items to define the hub are the following:
 
