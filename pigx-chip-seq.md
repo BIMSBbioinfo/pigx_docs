@@ -489,6 +489,77 @@ Currently, PiGx only supports Sun Grid Engine for cluster execution. If you're u
 #### Disappearing jobs on the cluster
 PiGx ChIPseq comes with sensible defaults for resource requests when running on a cluster, but based on the genome version and other parameters, these might not be sufficient and your cluster might terminate your jobs. The cluster resource requests may be overridden in the settings file. See the execution section of the settings file created with `pigx chipseq --init=settings`.
 
+## Guix locale error
+If you get a warning:
+
+```
+##########################
+
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+    LANGUAGE = (unset),
+    LC_ALL = (unset),
+    LC_MEASUREMENT = "de_DE.UTF-8",
+    LC_PAPER = "de_DE.UTF-8",
+    LC_MONETARY = "de_DE.UTF-8",
+    LC_NAME = "de_DE.UTF-8",
+    LC_ADDRESS = "de_DE.UTF-8",
+    LC_NUMERIC = "de_DE.UTF-8",
+    LC_TELEPHONE = "de_DE.UTF-8",
+    LC_IDENTIFICATION = "de_DE.UTF-8",
+    LC_TIME = "de_DE.UTF-8",
+    LANG = "en_US.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+
+##########################
+```
+
+and the pipeline breaks at multiqc, printing this into the Log :
+
+```
+####################################################
+Traceback (most recent call last):
+  File "/gnu/store/gaijkjaiv4hirsazalpbjp3ifymybkzb-multiqc-1.5/bin/.multiqc-real", line 767, in <module>
+    multiqc()
+  File "/gnu/store/2h1kcjw1r1306chd45452kwqzq2xb001-python-click-6.7/lib/python3.6/site-packages/click/core.py", line 722, in __call__
+    return self.main(*args, **kwargs)
+  File "/gnu/store/2h1kcjw1r1306chd45452kwqzq2xb001-python-click-6.7/lib/python3.6/site-packages/click/core.py", line 676, in main
+    _verify_python3_env()
+  File "/gnu/store/2h1kcjw1r1306chd45452kwqzq2xb001-python-click-6.7/lib/python3.6/site-packages/click/_unicodefun.py", line 118, in _verify_python3_env
+    'for mitigation steps.' + extra)
+RuntimeError: Click will abort further execution because Python 3 was configured to use ASCII as encoding for the environment.  Consult http://click.pocoo.org/python3/for mitigation steps.
+
+Additional information: on this system no suitable UTF-8
+locales were discovered.  This most likely requires resolving
+by reconfiguring the locale system.
+
+Click discovered that you exported a UTF-8 locale
+but the locale system could not pick up from it because
+it does not exist.  The exported locale is "en_US.UTF-8" but it
+is not supported
+
+#######################################################
+```
+
+Then you have to install `glibc-locales`
+
+```
+guix package -i glibc-locales
+```
+and export this global variable to use these guix locales:
+
+```
+export GUIX_LOCPATH=$HOME/.guix-profile/lib/locale
+```
+
+Or you might consider adding this directly to your `~/.bashrc` or `~/.bash_profile`. 
+
+```
+echo -e "# use guix locales\nexport GUIX_LOCPATH="'$HOME'"/.guix-profile/lib/locale"  >>  ~/.bashrc
+```
+
+
 # FAQ
 
 __Q:__ I get the following error:
