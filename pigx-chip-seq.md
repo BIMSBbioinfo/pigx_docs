@@ -489,7 +489,7 @@ Currently, PiGx only supports Sun Grid Engine for cluster execution. If you're u
 #### Disappearing jobs on the cluster
 PiGx ChIPseq comes with sensible defaults for resource requests when running on a cluster, but based on the genome version and other parameters, these might not be sufficient and your cluster might terminate your jobs. The cluster resource requests may be overridden in the settings file. See the execution section of the settings file created with `pigx chipseq --init=settings`.
 
-## FAQ
+# FAQ
 
 __Q:__ I get the following error:
 ```bash
@@ -509,6 +509,23 @@ __A:__ The command that you have to use depends on the way the pipeline was inst
 __Q:__ The docs mention how to deal with technical replicates, but how should biological replicates be handled?
 
 __A:__ Usually biological replicates are kept seperately, which means you should give them distinct names in the sample sheet to allow for distinct alignments, and then for peak-calling you pick up the sample names from the sample sheet to reenter them in the 'analysis' section of the settings file.
+
+__Q:__ I get an error when trying to run the pipeline:
+```sh
+SystemExit in line 26 of /gnu/store/ik8kz81k720a8sy8nc4119jy5njb98gd-pigx-chipseq-0.0.20/libexec/pigx_chipseq/scripts/Check_Config.py:
+ERROR: Config file is not properly formated:
+Genome fasta headers contain whitespaces.
+ Please reformat the headers
+
+  File "/gnu/store/ik8kz81k720a8sy8nc4119jy5njb98gd-pigx-chipseq-0.0.20/libexec/pigx_chipseq/Snake_ChIPseq.py", line 38, in <module>
+  File "/gnu/store/ik8kz81k720a8sy8nc4119jy5njb98gd-pigx-chipseq-0.0.20/libexec/pigx_chipseq/scripts/Check_Config.py", line 26, in validate_config
+``` 
+
+__A:__ Our pipeline does not like if in the FASTA headers of the reference genome there is more information than the chromosome name, so please use this oneliner to format your genome-file: 
+```sh
+cat refGenome.fa  | awk '{ print $1}’ >  refGenome_noWhiteSpace.fa
+```
+
 
 # Questions
 If you have further questions please e-mail:
