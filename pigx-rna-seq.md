@@ -32,13 +32,13 @@ management.  Install the complete pipeline bundle with the following
 command:
 
 ```sh
-guix package -i pigx
+guix install pigx
 ```
 
 You can also install just the RNAseq pipeline with
 
 ```sh
-guix package -i pigx-rnaseq
+guix install pigx-rnaseq
 ```
 
 If you want to install PiGx RNAseq from source, please make sure that all

@@ -29,7 +29,7 @@ _Figure 1: An overview of the PiGx ChIPseq workflow_
 
 You can install this pipeline with all its dependencies using GNU Guix:
 
-    guix package -i pigx-chipseq
+    guix install pigx-chipseq
 
 You can also install it from source manually.  You can find the
 [latest
@@ -504,7 +504,7 @@ __A:__ The pipeline crashed at some point, possible reasons are mentioned by the
 __Q:__ command name?
 In my installation, the command appears to be pigx-chipseq and not pigx chipseq as the docs say.
 
-__A:__ The command that you have to use depends on the way the pipeline was installed, either as part of the pigx bundle (guix package -i pigx) or as a single pipeline (guix package -i pigx-chipseq)
+__A:__ The command that you have to use depends on the way the pipeline was installed, either as part of the pigx bundle (`guix install pigx`) or as a single pipeline (`guix install pigx-chipseq`)
 
 __Q:__ The docs mention how to deal with technical replicates, but how should biological replicates be handled?
 

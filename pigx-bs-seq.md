@@ -35,7 +35,7 @@ methylation between samples.
 
 You can install this pipeline with all its dependencies using GNU Guix:
 
-    guix package -i pigx-bsseq
+    guix install pigx-bsseq
 
 You can also install it from source manually.  You can find the
 [latest

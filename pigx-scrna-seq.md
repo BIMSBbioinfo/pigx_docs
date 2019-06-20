@@ -27,7 +27,7 @@ _Figure 1: An overview of the PiGx scRNA-seq workflow_
 You can install this pipeline and all of its dependencies through GNU
 Guix:
 
-    guix package -i pigx-scrnaseq
+    guix install pigx-scrnaseq
 
 You can also install it manually from source.  You can find the [latest
 release](https://github.com/BIMSBbioinfo/pigx_scrnaseq/releases/latest)
