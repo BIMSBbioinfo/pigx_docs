@@ -1,12 +1,12 @@
 # PiGx RNA-seq
 
 # Introduction
-PiGx RNAseq is a preprocessing and analysis pipeline. It takes single-end or paired-end `fastq` files containing fragment reads, and does all the necessary preprocessing to get analysis-ready gene expression levels. It also performs quality control steps and outputs comprehensive quality statistics. Finally, it performs a differential expression analysis and outputs a stand-alone HTML report with tables and figures summarizing any differential gene expression between samples as specified in the experiment design.
+PiGx RNAseq is a preprocessing and analysis pipeline. It takes single-end and/or paired-end `fastq` files containing fragment reads, and does all the necessary preprocessing to get analysis-ready gene expression levels. It also performs quality control steps and outputs comprehensive quality statistics. Finally, it performs a differential expression analysis and outputs a stand-alone HTML report with tables and figures summarizing any differential gene expression between samples as specified in the experiment design.
 
 ## Workflow
 PiGx RNAseq follows academic best practices for preprocessing and analysis of RNAseq data. Figure 1 provides an overview of the different steps of the pipeline, as well as the outputs.
 
-First, raw reads are trimmed using [TrimGalore!][trimgalore] to ensure a minimum read quality, and removal of adapter sequences. Next, reads are aligned to a reference genome using [STAR][star], and the depth of coverage is computed using [BEDTools][bedtools], outputing `bedgraph` files. Gene-level expression counts is obtained from _STAR_, and transcript-level quantification is produced using [Salmon][salmon]. Statistical analysis for differential expression analysis is performed using [DESeq2][deseq2], and the results are used to compile a custom report.
+First, raw reads are trimmed using [TrimGalore!][trimgalore] to ensure a minimum read quality, and removal of adapter sequences. Next, reads are aligned to a reference genome using [STAR][star], and the depth of coverage (normalized by [DESeq2][deseq2] size factors), is computed using [GenomicAlignments][genomicalignments], outputing `bigwig` files. Gene-level expression counts is obtained from [HTseq-count][htseqcount], and transcript-level quantification is produced using [Salmon][salmon]. Statistical analysis for differential expression analysis is performed using [DESeq2][deseq2], GO term enrichment analysis is performed using [gProfileR][gprofiler], and the results are used to compile a custom report.
 
 ![PiGx RNAseq workflow](./figures/pigx-rnaseq.png)
 _Figure 1: An overview of the PiGx RNAseq workflow_
@@ -15,11 +15,12 @@ _Figure 1: An overview of the PiGx RNAseq workflow_
 
 - Quality Control reports
 - Alignment results in BAM file format. 
-- BEDGRAPH files for genome-scale coverage analysis
-- Transcripts per million (TPM) counts matrices at gene/transcript level. 
+- bigwig files for genome-scale normalized coverage tracks
+- Raw (via _Salmon_ and _HTSeq-count_) and normalized read count tables (using _DESeq2_ median of ratios normalization procedure and TPM normalization). 
 - Differential expression analysis results
     - HTML reports
     - Tab-separated file for log-transformed normalized counts
+    - GO term analysis result tables
     - DESeq2 differential expression results table sorted by adjusted p-values. 
 
 # Installation
@@ -41,7 +42,7 @@ guix package -i pigx-rnaseq
 ```
 
 If you want to install PiGx RNAseq from source, please make sure that all
-required dependencies are installed and then follow the common GNU
+required dependencies (see "requirements.txt") are installed and then follow the common GNU
 build system steps after unpacking the [latest release
 tarball](https://github.com/BIMSBbioinfo/pigx_rnaseq/releases/latest):
 
@@ -226,29 +227,44 @@ PiGx RNAseq creates an output folder, as specified in the settings file, that co
 General quality control metrics are computed using [FastQC][fastqc] and [MultiQC][multiqc]. The MultiQC report is particularly useful, collating quality control metrics from many steps of the pipeline in a single html report, which may be found under the `multiqc` folder in the PiGx output folder.
 
 ## Gene expression
+
 PiGx RNAseq produces three variants of gene expression count matrices:
 
 | Kind of count matrix | output location |
 |------|-------|
-| Post-alignment reads-per-gene counts from [STAR][star] | in the `preprocessed_data` directory |
-| Pseudo-alignment reads-per-gene counts from [Salmon][salmon] | in the `salmon_output` directory |
-| Pseudo-alignment reads-per-transcript counts from [Salmon][salmon] | in the `salmon_output` directory |
+| Post-alignment reads-per-gene counts from [HTSeq-count][htseqcount] | in the `feature_counts/raw_counts` directory |
+| Pseudo-alignment reads-per-gene counts from [Salmon][salmon] | in the `feature_counts/raw_counts` directory |
+| Pseudo-alignment reads-per-transcript counts from [Salmon][salmon] | in the `feature_counts/raw_counts` directory |
 
-### Transcripts per million (TPM) counts table
+The read counting step using _HTSeq-count_ can be configured by modifying the `tools` section of the `settings.yaml` file. By default, the reads that align to the _exon_ features are grouped together via _gene_id_ assuming no strand-speficity, assuming the input files are in _bam_ format ordered by alignment coordinates. A counting mode of _union_ is chosen by default. 
 
-In order to enable comparison of gene/transcript expression across all samples outside of the context of differential expression analysis, PiGx RNAseq produces two matrices of normalized (TPM) counts:
+```yaml
+tools:
+  htseq-count:
+    executable: @HTSEQ_COUNT@
+    args: "-f bam -t exon -i gene_id --order pos --stranded no --mode union --nonunique none"
+```
 
-   - `salmon_output/TPM_counts_from_SALMON.transcripts.tsv` for transcript-level normalized counts. 
-   - `salmon_output/TPM_counts_from_SALMON.genes.tsv` for gene-level normalized counts. 
+The `args` line can be modified to add or remove further arguments that are passed to the _HTSeq-count_ tool. To find out more about the arguments for read counting, please refer to the [_HTSeq-count_ documentation](https://htseq.readthedocs.io/en/release_0.11.1/count.html). 
+
+### Normalized counts tables 
+
+In order to enable comparison of gene/transcript expression across all samples outside of the context of differential expression analysis, PiGx RNAseq produces normalized counts tables using two normalizatoin procedures:
+  - DESeq2 (median of ratios) normalization (Recommended option)
+    - `feature_counts/normalized/deseq_normalized_counts.tsv` for gene-level normalized counts. 
+  - TPM normalization 
+    - `feature_counts/normalized/TPM_counts_from_SALMON.transcripts.tsv` for transcript-level normalized counts. 
+    - `feature_counts/normalized/TPM_counts_from_SALMON.genes.tsv` for gene-level normalized counts. 
+
 
 ## Differential expression analysis results
 
-PiGx RNAseq produces differential expression reports for each comparison specified in the settings file, and using each of the expression quantification strategies specified above. I.e. for each contrast specified in the settings file, three reports will be produced; one based on counts-per-gene from STAR, one based on counts-per-gene from Salmon, and another based on counts-per-transcript from Salmon. Along with the HTML report will be produced two additional files per comparison: 1) a tab-separated file containing the DESeq2 differential expression results table, and 2) a tab-separated file containing the normalized expression values. Notice that these normalized values are on the logarithmic scale based on Variance Stabilizing Transformation method applied using DESeq2. Also, notice that these normalized values only apply in the context of the compared samples. In order to compare normalized values across all samples, please use the TPM counts table produced using `salmon`.  
+PiGx RNAseq produces differential expression reports for each comparison specified in the settings file, and using each of the expression quantification strategies specified above. I.e. for each contrast specified in the settings file, three reports will be produced; one based on counts-per-gene from _HTSeq-count_ computed from _STAR_ alignments, one based on counts-per-gene from Salmon, and another based on counts-per-transcript from Salmon. Along with the HTML report will be produced two additional files per comparison: 1) a tab-separated file containing the DESeq2 differential expression results table, and 2) a tab-separated file containing the normalized expression values. Notice that these normalized values only apply in the context of the compared samples. In order to compare normalized values across all samples, please use the  DESeq2 normalized count tables at `feature_counts/normalized/deseq_normalized_counts.tsv`. 
 
 The reports and complementary tab-separated files are all saved in the `reports` output directory.
 
 ## Depth of coverage
-PiGx RNAseq computes coverage depth from the STAR-alignment of the reads, using [bedtools][bedtools]. The resulting `bedGraph` files are output in the `bedgraph_files` output folder.
+PiGx RNAseq computes coverage depth from the STAR-alignment of the reads, using [GenomicAlignments][genomicalignments]. The resulting `bigwig` files are output in the `bigwig_files` output folder.
 
 # Troubleshooting
 
@@ -261,13 +277,14 @@ PiGx RNAseq comes with sensible defaults for resource requests when running on a
 
 [trimgalore]: https://www.bioinformatics.babraham.ac.uk/projects/trim_galore/
 [star]: https://github.com/alexdobin/STAR
-[bedtools]: http://bedtools.readthedocs.io/en/latest/
 [salmon]: https://combine-lab.github.io/salmon/
 [deseq2]: https://bioconductor.org/packages/release/bioc/html/DESeq2.html
 [snakemake]: http://snakemake.readthedocs.io/en/latest/
+[genomicalignments]: https://bioconductor.org/packages/release/bioc/html/GenomicAlignments.html
 [fastqc]: https://www.bioinformatics.babraham.ac.uk/projects/fastqc/
 [multiqc]: http://multiqc.info/
-
+[gprofiler]: https://cran.r-project.org/web/packages/gProfileR/index.html
+[htseqcount]: https://htseq.readthedocs.io/en/release_0.11.1/count.html
 
 # Questions
 If you have further questions please e-mail:
