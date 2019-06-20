@@ -726,7 +726,7 @@ installed:</p>
 
 </details>
 
-<h2 id="via-guix">Via Guix</h2>
+<h3 id="via-guix">Via Guix</h3>
 <p>Assuming you have Guix installed, the following command spawns a
 sub-shell in which all dependencies are available:</p>
 <pre><code class="lang-sh">guix environment <span class="hljs-_">-l</span> guix.scm
@@ -805,10 +805,30 @@ The pipeline can now be started using this command, which takes about 3 minutes 
 <pre><code class="lang-sh">pigx chipseq --init=sample-sheet
 </code></pre>
 <p>This creates a template that can be filled with your own samples.</p>
-<h3 id="technical-replicates">Technical Replicates</h3>
-<p>The current sample sheet does not support multiple technical replicates for one sample, so replicates need to be combined prior to running the pipeline.<br>This could be done by concatenating the respective files (for uncompressed or compressed files):</p>
-<pre><code class="lang-sh">cat sample_tecrep1.fq.gz sample_tecrep2.fq.gz [..] &gt; sample.fq.gz
-</code></pre>
+<h4 id="technical-replicates">Technical Replicates</h4>
+<p>The sample sheet offers support for technical replicates, by repeating the sample name (first column) for different input files (second,third column).
+The quality check will be performed for any input file and replicates will be merged during the mapping. </p>
+<table>
+<thead>
+<tr>
+<th>SampleName</th>
+<th>Read</th>
+<th>Read2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ChIPpe</td>
+<td>ChIPpe_R1.fq.gz</td>
+<td>ChIPpe_R2.fq.gz</td>
+</tr>
+<tr>
+<td>ChIPpe</td>
+<td>ChIPpe_t2_R1.fq.gz</td>
+<td>ChIPpe_t2_R2.fq.gz</td>
+</tr>
+</tbody>
+</table>
 <h2 id="settings-file">Settings File</h2>
 <p>The settings file is a file in yaml format specifying general settings and the details of the analysis. </p>
 <p>The settings file is straight forward using the following command: </p>
@@ -854,6 +874,16 @@ The pipeline can now be started using this command, which takes about 3 minutes 
 </tr>
 </tbody>
 </table>
+<h4 id="reference-and-annotations">Reference and annotations</h4>
+<p>The user must supply paths pointing to a reference genome for the organism, as well as annotated genes. These might for example be downloaded from:</p>
+<ul>
+<li><a href="http://genome.ucsc.edu/cgi-bin/hgTables" target="_blank">UCSC</a>: The reference genome can be retrieved by selecting the <em>group</em> <code>Mapping and Sequencing</code> with <em>track</em>  <code>Assembly</code>, then choosing <em>region</em> <code>genome</code> and <em>output format</em> <code>Sequence</code> and finally clicking <em>Get output</em> . The gene annotations can be retrieved by selecting the <em>group</em> <code>Genes and Gene Predictions</code> with <em>track</em>  <code>NCBI Refseq</code> or <code>Ensembl Genes</code>, then choosing <em>region</em> <code>genome</code> and <em>output format</em> <code>GTF - gene transfer format</code> and finally clicking <em>Get output</em> . </li>
+</ul>
+<p>or </p>
+<ul>
+<li><a href="https://www.ensembl.org/info/data/ftp/index.html" target="_blank">Ensembl</a>, where the reference genomoe is listed under <em>DNA</em> <code>FASTA</code>, the gene annotations under <em>Gene sets</em> <code>GTF</code>. </li>
+</ul>
+<p>The user is free to choose any resource for these annotation files, however it is very important to note that the chromosome naming styles must match between different annotation files (e.g. chromosome 21 is named as <em>chr21</em> in UCSC style, but <em>21</em> in NCBI/Ensemble style). </p>
 <h3 id="general">General</h3>
 <p>These are settings which apply to all analysis (unless adjusted in single analysis):</p>
 <table>
@@ -1010,6 +1040,7 @@ For more information have a look at the publication for the software we are usin
 </code></pre>
 <h4 id="optional-hub">(<em>optional</em>) Hub</h4>
 <p>In the <em>hub</em> section the general layout of a <a href="https://genome.ucsc.edu/goldenpath/help/hgTrackHubHelp.html#Intro" target="_blank">UCSC Track Hubs</a> is described with some minimal items. The track hub is generated from the processed data and allows the visual inspection of results at a UCSC genome browser (for supported genomes). </p>
+<p><strong>IMPORTANT</strong>: In order to use the hub feature, make sure you downloaded the reference genome in UCSC style (see <a href="#reference-and-annotations">here</a> for instructions ).</p>
 <p>The required items to define the hub are the following:</p>
 <table>
 <thead>
@@ -1187,6 +1218,11 @@ If you are sure that no other instances of snakemake are running on this directo
 </code></pre>
 <p>What happend and what should I do?</p>
 <p><strong>A:</strong> The pipeline crashed at some point, possible reasons are mentioned by the error. Do as the error message proposes and pass the <code>--unlock</code> argument once and then run the pipeline again without <code>--unlock</code>.  </p>
+<p><strong>Q:</strong> command name?
+In my installation, the command appears to be pigx-chipseq and not pigx chipseq as the docs say.</p>
+<p><strong>A:</strong> The command that you have to use depends on the way the pipeline was installed, either as part of the pigx bundle (guix package -i pigx) or as a single pipeline (guix package -i pigx-chipseq)</p>
+<p><strong>Q:</strong> The docs mention how to deal with technical replicates, but how should biological replicates be handled?</p>
+<p><strong>A:</strong> Usually biological replicates are kept seperately, which means you should give them distinct names in the sample sheet to allow for distinct alignments, and then for peak-calling you pick up the sample names from the sample sheet to reenter them in the &apos;analysis&apos; section of the settings file.</p>
 <h1 id="questions">Questions</h1>
 <p>If you have further questions please e-mail:
 pigx@googlegroups.com or use the web form to ask questions
@@ -1234,7 +1270,7 @@ pigx@googlegroups.com or use the web form to ask questions
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"PiGx ChIP-seq","level":"1.3","depth":1,"next":{"title":"Introduction","level":"1.3.1","depth":2,"anchor":"#introduction","path":"pigx-chip-seq.md","ref":"pigx-chip-seq.md#introduction","articles":[]},"previous":{"title":"Questions","level":"1.2.8","depth":2,"anchor":"#questions","path":"pigx-rna-seq.md","ref":"pigx-rna-seq.md#questions","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"pigx-chip-seq.md","mtime":"2018-04-21T03:58:41.039Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-21T03:59:55.135Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"PiGx ChIP-seq","level":"1.3","depth":1,"next":{"title":"Introduction","level":"1.3.1","depth":2,"anchor":"#introduction","path":"pigx-chip-seq.md","ref":"pigx-chip-seq.md#introduction","articles":[]},"previous":{"title":"Questions","level":"1.2.8","depth":2,"anchor":"#questions","path":"pigx-rna-seq.md","ref":"pigx-rna-seq.md#questions","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"pigx-chip-seq.md","mtime":"2019-06-20T23:25:04.029Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-06-20T23:26:18.271Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
