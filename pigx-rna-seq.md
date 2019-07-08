@@ -6,7 +6,7 @@ PiGx RNAseq is a preprocessing and analysis pipeline. It takes single-end and/or
 ## Workflow
 PiGx RNAseq follows academic best practices for preprocessing and analysis of RNAseq data. Figure 1 provides an overview of the different steps of the pipeline, as well as the outputs.
 
-First, raw reads are trimmed using [TrimGalore!][trimgalore] to ensure a minimum read quality, and removal of adapter sequences. Next, reads are aligned to a reference genome using [STAR][star], and the depth of coverage (normalized by [DESeq2][deseq2] size factors), is computed using [GenomicAlignments][genomicalignments], outputing `bigwig` files. Gene-level expression counts is obtained from [HTseq-count][htseqcount], and transcript-level quantification is produced using [Salmon][salmon]. Statistical analysis for differential expression analysis is performed using [DESeq2][deseq2], GO term enrichment analysis is performed using [gProfileR][gprofiler], and the results are used to compile a custom report.
+First, raw reads are trimmed using [TrimGalore!][trimgalore] to ensure a minimum read quality, and removal of adapter sequences. Next, reads are aligned to a reference genome using [STAR][star], and the depth of coverage (normalized by [DESeq2][deseq2] size factors), is computed using [GenomicAlignments][genomicalignments], outputing `bigwig` files. Gene-level expression counts is obtained from [GenomicAlignments::summarizeOverlaps][genomicalignments], and transcript-level quantification is produced using [Salmon][salmon]. Statistical analysis for differential expression analysis is performed using [DESeq2][deseq2], GO term enrichment analysis is performed using [gProfileR][gprofiler], and the results are used to compile a custom report.
 
 ![PiGx RNAseq workflow](./figures/pigx-rnaseq.png)
 _Figure 1: An overview of the PiGx RNAseq workflow_
@@ -16,7 +16,7 @@ _Figure 1: An overview of the PiGx RNAseq workflow_
 - Quality Control reports
 - Alignment results in BAM file format. 
 - bigwig files for genome-scale normalized coverage tracks
-- Raw (via _Salmon_ and _HTSeq-count_) and normalized read count tables (using _DESeq2_ median of ratios normalization procedure and TPM normalization). 
+- Raw (via _Salmon_ and _STAR_) and normalized read count tables (using _DESeq2_ median of ratios normalization procedure and TPM normalization). 
 - Differential expression analysis results
     - HTML reports
     - Tab-separated file for log-transformed normalized counts
@@ -232,20 +232,23 @@ PiGx RNAseq produces three variants of gene expression count matrices:
 
 | Kind of count matrix | output location |
 |------|-------|
-| Post-alignment reads-per-gene counts from [HTSeq-count][htseqcount] | in the `feature_counts/raw_counts` directory |
+| Post-alignment reads-per-gene counts from [GenomicAlignments::summarizeOverlaps][genomicalignments] | in the `feature_counts/raw_counts` directory |
 | Pseudo-alignment reads-per-gene counts from [Salmon][salmon] | in the `feature_counts/raw_counts` directory |
 | Pseudo-alignment reads-per-transcript counts from [Salmon][salmon] | in the `feature_counts/raw_counts` directory |
 
-The read counting step using _HTSeq-count_ can be configured by modifying the `tools` section of the `settings.yaml` file. By default, the reads that align to the _exon_ features are grouped together via _gene_id_ assuming no strand-speficity, assuming the input files are in _bam_ format ordered by alignment coordinates. A counting mode of _union_ is chosen by default. 
+The read counting step using _GenomicAlignments::summarizeOverlaps_ can be configured by modifying the `counting` section of the `settings.yaml` file. By default, the reads that align to the _exon_ features are grouped together via _gene_id_ assuming no strand-speficity, assuming the input files are in _bam_ format ordered by alignment coordinates. A counting mode of _Union_ is chosen by default. 
 
 ```yaml
-tools:
-  htseq-count:
-    executable: @HTSEQ_COUNT@
-    args: "-f bam -t exon -i gene_id --order pos --stranded no --mode union --nonunique none"
+counting:
+  counting_mode: "Union" # other options are "IntersectionStrict" and "IntersectionNotEmpty"
+  count_nonunique: TRUE # boolean (see inter.feature argument of summarizeOverlaps)
+  strandedness: "unspecific" # other options are "forward" and "reverse" for strand-specific read-counting
+  feature: "exon"
+  group_feature_by: "gene_id"
+  yield_size: 2000000 # how many reads to process at a time (this impacts memory consumption)
 ```
 
-The `args` line can be modified to add or remove further arguments that are passed to the _HTSeq-count_ tool. To find out more about the arguments for read counting, please refer to the [_HTSeq-count_ documentation](https://htseq.readthedocs.io/en/release_0.11.1/count.html). 
+The arguments in the `counting` section can be modified. To find out more about the arguments for read counting, please refer to the [GenomicAlignments::summarizeOverlaps function](https://bioconductor.org/packages/release/bioc/vignettes/GenomicAlignments/inst/doc/summarizeOverlaps.pdf). 
 
 ### Normalized counts tables 
 
@@ -259,12 +262,12 @@ In order to enable comparison of gene/transcript expression across all samples o
 
 ## Differential expression analysis results
 
-PiGx RNAseq produces differential expression reports for each comparison specified in the settings file, and using each of the expression quantification strategies specified above. I.e. for each contrast specified in the settings file, three reports will be produced; one based on counts-per-gene from _HTSeq-count_ computed from _STAR_ alignments, one based on counts-per-gene from Salmon, and another based on counts-per-transcript from Salmon. Along with the HTML report will be produced two additional files per comparison: 1) a tab-separated file containing the DESeq2 differential expression results table, and 2) a tab-separated file containing the normalized expression values. Notice that these normalized values only apply in the context of the compared samples. In order to compare normalized values across all samples, please use the  DESeq2 normalized count tables at `feature_counts/normalized/deseq_normalized_counts.tsv`. 
+PiGx RNAseq produces differential expression reports for each comparison specified in the settings file, and using each of the expression quantification strategies specified above. I.e. for each contrast specified in the settings file, three reports will be produced; one based on counts-per-gene from _GenomicAlignments::summarizeOverlaps_ computed from _STAR_ alignments, one based on counts-per-gene from Salmon, and another based on counts-per-transcript from Salmon. Along with the HTML report will be produced two additional files per comparison: 1) a tab-separated file containing the DESeq2 differential expression results table, and 2) a tab-separated file containing the normalized expression values. Notice that these normalized values only apply in the context of the compared samples. In order to compare normalized values across all samples, please use the  DESeq2 normalized count tables at `feature_counts/normalized/deseq_normalized_counts.tsv`. 
 
 The reports and complementary tab-separated files are all saved in the `reports` output directory.
 
 ## Depth of coverage
-PiGx RNAseq computes coverage depth from the STAR-alignment of the reads, using [GenomicAlignments][genomicalignments]. The resulting `bigwig` files are output in the `bigwig_files` output folder.
+PiGx RNAseq computes coverage depth from the STAR-alignment of the reads, using [GenomicAlignments::export.bw][genomicalignments]. The resulting `bigwig` files are output in the `bigwig_files` output folder.
 
 # Troubleshooting
 
