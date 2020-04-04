@@ -13,7 +13,11 @@ $ pigx [pipeline_name] [sample_sheet] -s [settings_file]
 
 Additionally, we also provide users with high quality reports and figures that contains results from basic analyses and data quality check. The following chapters provide detailed documentation for the pipelines available in PiGx.
 
+## Publication
 
+ **Wurmus R, Uyar B, Osberg B, Franke V, Gosdschan A, Wreczycka K, Ronen J,
+Akalin A**. [PiGx: Reproducible genomics analysis pipelines with GNU Guix.](https://www.ncbi.nlm.nih.gov/pubmed/30277498)
+**Gigascience**. 2018 Oct 2. doi: 10.1093/gigascience/giy123. PubMed PMID: 30277498.
 
 ## Contributors
 
