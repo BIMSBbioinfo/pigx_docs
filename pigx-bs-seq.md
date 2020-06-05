@@ -10,32 +10,67 @@ for each sample provided by the user.
 
 ## Workflow
 
-This figure provides an overview of the various stages of the
+PiGx-bsseq follows best practices for processing and analysis of bisulfite sequencing.
+Figure 1 provides an overview of the various stages of the
 pipeline, as well as the outputs and expected inputs.
 
-![PiGx BSseq workflow](./figures/pigx-bsseq.svg)
+First reads are trimmed for quality and adapter sequences using 
+[TrimGalore!](http://www.bioinformatics.babraham.ac.uk/projects/trim_galore/).  
+Then reads will be mapped to the genome using one or both of the available bisulfite aware aligners 
+[Bismark](http://www.bioinformatics.babraham.ac.uk/projects/bismark/) or 
+[bwa-meth](https://github.com/brentp/bwa-meth), before
+alignments are filtered for duplicate reads with [samblaster](https://github.com/GregoryFaust/samblaster) 
+and sorted with samtools. 
+If the reference genome the reads are going to be mapped to has not already
+undergone bisulfite conversion, such a conversion will be prepared
+automatically by PiGx BSSeq.  
+Methylation-calling is then carried out using either [MethylKit](https://github.com/al2na/methylKit)
+or [methylDackel](https://github.com/dpryan79/MethylDackel) depending on the chosen aligner, 
+before post-mapping analysis such as segmentation and differential
+methylation analysis between samples will be performed. 
+Finally we generate multiple reports including sample report for each sample,
+a differential analysis report and the pan-sample multiqc report.    
 
-In addition to fastq read files, a necessary input to the pipeline is
-a reference genome to be mapped to.  If such a genome has not already
-undergone bisulfite conversion, such a conversion can be prepared
-automatically by PiGx.  At the same time, reads are trimmed for
-quality and adapter sequences using
-[TrimGalore!](http://www.bioinformatics.babraham.ac.uk/projects/trim_galore/),
-with quality control analysis applied both before and after.  Once
-these steps are completed, reads can then be mapped to the genome
-using
-[Bismark](http://www.bioinformatics.babraham.ac.uk/projects/bismark/),
-before alignments are filtered for duplication and sorted.
-Methylation-calling is then carried out using
-[MethylKit](https://github.com/al2na/methylKit/Methylkit) before
-initial post-mapping analysis such as segmentation and differential
-methylation between samples.
+![PiGx BSseq workflow](./figures/pigx-bsseq.svg)
+_Figure 1: An overview of the PiGx BSseq workflow_
+
+# Output
+
+- Quality Control reports
+	- per Sample report shows Coverage and Metyhlation distribution
+	- MultiQC report informs about Read Quality, 
+	  Trimming Performance and Alignment Statistics
+- Alignment results in BAM file format. 
+- bigwig files for genome-wide methylation fraction tracks
+- BED files for genome-wide methylation segmentation
+- Intermediated objects from methylKit analysis in tabix format
+- Differential methylation analysis results
+    - comprehensive HTML report
+    - Tab-separated table for differential methylation results effect size and significance 
+    - BED files for detected genome-wide differentially methylation cytosines (DMCs)
+    - BED files for aggregated regions of genome-wide differentially methylation (DMRs)
+
 
 # Installation
 
-You can install this pipeline with all its dependencies using GNU Guix:
+Pre-built binaries for PiGx are available through 
+[GNU Guix](https://gnu.org/software/guix), the
+functional package manager for reproducible, user-controlled software
+management.  Install the complete pipeline bundle with the following
+command:
 
-    guix install pigx-bsseq
+```sh
+guix install pigx
+```
+
+You can install this BSseq pipeline with:
+
+
+```sh
+guix install pigx-bsseq
+```
+
+    
 
 You can also install it from source manually.  You can find the
 [latest
@@ -66,79 +101,152 @@ make install
 
 # Preparing the input
 
-To use the pipeline, the user must first edit two files: the sample sheet and the settings file. 
+In order to run the pipeline, the user must supply
+
+- a sample sheet
+- a settings file
+
+both files are described below.
+
+In order to generate template settings and sample sheet files, type
+
+```bash
+pigx bsseq --init
+```
+
+in the shell, and a boilerplate `sample_sheet.csv` and `settings.yaml` will be written to your current directory.
+
 
 ## Sample Sheet
 
 The sample sheet is a tabular file (`csv` format) describing the experiment.
 The table has the following columns:
 
-| reads            | reads(2)         | sample_ID   | protocol   | treatment |
+
+| Read1            | Read2            | SampleID    | Protocol   | Treatment |
 |------------------|------------------|-------------|------------|-----------|
-| SA_R1.fastq.gz   | SA_R2.fastq.gz   | sample_A    |WGBS        | 0   |
-| SB.fastq.gz      |                  | sample_B    |WGBS        | 1   |
-| ...              |                  |             |            |     |
+| SA_R1.fastq.gz   | SA_R2.fastq.gz   | sample_A    |WGBS        | H2O       |
+| SB.fastq.gz      |                  | sample_B    |WGBS        | MED1      |
+| ...              |                  |             |            |           |
 
-Here, each row of entries (below the header) corresponds to a sample. In this
-example, `sample A` is a paired-end experiment with two `fastq` files, whereas
-`sample B` is single end; thus, the `read 2` column for the latter is left blank.
-The third column, `sample ID`, contains some descriptive name (without
-white spaces) for the sample. The fourth column refers to the experimantal
-protocol (e.g. "WGBS" / "RRBS" for whole-genome/reduced-representation
-bisulfite sequencing, respectively), while the 5th column contains a treatment
-label--generally an integer-- that is used for reference in differential
-methylation (see below).
+_Table 1: example sample sheet_
 
-The above sample sheet can be produced by editing the included file
-`test/sample_sheet.xls` and saving it in `.csv` format with fields separated by
-commas (`,`).
+### Column descriptions
+
+- _SampleID_ is the name for the sample, which must be unique to each row of the table. 
+- _Read1/2_ are the fastq file names of paired end reads
+  - the location of these files is specified in `settings.yaml`
+  - for single-end data, leave the _Read2_ column in place, but have it empty
+- _Protocol_ refers to the experimental protocol, can be either "WGBS" / "RRBS" for whole-genome/reduced-representation bisulfite sequencing, respectively
+- _Treatment_ contains a treatment label that is used for reference in differential methylation
+
+
+> NOTE: The _Protocol_ decides wether the pipeline will perform deduplication ("WGBS") or not ("RRBS"). 
 
  
 ## Settings File
 
 In the settings file, various parameters are saved, in YAML format, to
-configure the execution of PiGx-bsseq.  The entries are stored
-hierarchically, and a brief description is provided below, along with
-possible default value in parenthesis:
+configure the execution of PiGx-bsseq. 
 
-- `locations`: 
-  - `input-dir`: path to directory containing the input `fastq` files (./in)
-  - `output-dir`: path to desired output directory, which PiGx will create if necessary (./out)
-  - `genome-dir`: path to directory containing the reference genome. (./genome)
+### Locations
 
-- general:
-  -  `assembly`: reference genome name ('hg19') 
-  -  methylation-calling:
-    -  `minimum-coverage`: minimum number of read-hits required for inclusion in analysis (10).
-    -  `minimum-quality`:  minimum read quality required for mapping (10)
-  -  differential-methylation:
-    - `cores`: number of cpu threads for differential methylation (1)
-    - `treatment-groups`: a series of pairings specifying comparisons to be performed between samples, based on the treatment vector supplied in the sample sheet (no default, but an example compatible with the above sample sheet is provided in the following line). The index of the control group _must_ be provided first, followed by the treatment being studied. Final report output represents the status of the latter index, relative to the former.
-        - ['0', '1']
-  -    annotation:
+  - The path to directory containing the reads  ( where the input `fastq` files are)
+  - The path to a desired output directory, which PiGx will create if necessary
+  - The path to the directory containing the fasta reference genome.
+  
+### General
+
+  - The reference genome name (e.g. 'hg19') 
+  - wether to use bismark or bwa-meth aligner, or both
+  - detailed settings which only need to be adjusted by experienced users
+  
+#### Methylation-calling Settings
+    
+    - minimum number of read-hits required for calling methylation (10)
+    - minimum mapping quality required for calling methylation (10)
+
+#### export-bigwig:
+    - decide for each cytosine methylation context wether merge strands and wether to export to bigwig
+    
+#### differential-methylation:
+    - number of cpu threads for differential methylation (1)
+    - significance threshold for detection of DMC
+    - effect size for detection of DMC
+    - annotation files are optional for the report, but 
     - `CpGfile`:  file (with path) specifying CpG annotations for differential methylation (genome/cpgIslandExt.hg19.bed.gz).
     - `refGenfile`: file (with path) specifying reference genes for differential methylation (genome/refGene.hg19.bed.gz).
     - `webfetch`: Boolean instruction as to whether PiGx should attempt to fetch the above files from the internet if they are unavailable locally (no).
 
 
-The values stored in the settings input file are used to overwrite the default
-settings, described below. An example settings file is available in
-the `test/` directory as `settings.yaml`. 
-The fields in `locations`, for example, will almost certainly require user input
-to over-write the default locations.
+### Differential Methylation (DM) analyis
+	- specify which of the treatment groups defined in the sample sheet should be compare against each other
 
-Note in particular the field `differential-methylation`:`treatment-groups`; below
-this there may be arbitrarily lines in the format `- ['A', 'B']` where `A` and
-`B` are integers referring to the treatment values from the sample sheet. Each
-such line represents a command to carry-out pair-wise comparison between the
-samples with the corresponding treatment values `A` and `B`. i
 
-The remaining fields provided here (and in the example settings file)
- comprise most of the settings that a
-typical user might want to access, while the more basic settings that are saved
-as defaults in `etc/settings.yaml.in` will not need to be modified by most
-users (although advanced users may freely re-define any such variables in their own
-settings file, and by so doing, overwrite them).
+The section described here comprise most of the settings that a 
+typical user might want to access, while more advanced settings provided
+as defaults in _execution_ section will not need to be modified by most
+users. 
+
+
+```yaml
+general:
+  assembly: ''
+  # use one or both bisulfite aligners
+  # bwameth is faster and uses less resources
+  use_bwameth: True
+  # bismark is gold standard and uses sensible defaults  
+  use_bismark: True
+  methylation-calling:
+    minimum-coverage: 10
+    minimum-quality: 10
+    # this applies to bwameth only
+    keep-singleton: False
+    keep-Dups: Auto                 # can be Auto/True/False, Auto decides based on protocol
+  export-bigwig:
+    context:
+      cpg: 
+        export: True
+		# join both strands and summarize coverage/methylation? 
+        destrand: True
+      chg: 
+        export: False
+        destrand: False
+      chh: 
+        export: False
+        destrand: False
+  reports:
+    TSS_plotlength: 5000
+  differential-methylation:
+    cores: 1
+    qvalue: 0.01
+    difference: 25
+    annotation:
+      # download cpgIsland-bedfile or refGenes-bedfile automatically if not given?
+      cpgIsland-bedfile: ''
+      refGenes-bedfile: ''
+      webfetch:   no
+
+
+DManalyses:
+  # The names of analyses can be anything but they have to be unique
+  # for each combination of case control group comparisons.
+
+  analysis1:
+    treatment_sample_groups: "MED1"
+    control_sample_groups: "H2O"
+
+
+ multipleTreat:
+    # If multiple sample groups are provided, they must be separated by comma.
+   treatment_sample_groups: "MED2,MED1"
+   control_sample_groups: "H2O"
+
+ withinGroup:
+   # For within group comparison (all vs all), give the same groups to treatment and control.
+   treatment_sample_groups: "MED2,MED1,H2O"
+   control_sample_groups: "MED2,MED1,H2O"V
+```
 
 # Running the pipeline
 
@@ -147,17 +255,6 @@ the command: `pigx-bsseq [sample sheet] -s [settings file]` with further
 options, described in the README (for example, the flag `--dry-run` can be
 added to confirm valid input settings before execution).
 
-# Output description
-
-Once the pipeline is executed, the desired output directory is
-created, along with various sub-directories for intermediate steps in
-the process, each of which are named with prefixes to indicate their
-(approximate) order in sequence.  In most cases, these processes have
-their own interim reports and log files. For example, `06_sorting`
-contains the sorted `.bam` file after alignments, and
-`07_methyl_calls` contains information on average methylation in
-various formats, while `01_raw_QC` is the earliest step --quality
-control of the raw inputs.
 
 ## Analysis 
 In the `out-dir` folder, PiGx will create a sub-directory
