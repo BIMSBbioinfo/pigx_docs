@@ -1,938 +1,419 @@
-
 <!DOCTYPE HTML>
-<html lang="" >
-    <head>
-        <meta charset="UTF-8">
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>PiGx BS-seq · GitBook</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.3">
-        
-        
-        
-    
-    <link rel="stylesheet" href="gitbook/style.css">
-
-    
-            
-                
-                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
-                
-            
-                
-                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
-                
-            
-                
-                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
-                
-            
-        
-
-    
-
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-
-        
-    
-    
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/website.css">
     <meta name="HandheldFriendly" content="true"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
-    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
-
-    
-    <link rel="next" href="pigx-bs-seq.html" />
-    
-    
-    <link rel="prev" href="pigx-chip-seq.html" />
-    
-
-    </head>
-    <body>
-        
-<div class="book">
-    <div class="book-summary">
-        
-            
-<div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search" />
-</div>
-
-            
-                <nav role="navigation">
-                
-
-
-<ul class="summary">
-    
-    
-
-    
-
-    
-        
-        
-    
-        <li class="chapter " data-level="1.1" data-path="./">
-            
-                <a href="./">
-            
-                    
-                    Introduction
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2" data-path="pigx-rna-seq.html">
-            
-                <a href="pigx-rna-seq.html">
-            
-                    
-                    PiGx RNA-seq
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.2.1" data-path="pigx-rna-seq.html">
-            
-                <a href="pigx-rna-seq.html#introduction">
-            
-                    
-                    Introduction
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.2" data-path="pigx-rna-seq.html">
-            
-                <a href="pigx-rna-seq.html#installation">
-            
-                    
-                    Installation
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.3" data-path="pigx-rna-seq.html">
-            
-                <a href="pigx-rna-seq.html#quick-start">
-            
-                    
-                    Quick start
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.4" data-path="pigx-rna-seq.html">
-            
-                <a href="pigx-rna-seq.html#preparing-the-input">
-            
-                    
-                    Preparing the input
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.5" data-path="pigx-rna-seq.html">
-            
-                <a href="pigx-rna-seq.html#running-the-pipeline">
-            
-                    
-                    Running the pipeline
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.6" data-path="pigx-rna-seq.html">
-            
-                <a href="pigx-rna-seq.html#output-description">
-            
-                    
-                    Output description
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.7" data-path="pigx-rna-seq.html">
-            
-                <a href="pigx-rna-seq.html#troubleshooting">
-            
-                    
-                    Troubleshooting
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.8" data-path="pigx-rna-seq.html">
-            
-                <a href="pigx-rna-seq.html#questions">
-            
-                    
-                    Questions
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3" data-path="pigx-chip-seq.html">
-            
-                <a href="pigx-chip-seq.html#pigx-chip-seq">
-            
-                    
-                    PiGx ChIP-seq
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.3.1" data-path="pigx-chip-seq.html">
-            
-                <a href="pigx-chip-seq.html#introduction">
-            
-                    
-                    Introduction
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.2" data-path="pigx-chip-seq.html">
-            
-                <a href="pigx-chip-seq.html#installation">
-            
-                    
-                    Installation
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.3" data-path="pigx-chip-seq.html">
-            
-                <a href="pigx-chip-seq.html#quick-start">
-            
-                    
-                    Quick Start
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4" data-path="pigx-chip-seq.html">
-            
-                <a href="pigx-chip-seq.html#preparing-input">
-            
-                    
-                    Preparing Input
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.5" data-path="pigx-chip-seq.html">
-            
-                <a href="pigx-chip-seq.html#running-the-pipeline">
-            
-                    
-                    Running the Pipeline
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.6" data-path="pigx-chip-seq.html">
-            
-                <a href="pigx-chip-seq.html#output-description">
-            
-                    
-                    Output Description
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.7" data-path="pigx-chip-seq.html">
-            
-                <a href="pigx-chip-seq.html#troubleshooting">
-            
-                    
-                    Troubleshooting
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.8" data-path="pigx-chip-seq.html">
-            
-                <a href="pigx-chip-seq.html#questions">
-            
-                    
-                    Questions
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter active" data-level="1.4" data-path="pigx-bs-seq.html">
-            
-                <a href="pigx-bs-seq.html">
-            
-                    
-                    PiGx BS-seq
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.4.1" data-path="pigx-bs-seq.html">
-            
-                <a href="pigx-bs-seq.html#introduction">
-            
-                    
-                    Introduction
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.2" data-path="pigx-bs-seq.html">
-            
-                <a href="pigx-bs-seq.html#installation">
-            
-                    
-                    Installation
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.3" data-path="pigx-bs-seq.html">
-            
-                <a href="pigx-bs-seq.html#quick-start">
-            
-                    
-                    Quick start
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.4" data-path="pigx-bs-seq.html">
-            
-                <a href="pigx-bs-seq.html#preparing-the-input">
-            
-                    
-                    Preparing the input
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.5" data-path="pigx-bs-seq.html">
-            
-                <a href="pigx-bs-seq.html#running-the-pipeline">
-            
-                    
-                    Running the pipeline
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.6" data-path="pigx-bs-seq.html">
-            
-                <a href="pigx-bs-seq.html#output-description">
-            
-                    
-                    Output description
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.7" data-path="pigx-bs-seq.html">
-            
-                <a href="pigx-bs-seq.html#troubleshooting">
-            
-                    
-                    Troubleshooting
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.8" data-path="pigx-bs-seq.html">
-            
-                <a href="pigx-bs-seq.html#questions">
-            
-                    
-                    Questions
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.5" data-path="pigx-scrna-seq.html">
-            
-                <a href="pigx-scrna-seq.html">
-            
-                    
-                    PiGx scRNA-seq
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.5.1" data-path="pigx-scrna-seq.html">
-            
-                <a href="pigx-scrna-seq.html#introduction">
-            
-                    
-                    Introduction
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.5.2" data-path="pigx-scrna-seq.html">
-            
-                <a href="pigx-scrna-seq.html#installation">
-            
-                    
-                    Installation
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.5.3" data-path="pigx-scrna-seq.html">
-            
-                <a href="pigx-scrna-seq.html#quick-start">
-            
-                    
-                    Quick start
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.5.4" data-path="pigx-scrna-seq.html">
-            
-                <a href="pigx-scrna-seq.html#preparing-the-input">
-            
-                    
-                    Preparing the input
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.5.5" data-path="pigx-scrna-seq.html">
-            
-                <a href="pigx-scrna-seq.html#running-the-pipeline">
-            
-                    
-                    Running the pipeline
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.5.6" data-path="pigx-scrna-seq.html">
-            
-                <a href="pigx-scrna-seq.html#output-description">
-            
-                    
-                    Output description
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.5.7" data-path="pigx-scrna-seq.html">
-            
-                <a href="pigx-scrna-seq.html#troubleshooting">
-            
-                    
-                    Troubleshooting
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.5.8" data-path="pigx-scrna-seq.html">
-            
-                <a href="pigx-scrna-seq.html#questions">
-            
-                    
-                    Questions
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-    
-
-    <li class="divider"></li>
-
-    <li>
-        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
-            Published with GitBook
-        </a>
-    </li>
-</ul>
-
-
-                </nav>
-            
-        
-    </div>
-
-    <div class="book-body">
-        
-            <div class="body-inner">
-                
-                    
-
-<div class="book-header" role="navigation">
-    
-
-    <!-- Title -->
-    <h1>
-        <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >PiGx BS-seq</a>
-    </h1>
-</div>
-
-
-
-
-                    <div class="page-wrapper" tabindex="-1" role="main">
-                        <div class="page-inner">
-                            
-<div id="book-search-results">
-    <div class="search-noresults">
-    
-                                <section class="normal markdown-section">
-                                
-                                <h1 id="pigx-bs-seq">PiGx BS-seq</h1>
-<h1 id="introduction">Introduction</h1>
-<p>PiGx-bsseq is a preprocessing and analysis pipeline that takes raw
-<code>fastq</code> read files and performs all necessary steps to present the
-full methylome for analysis. Quality control, and differential
-methylation are also performed, and a final report provides a summary
-for each sample provided by the user.</p>
-<h2 id="workflow">Workflow</h2>
-<p>This figure provides an overview of the various stages of the
-pipeline, as well as the outputs and expected inputs.</p>
-<p><img src="figures/pigx-bsseq.svg" alt="PiGx BSseq workflow"></p>
-<p>In addition to fastq read files, a necessary input to the pipeline is
-a reference genome to be mapped to.  If such a genome has not already
-undergone bisulfite conversion, such a conversion can be prepared
-automatically by PiGx.  At the same time, reads are trimmed for
-quality and adapter sequences using
-<a href="http://www.bioinformatics.babraham.ac.uk/projects/trim_galore/" target="_blank">TrimGalore!</a>,
-with quality control analysis applied both before and after.  Once
-these steps are completed, reads can then be mapped to the genome
-using
-<a href="http://www.bioinformatics.babraham.ac.uk/projects/bismark/" target="_blank">Bismark</a>,
-before alignments are filtered for duplication and sorted.
-Methylation-calling is then carried out using
-<a href="https://github.com/al2na/methylKit/Methylkit" target="_blank">MethylKit</a> before
-initial post-mapping analysis such as segmentation and differential
-methylation between samples.</p>
-<h1 id="installation">Installation</h1>
-<p>You can install this pipeline with all its dependencies using GNU Guix:</p>
-<pre><code>guix install pigx-bsseq
-</code></pre><p>You can also install it from source manually.  You can find the
-<a href="https://github.com/BIMSBbioinfo/pigx_bsseq/releases/latest" target="_blank">latest
-release</a>
-here.  PiGx uses the GNU build system.  Please make sure that all
-required dependencies are installed and then follow these steps after
-unpacking the latest release tarball:</p>
-<pre><code class="lang-sh">./configure --prefix=/some/<span class="hljs-built_in">where</span>
-make install
-</code></pre>
-<h1 id="quick-start">Quick start</h1>
-<ol>
-<li><p>Download the zipped test data:</p>
-<p> <code>wget https://github.com/BIMSBbioinfo/pigx_bsseq/releases/download/v0.0.8/test-data.tar.gz</code></p>
-</li>
-<li><p>Unzip the archive</p>
-<p> <code>tar xzvf test-data.tar.gz</code></p>
-</li>
-<li><p>Run the pipeline</p>
-<p> <code>cd tests &amp;&amp; pigx-bsseq -s settings.yaml sample_sheet.csv</code></p>
-</li>
-</ol>
-<h1 id="preparing-the-input">Preparing the input</h1>
-<p>To use the pipeline, the user must first edit two files: the sample sheet and the settings file. </p>
-<h2 id="sample-sheet">Sample Sheet</h2>
-<p>The sample sheet is a tabular file (<code>csv</code> format) describing the experiment.
-The table has the following columns:</p>
-<table>
-<thead>
-<tr>
-<th>reads</th>
-<th>reads(2)</th>
-<th>sample_ID</th>
-<th>protocol</th>
-<th>treatment</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>SA_R1.fastq.gz</td>
-<td>SA_R2.fastq.gz</td>
-<td>sample_A</td>
-<td>WGBS</td>
-<td>0</td>
-</tr>
-<tr>
-<td>SB.fastq.gz</td>
-<td></td>
-<td>sample_B</td>
-<td>WGBS</td>
-<td>1</td>
-</tr>
-<tr>
-<td>...</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>Here, each row of entries (below the header) corresponds to a sample. In this
-example, <code>sample A</code> is a paired-end experiment with two <code>fastq</code> files, whereas
-<code>sample B</code> is single end; thus, the <code>read 2</code> column for the latter is left blank.
-The third column, <code>sample ID</code>, contains some descriptive name (without
-white spaces) for the sample. The fourth column refers to the experimantal
-protocol (e.g. &quot;WGBS&quot; / &quot;RRBS&quot; for whole-genome/reduced-representation
-bisulfite sequencing, respectively), while the 5th column contains a treatment
-label--generally an integer-- that is used for reference in differential
-methylation (see below).</p>
-<p>The above sample sheet can be produced by editing the included file
-<code>test/sample_sheet.xls</code> and saving it in <code>.csv</code> format with fields separated by
-commas (<code>,</code>).</p>
-<h2 id="settings-file">Settings File</h2>
-<p>In the settings file, various parameters are saved, in YAML format, to
-configure the execution of PiGx-bsseq.  The entries are stored
-hierarchically, and a brief description is provided below, along with
-possible default value in parenthesis:</p>
-<ul>
-<li><p><code>locations</code>: </p>
-<ul>
-<li><code>input-dir</code>: path to directory containing the input <code>fastq</code> files (./in)</li>
-<li><code>output-dir</code>: path to desired output directory, which PiGx will create if necessary (./out)</li>
-<li><code>genome-dir</code>: path to directory containing the reference genome. (./genome)</li>
-</ul>
-</li>
-<li><p>general:</p>
-<ul>
-<li><code>assembly</code>: reference genome name (&apos;hg19&apos;) </li>
-<li>methylation-calling:<ul>
-<li><code>minimum-coverage</code>: minimum number of read-hits required for inclusion in analysis (10).</li>
-<li><code>minimum-quality</code>:  minimum read quality required for mapping (10)</li>
-</ul>
-</li>
-<li>differential-methylation:<ul>
-<li><code>cores</code>: number of cpu threads for differential methylation (1)</li>
-<li><code>treatment-groups</code>: a series of pairings specifying comparisons to be performed between samples, based on the treatment vector supplied in the sample sheet (no default, but an example compatible with the above sample sheet is provided in the following line). The index of the control group <em>must</em> be provided first, followed by the treatment being studied. Final report output represents the status of the latter index, relative to the former.<ul>
-<li>[&apos;0&apos;, &apos;1&apos;]</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>annotation:<ul>
-<li><code>CpGfile</code>:  file (with path) specifying CpG annotations for differential methylation (genome/cpgIslandExt.hg19.bed.gz).</li>
-<li><code>refGenfile</code>: file (with path) specifying reference genes for differential methylation (genome/refGene.hg19.bed.gz).</li>
-<li><code>webfetch</code>: Boolean instruction as to whether PiGx should attempt to fetch the above files from the internet if they are unavailable locally (no).</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>The values stored in the settings input file are used to overwrite the default
-settings, described below. An example settings file is available in
-the <code>test/</code> directory as <code>settings.yaml</code>. 
-The fields in <code>locations</code>, for example, will almost certainly require user input
-to over-write the default locations.</p>
-<p>Note in particular the field <code>differential-methylation</code>:<code>treatment-groups</code>; below
-this there may be arbitrarily lines in the format <code>- [&apos;A&apos;, &apos;B&apos;]</code> where <code>A</code> and
-<code>B</code> are integers referring to the treatment values from the sample sheet. Each
-such line represents a command to carry-out pair-wise comparison between the
-samples with the corresponding treatment values <code>A</code> and <code>B</code>. i</p>
-<p>The remaining fields provided here (and in the example settings file)
- comprise most of the settings that a
-typical user might want to access, while the more basic settings that are saved
-as defaults in <code>etc/settings.yaml.in</code> will not need to be modified by most
-users (although advanced users may freely re-define any such variables in their own
-settings file, and by so doing, overwrite them).</p>
-<h1 id="running-the-pipeline">Running the pipeline</h1>
-<p>After editting the above input files, the bsseq pipeline can be executed with
-the command: <code>pigx-bsseq [sample sheet] -s [settings file]</code> with further
-options, described in the README (for example, the flag <code>--dry-run</code> can be
-added to confirm valid input settings before execution).</p>
-<h1 id="output-description">Output description</h1>
-<p>Once the pipeline is executed, the desired output directory is
-created, along with various sub-directories for intermediate steps in
-the process, each of which are named with prefixes to indicate their
-(approximate) order in sequence.  In most cases, these processes have
-their own interim reports and log files. For example, <code>06_sorting</code>
-contains the sorted <code>.bam</code> file after alignments, and
-<code>07_methyl_calls</code> contains information on average methylation in
-various formats, while <code>01_raw_QC</code> is the earliest step --quality
-control of the raw inputs.</p>
-<h2 id="analysis">Analysis</h2>
-<p>In the <code>out-dir</code> folder, PiGx will create a sub-directory
-<code>Final_Reports/</code> in which a final report for each sample is provided, along
-with a report on the differential methylation observations for each pair of
-samples that was provided in the sample sheet under <code>general:
-differential-methylation: treatment-groups:</code> Further analysis can be performed
-on the aligned data using the sorted <code>.bam</code> file in <code>06_sorting</code>, or the bigwig
-file in <code>08_bigwig_files</code>, although for simple methylation percentages, it
-should be suffice to consult the column-separated files in <code>07_methyl_calls</code>.
-In each case, the specific file names will refer to the sample IDs provided in
-the original sample sheet.</p>
-<h1 id="troubleshooting">Troubleshooting</h1>
-<p>The dependency graph of rules contains branches; as such, the rules are not
-always performed in <em>exactly</em> the order indicated by directory prefix labels.
-Nevertheless, in cases of interrupted calculation, it may be useful to inspect
-the log files from the last (or second-to-last) directory created to check for
-error messages. </p>
-<p>Alongside these directories, the directory <code>pigx_work</code> is also created, with
-its contents described in the file <code>CONTENTS</code>---here one can see links to the
-original data files for traceability. In case a run of PiGx was done a long
-time ago, under conditions that have been forgotten, the subfolder
-<code>pigx_work/input/</code> contains links to each of the raw data files,
-<code>pigx_work/refGenome</code> links to the reference genome that was mapped do during
-exection, and <code>pigx_work/bin</code> contains links to the versions of binary
-executables that were used in the process.</p>
-<h3 id="cluster-submission">Cluster Submission</h3>
-<p>The settings file allows for fields that will serve to optimize resource usage
-when PiGx is submitted to a cluster via SGE (Sun Grid Engine, a standard
-queueing system). For example, under the section <code>execution: rules:</code> various
-parameters can be supplied regarding resource consumption (e.g. number of
-threads, memory required, etc.) for each rule individually, or, alternatively,
-<code>execution: cluster: queue</code> can specify a single queue for all jobs. </p>
-<p>The default parameters were chosen and tested on the human hg19 genome, since
-it is larger (and therefore requires a larger RAM footprint) than most other
-model organisms (e.g. Drosophila, mouse, etc.).  This is not an exhaustive
-test, however, and it remains possible that PiGx users studying exotic genomes
-may yet exceed resource allowance. In such cases, a job execution will be
-aborted and an email will be sent to the address supplied by the user detailing
-circumstances of the failed job (such as start time, stop time, <code>Max vmem</code> =
-maximum memory consumed), and resource requests can be adjusted accordingly.
-Advanced users may consult <code>etc/settings.yaml.in</code> to see which values can be
-fine-tuned; novice users who are studying either the human genome, or a smaller
-one, should simply ignore this section and allow PiGx to assign the default
-values.</p>
-<h1 id="questions">Questions</h1>
-<p>If you have further questions please send e-mail to
-pigx@googlegroups.com or <a href="https://groups.google.com/forum/#!forum/pigx/" target="_blank">ask questions on the web
-forum</a>.</p>
-
-                                
-                                </section>
-                            
-    </div>
-    <div class="search-results">
-        <div class="has-results">
-            
-            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
-            <ul class="search-results-list"></ul>
-            
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  </head>
+  <body>
+    <div class="book with-summary">
+      <div class="book-summary">
+        <div id="book-search-input" role="search">
+          <input type="text" placeholder="Type to search" />
         </div>
-        <div class="no-results">
-            
-            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
-            
-        </div>
-    </div>
-</div>
+        
+        <nav class="summary" id="TOC" role="doc-toc">
+          <h1 id="summary">Summary</h1>
+          <ul>
+          <li><a href="README.html">Introduction</a></li>
+          <li><a href="pigx-rna-seq.html">PiGx RNA-seq</a>
+          <ul>
+          <li><a href="pigx-rna-seq.html#introduction">Introduction</a></li>
+          <li><a href="pigx-rna-seq.html#installation">Installation</a></li>
+          <li><a href="pigx-rna-seq.html#quick-start">Quick start</a></li>
+          <li><a href="pigx-rna-seq.html#preparing-the-input">Preparing the input</a></li>
+          <li><a href="pigx-rna-seq.html#running-the-pipeline">Running the pipeline</a></li>
+          <li><a href="pigx-rna-seq.html#output-description">Output description</a></li>
+          <li><a href="pigx-rna-seq.html#troubleshooting">Troubleshooting</a></li>
+          <li><a href="pigx-rna-seq.html#questions">Questions</a></li>
+          </ul></li>
+          <li><a href="pigx-chip-seq.html#pigx-chip-seq">PiGx ChIP-seq</a>
+          <ul>
+          <li><a href="pigx-chip-seq.html#introduction">Introduction</a></li>
+          <li><a href="pigx-chip-seq.html#installation">Installation</a></li>
+          <li><a href="pigx-chip-seq.html#quick-start">Quick Start</a></li>
+          <li><a href="pigx-chip-seq.html#preparing-input">Preparing Input</a></li>
+          <li><a href="pigx-chip-seq.html#running-the-pipeline">Running the Pipeline</a></li>
+          <li><a href="pigx-chip-seq.html#output-description">Output Description</a></li>
+          <li><a href="pigx-chip-seq.html#troubleshooting">Troubleshooting</a></li>
+          <li><a href="pigx-chip-seq.html#questions">Questions</a></li>
+          </ul></li>
+          <li><a href="pigx-bs-seq.html">PiGx BS-seq</a>
+          <ul>
+          <li><a href="pigx-bs-seq.html#introduction">Introduction</a></li>
+          <li><a href="pigx-bs-seq.html#installation">Installation</a></li>
+          <li><a href="pigx-bs-seq.html#quick-start">Quick start</a></li>
+          <li><a href="pigx-bs-seq.html#preparing-the-input">Preparing the input</a></li>
+          <li><a href="pigx-bs-seq.html#running-the-pipeline">Running the pipeline</a></li>
+          <li><a href="pigx-bs-seq.html#output-description">Output description</a></li>
+          <li><a href="pigx-bs-seq.html#troubleshooting">Troubleshooting</a></li>
+          <li><a href="pigx-bs-seq.html#questions">Questions</a></li>
+          </ul></li>
+          <li><a href="pigx-scrna-seq.html">PiGx scRNA-seq</a>
+          <ul>
+          <li><a href="pigx-scrna-seq.html#introduction">Introduction</a></li>
+          <li><a href="pigx-scrna-seq.html#installation">Installation</a></li>
+          <li><a href="pigx-scrna-seq.html#quick-start">Quick start</a></li>
+          <li><a href="pigx-scrna-seq.html#preparing-the-input">Preparing the input</a></li>
+          <li><a href="pigx-scrna-seq.html#running-the-pipeline">Running the pipeline</a></li>
+          <li><a href="pigx-scrna-seq.html#output-description">Output description</a></li>
+          <li><a href="pigx-scrna-seq.html#troubleshooting">Troubleshooting</a></li>
+          <li><a href="pigx-scrna-seq.html#questions">Questions</a></li>
+          </ul></li>
+          </ul>
+        </nav>
+      </div>
 
-                        </div>
-                    </div>
-                
+      <div class="book-body">
+        <div class="body-inner">
+          <div class="book-header" role="navigation">
+            <!-- Title -->
+            <h1>
+              <i class="fa fa-circle-o-notch fa-spin"></i>
+              <a href="." ></a>
+            </h1>
+          </div>
+          <div class="page-wrapper" tabindex="-1" role="main">
+            <div class="page-inner">
+              <div id="book-search-results">
+                <div class="search-noresults">
+                  <section class="normal markdown-section">
+                    <h1 id="pigx-bs-seq">PiGx BS-seq</h1>
+                    <h1 id="introduction">Introduction</h1>
+                    <p>PiGx-bsseq is a preprocessing and analysis pipeline that takes raw <code>fastq</code> read files and performs all necessary steps to present the full methylome for analysis. Quality control, and differential methylation are also performed, and a final report provides a summary for each sample provided by the user.</p>
+                    <h2 id="workflow">Workflow</h2>
+                    <p>PiGx-bsseq follows best practices for processing and analysis of bisulfite sequencing. Figure 1 provides an overview of the various stages of the pipeline, as well as the outputs and expected inputs.</p>
+                    <p>First reads are trimmed for quality and adapter sequences using <a href="http://www.bioinformatics.babraham.ac.uk/projects/trim_galore/">TrimGalore!</a>.<br />
+                    Then reads will be mapped to the genome using one or both of the available bisulfite aware aligners <a href="http://www.bioinformatics.babraham.ac.uk/projects/bismark/">Bismark</a> or <a href="https://github.com/brentp/bwa-meth">bwa-meth</a>, before alignments are filtered for duplicate reads with <a href="https://github.com/GregoryFaust/samblaster">samblaster</a> and sorted with samtools. If the reference genome the reads are going to be mapped to has not already undergone bisulfite conversion, such a conversion will be prepared automatically by PiGx BSSeq.<br />
+                    Methylation-calling is then carried out using either <a href="https://github.com/al2na/methylKit">MethylKit</a> or <a href="https://github.com/dpryan79/MethylDackel">methylDackel</a> depending on the chosen aligner, before post-mapping analysis such as segmentation and differential methylation analysis between samples will be performed. Finally we generate multiple reports including sample report for each sample, a differential analysis report and the pan-sample multiqc report.</p>
+                    <p><img src="./figures/pigx-bsseq.svg" alt="PiGx BSseq workflow" /> <em>Figure 1: An overview of the PiGx BSseq workflow</em></p>
+                    <h1 id="output">Output</h1>
+                    <ul>
+                    <li>Quality Control reports
+                    <ul>
+                    <li>per Sample report shows Coverage and Metyhlation distribution</li>
+                    <li>MultiQC report informs about Read Quality, Trimming Performance and Alignment Statistics</li>
+                    </ul></li>
+                    <li>Alignment results in BAM file format.</li>
+                    <li>bigwig files for genome-wide methylation fraction tracks</li>
+                    <li>BED files for genome-wide methylation segmentation</li>
+                    <li>Intermediated objects from methylKit analysis in tabix format</li>
+                    <li>Differential methylation analysis results
+                    <ul>
+                    <li>comprehensive HTML report</li>
+                    <li>Tab-separated table for differential methylation results effect size and significance</li>
+                    <li>BED files for detected genome-wide differentially methylation cytosines (DMCs)</li>
+                    <li>BED files for aggregated regions of genome-wide differentially methylation (DMRs)</li>
+                    </ul></li>
+                    </ul>
+                    <h1 id="installation">Installation</h1>
+                    <p>Pre-built binaries for PiGx are available through <a href="https://gnu.org/software/guix">GNU Guix</a>, the functional package manager for reproducible, user-controlled software management. Install the complete pipeline bundle with the following command:</p>
+                    <div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="ex">guix</span> install pigx</span></code></pre></div>
+                    <p>You can install this BSseq pipeline with:</p>
+                    <div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="ex">guix</span> install pigx-bsseq</span></code></pre></div>
+                    <p>You can also install it from source manually. You can find the <a href="https://github.com/BIMSBbioinfo/pigx_bsseq/releases/latest">latest release</a> here. PiGx uses the GNU build system. Please make sure that all required dependencies are installed and then follow these steps after unpacking the latest release tarball:</p>
+                    <div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="ex">./configure</span> --prefix=/some/where</span>
+                    <span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="fu">make</span> install</span></code></pre></div>
+                    <h1 id="quick-start">Quick start</h1>
+                    <ol>
+                    <li><p>Download the zipped test data:</p>
+                    <p><code>wget https://github.com/BIMSBbioinfo/pigx_bsseq/releases/download/v0.0.8/test-data.tar.gz</code></p></li>
+                    <li><p>Unzip the archive</p>
+                    <p><code>tar xzvf test-data.tar.gz</code></p></li>
+                    <li><p>Run the pipeline</p>
+                    <p><code>cd tests &amp;&amp; pigx-bsseq -s settings.yaml sample_sheet.csv</code></p></li>
+                    </ol>
+                    <h1 id="preparing-the-input">Preparing the input</h1>
+                    <p>In order to run the pipeline, the user must supply</p>
+                    <ul>
+                    <li>a sample sheet</li>
+                    <li>a settings file</li>
+                    </ul>
+                    <p>both files are described below.</p>
+                    <p>In order to generate template settings and sample sheet files, type</p>
+                    <div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="ex">pigx</span> bsseq --init</span></code></pre></div>
+                    <p>in the shell, and a boilerplate <code>sample_sheet.csv</code> and <code>settings.yaml</code> will be written to your current directory.</p>
+                    <h2 id="sample-sheet">Sample Sheet</h2>
+                    <p>The sample sheet is a tabular file (<code>csv</code> format) describing the experiment. The table has the following columns:</p>
+                    <table>
+                    <thead>
+                    <tr class="header">
+                    <th>Read1</th>
+                    <th>Read2</th>
+                    <th>SampleID</th>
+                    <th>Protocol</th>
+                    <th>Treatment</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="odd">
+                    <td>SA_R1.fastq.gz</td>
+                    <td>SA_R2.fastq.gz</td>
+                    <td>sample_A</td>
+                    <td>WGBS</td>
+                    <td>H2O</td>
+                    </tr>
+                    <tr class="even">
+                    <td>SB.fastq.gz</td>
+                    <td></td>
+                    <td>sample_B</td>
+                    <td>WGBS</td>
+                    <td>MED1</td>
+                    </tr>
+                    <tr class="odd">
+                    <td>…</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    </tr>
+                    </tbody>
+                    </table>
+                    <p><em>Table 1: example sample sheet</em></p>
+                    <h3 id="column-descriptions">Column descriptions</h3>
+                    <ul>
+                    <li><em>SampleID</em> is the name for the sample, which must be unique to each row of the table.</li>
+                    <li><em>Read1/2</em> are the fastq file names of paired end reads
+                    <ul>
+                    <li>the location of these files is specified in <code>settings.yaml</code></li>
+                    <li>for single-end data, leave the <em>Read2</em> column in place, but have it empty</li>
+                    </ul></li>
+                    <li><em>Protocol</em> refers to the experimental protocol, can be either “WGBS” / “RRBS” for whole-genome/reduced-representation bisulfite sequencing, respectively</li>
+                    <li><em>Treatment</em> contains a treatment label that is used for reference in differential methylation</li>
+                    </ul>
+                    <blockquote>
+                    <p>NOTE: The <em>Protocol</em> decides wether the pipeline will perform deduplication (“WGBS”) or not (“RRBS”).</p>
+                    </blockquote>
+                    <h2 id="settings-file">Settings File</h2>
+                    <p>In the settings file, various parameters are saved, in YAML format, to configure the execution of PiGx-bsseq.</p>
+                    <h3 id="locations">Locations</h3>
+                    <ul>
+                    <li>The path to directory containing the reads ( where the input <code>fastq</code> files are)</li>
+                    <li>The path to a desired output directory, which PiGx will create if necessary</li>
+                    <li>The path to the directory containing the fasta reference genome.</li>
+                    </ul>
+                    <h3 id="general">General</h3>
+                    <ul>
+                    <li>The reference genome name (e.g. ‘hg19’)</li>
+                    <li>wether to use bismark or bwa-meth aligner, or both</li>
+                    <li>detailed settings which only need to be adjusted by experienced users</li>
+                    </ul>
+                    <h4 id="methylation-calling-settings">Methylation-calling Settings</h4>
+                    <pre><code>- minimum number of read-hits required for calling methylation (10)
+                    - minimum mapping quality required for calling methylation (10)</code></pre>
+                    <h4 id="export-bigwig">export-bigwig:</h4>
+                    <pre><code>- decide for each cytosine methylation context wether merge strands and wether to export to bigwig</code></pre>
+                    <h4 id="differential-methylation">differential-methylation:</h4>
+                    <pre><code>- number of cpu threads for differential methylation (1)
+                    - significance threshold for detection of DMC
+                    - effect size for detection of DMC
+                    - annotation files are optional for the report, but 
+                    - `CpGfile`:  file (with path) specifying CpG annotations for differential methylation (genome/cpgIslandExt.hg19.bed.gz).
+                    - `refGenfile`: file (with path) specifying reference genes for differential methylation (genome/refGene.hg19.bed.gz).
+                    - `webfetch`: Boolean instruction as to whether PiGx should attempt to fetch the above files from the internet if they are unavailable locally (no).</code></pre>
+                    <h3 id="differential-methylation-dm-analyis">Differential Methylation (DM) analyis</h3>
+                    <pre><code>- specify which of the treatment groups defined in the sample sheet should be compare against each other</code></pre>
+                    <p>The section described here comprise most of the settings that a typical user might want to access, while more advanced settings provided as defaults in <em>execution</em> section will not need to be modified by most users.</p>
+                    <div class="sourceCode" id="cb9"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="fu">general</span><span class="kw">:</span></span>
+                    <span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">assembly</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;&#39;</span></span>
+                    <span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a><span class="co">  # use one or both bisulfite aligners</span></span>
+                    <span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a><span class="co">  # bwameth is faster and uses less resources</span></span>
+                    <span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a><span class="at">  </span><span class="fu">use_bwameth</span><span class="kw">:</span><span class="at"> </span><span class="ch">True</span></span>
+                    <span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a><span class="co">  # bismark is gold standard and uses sensible defaults  </span></span>
+                    <span id="cb9-7"><a href="#cb9-7" aria-hidden="true"></a><span class="at">  </span><span class="fu">use_bismark</span><span class="kw">:</span><span class="at"> </span><span class="ch">True</span></span>
+                    <span id="cb9-8"><a href="#cb9-8" aria-hidden="true"></a><span class="at">  </span><span class="fu">methylation-calling</span><span class="kw">:</span></span>
+                    <span id="cb9-9"><a href="#cb9-9" aria-hidden="true"></a><span class="at">    </span><span class="fu">minimum-coverage</span><span class="kw">:</span><span class="at"> </span><span class="dv">10</span></span>
+                    <span id="cb9-10"><a href="#cb9-10" aria-hidden="true"></a><span class="at">    </span><span class="fu">minimum-quality</span><span class="kw">:</span><span class="at"> </span><span class="dv">10</span></span>
+                    <span id="cb9-11"><a href="#cb9-11" aria-hidden="true"></a><span class="co">    # this applies to bwameth only</span></span>
+                    <span id="cb9-12"><a href="#cb9-12" aria-hidden="true"></a><span class="at">    </span><span class="fu">keep-singleton</span><span class="kw">:</span><span class="at"> </span><span class="ch">False</span></span>
+                    <span id="cb9-13"><a href="#cb9-13" aria-hidden="true"></a><span class="at">    </span><span class="fu">keep-Dups</span><span class="kw">:</span><span class="at"> Auto</span><span class="co">                 # can be Auto/True/False, Auto decides based on protocol</span></span>
+                    <span id="cb9-14"><a href="#cb9-14" aria-hidden="true"></a><span class="at">  </span><span class="fu">export-bigwig</span><span class="kw">:</span></span>
+                    <span id="cb9-15"><a href="#cb9-15" aria-hidden="true"></a><span class="at">    </span><span class="fu">context</span><span class="kw">:</span></span>
+                    <span id="cb9-16"><a href="#cb9-16" aria-hidden="true"></a><span class="at">      </span><span class="fu">cpg</span><span class="kw">:</span><span class="at"> </span></span>
+                    <span id="cb9-17"><a href="#cb9-17" aria-hidden="true"></a><span class="at">        </span><span class="fu">export</span><span class="kw">:</span><span class="at"> </span><span class="ch">True</span></span>
+                    <span id="cb9-18"><a href="#cb9-18" aria-hidden="true"></a><span class="co">        # join both strands and summarize coverage/methylation? </span></span>
+                    <span id="cb9-19"><a href="#cb9-19" aria-hidden="true"></a><span class="at">        </span><span class="fu">destrand</span><span class="kw">:</span><span class="at"> </span><span class="ch">True</span></span>
+                    <span id="cb9-20"><a href="#cb9-20" aria-hidden="true"></a><span class="at">      </span><span class="fu">chg</span><span class="kw">:</span><span class="at"> </span></span>
+                    <span id="cb9-21"><a href="#cb9-21" aria-hidden="true"></a><span class="at">        </span><span class="fu">export</span><span class="kw">:</span><span class="at"> </span><span class="ch">False</span></span>
+                    <span id="cb9-22"><a href="#cb9-22" aria-hidden="true"></a><span class="at">        </span><span class="fu">destrand</span><span class="kw">:</span><span class="at"> </span><span class="ch">False</span></span>
+                    <span id="cb9-23"><a href="#cb9-23" aria-hidden="true"></a><span class="at">      </span><span class="fu">chh</span><span class="kw">:</span><span class="at"> </span></span>
+                    <span id="cb9-24"><a href="#cb9-24" aria-hidden="true"></a><span class="at">        </span><span class="fu">export</span><span class="kw">:</span><span class="at"> </span><span class="ch">False</span></span>
+                    <span id="cb9-25"><a href="#cb9-25" aria-hidden="true"></a><span class="at">        </span><span class="fu">destrand</span><span class="kw">:</span><span class="at"> </span><span class="ch">False</span></span>
+                    <span id="cb9-26"><a href="#cb9-26" aria-hidden="true"></a><span class="at">  </span><span class="fu">reports</span><span class="kw">:</span></span>
+                    <span id="cb9-27"><a href="#cb9-27" aria-hidden="true"></a><span class="at">    </span><span class="fu">TSS_plotlength</span><span class="kw">:</span><span class="at"> </span><span class="dv">5000</span></span>
+                    <span id="cb9-28"><a href="#cb9-28" aria-hidden="true"></a><span class="at">  </span><span class="fu">differential-methylation</span><span class="kw">:</span></span>
+                    <span id="cb9-29"><a href="#cb9-29" aria-hidden="true"></a><span class="at">    </span><span class="fu">cores</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
+                    <span id="cb9-30"><a href="#cb9-30" aria-hidden="true"></a><span class="at">    </span><span class="fu">qvalue</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.01</span></span>
+                    <span id="cb9-31"><a href="#cb9-31" aria-hidden="true"></a><span class="at">    </span><span class="fu">difference</span><span class="kw">:</span><span class="at"> </span><span class="dv">25</span></span>
+                    <span id="cb9-32"><a href="#cb9-32" aria-hidden="true"></a><span class="at">    </span><span class="fu">annotation</span><span class="kw">:</span></span>
+                    <span id="cb9-33"><a href="#cb9-33" aria-hidden="true"></a><span class="co">      # download cpgIsland-bedfile or refGenes-bedfile automatically if not given?</span></span>
+                    <span id="cb9-34"><a href="#cb9-34" aria-hidden="true"></a><span class="at">      </span><span class="fu">cpgIsland-bedfile</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;&#39;</span></span>
+                    <span id="cb9-35"><a href="#cb9-35" aria-hidden="true"></a><span class="at">      </span><span class="fu">refGenes-bedfile</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;&#39;</span></span>
+                    <span id="cb9-36"><a href="#cb9-36" aria-hidden="true"></a><span class="at">      </span><span class="fu">webfetch</span><span class="kw">:</span><span class="at">   </span><span class="ch">no</span></span>
+                    <span id="cb9-37"><a href="#cb9-37" aria-hidden="true"></a></span>
+                    <span id="cb9-38"><a href="#cb9-38" aria-hidden="true"></a></span>
+                    <span id="cb9-39"><a href="#cb9-39" aria-hidden="true"></a><span class="fu">DManalyses</span><span class="kw">:</span></span>
+                    <span id="cb9-40"><a href="#cb9-40" aria-hidden="true"></a><span class="co">  # The names of analyses can be anything but they have to be unique</span></span>
+                    <span id="cb9-41"><a href="#cb9-41" aria-hidden="true"></a><span class="co">  # for each combination of case control group comparisons.</span></span>
+                    <span id="cb9-42"><a href="#cb9-42" aria-hidden="true"></a></span>
+                    <span id="cb9-43"><a href="#cb9-43" aria-hidden="true"></a><span class="at">  </span><span class="fu">analysis1</span><span class="kw">:</span></span>
+                    <span id="cb9-44"><a href="#cb9-44" aria-hidden="true"></a><span class="at">    </span><span class="fu">treatment_sample_groups</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;MED1&quot;</span></span>
+                    <span id="cb9-45"><a href="#cb9-45" aria-hidden="true"></a><span class="at">    </span><span class="fu">control_sample_groups</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;H2O&quot;</span></span>
+                    <span id="cb9-46"><a href="#cb9-46" aria-hidden="true"></a></span>
+                    <span id="cb9-47"><a href="#cb9-47" aria-hidden="true"></a></span>
+                    <span id="cb9-48"><a href="#cb9-48" aria-hidden="true"></a><span class="at"> </span><span class="fu">multipleTreat</span><span class="kw">:</span></span>
+                    <span id="cb9-49"><a href="#cb9-49" aria-hidden="true"></a><span class="co">    # If multiple sample groups are provided, they must be separated by comma.</span></span>
+                    <span id="cb9-50"><a href="#cb9-50" aria-hidden="true"></a><span class="at">   </span><span class="fu">treatment_sample_groups</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;MED2,MED1&quot;</span></span>
+                    <span id="cb9-51"><a href="#cb9-51" aria-hidden="true"></a><span class="at">   </span><span class="fu">control_sample_groups</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;H2O&quot;</span></span>
+                    <span id="cb9-52"><a href="#cb9-52" aria-hidden="true"></a></span>
+                    <span id="cb9-53"><a href="#cb9-53" aria-hidden="true"></a><span class="at"> </span><span class="fu">withinGroup</span><span class="kw">:</span></span>
+                    <span id="cb9-54"><a href="#cb9-54" aria-hidden="true"></a><span class="co">   # For within group comparison (all vs all), give the same groups to treatment and control.</span></span>
+                    <span id="cb9-55"><a href="#cb9-55" aria-hidden="true"></a><span class="at">   </span><span class="fu">treatment_sample_groups</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;MED2,MED1,H2O&quot;</span></span>
+                    <span id="cb9-56"><a href="#cb9-56" aria-hidden="true"></a><span class="at">   </span><span class="fu">control_sample_groups</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;MED2,MED1,H2O&quot;</span><span class="er">V</span></span></code></pre></div>
+                    <h1 id="running-the-pipeline">Running the pipeline</h1>
+                    <p>After editting the above input files, the bsseq pipeline can be executed with the command: <code>pigx-bsseq [sample sheet] -s [settings file]</code> with further options, described in the README (for example, the flag <code>--dry-run</code> can be added to confirm valid input settings before execution).</p>
+                    <h2 id="analysis">Analysis</h2>
+                    <p>In the <code>out-dir</code> folder, PiGx will create a sub-directory <code>Final_Reports/</code> in which a final report for each sample is provided, along with a report on the differential methylation observations for each pair of samples that was provided in the sample sheet under <code>general: differential-methylation: treatment-groups:</code> Further analysis can be performed on the aligned data using the sorted <code>.bam</code> file in <code>06_sorting</code>, or the bigwig file in <code>08_bigwig_files</code>, although for simple methylation percentages, it should be suffice to consult the column-separated files in <code>07_methyl_calls</code>. In each case, the specific file names will refer to the sample IDs provided in the original sample sheet.</p>
+                    <h1 id="troubleshooting">Troubleshooting</h1>
+                    <p>The dependency graph of rules contains branches; as such, the rules are not always performed in <em>exactly</em> the order indicated by directory prefix labels. Nevertheless, in cases of interrupted calculation, it may be useful to inspect the log files from the last (or second-to-last) directory created to check for error messages.</p>
+                    <p>Alongside these directories, the directory <code>pigx_work</code> is also created, with its contents described in the file <code>CONTENTS</code>—here one can see links to the original data files for traceability. In case a run of PiGx was done a long time ago, under conditions that have been forgotten, the subfolder <code>pigx_work/input/</code> contains links to each of the raw data files, <code>pigx_work/refGenome</code> links to the reference genome that was mapped do during exection, and <code>pigx_work/bin</code> contains links to the versions of binary executables that were used in the process.</p>
+                    <h3 id="cluster-submission">Cluster Submission</h3>
+                    <p>The settings file allows for fields that will serve to optimize resource usage when PiGx is submitted to a cluster via SGE (Sun Grid Engine, a standard queueing system). For example, under the section <code>execution: rules:</code> various parameters can be supplied regarding resource consumption (e.g. number of threads, memory required, etc.) for each rule individually, or, alternatively, <code>execution: cluster: queue</code> can specify a single queue for all jobs.</p>
+                    <p>The default parameters were chosen and tested on the human hg19 genome, since it is larger (and therefore requires a larger RAM footprint) than most other model organisms (e.g. Drosophila, mouse, etc.). This is not an exhaustive test, however, and it remains possible that PiGx users studying exotic genomes may yet exceed resource allowance. In such cases, a job execution will be aborted and an email will be sent to the address supplied by the user detailing circumstances of the failed job (such as start time, stop time, <code>Max vmem</code> = maximum memory consumed), and resource requests can be adjusted accordingly. Advanced users may consult <code>etc/settings.yaml.in</code> to see which values can be fine-tuned; novice users who are studying either the human genome, or a smaller one, should simply ignore this section and allow PiGx to assign the default values.</p>
+                    <h1 id="questions">Questions</h1>
+                    <p>If you have further questions please send e-mail to <a href="mailto:pigx@googlegroups.com" class="email">pigx@googlegroups.com</a> or <a href="https://groups.google.com/forum/#!forum/pigx/">ask questions on the web forum</a>.</p>
+                  </section>
+                </div>
+                <div class="search-results">
+                  <div class="has-results">
+                    <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+                    <ul class="search-results-list"></ul>
+                  </div>
+                  <div class="no-results">
+                    <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+                  </div>
+                </div>
+              </div>
             </div>
-
-            
-                
-                <a href="pigx-chip-seq.html#questions" class="navigation navigation-prev " aria-label="Previous page: Questions">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-                
-                
-                <a href="pigx-bs-seq.html#introduction" class="navigation navigation-next " aria-label="Next page: Introduction">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-                
-            
-        
-    </div>
-
-    <script>
+          </div>
+        </div>
+      </div>
+      <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"PiGx BS-seq","level":"1.4","depth":1,"next":{"title":"Introduction","level":"1.4.1","depth":2,"anchor":"#introduction","path":"pigx-bs-seq.md","ref":"pigx-bs-seq.md#introduction","articles":[]},"previous":{"title":"Questions","level":"1.3.8","depth":2,"anchor":"#questions","path":"pigx-chip-seq.md","ref":"pigx-chip-seq.md#questions","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"pigx-bs-seq.md","mtime":"2019-07-08T15:23:21.475Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-07-08T15:24:30.549Z"},"basePath":".","book":{"language":""}});
+          gitbook.page.hasChanged(
+            {
+              "page":
+              {
+                "title":"",
+                "level":"1.1",
+                "depth":1,
+                "next":{},
+                "dir":"ltr"
+              },
+              "config":
+              {
+                "gitbook":"*",
+                "theme":"default",
+                "variables":{},
+                "plugins":[],
+                "pluginsConfig":
+                {
+                  "highlight":{},
+                  "search":{},
+                  "lunr": {
+                    "maxIndexSize":1000000,
+                    "ignoreSpecialCharacters":false
+                  },
+                  "sharing": {
+                    "facebook":true,
+                    "twitter":true,
+                    "google":false,
+                    "weibo":false,
+                    "instapaper":false,
+                    "vk":false,
+                    "all":[
+                      "facebook",
+                      "google",
+                      "twitter",
+                      "weibo",
+                      "instapaper"
+                    ]},
+                  "fontsettings": {
+                    "theme":"white",
+                    "family":"sans",
+                    "size":2
+                  },
+                  "theme-default": {
+                    "styles": {
+                      "website":"styles/website.css",
+                      "pdf":"styles/pdf.css",
+                      "epub":"styles/epub.css",
+                      "mobi":"styles/mobi.css",
+                      "ebook":"styles/ebook.css",
+                      "print":"styles/print.css"
+                    },
+                    "showLevel":false
+                  }
+                },
+                "structure": {
+                  "langs":"LANGS.md",
+                  "readme":"README.md",
+                  "glossary":"GLOSSARY.md",
+                  "summary":"SUMMARY.md"
+                },
+                "pdf": {
+                  "pageNumbers":true,
+                  "fontSize":12,
+                  "fontFamily":"Arial",
+                  "paperSize":"a4",
+                  "chapterMark":"pagebreak",
+                  "pageBreaksBefore":"/",
+                  "margin": {
+                    "right":62,"left":62,"top":56,"bottom":56
+                  }
+                },
+                "styles": {
+                  "website":"styles/website.css",
+                  "pdf":"styles/pdf.css",
+                  "epub":"styles/epub.css",
+                  "mobi":"styles/mobi.css",
+                  "ebook":"styles/ebook.css",
+                  "print":"styles/print.css"
+                }
+              },
+              "file": {
+                "path":"",
+                "mtime":"",
+                "type":"markdown"
+              },
+              "gitbook": {
+                "version":"3.2.3",
+                "time":"2019-07-08T15:24:30.549Z"
+              },
+              "basePath":".",
+              "book": {"language":""}});
         });
     </script>
-</div>
-
-        
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="gitbook/gitbook.js"></script>
     <script src="gitbook/theme.js"></script>
-    
-        
-        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
-        
-    
-        
-        <script src="gitbook/gitbook-plugin-search/search.js"></script>
-        
-    
-        
-        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
-        
-    
-        
-        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
-        
-    
-        
-        <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
-        
-    
-        
-        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
-        
-    
-
-    </body>
+    <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+    <script src="gitbook/gitbook-plugin-search/search.js"></script>
+    <script src="gitbook/gitbook-plugin-lunr/lunr.js"></script>
+    <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+    <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
+    <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+  </body>
 </html>
-

@@ -1,1013 +1,446 @@
-
 <!DOCTYPE HTML>
-<html lang="" >
-    <head>
-        <meta charset="UTF-8">
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>PiGx scRNA-seq · GitBook</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.3">
-        
-        
-        
-    
-    <link rel="stylesheet" href="gitbook/style.css">
-
-    
-            
-                
-                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
-                
-            
-                
-                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
-                
-            
-                
-                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
-                
-            
-        
-
-    
-
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-
-        
-    
-    
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/website.css">
     <meta name="HandheldFriendly" content="true"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
-    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
-
-    
-    <link rel="next" href="pigx-scrna-seq.html" />
-    
-    
-    <link rel="prev" href="pigx-bs-seq.html" />
-    
-
-    </head>
-    <body>
-        
-<div class="book">
-    <div class="book-summary">
-        
-            
-<div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search" />
-</div>
-
-            
-                <nav role="navigation">
-                
-
-
-<ul class="summary">
-    
-    
-
-    
-
-    
-        
-        
-    
-        <li class="chapter " data-level="1.1" data-path="./">
-            
-                <a href="./">
-            
-                    
-                    Introduction
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2" data-path="pigx-rna-seq.html">
-            
-                <a href="pigx-rna-seq.html">
-            
-                    
-                    PiGx RNA-seq
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.2.1" data-path="pigx-rna-seq.html">
-            
-                <a href="pigx-rna-seq.html#introduction">
-            
-                    
-                    Introduction
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.2" data-path="pigx-rna-seq.html">
-            
-                <a href="pigx-rna-seq.html#installation">
-            
-                    
-                    Installation
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.3" data-path="pigx-rna-seq.html">
-            
-                <a href="pigx-rna-seq.html#quick-start">
-            
-                    
-                    Quick start
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.4" data-path="pigx-rna-seq.html">
-            
-                <a href="pigx-rna-seq.html#preparing-the-input">
-            
-                    
-                    Preparing the input
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.5" data-path="pigx-rna-seq.html">
-            
-                <a href="pigx-rna-seq.html#running-the-pipeline">
-            
-                    
-                    Running the pipeline
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.6" data-path="pigx-rna-seq.html">
-            
-                <a href="pigx-rna-seq.html#output-description">
-            
-                    
-                    Output description
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.7" data-path="pigx-rna-seq.html">
-            
-                <a href="pigx-rna-seq.html#troubleshooting">
-            
-                    
-                    Troubleshooting
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.8" data-path="pigx-rna-seq.html">
-            
-                <a href="pigx-rna-seq.html#questions">
-            
-                    
-                    Questions
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3" data-path="pigx-chip-seq.html">
-            
-                <a href="pigx-chip-seq.html#pigx-chip-seq">
-            
-                    
-                    PiGx ChIP-seq
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.3.1" data-path="pigx-chip-seq.html">
-            
-                <a href="pigx-chip-seq.html#introduction">
-            
-                    
-                    Introduction
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.2" data-path="pigx-chip-seq.html">
-            
-                <a href="pigx-chip-seq.html#installation">
-            
-                    
-                    Installation
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.3" data-path="pigx-chip-seq.html">
-            
-                <a href="pigx-chip-seq.html#quick-start">
-            
-                    
-                    Quick Start
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4" data-path="pigx-chip-seq.html">
-            
-                <a href="pigx-chip-seq.html#preparing-input">
-            
-                    
-                    Preparing Input
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.5" data-path="pigx-chip-seq.html">
-            
-                <a href="pigx-chip-seq.html#running-the-pipeline">
-            
-                    
-                    Running the Pipeline
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.6" data-path="pigx-chip-seq.html">
-            
-                <a href="pigx-chip-seq.html#output-description">
-            
-                    
-                    Output Description
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.7" data-path="pigx-chip-seq.html">
-            
-                <a href="pigx-chip-seq.html#troubleshooting">
-            
-                    
-                    Troubleshooting
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.8" data-path="pigx-chip-seq.html">
-            
-                <a href="pigx-chip-seq.html#questions">
-            
-                    
-                    Questions
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4" data-path="pigx-bs-seq.html">
-            
-                <a href="pigx-bs-seq.html">
-            
-                    
-                    PiGx BS-seq
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.4.1" data-path="pigx-bs-seq.html">
-            
-                <a href="pigx-bs-seq.html#introduction">
-            
-                    
-                    Introduction
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.2" data-path="pigx-bs-seq.html">
-            
-                <a href="pigx-bs-seq.html#installation">
-            
-                    
-                    Installation
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.3" data-path="pigx-bs-seq.html">
-            
-                <a href="pigx-bs-seq.html#quick-start">
-            
-                    
-                    Quick start
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.4" data-path="pigx-bs-seq.html">
-            
-                <a href="pigx-bs-seq.html#preparing-the-input">
-            
-                    
-                    Preparing the input
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.5" data-path="pigx-bs-seq.html">
-            
-                <a href="pigx-bs-seq.html#running-the-pipeline">
-            
-                    
-                    Running the pipeline
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.6" data-path="pigx-bs-seq.html">
-            
-                <a href="pigx-bs-seq.html#output-description">
-            
-                    
-                    Output description
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.7" data-path="pigx-bs-seq.html">
-            
-                <a href="pigx-bs-seq.html#troubleshooting">
-            
-                    
-                    Troubleshooting
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.8" data-path="pigx-bs-seq.html">
-            
-                <a href="pigx-bs-seq.html#questions">
-            
-                    
-                    Questions
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter active" data-level="1.5" data-path="pigx-scrna-seq.html">
-            
-                <a href="pigx-scrna-seq.html">
-            
-                    
-                    PiGx scRNA-seq
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.5.1" data-path="pigx-scrna-seq.html">
-            
-                <a href="pigx-scrna-seq.html#introduction">
-            
-                    
-                    Introduction
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.5.2" data-path="pigx-scrna-seq.html">
-            
-                <a href="pigx-scrna-seq.html#installation">
-            
-                    
-                    Installation
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.5.3" data-path="pigx-scrna-seq.html">
-            
-                <a href="pigx-scrna-seq.html#quick-start">
-            
-                    
-                    Quick start
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.5.4" data-path="pigx-scrna-seq.html">
-            
-                <a href="pigx-scrna-seq.html#preparing-the-input">
-            
-                    
-                    Preparing the input
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.5.5" data-path="pigx-scrna-seq.html">
-            
-                <a href="pigx-scrna-seq.html#running-the-pipeline">
-            
-                    
-                    Running the pipeline
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.5.6" data-path="pigx-scrna-seq.html">
-            
-                <a href="pigx-scrna-seq.html#output-description">
-            
-                    
-                    Output description
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.5.7" data-path="pigx-scrna-seq.html">
-            
-                <a href="pigx-scrna-seq.html#troubleshooting">
-            
-                    
-                    Troubleshooting
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.5.8" data-path="pigx-scrna-seq.html">
-            
-                <a href="pigx-scrna-seq.html#questions">
-            
-                    
-                    Questions
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-    
-
-    <li class="divider"></li>
-
-    <li>
-        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
-            Published with GitBook
-        </a>
-    </li>
-</ul>
-
-
-                </nav>
-            
-        
-    </div>
-
-    <div class="book-body">
-        
-            <div class="body-inner">
-                
-                    
-
-<div class="book-header" role="navigation">
-    
-
-    <!-- Title -->
-    <h1>
-        <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >PiGx scRNA-seq</a>
-    </h1>
-</div>
-
-
-
-
-                    <div class="page-wrapper" tabindex="-1" role="main">
-                        <div class="page-inner">
-                            
-<div id="book-search-results">
-    <div class="search-noresults">
-    
-                                <section class="normal markdown-section">
-                                
-                                <h1 id="pigx-scrna-seq">PiGx scRNA-seq</h1>
-<h1 id="introduction">Introduction</h1>
-<p>PiGX scRNAseq is an analysis pipeline for preprocessing and quality control for single cell RNA sequencing experiments. 
-The inputs are read files from the sequencing experiment, and a configuration file which describes the experiment. 
-It produces processed files for downstream analysis and interactive quality reports. 
-The pipeline is designed to work with UMI based methods. It currently supports all methods which output paired
-adapter - read files.
-The pipeline was heavily influenced by the <a href="http://mccarrolllab.com/dropseq/" target="_blank">Dropseq</a> pipeline from the McCaroll lab.</p>
-<h2 id="workflow">Workflow</h2>
-<ul>
-<li>Quality control reads using fastQC and multiQC</li>
-<li>Automatically determines the appropriate cell number</li>
-<li>Constructs the digital gene expression matrix</li>
-<li>Calculates per sample and per cell statistics</li>
-<li>Prepares a quality control report</li>
-<li>Normalizes data and does dimensionallity reduction</li>
-</ul>
-<p><img src="figures/pigx-scrnaseq.svg" alt="PiGx scRNAseq workflow">
-<em>Figure 1: An overview of the PiGx scRNA-seq workflow</em></p>
-<h1 id="installation">Installation</h1>
-<p>You can install this pipeline and all of its dependencies through GNU
-Guix:</p>
-<pre><code>guix install pigx-scrnaseq
-</code></pre><p>You can also install it manually from source.  You can find the <a href="https://github.com/BIMSBbioinfo/pigx_scrnaseq/releases/latest" target="_blank">latest
-release</a>
-here.  PiGx uses the GNU build system.  Please make sure that all
-required dependencies are installed and then follow these steps after
-unpacking the latest release tarball:</p>
-<pre><code class="lang-sh">./configure                         \
-    --prefix=/some/<span class="hljs-built_in">where</span>            \
-    DROPSEQJAR=/path/to/dropseq.jar \
-    PICARDJAR=/path/to/picard.jar
-make install
-</code></pre>
-<h2 id="via-conda">Via Conda</h2>
-<ul>
-<li>Download pigx_scrnaseq source code <ul>
-<li>run: <blockquote>
-<p>git clone <a href="https://github.com/BIMSBbioinfo/pigx_scrnaseq.git" target="_blank">https://github.com/BIMSBbioinfo/pigx_scrnaseq.git</a></p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li>Download and install Anaconda from <a href="https://www.anaconda.com/download" target="_blank">https://www.anaconda.com/download</a></li>
-<li>Locate the &apos;environment.yml&apos; file in the source code. <ul>
-<li>run:<blockquote>
-<p>conda env create -f environment.yml #provide path to the environment.yml file</p>
-</blockquote>
-</li>
-<li>activate the environment:<blockquote>
-<p>source activate pigx_scrnaseq </p>
-</blockquote>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="via-guix">Via Guix</h2>
-<p>Assuming you have Guix installed, the following command spawns a
-sub-shell in which all dependencies are available:</p>
-<pre><code class="lang-sh">guix environment <span class="hljs-_">-l</span> guix.scm
-</code></pre>
-<p>If you do not use one of these package
-managers, you will need to ensure that the following software is
-installed:</p>
-<details>
-<summary>Software dependencies</summary>
-
-</details>
-
-
-<h2 id="dependencies">Dependencies</h2>
-<p>By default the <code>configure</code> script expects tools to be in a directory
-listed in the <code>PATH</code> environment variable.  If the tools are installed
-in a location that is not on the <code>PATH</code> you can tell the <code>configure</code>
-script about them with variables.  Run <code>./configure --help</code> for a list
-of all variables and options.</p>
-<p>You can prepare a suitable environment with Conda or with <a href="https://gnu.org/s/guix" target="_blank">GNU
-Guix</a>.</p>
-<p>The pipeline currently depends on two external java programs, which can be found on the
-following links:</p>
-<ol>
-<li><p><a href="https://github.com/broadinstitute/picard/releases/tag/2.18.0" target="_blank">Picard tools</a></p>
-</li>
-<li><p><a href="http://mccarrolllab.com/download/1276/" target="_blank">Dropseq tools</a></p>
-</li>
-</ol>
-<p>During the configure step path to the <strong>.jar</strong> files needs to be provided.</p>
-<h1 id="quick-start">Quick Start</h1>
-<p>To check wether the pipeline was properly installed, run PiGx scRNAseq on a minimal test dataset, which can be found on the following <a href="https://github.com/BIMSBbioinfo/pigx_scrnaseq/releases/download/v0.0.3/test_data.tgz" target="_blank">link</a>
-Once downloaded run these commands to extract the data:</p>
-<pre><code class="lang-sh">mkdir <span class="hljs-built_in">test</span>_dir
-tar -xzf <span class="hljs-built_in">test</span>_data.tar.gz --directory <span class="hljs-built_in">test</span>_dir/
-<span class="hljs-built_in">cd</span> <span class="hljs-built_in">test</span>_dir
-</code></pre>
-<p>The tarball includes a settings file and a sample sheet file. 
-The pipeline can now be started with the following command:</p>
-<pre><code class="lang-sh">pigx scrnaseq <span class="hljs-_">-s</span> <span class="hljs-built_in">test</span>_dir/settings.yaml <span class="hljs-built_in">test</span>_dir/sample_sheet.csv
-</code></pre>
-<p>The output of the pipeline is located inside <code>test_dir/out</code> directory.</p>
-<p>The <code>scRNA-Seq.report.html</code> inside the <code>Mapped</code> directory gives a general overview about the single cell experiments.</p>
-<h1 id="preparing-the-input">Preparing the input</h1>
-<p>To run the pipeline, the user must supply</p>
-<ul>
-<li><p>a sample sheet</p>
-</li>
-<li><p>a settings file</p>
-</li>
-</ul>
-<p>both files are described below.</p>
-<p>To generate template <code>sample_sheet.csv</code> and <code>settings.yaml</code> files, in your current directory, type the following command 
-in the shell:</p>
-<pre><code class="lang-sh">pigx scrnaseq --init
-</code></pre>
-<h2 id="sample-sheet">Sample Sheet</h2>
-<p>The sample sheet is a tabular file describing the experiment. The table has the following columns:</p>
-<table>
-<thead>
-<tr>
-<th>name</th>
-<th>reads1</th>
-<th>reads2</th>
-<th>library</th>
-<th>covariate1</th>
-<th>covariate2</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li><em>name</em> - name for the sample, which will be used to label the sample in all downstream analysis</li>
-<li><em>reads1</em> - fastq file containing the <strong>adapter sequences</strong></li>
-<li><em>reads2</em> - fastq file containing the <strong>sequenced reads</strong><ul>
-<li>location of these files is specified in <code>settings.yaml</code></li>
-</ul>
-</li>
-<li><em>library</em> - sequencing platform on which the experiment was performed (i.e. dropseq)</li>
-<li><em>covariates</em> - variables which describe the samples. For example: replicate, time, hour post infection, tissue ...</li>
-</ul>
-<p>Additional columns may be included which may be used as covariates in the differential expression analysis (sex, age, different treatments).</p>
-<h2 id="settings-file">Settings File</h2>
-<p>The settings file is a <em>YAML</em> file which specifies:</p>
-<ul>
-<li>Locations:<ul>
-<li>The locations of the reads (directory where <code>fastq</code> files are located)</li>
-<li>The location of the output directory</li>
-<li>The location of the <code>fasta</code> file with the reference genome (must be prepared by the user)</li>
-<li>The location of a <code>GTF</code> file with genome annotations</li>
-</ul>
-</li>
-<li><p>Genome assembly name (i.e. mm10)</p>
-</li>
-<li><p>covariates </p>
-</li>
-</ul>
-<p>In order to get started, enter <code>pigx-scrnaseq --init-settings my_settings.yaml</code>. This will create a file called <code>my_settings.yaml</code> with the default structure. The file will look like this:</p>
-<pre><code class="lang-yaml"><span class="hljs-attr">locations:</span>
-<span class="hljs-attr">  output-dir:</span> out/
-<span class="hljs-attr">  reads-dir:</span> sample_data/reads/
-<span class="hljs-attr">  tempdir:</span>
-
-<span class="hljs-attr">covariates:</span> <span class="hljs-string">&apos;covariate1, covariate2, ...&apos;</span>
-
-<span class="hljs-attr">annotation:</span>
-<span class="hljs-attr">  primary:</span>
-<span class="hljs-attr">    genome:</span>
-<span class="hljs-attr">      name:</span> hg19
-<span class="hljs-attr">      fasta:</span> sample_data/genome.fa
-<span class="hljs-attr">    gtf:</span> sample_data/genome.gtf
-
-<span class="hljs-attr">execution:</span>
-<span class="hljs-attr">  submit-to-cluster:</span> <span class="hljs-literal">no</span>
-<span class="hljs-attr">  jobs:</span> <span class="hljs-number">6</span>
-<span class="hljs-attr">  nice:</span> <span class="hljs-number">19</span>
-</code></pre>
-<h1 id="running-the-pipeline">Running the pipeline</h1>
-<p>To run PiGx on your experimental data, first prepare the sample sheet and settings file (see <a href="#preparing-input">above</a>), and then from the terminal type</p>
-<pre><code class="lang-sh">$ pigx-scrnaseq <span class="hljs-_">-s</span> settings.yaml sample_sheet.csv
-</code></pre>
-<p>If you are not sure wether you set everything up correctly, use the dryrun option which will only show what work would be performed, but does not actually run the pipeline.</p>
-<pre><code class="lang-sh">$ pigx-scrnaseq <span class="hljs-_">-s</span> settings.yaml sample_sheet.csv -n
-</code></pre>
-<p>To see all available options type the <code>--help</code> option</p>
-<h1 id="output-description">Output Description</h1>
-<p>PiGx scRNA-seq creates an output folder, with a specific directory structure (for details see <a href="#output-folder-structure">here</a>), with the following results:</p>
-<ul>
-<li>bam files</li>
-<li>bigwig files</li>
-<li>UMI and read count matrices</li>
-<li>Quality control report</li>
-<li>SingleCellExperiment object with pre-calculated statistics and dimensionallity reductions</li>
-</ul>
-<h3 id="output-folder-structure">Output Folder Structure</h3>
-<p>The output directory structure has the following structure:</p>
-<pre><code>|-- Annotation
-|   `-- genome_name (i.e. mm10)
-|       `-- STAR_INDEX
-|-- Log
-|-- Mapped
-|   |-- Sample_1
-|   |   `-- genome_name
-|   |-- Sample_2
-|   |   `-- genome_name
-|   |-- Sample_3
-|   |   `-- genome_name
-|   `-- Sample_4
-|       `-- genome_name
-</code></pre><h4 id="annotation">Annotation</h4>
-<p>Contains pre-processed fasta and gtf file, along with the STAR genome index.
-The genome fasta file is processed into a dict header.
-The gtf file has gene_names replaced with gene_id.</p>
-<p><strong>Important</strong>: We sincerely advise that you check that the gtf file corresponds to the same organism
-and genome version as the genome fasta files.
-The chromosome names have to completely correspond between the two files.</p>
-<p>We encourage users to use both the genome annotation and the fasta file from the <a href="https://www.ensembl.org/info/data/ftp/index.html" target="_blank">ENSEMBL</a> database.</p>
-<h4 id="log">Log</h4>
-<p>Contains execution logs for every step of the pipeline.</p>
-<h4 id="mapped">Mapped</h4>
-<p>The <strong>Mapped</strong> folder contains per sample processed single cell samples.
-Additionally, it contains a <a href="http://linnarssonlab.org/loompy/" target="_blank">loom</a> file with merged expression values from all experiments,
-an RDS file with a saved <a href="https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html" target="_blank">SingleCellExperiment</a> object, and a quality control report in the html format.</p>
-<h4 id="sample-output-description">Sample output description</h4>
-<p>Analaysis results for each sample are done in a separate subdirectory under <strong>Mapped</strong>.
-Structure of analysis results:</p>
-<pre><code>|-- Sample1.fastq.bam
-|-- Sample1_1_fastqc.html
-|-- Sample1_1_fastqc.zip
-|-- Sample1_2_fastqc.html
-|-- Sample1_2_fastqc.zip
-|-- genome_name
-|   |-- adapter_trimming_report.txt
-|   |-- Sample1_genome_name.bw
-|   |-- Sample1_genome_name.m.bw
-|   |-- Sample1_genome_name.p.bw
-|   |-- Sample1_genome_name_BAMTagHistogram.txt
-|   |-- Sample1_genome_name_DownstreamStatistics.txt
-|   |-- Sample1_genome_name_READS.Matrix.txt
-|   |-- Sample1_genome_name_ReadCutoff.png
-|   |-- Sample1_genome_name_ReadCutoff.yaml
-|   |-- Sample1_genome_name_ReadStatistics.txt
-|   |-- Sample1_genome_name_Summary.txt
-|   |-- Sample1_genome_name_UMI.Matrix.loom
-|   |-- Sample1_genome_name_UMI.Matrix.txt
-|   |-- polyA_trimming_report.txt
-|   |-- star.Log.final.out
-|   |-- star.Log.out
-|   |-- star.Log.progress.out
-|   |-- star.SJ.out.tab
-|   |-- star_gene_exon_tagged.bai
-|   |-- star_gene_exon_tagged.bam
-|   |-- unaligned_tagged_Cellular.bam_summary.txt
-|   `-- unaligned_tagged_Molecular.bam_summary.txt
-</code></pre><ul>
-<li><p>Sample1.fastq.bam - contains merged barcode and sequence fq files</p>
-</li>
-<li><p>Sample1_genome_name.<strong>bw</strong> - bigWig file constructed from selected cells. Files with <strong>m/p</strong>.bw contain strand separated signal</p>
-</li>
-<li><p>Sample1<em>genome_name</em><strong>BAMTagHistogram</strong> - Number of reads in coressponding to each cell barcode.</p>
-</li>
-<li><p>Sample1_genome_name_UMI.Matrix.<strong>txt/loom</strong> - UMI based digital expression matrix in txt and loom format</p>
-</li>
-<li><p>Sample1_genome_name_READS.Matrix.txt - Read count digital expression matrix</p>
-</li>
-<li><p>Sample1_genome_name_ReadCutoff.yaml - contains the UMI threshold for selecting high quality cells (obtained using <a href="https://github.com/rajewsky-lab/dropbead" target="_blank">dropbead</a>). The corresponding .png file visualizes the UMI curve and the threshold.</p>
-</li>
-<li><p>star_gene_exon_tagged.bam - mapped and annotated reads. Each read is tagged by annotation based on it&apos;s mapping location.</p>
-</li>
-<li><p>Sample1<em>genome_name</em><strong>ReadStatistics/Downstream</strong>.txt - quality control statistics used in the html report. They contain values such as number of reads in Exons/Introns.</p>
-</li>
-</ul>
-<h2 id="downstream-analysis">Downstream analysis</h2>
-<p>The combined expression data are subsequently processed into a <a href="https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html" target="_blank">SingleCellExperiment</a> object. SingleCellExperiment is a Bioconductor class for storing expression values, along with the cell, and gene data, and experimental meta data in a single container. It is constructed on top of hdf5  file based arrays  (Pag&#xE8;s 2017), which enables exploration even on systems with limited memory capacity. 
-During the object construction, the pipeline performs expression normalization, dimensionallity reduction, identification of significantly variable genes, assigns the cells to the steps of the cell cycle, and calculates the quality statistics. The SingleCellExperiment object contains all of the necessary data needed for further exploration. The object connects the pigx-pipeline with the Bioconductor single cell computing environment, and enables integration with state of the art statistical, and machine learning mehods (<a href="https://bioconductor.org/packages/release/bioc/html/scran.html" target="_blank">scran</a>, <a href="https://bioconductor.org/packages/release/bioc/html/zinbwave.html" target="_blank">zinbwave</a>, <a href="https://github.com/BIMSBbioinfo/netSmooth" target="_blank">netSmooth</a>, <a href="https://github.com/csoneson/iSEE" target="_blank">iSEE</a>.</p>
-<h2 id="execution-on-a-cluster">Execution on a cluster</h2>
-<p>Currently, PiGx only supports Sun Grid Engine for cluster execution. If you&apos;re uncertain about your cluster, try typing <code>qsub</code> in the shell (Sun Grid Engine uses <code>qsub</code> to submit jobs).</p>
-<h4 id="disappearing-jobs-on-the-cluster">Disappearing jobs on the cluster</h4>
-<p>PiGx scRNA-seq comes with sensible defaults for resource requests when running on a cluster, but based on the genome version and other parameters, these might not be sufficient and your cluster might terminate your jobs. The cluster resource requests may be overridden in the settings file. See the execution section of the settings file created with <code>pigx scrnaseq --init=settings</code>.</p>
-<h1 id="troubleshooting">Troubleshooting</h1>
-<p><strong>Q:</strong> I get the following error:</p>
-<pre><code class="lang-bash">Error: Directory cannot be locked. Please make sure that no other Snakemake process is trying to create the same files <span class="hljs-keyword">in</span> the following directory:
-/home/agosdsc/projects/pigx_scrnaseq/<span class="hljs-built_in">test</span>_dir/out
-If you are sure that no other instances of snakemake are running on this directory, the remaining lock was likely caused by a <span class="hljs-built_in">kill</span> signal or a power loss. It can be removed with the --unlock argument.
-</code></pre>
-<p>What happend and what should I do?</p>
-<p><strong>A:</strong> The pipeline crashed at some point, possible reasons are mentioned by the error. Do as the error message proposes and pass the <code>--unlock</code> argument once and then run the pipeline again without <code>--unlock</code>.  </p>
-<h1 id="questions">Questions</h1>
-<p>If you have further questions please e-mail:
-pigx@googlegroups.com or use the web form to ask questions
-<a href="https://groups.google.com/forum/#!forum/pigx/" target="_blank">https://groups.google.com/forum/#!forum/pigx/</a></p>
-
-                                
-                                </section>
-                            
-    </div>
-    <div class="search-results">
-        <div class="has-results">
-            
-            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
-            <ul class="search-results-list"></ul>
-            
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  </head>
+  <body>
+    <div class="book with-summary">
+      <div class="book-summary">
+        <div id="book-search-input" role="search">
+          <input type="text" placeholder="Type to search" />
         </div>
-        <div class="no-results">
-            
-            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
-            
-        </div>
-    </div>
-</div>
+        
+        <nav class="summary" id="TOC" role="doc-toc">
+          <h1 id="summary">Summary</h1>
+          <ul>
+          <li><a href="README.html">Introduction</a></li>
+          <li><a href="pigx-rna-seq.html">PiGx RNA-seq</a>
+          <ul>
+          <li><a href="pigx-rna-seq.html#introduction">Introduction</a></li>
+          <li><a href="pigx-rna-seq.html#installation">Installation</a></li>
+          <li><a href="pigx-rna-seq.html#quick-start">Quick start</a></li>
+          <li><a href="pigx-rna-seq.html#preparing-the-input">Preparing the input</a></li>
+          <li><a href="pigx-rna-seq.html#running-the-pipeline">Running the pipeline</a></li>
+          <li><a href="pigx-rna-seq.html#output-description">Output description</a></li>
+          <li><a href="pigx-rna-seq.html#troubleshooting">Troubleshooting</a></li>
+          <li><a href="pigx-rna-seq.html#questions">Questions</a></li>
+          </ul></li>
+          <li><a href="pigx-chip-seq.html#pigx-chip-seq">PiGx ChIP-seq</a>
+          <ul>
+          <li><a href="pigx-chip-seq.html#introduction">Introduction</a></li>
+          <li><a href="pigx-chip-seq.html#installation">Installation</a></li>
+          <li><a href="pigx-chip-seq.html#quick-start">Quick Start</a></li>
+          <li><a href="pigx-chip-seq.html#preparing-input">Preparing Input</a></li>
+          <li><a href="pigx-chip-seq.html#running-the-pipeline">Running the Pipeline</a></li>
+          <li><a href="pigx-chip-seq.html#output-description">Output Description</a></li>
+          <li><a href="pigx-chip-seq.html#troubleshooting">Troubleshooting</a></li>
+          <li><a href="pigx-chip-seq.html#questions">Questions</a></li>
+          </ul></li>
+          <li><a href="pigx-bs-seq.html">PiGx BS-seq</a>
+          <ul>
+          <li><a href="pigx-bs-seq.html#introduction">Introduction</a></li>
+          <li><a href="pigx-bs-seq.html#installation">Installation</a></li>
+          <li><a href="pigx-bs-seq.html#quick-start">Quick start</a></li>
+          <li><a href="pigx-bs-seq.html#preparing-the-input">Preparing the input</a></li>
+          <li><a href="pigx-bs-seq.html#running-the-pipeline">Running the pipeline</a></li>
+          <li><a href="pigx-bs-seq.html#output-description">Output description</a></li>
+          <li><a href="pigx-bs-seq.html#troubleshooting">Troubleshooting</a></li>
+          <li><a href="pigx-bs-seq.html#questions">Questions</a></li>
+          </ul></li>
+          <li><a href="pigx-scrna-seq.html">PiGx scRNA-seq</a>
+          <ul>
+          <li><a href="pigx-scrna-seq.html#introduction">Introduction</a></li>
+          <li><a href="pigx-scrna-seq.html#installation">Installation</a></li>
+          <li><a href="pigx-scrna-seq.html#quick-start">Quick start</a></li>
+          <li><a href="pigx-scrna-seq.html#preparing-the-input">Preparing the input</a></li>
+          <li><a href="pigx-scrna-seq.html#running-the-pipeline">Running the pipeline</a></li>
+          <li><a href="pigx-scrna-seq.html#output-description">Output description</a></li>
+          <li><a href="pigx-scrna-seq.html#troubleshooting">Troubleshooting</a></li>
+          <li><a href="pigx-scrna-seq.html#questions">Questions</a></li>
+          </ul></li>
+          </ul>
+        </nav>
+      </div>
 
-                        </div>
-                    </div>
-                
+      <div class="book-body">
+        <div class="body-inner">
+          <div class="book-header" role="navigation">
+            <!-- Title -->
+            <h1>
+              <i class="fa fa-circle-o-notch fa-spin"></i>
+              <a href="." ></a>
+            </h1>
+          </div>
+          <div class="page-wrapper" tabindex="-1" role="main">
+            <div class="page-inner">
+              <div id="book-search-results">
+                <div class="search-noresults">
+                  <section class="normal markdown-section">
+                    <h1 id="pigx-scrna-seq">PiGx scRNA-seq</h1>
+                    <h1 id="introduction">Introduction</h1>
+                    <p>PiGX scRNAseq is an analysis pipeline for preprocessing and quality control for single cell RNA sequencing experiments. The inputs are read files from the sequencing experiment, and a configuration file which describes the experiment. It produces processed files for downstream analysis and interactive quality reports. The pipeline is designed to work with UMI based methods. It currently supports all methods which output paired adapter - read files. The pipeline was heavily influenced by the <a href="http://mccarrolllab.com/dropseq/">Dropseq</a> pipeline from the McCaroll lab.</p>
+                    <h2 id="workflow">Workflow</h2>
+                    <ul>
+                    <li>Quality control reads using fastQC and multiQC</li>
+                    <li>Automatically determines the appropriate cell number</li>
+                    <li>Constructs the digital gene expression matrix</li>
+                    <li>Calculates per sample and per cell statistics</li>
+                    <li>Prepares a quality control report</li>
+                    <li>Normalizes data and does dimensionallity reduction</li>
+                    </ul>
+                    <p><img src="./figures/pigx-scrnaseq.svg" alt="PiGx scRNAseq workflow" /> <em>Figure 1: An overview of the PiGx scRNA-seq workflow</em></p>
+                    <h1 id="installation">Installation</h1>
+                    <p>You can install this pipeline and all of its dependencies through GNU Guix:</p>
+                    <pre><code>guix install pigx-scrnaseq</code></pre>
+                    <p>You can also install it manually from source. You can find the <a href="https://github.com/BIMSBbioinfo/pigx_scrnaseq/releases/latest">latest release</a> here. PiGx uses the GNU build system. Please make sure that all required dependencies are installed and then follow these steps after unpacking the latest release tarball:</p>
+                    <div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="ex">./configure</span>                         <span class="kw">\</span></span>
+                    <span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>    <span class="ex">--prefix</span>=/some/where            <span class="kw">\</span></span>
+                    <span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>    <span class="va">DROPSEQJAR=</span>/path/to/dropseq.jar <span class="kw">\</span></span>
+                    <span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>    <span class="va">PICARDJAR=</span>/path/to/picard.jar</span>
+                    <span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a><span class="fu">make</span> install</span></code></pre></div>
+                    <h2 id="via-conda">Via Conda</h2>
+                    <ul>
+                    <li>Download pigx_scrnaseq source code
+                    <ul>
+                    <li><p>run:</p>
+                    <blockquote>
+                    <p>git clone <a href="https://github.com/BIMSBbioinfo/pigx_scrnaseq.git" class="uri">https://github.com/BIMSBbioinfo/pigx_scrnaseq.git</a></p>
+                    </blockquote></li>
+                    </ul></li>
+                    <li>Download and install Anaconda from <a href="https://www.anaconda.com/download" class="uri">https://www.anaconda.com/download</a></li>
+                    <li>Locate the ‘environment.yml’ file in the source code.
+                    <ul>
+                    <li><p>run:</p>
+                    <blockquote>
+                    <p>conda env create -f environment.yml #provide path to the environment.yml file</p>
+                    </blockquote></li>
+                    <li><p>activate the environment:</p>
+                    <blockquote>
+                    <p>source activate pigx_scrnaseq</p>
+                    </blockquote></li>
+                    </ul></li>
+                    </ul>
+                    <h2 id="via-guix">Via Guix</h2>
+                    <p>Assuming you have Guix installed, the following command spawns a sub-shell in which all dependencies are available:</p>
+                    <div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="ex">guix</span> environment -l guix.scm</span></code></pre></div>
+                    <p>If you do not use one of these package managers, you will need to ensure that the following software is installed:</p>
+                    <details>
+                    <summary>Software dependencies</summary>
+
+                    </details>
+                    <h2 id="dependencies">Dependencies</h2>
+                    <p>By default the <code>configure</code> script expects tools to be in a directory listed in the <code>PATH</code> environment variable. If the tools are installed in a location that is not on the <code>PATH</code> you can tell the <code>configure</code> script about them with variables. Run <code>./configure --help</code> for a list of all variables and options.</p>
+                    <p>You can prepare a suitable environment with Conda or with <a href="https://gnu.org/s/guix">GNU Guix</a>.</p>
+                    <p>The pipeline currently depends on two external java programs, which can be found on the following links:</p>
+                    <ol>
+                    <li><p><a href="https://github.com/broadinstitute/picard/releases/tag/2.18.0">Picard tools</a></p></li>
+                    <li><p><a href="http://mccarrolllab.com/download/1276/">Dropseq tools</a></p></li>
+                    </ol>
+                    <p>During the configure step path to the <strong>.jar</strong> files needs to be provided.</p>
+                    <h1 id="quick-start">Quick Start</h1>
+                    <p>To check wether the pipeline was properly installed, run PiGx scRNAseq on a minimal test dataset, which can be found on the following <a href="https://github.com/BIMSBbioinfo/pigx_scrnaseq/releases/download/v0.0.3/test_data.tgz">link</a> Once downloaded run these commands to extract the data:</p>
+                    <div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="fu">mkdir</span> test_dir</span>
+                    <span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="fu">tar</span> -xzf test_data.tar.gz --directory test_dir/</span>
+                    <span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="bu">cd</span> test_dir</span></code></pre></div>
+                    <p>The tarball includes a settings file and a sample sheet file. The pipeline can now be started with the following command:</p>
+                    <div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="ex">pigx</span> scrnaseq -s test_dir/settings.yaml test_dir/sample_sheet.csv</span></code></pre></div>
+                    <p>The output of the pipeline is located inside <code>test_dir/out</code> directory.</p>
+                    <p>The <code>scRNA-Seq.report.html</code> inside the <code>Mapped</code> directory gives a general overview about the single cell experiments.</p>
+                    <h1 id="preparing-the-input">Preparing the input</h1>
+                    <p>To run the pipeline, the user must supply</p>
+                    <ul>
+                    <li><p>a sample sheet</p></li>
+                    <li><p>a settings file</p></li>
+                    </ul>
+                    <p>both files are described below.</p>
+                    <p>To generate template <code>sample_sheet.csv</code> and <code>settings.yaml</code> files, in your current directory, type the following command in the shell:</p>
+                    <div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="ex">pigx</span> scrnaseq --init</span></code></pre></div>
+                    <h2 id="sample-sheet">Sample Sheet</h2>
+                    <p>The sample sheet is a tabular file describing the experiment. The table has the following columns:</p>
+                    <table>
+                    <thead>
+                    <tr class="header">
+                    <th>name</th>
+                    <th>reads1</th>
+                    <th>reads2</th>
+                    <th>library</th>
+                    <th>covariate1</th>
+                    <th>covariate2</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    </table>
+                    <ul>
+                    <li><em>name</em> - name for the sample, which will be used to label the sample in all downstream analysis</li>
+                    <li><em>reads1</em> - fastq file containing the <strong>adapter sequences</strong></li>
+                    <li><em>reads2</em> - fastq file containing the <strong>sequenced reads</strong>
+                    <ul>
+                    <li>location of these files is specified in <code>settings.yaml</code></li>
+                    </ul></li>
+                    <li><em>library</em> - sequencing platform on which the experiment was performed (i.e. dropseq)</li>
+                    <li><em>covariates</em> - variables which describe the samples. For example: replicate, time, hour post infection, tissue …</li>
+                    </ul>
+                    <p>Additional columns may be included which may be used as covariates in the differential expression analysis (sex, age, different treatments).</p>
+                    <h2 id="settings-file">Settings File</h2>
+                    <p>The settings file is a <em>YAML</em> file which specifies:</p>
+                    <ul>
+                    <li><p>Locations:</p>
+                    <ul>
+                    <li>The locations of the reads (directory where <code>fastq</code> files are located)</li>
+                    <li>The location of the output directory</li>
+                    <li>The location of the <code>fasta</code> file with the reference genome (must be prepared by the user)</li>
+                    <li>The location of a <code>GTF</code> file with genome annotations</li>
+                    </ul></li>
+                    <li><p>Genome assembly name (i.e. mm10)</p></li>
+                    <li><p>covariates</p></li>
+                    </ul>
+                    <p>In order to get started, enter <code>pigx-scrnaseq --init-settings my_settings.yaml</code>. This will create a file called <code>my_settings.yaml</code> with the default structure. The file will look like this:</p>
+                    <div class="sourceCode" id="cb7"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="fu">locations</span><span class="kw">:</span></span>
+                    <span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">output-dir</span><span class="kw">:</span><span class="at"> out/</span></span>
+                    <span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a><span class="at">  </span><span class="fu">reads-dir</span><span class="kw">:</span><span class="at"> sample_data/reads/</span></span>
+                    <span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a><span class="at">  </span><span class="fu">tempdir</span><span class="kw">:</span></span>
+                    <span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a></span>
+                    <span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a><span class="fu">covariates</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;covariate1, covariate2, ...&#39;</span></span>
+                    <span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a></span>
+                    <span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a><span class="fu">annotation</span><span class="kw">:</span></span>
+                    <span id="cb7-9"><a href="#cb7-9" aria-hidden="true"></a><span class="at">  </span><span class="fu">primary</span><span class="kw">:</span></span>
+                    <span id="cb7-10"><a href="#cb7-10" aria-hidden="true"></a><span class="at">    </span><span class="fu">genome</span><span class="kw">:</span></span>
+                    <span id="cb7-11"><a href="#cb7-11" aria-hidden="true"></a><span class="at">      </span><span class="fu">name</span><span class="kw">:</span><span class="at"> hg19</span></span>
+                    <span id="cb7-12"><a href="#cb7-12" aria-hidden="true"></a><span class="at">      </span><span class="fu">fasta</span><span class="kw">:</span><span class="at"> sample_data/genome.fa</span></span>
+                    <span id="cb7-13"><a href="#cb7-13" aria-hidden="true"></a><span class="at">    </span><span class="fu">gtf</span><span class="kw">:</span><span class="at"> sample_data/genome.gtf</span></span>
+                    <span id="cb7-14"><a href="#cb7-14" aria-hidden="true"></a></span>
+                    <span id="cb7-15"><a href="#cb7-15" aria-hidden="true"></a><span class="fu">execution</span><span class="kw">:</span></span>
+                    <span id="cb7-16"><a href="#cb7-16" aria-hidden="true"></a><span class="at">  </span><span class="fu">submit-to-cluster</span><span class="kw">:</span><span class="at"> </span><span class="ch">no</span></span>
+                    <span id="cb7-17"><a href="#cb7-17" aria-hidden="true"></a><span class="at">  </span><span class="fu">jobs</span><span class="kw">:</span><span class="at"> </span><span class="dv">6</span></span>
+                    <span id="cb7-18"><a href="#cb7-18" aria-hidden="true"></a><span class="at">  </span><span class="fu">nice</span><span class="kw">:</span><span class="at"> </span><span class="dv">19</span></span></code></pre></div>
+                    <h1 id="running-the-pipeline">Running the pipeline</h1>
+                    <p>To run PiGx on your experimental data, first prepare the sample sheet and settings file (see <a href="#preparing-input">above</a>), and then from the terminal type</p>
+                    <div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a>$ <span class="ex">pigx-scrnaseq</span> -s settings.yaml sample_sheet.csv</span></code></pre></div>
+                    <p>If you are not sure wether you set everything up correctly, use the dryrun option which will only show what work would be performed, but does not actually run the pipeline.</p>
+                    <div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a>$ <span class="ex">pigx-scrnaseq</span> -s settings.yaml sample_sheet.csv -n </span></code></pre></div>
+                    <p>To see all available options type the <code>--help</code> option</p>
+                    <h1 id="output-description">Output Description</h1>
+                    <p>PiGx scRNA-seq creates an output folder, with a specific directory structure (for details see <a href="#output-folder-structure">here</a>), with the following results:</p>
+                    <ul>
+                    <li>bam files</li>
+                    <li>bigwig files</li>
+                    <li>UMI and read count matrices</li>
+                    <li>Quality control report</li>
+                    <li>SingleCellExperiment object with pre-calculated statistics and dimensionallity reductions</li>
+                    </ul>
+                    <h3 id="output-folder-structure">Output Folder Structure</h3>
+                    <p>The output directory structure has the following structure:</p>
+                    <pre><code>|-- Annotation
+                    |   `-- genome_name (i.e. mm10)
+                    |       `-- STAR_INDEX
+                    |-- Log
+                    |-- Mapped
+                    |   |-- Sample_1
+                    |   |   `-- genome_name
+                    |   |-- Sample_2
+                    |   |   `-- genome_name
+                    |   |-- Sample_3
+                    |   |   `-- genome_name
+                    |   `-- Sample_4
+                    |       `-- genome_name</code></pre>
+                    <h4 id="annotation">Annotation</h4>
+                    <p>Contains pre-processed fasta and gtf file, along with the STAR genome index. The genome fasta file is processed into a dict header. The gtf file has gene_names replaced with gene_id.</p>
+                    <p><strong>Important</strong>: We sincerely advise that you check that the gtf file corresponds to the same organism and genome version as the genome fasta files. The chromosome names have to completely correspond between the two files.</p>
+                    <p>We encourage users to use both the genome annotation and the fasta file from the <a href="https://www.ensembl.org/info/data/ftp/index.html">ENSEMBL</a> database.</p>
+                    <h4 id="log">Log</h4>
+                    <p>Contains execution logs for every step of the pipeline.</p>
+                    <h4 id="mapped">Mapped</h4>
+                    <p>The <strong>Mapped</strong> folder contains per sample processed single cell samples. Additionally, it contains a <a href="http://linnarssonlab.org/loompy/">loom</a> file with merged expression values from all experiments, an RDS file with a saved <a href="https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html">SingleCellExperiment</a> object, and a quality control report in the html format.</p>
+                    <h4 id="sample-output-description">Sample output description</h4>
+                    <p>Analaysis results for each sample are done in a separate subdirectory under <strong>Mapped</strong>. Structure of analysis results:</p>
+                    <pre><code>|-- Sample1.fastq.bam
+                    |-- Sample1_1_fastqc.html
+                    |-- Sample1_1_fastqc.zip
+                    |-- Sample1_2_fastqc.html
+                    |-- Sample1_2_fastqc.zip
+                    |-- genome_name
+                    |   |-- adapter_trimming_report.txt
+                    |   |-- Sample1_genome_name.bw
+                    |   |-- Sample1_genome_name.m.bw
+                    |   |-- Sample1_genome_name.p.bw
+                    |   |-- Sample1_genome_name_BAMTagHistogram.txt
+                    |   |-- Sample1_genome_name_DownstreamStatistics.txt
+                    |   |-- Sample1_genome_name_READS.Matrix.txt
+                    |   |-- Sample1_genome_name_ReadCutoff.png
+                    |   |-- Sample1_genome_name_ReadCutoff.yaml
+                    |   |-- Sample1_genome_name_ReadStatistics.txt
+                    |   |-- Sample1_genome_name_Summary.txt
+                    |   |-- Sample1_genome_name_UMI.Matrix.loom
+                    |   |-- Sample1_genome_name_UMI.Matrix.txt
+                    |   |-- polyA_trimming_report.txt
+                    |   |-- star.Log.final.out
+                    |   |-- star.Log.out
+                    |   |-- star.Log.progress.out
+                    |   |-- star.SJ.out.tab
+                    |   |-- star_gene_exon_tagged.bai
+                    |   |-- star_gene_exon_tagged.bam
+                    |   |-- unaligned_tagged_Cellular.bam_summary.txt
+                    |   `-- unaligned_tagged_Molecular.bam_summary.txt</code></pre>
+                    <ul>
+                    <li><p>Sample1.fastq.bam - contains merged barcode and sequence fq files</p></li>
+                    <li><p>Sample1_genome_name.<strong>bw</strong> - bigWig file constructed from selected cells. Files with <strong>m/p</strong>.bw contain strand separated signal</p></li>
+                    <li><p>Sample1_genome_name_<strong>BAMTagHistogram</strong> - Number of reads in coressponding to each cell barcode.</p></li>
+                    <li><p>Sample1_genome_name_UMI.Matrix.<strong>txt/loom</strong> - UMI based digital expression matrix in txt and loom format</p></li>
+                    <li><p>Sample1_genome_name_READS.Matrix.txt - Read count digital expression matrix</p></li>
+                    <li><p>Sample1_genome_name_ReadCutoff.yaml - contains the UMI threshold for selecting high quality cells (obtained using <a href="https://github.com/rajewsky-lab/dropbead">dropbead</a>). The corresponding .png file visualizes the UMI curve and the threshold.</p></li>
+                    <li><p>star_gene_exon_tagged.bam - mapped and annotated reads. Each read is tagged by annotation based on it’s mapping location.</p></li>
+                    <li><p>Sample1_genome_name_<strong>ReadStatistics/Downstream</strong>.txt - quality control statistics used in the html report. They contain values such as number of reads in Exons/Introns.</p></li>
+                    </ul>
+                    <h2 id="downstream-analysis">Downstream analysis</h2>
+                    <p>The combined expression data are subsequently processed into a <a href="https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html">SingleCellExperiment</a> object. SingleCellExperiment is a Bioconductor class for storing expression values, along with the cell, and gene data, and experimental meta data in a single container. It is constructed on top of hdf5 file based arrays (Pagès 2017), which enables exploration even on systems with limited memory capacity. During the object construction, the pipeline performs expression normalization, dimensionallity reduction, identification of significantly variable genes, assigns the cells to the steps of the cell cycle, and calculates the quality statistics. The SingleCellExperiment object contains all of the necessary data needed for further exploration. The object connects the pigx-pipeline with the Bioconductor single cell computing environment, and enables integration with state of the art statistical, and machine learning mehods (<a href="https://bioconductor.org/packages/release/bioc/html/scran.html">scran</a>, <a href="https://bioconductor.org/packages/release/bioc/html/zinbwave.html">zinbwave</a>, <a href="https://github.com/BIMSBbioinfo/netSmooth">netSmooth</a>, <a href="https://github.com/csoneson/iSEE">iSEE</a>.</p>
+                    <h2 id="execution-on-a-cluster">Execution on a cluster</h2>
+                    <p>Currently, PiGx only supports Sun Grid Engine for cluster execution. If you’re uncertain about your cluster, try typing <code>qsub</code> in the shell (Sun Grid Engine uses <code>qsub</code> to submit jobs).</p>
+                    <h4 id="disappearing-jobs-on-the-cluster">Disappearing jobs on the cluster</h4>
+                    <p>PiGx scRNA-seq comes with sensible defaults for resource requests when running on a cluster, but based on the genome version and other parameters, these might not be sufficient and your cluster might terminate your jobs. The cluster resource requests may be overridden in the settings file. See the execution section of the settings file created with <code>pigx scrnaseq --init=settings</code>.</p>
+                    <h1 id="troubleshooting">Troubleshooting</h1>
+                    <p><strong>Q:</strong> I get the following error:</p>
+                    <div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="ex">Error</span>: Directory cannot be locked. Please make sure that no other Snakemake process is trying to create the same files in the following directory:</span>
+                    <span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a><span class="ex">/home/agosdsc/projects/pigx_scrnaseq/test_dir/out</span></span>
+                    <span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a><span class="ex">If</span> you are sure that no other instances of snakemake are running on this directory, the remaining lock was likely caused by a kill signal or a power loss. It can be removed with the --unlock argument.</span></code></pre></div>
+                    <p>What happend and what should I do?</p>
+                    <p><strong>A:</strong> The pipeline crashed at some point, possible reasons are mentioned by the error. Do as the error message proposes and pass the <code>--unlock</code> argument once and then run the pipeline again without <code>--unlock</code>.</p>
+                    <h1 id="questions">Questions</h1>
+                    <p>If you have further questions please e-mail: <a href="mailto:pigx@googlegroups.com" class="email">pigx@googlegroups.com</a> or use the web form to ask questions <a href="https://groups.google.com/forum/#!forum/pigx/" class="uri">https://groups.google.com/forum/#!forum/pigx/</a></p>
+                  </section>
+                </div>
+                <div class="search-results">
+                  <div class="has-results">
+                    <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+                    <ul class="search-results-list"></ul>
+                  </div>
+                  <div class="no-results">
+                    <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+                  </div>
+                </div>
+              </div>
             </div>
-
-            
-                
-                <a href="pigx-bs-seq.html#questions" class="navigation navigation-prev " aria-label="Previous page: Questions">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-                
-                
-                <a href="pigx-scrna-seq.html#introduction" class="navigation navigation-next " aria-label="Next page: Introduction">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-                
-            
-        
-    </div>
-
-    <script>
+          </div>
+        </div>
+      </div>
+      <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"PiGx scRNA-seq","level":"1.5","depth":1,"next":{"title":"Introduction","level":"1.5.1","depth":2,"anchor":"#introduction","path":"pigx-scrna-seq.md","ref":"pigx-scrna-seq.md#introduction","articles":[]},"previous":{"title":"Questions","level":"1.4.8","depth":2,"anchor":"#questions","path":"pigx-bs-seq.md","ref":"pigx-bs-seq.md#questions","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"pigx-scrna-seq.md","mtime":"2019-07-08T15:23:21.475Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-07-08T15:24:30.549Z"},"basePath":".","book":{"language":""}});
+          gitbook.page.hasChanged(
+            {
+              "page":
+              {
+                "title":"",
+                "level":"1.1",
+                "depth":1,
+                "next":{},
+                "dir":"ltr"
+              },
+              "config":
+              {
+                "gitbook":"*",
+                "theme":"default",
+                "variables":{},
+                "plugins":[],
+                "pluginsConfig":
+                {
+                  "highlight":{},
+                  "search":{},
+                  "lunr": {
+                    "maxIndexSize":1000000,
+                    "ignoreSpecialCharacters":false
+                  },
+                  "sharing": {
+                    "facebook":true,
+                    "twitter":true,
+                    "google":false,
+                    "weibo":false,
+                    "instapaper":false,
+                    "vk":false,
+                    "all":[
+                      "facebook",
+                      "google",
+                      "twitter",
+                      "weibo",
+                      "instapaper"
+                    ]},
+                  "fontsettings": {
+                    "theme":"white",
+                    "family":"sans",
+                    "size":2
+                  },
+                  "theme-default": {
+                    "styles": {
+                      "website":"styles/website.css",
+                      "pdf":"styles/pdf.css",
+                      "epub":"styles/epub.css",
+                      "mobi":"styles/mobi.css",
+                      "ebook":"styles/ebook.css",
+                      "print":"styles/print.css"
+                    },
+                    "showLevel":false
+                  }
+                },
+                "structure": {
+                  "langs":"LANGS.md",
+                  "readme":"README.md",
+                  "glossary":"GLOSSARY.md",
+                  "summary":"SUMMARY.md"
+                },
+                "pdf": {
+                  "pageNumbers":true,
+                  "fontSize":12,
+                  "fontFamily":"Arial",
+                  "paperSize":"a4",
+                  "chapterMark":"pagebreak",
+                  "pageBreaksBefore":"/",
+                  "margin": {
+                    "right":62,"left":62,"top":56,"bottom":56
+                  }
+                },
+                "styles": {
+                  "website":"styles/website.css",
+                  "pdf":"styles/pdf.css",
+                  "epub":"styles/epub.css",
+                  "mobi":"styles/mobi.css",
+                  "ebook":"styles/ebook.css",
+                  "print":"styles/print.css"
+                }
+              },
+              "file": {
+                "path":"",
+                "mtime":"",
+                "type":"markdown"
+              },
+              "gitbook": {
+                "version":"3.2.3",
+                "time":"2019-07-08T15:24:30.549Z"
+              },
+              "basePath":".",
+              "book": {"language":""}});
         });
     </script>
-</div>
-
-        
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="gitbook/gitbook.js"></script>
     <script src="gitbook/theme.js"></script>
-    
-        
-        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
-        
-    
-        
-        <script src="gitbook/gitbook-plugin-search/search.js"></script>
-        
-    
-        
-        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
-        
-    
-        
-        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
-        
-    
-        
-        <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
-        
-    
-        
-        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
-        
-    
-
-    </body>
+    <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+    <script src="gitbook/gitbook-plugin-search/search.js"></script>
+    <script src="gitbook/gitbook-plugin-lunr/lunr.js"></script>
+    <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+    <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
+    <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+  </body>
 </html>
-
