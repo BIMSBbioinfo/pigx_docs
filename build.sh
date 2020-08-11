@@ -1,3 +1,4 @@
+set -x -e
 mkdir -p tmp
 
 # Build navigation
