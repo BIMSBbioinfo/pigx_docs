@@ -1,8 +1,8 @@
 mkdir -p tmp
 
 # Build navigation
-pandoc -f markdown -t html -o "book/SUMMARY.html" SUMMARY.md
-sed -i book/SUMMARY.html -e 's|\.md|.html|'
+pandoc -f markdown -t html SUMMARY.md | \
+    sed -e 's|\.md|.html|' > book/SUMMARY.html
 
 echo '[' > tmp/documents.json
 
