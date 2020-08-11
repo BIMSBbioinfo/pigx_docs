@@ -19,8 +19,10 @@ for file in $(ls -1 pages); do
                --template template.json - | tr "\n" " " >> tmp/documents.json
 
     # Build web pages
+    # TODO: level should be taken from SUMMARY
     pandoc -f markdown_github+smart \
            -t html \
+           -V level="1.1" \
            -V navigation="$(cat book/SUMMARY.html)" \
            -V pagetitle="$title" \
            -o "book/$(basename $file .md).html" \
