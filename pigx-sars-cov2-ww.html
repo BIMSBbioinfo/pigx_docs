@@ -76,6 +76,7 @@
           <li><a href="pigx-sars-cov2-ww.html#installation">Installation</a></li>
           <li><a href="pigx-sars-cov2-ww.html#quick-start">Quick start</a></li>
           <li><a href="pigx-sars-cov2-ww.html#preparing-the-input">Preparing the input</a></li>
+          <li><a href="pigx-sars-cov2-ww.html#running-the-pipeline">Running the pipeline</a></li>
           <li><a href="pigx-sars-cov2-ww.html#troubleshooting">Troubleshooting</a></li>
           </ul></li>
           </ul>
@@ -136,7 +137,7 @@
                     <p>At this point you are able to run PiGx SARS-CoV-2. To see all available options type <code>--help</code>.</p>
                     <div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="ex">pigx-sars-cov2-ww</span> --help</span></code></pre></div>
                     <h2 id="prepare-databases">Prepare databases</h2>
-                    <p>Before the pipeline can work, three databases must be downloaded and their location will need to be provided in the settings file. Depending on the size of the databases this can take some time. Be sure that the pigx-sarscov2-ww pipeline is downloaded and the tools are installed or used via the provided and suggested guix environment. One database (signature mutations, <code>sigmut_db</code>) is already provided via the repository. The directory structure is suggested like <a href="#structure-overview">this</a> and pre-filled accordingly in the settings file.</p>
+                    <p>Before the pipeline can work, three databases must be downloaded and their location will need to be provided in the settings file. Depending on the size of the databases this can take some time. One database (signature mutations, <code>sigmut_db</code>) is already included.</p>
                     <h3 id="kraken2-database">Kraken2 database</h3>
                     <p>There are several libraries of genomes that can be used to classify the (unaligned) reads. It is up to you which one to use, but be sure that they fulfill the necessities stated by Kraken2 <a href="https://github.com/DerrickWood/kraken2/wiki/Manual#kraken-2-databases">Kraken2 manual</a>. For an overall overview we recommend to use the Plus-PFP library provided <a href="https://benlangmead.github.io/aws-indexes/k2">here</a>. If the classification is not of concern or only the viruses are of interest, we recommend to use a smaller one. This will accelerate the speed. It is also possible to have multiple Kraken2 databases installed, just be sure to provide the correct location to the settings file.</p>
                     <p>First download and unpack the database in the <code>databases/kraken_db/</code>:</p>
@@ -174,6 +175,17 @@
                     wget -qO- ftp://ftp.ensemblgenomes.org/pub/viruses/variation/indexed_vep_cache/sars_cov_2_vep_101_ASM985889v3.tar.gz | tar -C $DBNAME -xzv</code></pre>
                     <h3 id="sigmut-database">Sigmut database</h3>
                     <p>Necessary files are provided in <code>databases/sigmut_db/</code> for the current main Variants of Concern. Users can add files with new variants if/when necessary.</p>
+                    <h1 id="quick-start">Quick Start</h1>
+                    <p>To check whether the pipeline and the databases have been properly set up, run the pipeline on a minimal test dataset.</p>
+                    <ol>
+                    <li><p>Download the test data</p>
+                    <p><code>git clone https://github.com/BIMSBbioinfo/pigx_sarscov2_ww sarscov2-test</code></p></li>
+                    <li><p>Enter the directory</p>
+                    <p><code>cd sarscov2-test</code></p></li>
+                    <li><p>Run the pipeline</p>
+                    <p><code>pigx-sars-cov2-ww -s .tests/settings.yaml .tests/sample_sheet.csv</code></p></li>
+                    </ol>
+                    <p>Inside <code>tests/</code> a new directory <code>output</code> is created, which includes specific directories containing output data for the respective step of the pipeline. The <code>tests/output/reports/index.html</code> gives the overview over all merged reports for the test data.</p>
                     <h1 id="preparing-the-input">Preparing the input</h1>
                     <p>In order to run the pipeline, you need to supply</p>
                     <ul>
@@ -259,17 +271,17 @@
                     <li><em>read-length</em> specifies the length of the basepairs</li>
                     <li><em>cut-off</em> specifies the cut-off factor</li>
                     </ul>
-                    <h1 id="quick-start">Quick Start</h1>
-                    <p>To check whether the pipeline and the databases have been properly set up, run the pipeline on a minimal test dataset.</p>
-                    <ol>
-                    <li><p>Download the test data</p>
-                    <p><code>git clone https://github.com/BIMSBbioinfo/pigx_sarscov2_ww sarscov2-test</code></p></li>
-                    <li><p>Enter the directory</p>
-                    <p><code>cd sarscov2-test</code></p></li>
-                    <li><p>Run the pipeline</p>
-                    <p><code>pigx-sars-cov2-ww -s .tests/settings.yaml .tests/sample_sheet.csv</code></p></li>
-                    </ol>
-                    <p>Inside <code>tests/</code> a new directory <code>output</code> is created, which includes specific directories containing output data for the respective step of the pipeline. The <code>tests/output/reports/index.html</code> gives the overview over all merged reports for the test data.</p>
+                    <h1 id="running-the-pipeline">Running the pipeline</h1>
+                    <p>PiGx SARS-CoV-2 wastewater is executed using the command <code>pigx-sars-cov2-ww -s settings.yaml sample_sheet.csv</code>. See <code>pigx-sars-cov2-ww --help</code> for information about additional command line arguments.</p>
+                    <p>The <code>execution</code> section of the settings file provides some control over the execution of the pipeline.</p>
+                    <h2 id="local--cluster-execution">Local / cluster execution</h2>
+                    <p>The workflow may be executed locally (on a single computer), or, if a Sun Grid Engine-compatible HPC environment is available, supports cluster execution. In order to enable cluster execution, specify <code>submit-to-cluster: yes</code> in the settings file.</p>
+                    <h2 id="parallel-execution">Parallel execution</h2>
+                    <p>If the workflow is run on a cluster, or a single computer with sufficient resources, some of the tasks may be computed in parallel. To specify the allowed level or parallelism, set the <code>jobs</code> setting under <code>execution</code> in the settings file. For instance,</p>
+                    <div class="sourceCode" id="cb13"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="fu">execution</span><span class="kw">:</span></span>
+                    <span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">submit-to-cluster</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
+                    <span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a><span class="at">  </span><span class="fu">jobs</span><span class="kw">:</span><span class="at"> </span><span class="dv">40</span></span></code></pre></div>
+                    <p>in the settings file, will submit up to 40 simultaneous compute jobs on the cluster.</p>
                     <h1 id="troubleshooting">Troubleshooting</h1>
                     <p>If you have any questions please e-mail: <a href="mailto:pigx@googlegroups.com" class="email">pigx@googlegroups.com</a> or use the web form to ask questions <a href="https://groups.google.com/forum/#!forum/pigx/" class="uri">https://groups.google.com/forum/#!forum/pigx/</a>.</p>
                     <p>If you run into any bugs, please open an issue here: <a href="https://github.com/BIMSBbioinfo/pigx_rnaseq/issues" class="uri">https://github.com/BIMSBbioinfo/pigx_rnaseq/issues</a>.</p>
