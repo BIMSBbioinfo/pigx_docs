@@ -81,7 +81,8 @@ pigx-sars-cov2-ww --help
 <details>
 <summary>toggle output</summary>
 
-```sh
+<pre>
+<code>
 usage: pigx-sars-cov2-ww [-h] [-v] (--init [{settings,sample-sheet,both}] | -s SETTINGS) [-c CONFIGFILE]
                          [--target TARGET] [-n] [--graph GRAPH] [--force] [--reason] [--unlock] [--verbose]
                          [--printshellcmds]
@@ -122,7 +123,8 @@ optional arguments:
   --printshellcmds                        Print commands being executed by snakemake.
 
 This pipeline was developed by the Akalin group at MDC in Berlin in 2017-2021.
-```
+</code>
+</pre>
 </details>
 </br>
 
