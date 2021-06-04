@@ -175,7 +175,7 @@ The sample sheet is a tabular file (`csv` format) describing the experiment. The
 
 ## Settings file
 
-In the settings file, parameters are saved, in YAML format, to configure the execution of PiGx-sarscov2. It specifies:
+The settings file contains parameters (in YAML format) to configure the execution of the PiGx SARS-CoV-2 pipeline. It specifies:
 
 **Locations**:
 
