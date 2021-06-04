@@ -77,13 +77,73 @@ At this point you are able to run PiGx SARS-CoV-2. To see all available options 
 pigx-sars-cov2-ww --help
 ```
 
+## Prepare databases
+
+Before the pipeline can work, three databases must be downloaded and their location will need to be provided in the settings file. Depending on the size of the databases this can take some time.
+Be sure that the pigx-sarscov2-ww pipeline is downloaded and the tools are installed or used via the provided and suggested guix environment. One database (signature mutations, `sigmut_db`) is already provided via the repository. The directory structure is suggested like [this](#structure-overview) and pre-filled accordingly in the settings file. 
+
+### Kraken2 database
+
+There are several libraries of genomes that can be used to classify the (unaligned) reads. It is up to you which one to use, but be sure that they fulfill the necessities stated by Kraken2 [Kraken2 manual](https://github.com/DerrickWood/kraken2/wiki/Manual#kraken-2-databases). For an overall overview we recommend to use the Plus-PFP library provided [here](https://benlangmead.github.io/aws-indexes/k2). If the classification is not of concern or only the viruses are of interest, we recommend to use a smaller one. This will accelerate the speed.
+It is also possible to have multiple Kraken2 databases installed, just be sure to provide the correct location to the settings file.
+
+First download and unpack the database in the `databases/kraken_db/`:
+
+```
+DIR=databases/kraken_db/
+mkdir -p $DIR
+
+# NOTE: This command will download a very large file, after unpacking this will
+# require about 100GB of disc space. If this is not feasible use another
+# database instead. For this please see link above or commented lines below.
+wget -qO- https://genome-idx.s3.amazonaws.com/kraken/k2_pluspfp_20210127.tar.gz | tar -C $DIR -xzv
+
+# Use the following two lines to use smaller 8GB version instead.
+# wget -qO- https://genome-idx.s3.amazonaws.com/kraken/k2_pluspfp_8gb_20210127.tar.gz | tar -C $DIR -xzv
 ```
 
-For example, with this command the pipeline is used for the included test data: 
+Next go to the database/ directory and build the Kraken database. This might take a while (depends on the size of the downloaded database):
 
-```sh
-pigx-sars-cov2-ww -s tests/settings.yaml tests/sample_sheet.csv
 ```
+#current location: pigx_sarscov2_ww/
+cd databases/
+DBNAME=kraken_db
+kraken2-build --use-ftp --download-taxonomy --db $DBNAME # if this fails, you might want to try it without the --use-ftp flag
+kraken2-build --build --db $DBNAME
+```
+
+Kraken might tell you that it can't find a library subdirectory. If that's the case it should be fine though.  
+This folder should now contain at least these files: hash.k2d, opts.k2d and taxo.k2d.
+
+### Krona database
+
+Krona Tools needs two files, which have to be installed in the `databases/krona_db/`. Also this might take a while:
+
+```
+#current location: pigx_sarscov2_ww/databases/
+DBNAME=krona_db/
+mkdir -p $DBNAME
+KRONA=$(dirname $(which ktImportTaxonomy))/../share/krona-tools/ # this is just a workaround until tool paths are declared
+$KRONA/updateTaxonomy.sh $DBNAME # the scripts are stored a priori in that folder
+$KRONA/updateAccessions.sh $DBNAME
+```
+
+### VEP database
+
+Just download the `SARS_CoV_2` database for VEP (variant effect predictor) and unpack it in the `databases/vep_db/` directory.
+
+```
+#current location: pigx_sarscov2_ww/databases/
+DBNAME=vep_db/
+mkdir -p $DBNAME
+wget -qO- ftp://ftp.ensemblgenomes.org/pub/viruses/variation/indexed_vep_cache/sars_cov_2_vep_101_ASM985889v3.tar.gz | tar -C $DBNAME -xzv
+```
+
+### Sigmut database
+
+Necessary files are provided in `databases/sigmut_db/` for the current main Variants of Concern. Users can add files with new variants if/when necessary.
+
+
 
 # Preparing the input
 
@@ -143,71 +203,6 @@ that are shorter than the product of read-length and the cut-off factor are remo
 - _read-length_ specifies the length of the basepairs
 - _cut-off_ specifies the cut-off factor
 
-## Prepare databases
-
-Before the pipeline can work, three databases must be downloaded and their location will need to be provided in the settings file. Depending on the size of the databases this can take some time.
-Be sure that the pigx-sarscov2-ww pipeline is downloaded and the tools are installed or used via the provided and suggested guix environment. One database (signature mutations, `sigmut_db`) is already provided via the repository. The directory structure is suggested like [this](#structure-overview) and pre-filled accordingly in the settings file. 
-
-### Kraken2 database
-
-There are several libraries of genomes that can be used to classify the (unaligned) reads. It is up to you which one to use, but be sure that they fulfill the necessities stated by Kraken2 [Kraken2 manual](https://github.com/DerrickWood/kraken2/wiki/Manual#kraken-2-databases). For an overall overview we recommend to use the Plus-PFP library provided [here](https://benlangmead.github.io/aws-indexes/k2). If the classification is not of concern or only the viruses are of interest, we recommend to use a smaller one. This will accelerate the speed.
-It is also possible to have multiple Kraken2 databases installed, just be sure to provide the correct location to the settings file.
-
-First download and unpack the database in the `databases/kraken_db/`:
-
-```
-DIR=databases/kraken_db/
-mkdir -p $DIR
-
-# NOTE: This command will download a very large file, after unpacking this will
-# require about 100GB of disc space. If this is not feasible use another
-# database instead. For this please see link above or commented lines below.
-wget -qO- https://genome-idx.s3.amazonaws.com/kraken/k2_pluspfp_20210127.tar.gz | tar -C $DIR -xzv
-
-# Use the following two lines to use smaller 8GB version instead.
-# wget -qO- https://genome-idx.s3.amazonaws.com/kraken/k2_pluspfp_8gb_20210127.tar.gz | tar -C $DIR -xzv
-```
-
-Next go to the database/ directory and build the Kraken database. This might take a while (depends on the size of the downloaded database):
-
-```
-#current location: pigx_sarscov2_ww/
-cd database/
-DBNAME=kraken_db
-kraken2-build --use-ftp --download-taxonomy --db $DBNAME # if this fails, you might want to try it without the --use-ftp flag
-kraken2-build --build --db $DBNAME
-```
-
-Kraken might tell you that it can't find a library subdirectory. If that's the case it should be fine though.  
-This folder should now contain at least these files: hash.k2d, opts.k2d and taxo.k2d.
-
-### Krona database
-
-Krona Tools needs two files, which have to be installed in the `databases/krona_db/`. Also this might take a while:
-
-```
-#current location: pigx_sarscov2_ww/databases/
-DBNAME=krona_db/
-mkdir -p $DBNAME
-KRONA=$(dirname $(which ktImportTaxonomy))/../share/krona-tools/ # this is just a workaround until tool paths are declared
-$KRONA/updateTaxonomy.sh $DBNAME # the scripts are stored a priori in that folder
-$KRONA/updateAccessions.sh $DBNAME
-```
-
-### VEP database
-
-Just download the `SARS_CoV_2` database for VEP (variant effect predictor) and unpack it in the `databases/vep_db/` directory.
-
-```
-#current location: pigx_sarscov2_ww/databases/
-DBNAME=vep_db/
-mkdir -p $DBNAME
-wget -qO- ftp://ftp.ensemblgenomes.org/pub/viruses/variation/indexed_vep_cache/sars_cov_2_vep_101_ASM985889v3.tar.gz | tar -C $DBNAME -xzv
-```
-
-### Sigmut database
-
-Necessary files are provided in `databases/sigmut_db/` for the current main Variants of Concern. Users can add files with new variants if/when necessary.
 
 
 # Quick Start
