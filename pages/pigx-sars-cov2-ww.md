@@ -221,6 +221,28 @@ that are shorter than the product of read-length and the cut-off factor are remo
 - _cut-off_ specifies the cut-off factor
 
 
+# Running the pipeline
+
+PiGx SARS-CoV-2 wastewater is executed using the command `pigx-sars-cov2-ww -s settings.yaml sample_sheet.csv`. See `pigx-sars-cov2-ww --help` for information about additional command line arguments.
+
+The `execution` section of the settings file provides some control over the execution of the pipeline.
+
+## Local / cluster execution
+
+The workflow may be executed locally (on a single computer), or, if a Sun Grid Engine-compatible HPC environment is available, supports cluster execution. In order to enable cluster execution, specify `submit-to-cluster: yes` in the settings file.
+
+## Parallel execution
+If the workflow is run on a cluster, or a single computer with sufficient resources, some of the tasks may be computed in parallel. To specify the allowed level or parallelism, set the `jobs` setting under `execution` in the settings file. For instance,
+
+```yaml
+execution:
+  submit-to-cluster: yes
+  jobs: 40
+```
+
+in the settings file, will submit up to 40 simultaneous compute jobs on the cluster.
+
+
 # Troubleshooting
 
 If you have any questions please e-mail: pigx@googlegroups.com or use the web form to ask questions https://groups.google.com/forum/#!forum/pigx/. 
