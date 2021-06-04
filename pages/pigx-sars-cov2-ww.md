@@ -143,6 +143,24 @@ wget -qO- ftp://ftp.ensemblgenomes.org/pub/viruses/variation/indexed_vep_cache/s
 Necessary files are provided in `databases/sigmut_db/` for the current main Variants of Concern. Users can add files with new variants if/when necessary.
 
 
+# Quick Start
+
+To check whether the pipeline and the databases have been properly set up, run the pipeline on a minimal test dataset.
+
+1. Download the test data
+
+    `git clone https://github.com/BIMSBbioinfo/pigx_sarscov2_ww sarscov2-test`
+
+2. Enter the directory
+
+    `cd sarscov2-test`
+
+3. Run the pipeline
+
+    `pigx-sars-cov2-ww -s .tests/settings.yaml .tests/sample_sheet.csv`
+
+Inside `tests/` a new directory `output` is created, which includes specific directories containing output data for the respective step of the pipeline.    The `tests/output/reports/index.html` gives the overview over all merged reports for the test data. 
+
 
 # Preparing the input
 
@@ -202,24 +220,6 @@ that are shorter than the product of read-length and the cut-off factor are remo
 - _read-length_ specifies the length of the basepairs
 - _cut-off_ specifies the cut-off factor
 
-
-# Quick Start
-
-To check whether the pipeline and the databases have been properly set up, run the pipeline on a minimal test dataset.
-
-1. Download the test data
-
-    `git clone https://github.com/BIMSBbioinfo/pigx_sarscov2_ww sarscov2-test`
-
-2. Enter the directory
-
-    `cd sarscov2-test`
-
-3. Run the pipeline
-
-    `pigx-sars-cov2-ww -s .tests/settings.yaml .tests/sample_sheet.csv`
-
-Inside `tests/` a new directory `output` is created, which includes specific directories containing output data for the respective step of the pipeline.    The `tests/output/reports/index.html` gives the overview over all merged reports for the test data. 
 
 # Troubleshooting
 
