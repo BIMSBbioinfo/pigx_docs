@@ -309,37 +309,36 @@ Necessary files are provided in `databases/sigmut_db/` for the current main Vari
 # Quick Start
 
 To check wether the pipeline together with the databases was properly installed, run PiGx SARS-CoV-2 Wastewater Sequencing Pipeline on a minimal test dataset.
-For this there are samples provided in `tests/sample_data/`. The folder structure should be provided like this, assuming all databases are set up like described [here](#prepare-databases):
-
+For this there are samples provided in `tests/sample_data/`. The directory structure should be provided like this, assuming all databases are set up like described [here](#prepare-databases):
 
 ```
 pigx_sarscov2_ww
-|
-|__databases/
-   │
-   │__kraken_db/
-   │
-   │__krona_db/
-   │
-   │__vep_db/
-   |
-   |__sigmut_db/
-|      
-|__tests/
-   |__sample_sheet.csv
-   |
-   |__settings.yaml
-   |
-   |__sample_data/
-      |
-      |__reads/
-      |
-      |__NC_045512.2.fasta
-      |
-      |__nCoV-2019_NCref.bed
-|
-|__[...]
-
+│
+├── databases
+│   ├── kraken_db
+│   │   └── ...
+│   ├── krona_db
+│   │   └── ...
+│   ├── sigmut_db
+│   │   └── ...
+│   └── vep_db
+│       └── ...
+├── tests
+│   ├── databases
+│   │   └── vep_db
+│   │       └── ...
+│   ├── sample_data
+│   │   ├── reads
+│   │   │   ├── ...
+│   │   ├── signature_mutations
+│   │   │   └── ...
+│   │   ├── NC_045512.2.fasta
+│   │   ├── nCoV-2019_NCref.bed
+│   │   └── ...
+│   ├── sample_sheet.csv
+│   ├── settings.yaml
+│   └── ...
+└── ...
 ``` 
 
 Now the the test set can be run with the command: 
