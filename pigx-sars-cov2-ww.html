@@ -75,6 +75,7 @@
           <li><a href="pigx-sars-cov2-ww.html#introduction">Introduction</a></li>
           <li><a href="pigx-sars-cov2-ww.html#installation">Installation</a></li>
           <li><a href="pigx-sars-cov2-ww.html#quick-start">Quick start</a></li>
+          <li><a href="pigx-sars-cov2-ww.html#preparing-the-input">Preparing the input</a></li>
           <li><a href="pigx-sars-cov2-ww.html#troubleshooting">Troubleshooting</a></li>
           </ul></li>
           </ul>
@@ -95,6 +96,7 @@
               <div id="book-search-results">
                 <div class="search-noresults">
                   <section class="normal markdown-section">
+                    <h1 id="pigx-sars-cov-2-wastewater">PiGx SARS-CoV-2 wastewater</h1>
                     <h1 id="introduction">Introduction</h1>
                     <p>PiGx SARS-CoV-2 is a pipeline for analysing data from sequenced wastewater samples and identifying given variants-of-concern of SARS-CoV-2. Currently wastewater samples are used, which are enriched for SARS-CoV-2. The pipeline can be used for continuous sampling. The output of the PiGx SARS-CoV-2 pipeline is summarized in a report which provides an intuitive visual overview about the development of variant abundance over time and location. Additionally there will be more detailed reports per sample, which cover the quality control of the samples, the detected variants and a taxonomic classification of all unaligned reads. This version of the pipeline was designed to work with target sequencing (PCR-based) and tested with data generated using the <a href="https://github.com/artic-network/artic-ncov2019/tree/master/primer_schemes/nCoV-2019/V30">ARTIC nCoV-2019 primers</a>.</p>
                     <h2 id="workflow">Workflow</h2>
@@ -115,11 +117,9 @@
                     <li>log files for all major analysis steps performed by the pipeline</li>
                     </ul>
                     <h1 id="installation">Installation</h1>
-                    <h2 id="install-via-guix">Install via guix</h2>
                     <p>Pre-built binaries for PiGx are available through <a href="https://gnu.org/s/guix">GNU Guix</a>, the functional package manager for reproducible, user-controlled software management. You can install the PiGx SARS-CoV-2 pipeline with</p>
                     <div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="ex">guix</span> install pigx-sars-cov2-ww</span></code></pre></div>
-                    <h2 id="install-from-source">Install from source</h2>
-                    <p>Instead, if you want to install PiGx SARS-CoV-2 from source, please clone this repository and change directory accordingly:</p>
+                    <p>If you want to install PiGx SARS-CoV-2 from source, please clone this repository and change directory accordingly:</p>
                     <div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="fu">git</span> clone https://github.com/BIMSBbioinfo/pigx_sarscov2_ww.git</span>
                     <span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="bu">cd</span> pigx_sarscov2_ww</span></code></pre></div>
                     <p>To fetch code that is common to all PiGx pipelines run this:</p>
@@ -228,17 +228,17 @@
                     <div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="ex">pigx-sars-cov2-ww</span> [options] sample_sheet.csv</span></code></pre></div>
                     <p>For example, with this command the pipeline is used for the included test data:</p>
                     <div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="ex">pigx-sars-cov2-ww</span> -s tests/settings.yaml tests/sample_sheet.csv</span></code></pre></div>
-                    <h2 id="preparing-the-input">Preparing the input</h2>
-                    <p>In order to run the pipeline, the user must supply</p>
+                    <h1 id="preparing-the-input">Preparing the input</h1>
+                    <p>In order to run the pipeline, you need to supply</p>
                     <ul>
                     <li>a sample sheet</li>
-                    <li>a settings file</li>
+                    <li>a settings file.</li>
                     </ul>
-                    <p>both files are described below.</p>
+                    <p>Both files are described below.</p>
                     <p>In order to generate template settings and sample sheet files, type</p>
                     <div class="sourceCode" id="cb10"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="ex">pigx-sars-cov2-ww</span> --init</span></code></pre></div>
                     <p>in the shell, and a boilerplate <code>sample_sheet.csv</code> and <code>settings.yaml</code> will be written to your current directory. An example for both files is provided in the <code>tests/</code> directory.</p>
-                    <h3 id="sample-sheet">Sample sheet</h3>
+                    <h2 id="sample-sheet">Sample sheet</h2>
                     <p>The sample sheet is a tabular file (<code>csv</code> format) describing the experiment. The table has the following columns:</p>
                     <table style="width:100%;">
                     <colgroup>
@@ -294,9 +294,9 @@
                     <li><em>location_name</em> is the name of the location and should be unique per coordinates</li>
                     <li><em>coordinates_lat</em> &amp; <em>coordinates_long</em> correspond the latitude and longitude of the location name</li>
                     </ul>
-                    <h3 id="settings-file">Settings file</h3>
+                    <h2 id="settings-file">Settings file</h2>
                     <p>In the settings file, parameters are saved, in YAML format, to configure the execution of PiGx-sarscov2. It specifies:</p>
-                    <h4 id="locations">Locations</h4>
+                    <p><strong>Locations</strong>:</p>
                     <ul>
                     <li><em>output-dir</em>, the location of the outputs for the pipeline</li>
                     <li><em>reads-dir</em>, the location of the reads (directory where <code>fastq</code> files are)</li>
@@ -307,7 +307,7 @@
                     <li><em>sigmut-db-dir</em>, the location of the signature mutations database (provided at databases/sigmut_db/)</li>
                     <li><em>vep-db-dir</em>, the location of <code>sars_cov_2</code> database for VEP (must be prepared by the user)</li>
                     </ul>
-                    <h4 id="trimming">Trimming</h4>
+                    <p><strong>Trimming</strong>:</p>
                     <p>These settings are used to filter raw reads when trimming. Reads that are shorter than the product of read-length and the cut-off factor are removed.</p>
                     <ul>
                     <li><em>read-length</em> specifies the length of the basepairs</li>
