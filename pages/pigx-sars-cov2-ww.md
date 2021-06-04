@@ -71,67 +71,12 @@ Inside the environment you can then perform the usual build steps:
 make install
 ```
 
-# Getting started
-
 At this point you are able to run PiGx SARS-CoV-2. To see all available options type `--help`.
 
 ```sh
 pigx-sars-cov2-ww --help
 ```
-<details>
-<summary>toggle output</summary>
 
-<pre>
-<code>
-usage: pigx-sars-cov2-ww [-h] [-v] (--init [{settings,sample-sheet,both}] | -s SETTINGS) [-c CONFIGFILE]
-                         [--target TARGET] [-n] [--graph GRAPH] [--force] [--reason] [--unlock] [--verbose]
-                         [--printshellcmds]
-                         [sample_sheet]
-
-PiGx SARS-CoV-2 wastewater sequencing Pipeline.
-
-This is a pipeline for analyzing data from sequenced wastewater
-samples and identifying given variants-of-concern of SARS-CoV-2.  The
-pipeline can be used for continuous sampling.  The output report
-provides an intuitive visual overview about the development of variant
-abundance over time and location.
-
-positional arguments:
-  sample_sheet                            The sample sheet containing sample data in CSV format.
-
-optional arguments:
-  -h, --help                              show this help message and exit
-  -v, --version                           show program's version number and exit
-  --init [{settings,sample-sheet,both}]   Generate a template SETTINGS file, a SAMPLE-SHEET.  Leave empty for both.
-  -s SETTINGS, --settings SETTINGS        A YAML file for settings that deviate from the defaults.
-  -c CONFIGFILE, --configfile CONFIGFILE  The config file used for calling the underlying snakemake process.  By
-                                          default the file 'config.json' is dynamically created from the sample
-                                          sheet and the settings file.
-  --target TARGET                         Stop when the named target is completed instead of running the whole
-                                          pipeline.  The default target is "final-report".  Pass "--target=help"
-                                          to describe all available targets.
-  -n, --dry-run                           Only show what work would be performed.  Do not actually run the
-                                          pipeline.
-  --graph GRAPH                           Output a graph in PDF format showing the relations between rules of
-                                          this pipeline.  You must specify a graph file name such as
-                                          "graph.pdf".
-  --force                                 Force the execution of rules, even though the outputs are considered
-                                          fresh.
-  --reason                                Print the reason why a rule is executed.
-  --unlock                                Recover after a snakemake crash.
-  --verbose                               Print supplementary info on job execution.
-  --printshellcmds                        Print commands being executed by snakemake.
-
-This pipeline was developed by the Akalin group at MDC in Berlin in 2017-2021.
-</code>
-</pre>
-</details>
-</br>
-
-Though, to actually use it on your experimental data still more setup is required. Please follow [the steps to prepare the required databases](#prepare-databases) first and [prepare the input](#preparing-the-input). Then afterwards, you can run the pipeline:
-
-```sh
-pigx-sars-cov2-ww [options] sample_sheet.csv
 ```
 
 For example, with this command the pipeline is used for the included test data: 
