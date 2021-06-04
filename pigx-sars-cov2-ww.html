@@ -353,34 +353,34 @@
                     <h3 id="sigmut-database">Sigmut database</h3>
                     <p>Necessary files are provided in <code>databases/sigmut_db/</code> for the current main Variants of Concern. Users can add files with new variants if/when necessary.</p>
                     <h1 id="quick-start">Quick Start</h1>
-                    <p>To check wether the pipeline together with the databases was properly installed, run PiGx SARS-CoV-2 Wastewater Sequencing Pipeline on a minimal test dataset. For this there are samples provided in <code>tests/sample_data/</code>. The folder structure should be provided like this, assuming all databases are set up like described <a href="#prepare-databases">here</a>:</p>
+                    <p>To check wether the pipeline together with the databases was properly installed, run PiGx SARS-CoV-2 Wastewater Sequencing Pipeline on a minimal test dataset. For this there are samples provided in <code>tests/sample_data/</code>. The directory structure should be provided like this, assuming all databases are set up like described <a href="#prepare-databases">here</a>:</p>
                     <pre><code>pigx_sarscov2_ww
-                    |
-                    |__databases/
-                       │
-                       │__kraken_db/
-                       │
-                       │__krona_db/
-                       │
-                       │__vep_db/
-                       |
-                       |__sigmut_db/
-                    |      
-                    |__tests/
-                       |__sample_sheet.csv
-                       |
-                       |__settings.yaml
-                       |
-                       |__sample_data/
-                          |
-                          |__reads/
-                          |
-                          |__NC_045512.2.fasta
-                          |
-                          |__nCoV-2019_NCref.bed
-                    |
-                    |__[...]
-                    </code></pre>
+                    │
+                    ├── databases
+                    │   ├── kraken_db
+                    │   │   └── ...
+                    │   ├── krona_db
+                    │   │   └── ...
+                    │   ├── sigmut_db
+                    │   │   └── ...
+                    │   └── vep_db
+                    │       └── ...
+                    ├── tests
+                    │   ├── databases
+                    │   │   └── vep_db
+                    │   │       └── ...
+                    │   ├── sample_data
+                    │   │   ├── reads
+                    │   │   │   ├── ...
+                    │   │   ├── signature_mutations
+                    │   │   │   └── ...
+                    │   │   ├── NC_045512.2.fasta
+                    │   │   ├── nCoV-2019_NCref.bed
+                    │   │   └── ...
+                    │   ├── sample_sheet.csv
+                    │   ├── settings.yaml
+                    │   └── ...
+                    └── ...</code></pre>
                     <p>Now the the test set can be run with the command:</p>
                     <pre><code>#current location: pigx_sarscov2_ww/
                     PIGX_UNINSTALLED=t ./pigx-sars-cov2-ww -s tests/settings.yaml tests/sample_sheet.csv</code></pre>
