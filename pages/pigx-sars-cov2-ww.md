@@ -46,7 +46,7 @@ To fetch code that is common to all PiGx pipelines run this:
 git submodule update --init
 ```
 
-Before setting everything up, though, make sure all dependencies are met by either installing the following software manually, or by entering the provided reproducible Guix environment. If you are using Guix we definitely recommend the latter. This command spawns a sub-shell in which all dependencies are available:
+Before setting everything up, though, make sure [all dependencies](https://github.com/BIMSBbioinfo/pigx_sarscov2_ww/blob/main/manifest.scm) are met by either installing them manually, or by entering the provided reproducible Guix environment. If you are using Guix we definitely recommend the latter. This command spawns a sub-shell in which all dependencies are available at exactly the same versions that we used to develop the pipeline:
 
 ```sh
 USE_GUIX_INFERIOR=t guix environment --pure -m manifest.scm --preserve=GUIX_LOCPATH
@@ -62,49 +62,6 @@ guix environment --pure -m manifest.scm --preserve=GUIX_LOCPATH
 Note that `--pure` unsets all environment variables that are not
 explicitly preserved.  To access other executables that are not part
 of the environment please address them by their absolute file name.
-
-
-<details>
-<summary>Software dependencies</summary>
-
-- R
-    - minimal
-    - base64url
-    - dplyr
-    - dt
-    - ggplot2
-    - magrittr
-    - plotly
-    - qpcr
-    - rmarkdown
-    - stringr
-    - tidyr
-    - reshape2
-- python
-    - wrapper
-    - pyyaml
-- bash-minimal
-- bwa
-- ensembl-vep
-- fastqc
-- multiqc
-- kraken2
-- krona-tools
-- lofreq
-- prinseq
-- samtools
-- snakemake
-- autoconf
-- automake
-- coreutils
-- gawk
-- grep
-- make
-- sed
-
-
-</details>
-</br>
 
 Inside the environment you can then perform the usual build steps:
 
