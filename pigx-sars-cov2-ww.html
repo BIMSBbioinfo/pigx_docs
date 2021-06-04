@@ -133,62 +133,47 @@
                     <div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="ex">./bootstrap.sh</span></span>
                     <span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="ex">./configure</span> --prefix=/some/where</span>
                     <span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a><span class="fu">make</span> install</span></code></pre></div>
-                    <h1 id="getting-started">Getting started</h1>
                     <p>At this point you are able to run PiGx SARS-CoV-2. To see all available options type <code>--help</code>.</p>
                     <div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="ex">pigx-sars-cov2-ww</span> --help</span></code></pre></div>
-                    <details>
-                    <summary>toggle output</summary>
+                    <h2 id="prepare-databases">Prepare databases</h2>
+                    <p>Before the pipeline can work, three databases must be downloaded and their location will need to be provided in the settings file. Depending on the size of the databases this can take some time. Be sure that the pigx-sarscov2-ww pipeline is downloaded and the tools are installed or used via the provided and suggested guix environment. One database (signature mutations, <code>sigmut_db</code>) is already provided via the repository. The directory structure is suggested like <a href="#structure-overview">this</a> and pre-filled accordingly in the settings file.</p>
+                    <h3 id="kraken2-database">Kraken2 database</h3>
+                    <p>There are several libraries of genomes that can be used to classify the (unaligned) reads. It is up to you which one to use, but be sure that they fulfill the necessities stated by Kraken2 <a href="https://github.com/DerrickWood/kraken2/wiki/Manual#kraken-2-databases">Kraken2 manual</a>. For an overall overview we recommend to use the Plus-PFP library provided <a href="https://benlangmead.github.io/aws-indexes/k2">here</a>. If the classification is not of concern or only the viruses are of interest, we recommend to use a smaller one. This will accelerate the speed. It is also possible to have multiple Kraken2 databases installed, just be sure to provide the correct location to the settings file.</p>
+                    <p>First download and unpack the database in the <code>databases/kraken_db/</code>:</p>
+                    <pre><code>DIR=databases/kraken_db/
+                    mkdir -p $DIR
 
-                    <pre>
-                    <code>
-                    usage: pigx-sars-cov2-ww [-h] [-v] (--init [{settings,sample-sheet,both}] | -s SETTINGS) [-c CONFIGFILE]
-                                             [--target TARGET] [-n] [--graph GRAPH] [--force] [--reason] [--unlock] [--verbose]
-                                             [--printshellcmds]
-                                             [sample_sheet]
+                    # NOTE: This command will download a very large file, after unpacking this will
+                    # require about 100GB of disc space. If this is not feasible use another
+                    # database instead. For this please see link above or commented lines below.
+                    wget -qO- https://genome-idx.s3.amazonaws.com/kraken/k2_pluspfp_20210127.tar.gz | tar -C $DIR -xzv
 
-                    PiGx SARS-CoV-2 wastewater sequencing Pipeline.
-
-                    This is a pipeline for analyzing data from sequenced wastewater
-                    samples and identifying given variants-of-concern of SARS-CoV-2.  The
-                    pipeline can be used for continuous sampling.  The output report
-                    provides an intuitive visual overview about the development of variant
-                    abundance over time and location.
-
-                    positional arguments:
-                      sample_sheet                            The sample sheet containing sample data in CSV format.
-
-                    optional arguments:
-                      -h, --help                              show this help message and exit
-                      -v, --version                           show program's version number and exit
-                      --init [{settings,sample-sheet,both}]   Generate a template SETTINGS file, a SAMPLE-SHEET.  Leave empty for both.
-                      -s SETTINGS, --settings SETTINGS        A YAML file for settings that deviate from the defaults.
-                      -c CONFIGFILE, --configfile CONFIGFILE  The config file used for calling the underlying snakemake process.  By
-                                                              default the file 'config.json' is dynamically created from the sample
-                                                              sheet and the settings file.
-                      --target TARGET                         Stop when the named target is completed instead of running the whole
-                                                              pipeline.  The default target is "final-report".  Pass "--target=help"
-                                                              to describe all available targets.
-                      -n, --dry-run                           Only show what work would be performed.  Do not actually run the
-                                                              pipeline.
-                      --graph GRAPH                           Output a graph in PDF format showing the relations between rules of
-                                                              this pipeline.  You must specify a graph file name such as
-                                                              "graph.pdf".
-                      --force                                 Force the execution of rules, even though the outputs are considered
-                                                              fresh.
-                      --reason                                Print the reason why a rule is executed.
-                      --unlock                                Recover after a snakemake crash.
-                      --verbose                               Print supplementary info on job execution.
-                      --printshellcmds                        Print commands being executed by snakemake.
-
-                    This pipeline was developed by the Akalin group at MDC in Berlin in 2017-2021.
-                    </code>
-                    </pre>
-                    </details>
-                    <p></br></p>
-                    <p>Though, to actually use it on your experimental data still more setup is required. Please follow <a href="#prepare-databases">the steps to prepare the required databases</a> first and <a href="#preparing-the-input">prepare the input</a>. Then afterwards, you can run the pipeline:</p>
-                    <div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="ex">pigx-sars-cov2-ww</span> [options] sample_sheet.csv</span></code></pre></div>
-                    <p>For example, with this command the pipeline is used for the included test data:</p>
-                    <div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="ex">pigx-sars-cov2-ww</span> -s tests/settings.yaml tests/sample_sheet.csv</span></code></pre></div>
+                    # Use the following two lines to use smaller 8GB version instead.
+                    # wget -qO- https://genome-idx.s3.amazonaws.com/kraken/k2_pluspfp_8gb_20210127.tar.gz | tar -C $DIR -xzv</code></pre>
+                    <p>Next go to the database/ directory and build the Kraken database. This might take a while (depends on the size of the downloaded database):</p>
+                    <pre><code>#current location: pigx_sarscov2_ww/
+                    cd databases/
+                    DBNAME=kraken_db
+                    kraken2-build --use-ftp --download-taxonomy --db $DBNAME # if this fails, you might want to try it without the --use-ftp flag
+                    kraken2-build --build --db $DBNAME</code></pre>
+                    <p>Kraken might tell you that it can’t find a library subdirectory. If that’s the case it should be fine though.<br />
+                    This folder should now contain at least these files: hash.k2d, opts.k2d and taxo.k2d.</p>
+                    <h3 id="krona-database">Krona database</h3>
+                    <p>Krona Tools needs two files, which have to be installed in the <code>databases/krona_db/</code>. Also this might take a while:</p>
+                    <pre><code>#current location: pigx_sarscov2_ww/databases/
+                    DBNAME=krona_db/
+                    mkdir -p $DBNAME
+                    KRONA=$(dirname $(which ktImportTaxonomy))/../share/krona-tools/ # this is just a workaround until tool paths are declared
+                    $KRONA/updateTaxonomy.sh $DBNAME # the scripts are stored a priori in that folder
+                    $KRONA/updateAccessions.sh $DBNAME</code></pre>
+                    <h3 id="vep-database">VEP database</h3>
+                    <p>Just download the <code>SARS_CoV_2</code> database for VEP (variant effect predictor) and unpack it in the <code>databases/vep_db/</code> directory.</p>
+                    <pre><code>#current location: pigx_sarscov2_ww/databases/
+                    DBNAME=vep_db/
+                    mkdir -p $DBNAME
+                    wget -qO- ftp://ftp.ensemblgenomes.org/pub/viruses/variation/indexed_vep_cache/sars_cov_2_vep_101_ASM985889v3.tar.gz | tar -C $DBNAME -xzv</code></pre>
+                    <h3 id="sigmut-database">Sigmut database</h3>
+                    <p>Necessary files are provided in <code>databases/sigmut_db/</code> for the current main Variants of Concern. Users can add files with new variants if/when necessary.</p>
                     <h1 id="preparing-the-input">Preparing the input</h1>
                     <p>In order to run the pipeline, you need to supply</p>
                     <ul>
@@ -197,7 +182,7 @@
                     </ul>
                     <p>Both files are described below.</p>
                     <p>In order to generate template settings and sample sheet files, type</p>
-                    <div class="sourceCode" id="cb10"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="ex">pigx-sars-cov2-ww</span> --init</span></code></pre></div>
+                    <div class="sourceCode" id="cb12"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="ex">pigx-sars-cov2-ww</span> --init</span></code></pre></div>
                     <p>in the shell, and a boilerplate <code>sample_sheet.csv</code> and <code>settings.yaml</code> will be written to your current directory. An example for both files is provided in the <code>tests/</code> directory.</p>
                     <h2 id="sample-sheet">Sample sheet</h2>
                     <p>The sample sheet is a tabular file (<code>csv</code> format) describing the experiment. The table has the following columns:</p>
@@ -274,77 +259,16 @@
                     <li><em>read-length</em> specifies the length of the basepairs</li>
                     <li><em>cut-off</em> specifies the cut-off factor</li>
                     </ul>
-                    <h2 id="prepare-databases">Prepare databases</h2>
-                    <p>Before the pipeline can work, three databases must be downloaded and their location will need to be provided in the settings file. Depending on the size of the databases this can take some time. Be sure that the pigx-sarscov2-ww pipeline is downloaded and the tools are installed or used via the provided and suggested guix environment. One database (signature mutations, <code>sigmut_db</code>) is already provided via the repository. The directory structure is suggested like <a href="#structure-overview">this</a> and pre-filled accordingly in the settings file.</p>
-                    <h3 id="kraken2-database">Kraken2 database</h3>
-                    <p>There are several libraries of genomes that can be used to classify the (unaligned) reads. It is up to you which one to use, but be sure that they fulfill the necessities stated by Kraken2 <a href="https://github.com/DerrickWood/kraken2/wiki/Manual#kraken-2-databases">Kraken2 manual</a>. For an overall overview we recommend to use the Plus-PFP library provided <a href="https://benlangmead.github.io/aws-indexes/k2">here</a>. If the classification is not of concern or only the viruses are of interest, we recommend to use a smaller one. This will accelerate the speed. It is also possible to have multiple Kraken2 databases installed, just be sure to provide the correct location to the settings file.</p>
-                    <p>First download and unpack the database in the <code>databases/kraken_db/</code>:</p>
-                    <pre><code>DIR=databases/kraken_db/
-                    mkdir -p $DIR
-
-                    # NOTE: This command will download a very large file, after unpacking this will
-                    # require about 100GB of disc space. If this is not feasible use another
-                    # database instead. For this please see link above or commented lines below.
-                    wget -qO- https://genome-idx.s3.amazonaws.com/kraken/k2_pluspfp_20210127.tar.gz | tar -C $DIR -xzv
-
-                    # Use the following two lines to use smaller 8GB version instead.
-                    # wget -qO- https://genome-idx.s3.amazonaws.com/kraken/k2_pluspfp_8gb_20210127.tar.gz | tar -C $DIR -xzv</code></pre>
-                    <p>Next go to the database/ directory and build the Kraken database. This might take a while (depends on the size of the downloaded database):</p>
-                    <pre><code>#current location: pigx_sarscov2_ww/
-                    cd database/
-                    DBNAME=kraken_db
-                    kraken2-build --use-ftp --download-taxonomy --db $DBNAME # if this fails, you might want to try it without the --use-ftp flag
-                    kraken2-build --build --db $DBNAME</code></pre>
-                    <p>Kraken might tell you that it can’t find a library subdirectory. If that’s the case it should be fine though.<br />
-                    This folder should now contain at least these files: hash.k2d, opts.k2d and taxo.k2d.</p>
-                    <h3 id="krona-database">Krona database</h3>
-                    <p>Krona Tools needs two files, which have to be installed in the <code>databases/krona_db/</code>. Also this might take a while:</p>
-                    <pre><code>#current location: pigx_sarscov2_ww/databases/
-                    DBNAME=krona_db/
-                    mkdir -p $DBNAME
-                    KRONA=$(dirname $(which ktImportTaxonomy))/../share/krona-tools/ # this is just a workaround until tool paths are declared
-                    $KRONA/updateTaxonomy.sh $DBNAME # the scripts are stored a priori in that folder
-                    $KRONA/updateAccessions.sh $DBNAME</code></pre>
-                    <h3 id="vep-database">VEP database</h3>
-                    <p>Just download the <code>SARS_CoV_2</code> database for VEP (variant effect predictor) and unpack it in the <code>databases/vep_db/</code> directory.</p>
-                    <pre><code>#current location: pigx_sarscov2_ww/databases/
-                    DBNAME=vep_db/
-                    mkdir -p $DBNAME
-                    wget -qO- ftp://ftp.ensemblgenomes.org/pub/viruses/variation/indexed_vep_cache/sars_cov_2_vep_101_ASM985889v3.tar.gz | tar -C $DBNAME -xzv</code></pre>
-                    <h3 id="sigmut-database">Sigmut database</h3>
-                    <p>Necessary files are provided in <code>databases/sigmut_db/</code> for the current main Variants of Concern. Users can add files with new variants if/when necessary.</p>
                     <h1 id="quick-start">Quick Start</h1>
-                    <p>To check wether the pipeline together with the databases was properly installed, run PiGx SARS-CoV-2 Wastewater Sequencing Pipeline on a minimal test dataset. For this there are samples provided in <code>tests/sample_data/</code>. The directory structure should be provided like this, assuming all databases are set up like described <a href="#prepare-databases">here</a>:</p>
-                    <pre><code>pigx_sarscov2_ww
-                    │
-                    ├── databases
-                    │   ├── kraken_db
-                    │   │   └── ...
-                    │   ├── krona_db
-                    │   │   └── ...
-                    │   ├── sigmut_db
-                    │   │   └── ...
-                    │   └── vep_db
-                    │       └── ...
-                    ├── tests
-                    │   ├── databases
-                    │   │   └── vep_db
-                    │   │       └── ...
-                    │   ├── sample_data
-                    │   │   ├── reads
-                    │   │   │   ├── ...
-                    │   │   ├── signature_mutations
-                    │   │   │   └── ...
-                    │   │   ├── NC_045512.2.fasta
-                    │   │   ├── nCoV-2019_NCref.bed
-                    │   │   └── ...
-                    │   ├── sample_sheet.csv
-                    │   ├── settings.yaml
-                    │   └── ...
-                    └── ...</code></pre>
-                    <p>Now the the test set can be run with the command:</p>
-                    <pre><code>#current location: pigx_sarscov2_ww/
-                    PIGX_UNINSTALLED=t ./pigx-sars-cov2-ww -s tests/settings.yaml tests/sample_sheet.csv</code></pre>
+                    <p>To check whether the pipeline and the databases have been properly set up, run the pipeline on a minimal test dataset.</p>
+                    <ol>
+                    <li><p>Download the test data</p>
+                    <p><code>git clone https://github.com/BIMSBbioinfo/pigx_sarscov2_ww sarscov2-test</code></p></li>
+                    <li><p>Enter the directory</p>
+                    <p><code>cd sarscov2-test</code></p></li>
+                    <li><p>Run the pipeline</p>
+                    <p><code>pigx-sars-cov2-ww -s .tests/settings.yaml .tests/sample_sheet.csv</code></p></li>
+                    </ol>
                     <p>Inside <code>tests/</code> a new directory <code>output</code> is created, which includes specific directories containing output data for the respective step of the pipeline. The <code>tests/output/reports/index.html</code> gives the overview over all merged reports for the test data.</p>
                     <h1 id="troubleshooting">Troubleshooting</h1>
                     <p>If you have any questions please e-mail: <a href="mailto:pigx@googlegroups.com" class="email">pigx@googlegroups.com</a> or use the web form to ask questions <a href="https://groups.google.com/forum/#!forum/pigx/" class="uri">https://groups.google.com/forum/#!forum/pigx/</a>.</p>
