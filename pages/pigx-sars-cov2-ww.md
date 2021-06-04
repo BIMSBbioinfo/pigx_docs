@@ -181,14 +181,14 @@ For example, with this command the pipeline is used for the included test data:
 pigx-sars-cov2-ww -s tests/settings.yaml tests/sample_sheet.csv
 ```
 
-## Preparing the input
+# Preparing the input
 
-In order to run the pipeline, the user must supply
+In order to run the pipeline, you need to supply
 
 - a sample sheet
-- a settings file
+- a settings file.
 
-both files are described below.
+Both files are described below.
 
 In order to generate template settings and sample sheet files, type
 
@@ -198,7 +198,7 @@ pigx-sars-cov2-ww --init
 
 in the shell, and a boilerplate `sample_sheet.csv` and `settings.yaml` will be written to your current directory. An example for both files is provided in the `tests/` directory.
 
-### Sample sheet
+## Sample sheet
 
 The sample sheet is a tabular file (`csv` format) describing the experiment. The table has the following columns:
 
@@ -216,11 +216,11 @@ The sample sheet is a tabular file (`csv` format) describing the experiment. The
 - _location_name_ is the name of the location and should be unique per coordinates
 - _coordinates_lat_ & _coordinates_long_ correspond the latitude and longitude of the location name
 
-### Settings file
+## Settings file
 
 In the settings file, parameters are saved, in YAML format, to configure the execution of PiGx-sarscov2. It specifies:
 
-#### Locations
+**Locations**:
 
 - _output-dir_, the location of the outputs for the pipeline
 - _reads-dir_, the location of the reads (directory where `fastq` files are)
@@ -231,7 +231,7 @@ In the settings file, parameters are saved, in YAML format, to configure the exe
 - _sigmut-db-dir_, the location of the signature mutations database (provided at databases/sigmut_db/)
 - _vep-db-dir_, the location of `sars_cov_2` database for VEP (must be prepared by the user)
 
-#### Trimming
+**Trimming**:
 
 These settings are used to filter raw reads when trimming. Reads
 that are shorter than the product of read-length and the cut-off factor are removed.

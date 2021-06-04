@@ -41,4 +41,5 @@
     * [Introduction](pigx-sars-cov2-ww.md#introduction)
     * [Installation](pigx-sars-cov2-ww.md#installation)
     * [Quick start](pigx-sars-cov2-ww.md#quick-start)
+    * [Preparing the input](pigx-sars-cov2-ww.md#preparing-the-input)
     * [Troubleshooting](pigx-sars-cov2-ww.md#troubleshooting)
