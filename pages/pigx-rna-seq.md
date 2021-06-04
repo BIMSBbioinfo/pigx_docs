@@ -122,7 +122,7 @@ The settings file is a _YAML_ file which specifies:
   - Which samples to compare (by `sample_type` in the sample sheet)
   - Which covariates to include in the DE analysis (from additional columns in the sample sheet)
 
-In order to get started, enter `pigx-rnaseq --init-settings my_settings.yaml`. This will create a file called `my_settings.yaml` with the default structure. The file will look like this:
+In order to get started, enter `pigx-rnaseq --init=settings my_settings.yaml`. This will create a file called `my_settings.yaml` with the default structure. The file will look like this:
 
 ```yaml
 locations:
