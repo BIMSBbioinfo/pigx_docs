@@ -733,7 +733,7 @@
 .button:focus,.button:hover{outline:0}
 .button.size-2{width:50%}
 .button.size-3{width:33%}
-.markdown-section{display:block;word-wrap:break-word;overflow:hidden;color:#333;line-height:1.7;text-size-adjust:100%;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-moz-text-size-adjust:100%}
+.markdown-section{display:block;word-wrap:break-word;color:#333;line-height:1.7;text-size-adjust:100%;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-moz-text-size-adjust:100%}
 .markdown-section *{box-sizing:border-box;-webkit-box-sizing:border-box;font-size:inherit}
 .markdown-section>:first-child{margin-top:0!important}
 .markdown-section>:last-child{margin-bottom:0!important}
