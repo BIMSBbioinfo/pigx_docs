@@ -236,8 +236,8 @@ reports on amplicon coverage and read coverage, as well as general
 quality control and preprocessing metrics.
 
 General quality control metrics are computed using
-[FastQC][https://www.bioinformatics.babraham.ac.uk/projects/fastqc/]
-and [MultiQC][https://multiqc.info/].  The MultiQC report is
+[FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
+and [MultiQC](https://multiqc.info/).  The MultiQC report is
 particularly useful, collating quality control metrics from many steps
 of the pipeline in a single HTML report, which may be found under the
 `multiqc` directory in the PiGx output folder.
