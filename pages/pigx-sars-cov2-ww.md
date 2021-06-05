@@ -213,6 +213,61 @@ execution:
 in the settings file, will submit up to 40 simultaneous compute jobs on the cluster.
 
 
+# Output description
+
+PiGx SARS-CoV-2 wastewater creates an output directory, as specified in the settings file, that contains all of the following outputs.
+
+## Time series reports
+
+This pipeline performs mutation analysis of SARS-CoV-2 and reports and
+quantifies the occurrence of *variants of concern* (VOC) and signature
+mutations by which they are characterised.
+
+The visualizations in the time series report provide an overview of
+the evolution of VOCs and signature mutations found in the analyzed
+samples across given time points and locations.  The abundance values
+for the variants are derived by deconvolution.  The frequencies of the
+mutations are the output of [LoFreq](https://csb5.github.io/lofreq/).
+
+## Quality control
+
+A quality control report is generated for each sample.  It includes
+reports on amplicon coverage and read coverage, as well as general
+quality control and preprocessing metrics.
+
+General quality control metrics are computed using
+[FastQC][https://www.bioinformatics.babraham.ac.uk/projects/fastqc/]
+and [MultiQC][https://multiqc.info/].  The MultiQC report is
+particularly useful, collating quality control metrics from many steps
+of the pipeline in a single HTML report, which may be found under the
+`multiqc` directory in the PiGx output folder.
+
+## Taxonomic classification
+
+This report provides an overview of the species found in the provided
+wastewater samples apart from SARS-Cov-2.  The SARS-CoV-2 enriched
+wastewater samples are aligned to the virus genome. It provides
+insight about possible biases and contamination of the samples. In
+case of abundance of species very similar to SARS-CoV-2 only the
+taxonomic family will be reported which could indicate that an
+identification/alignment of SARS-CoV-2 could be biased or
+impossible. In case of a high percentage of read matching SARS-CoV-2 a
+refining of trimming parameters should be considered.
+
+## Variant report
+
+This report shows the variant analysis of SARS-CoV-2 from wastewater
+samples. Mutations are identified by single-nucleotide-variant (SNV)
+calling performed by [LoFreq](https://csb5.github.io/lofreq/).
+Translated to amino acid mutations by using [Ensemble VEP -
+COVID-19](https://covid-19.ensembl.org/info/docs/tools/vep/index.html).
+The list of found mutations (including synonymous and non-synonymous
+mutations) were matched against lists of signature mutations
+characterising variants of concern (VOC) of SARS-CoV-2 provided by
+[outbreak.info](https://outbreak.info/situation-reports) and
+[CoVariant.org](https://covariants.org/variants/S.501Y.V1).
+
+
 # Troubleshooting
 
 If you have any questions please e-mail: pigx@googlegroups.com or use the web form to ask questions https://groups.google.com/forum/#!forum/pigx/. 

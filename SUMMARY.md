@@ -43,4 +43,5 @@
     * [Quick start](pigx-sars-cov2-ww.md#quick-start)
     * [Preparing the input](pigx-sars-cov2-ww.md#preparing-the-input)
     * [Running the pipeline](pigx-sars-cov2-ww.md#running-the-pipeline)
+    * [Output description](pigx-sars-cov2-ww.md#output-description)
     * [Troubleshooting](pigx-sars-cov2-ww.md#troubleshooting)
