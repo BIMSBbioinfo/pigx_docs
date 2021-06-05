@@ -138,41 +138,17 @@
                     <div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="ex">pigx-sars-cov2-ww</span> --help</span></code></pre></div>
                     <h2 id="prepare-databases">Prepare databases</h2>
                     <p>Before the pipeline can work, three databases must be downloaded and their location will need to be provided in the settings file. Depending on the size of the databases this can take some time. One database (signature mutations, <code>sigmut_db</code>) is already included.</p>
+                    <p>We provide the script <code>download_databases.sh</code> to automate the download and configuration of all default databases. After installing the pipeline you can run the script like this:</p>
+                    <div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="va">prefix=</span><span class="st">&quot;</span><span class="va">$(</span><span class="fu">dirname</span> pigx-sars-cov2-ww<span class="va">)</span><span class="st">/../&quot;</span></span>
+                    <span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a><span class="va">$prefix</span><span class="ex">/libexec/pigx_sars-cov2-ww/scripts/download_databases.sh</span></span></code></pre></div>
+                    <p>Read on for details if you want to download the databases manually.</p>
                     <h3 id="kraken2-database">Kraken2 database</h3>
-                    <p>There are several libraries of genomes that can be used to classify the (unaligned) reads. It is up to you which one to use, but be sure that they fulfill the necessities stated by Kraken2 <a href="https://github.com/DerrickWood/kraken2/wiki/Manual#kraken-2-databases">Kraken2 manual</a>. For an overall overview we recommend to use the Plus-PFP library provided <a href="https://benlangmead.github.io/aws-indexes/k2">here</a>. If the classification is not of concern or only the viruses are of interest, we recommend to use a smaller one. This will accelerate the speed. It is also possible to have multiple Kraken2 databases installed, just be sure to provide the correct location to the settings file.</p>
-                    <p>First download and unpack the database in the <code>databases/kraken_db/</code>:</p>
-                    <pre><code>DIR=databases/kraken_db/
-                    mkdir -p $DIR
-
-                    # NOTE: This command will download a very large file, after unpacking this will
-                    # require about 100GB of disc space. If this is not feasible use another
-                    # database instead. For this please see link above or commented lines below.
-                    wget -qO- https://genome-idx.s3.amazonaws.com/kraken/k2_pluspfp_20210127.tar.gz | tar -C $DIR -xzv
-
-                    # Use the following two lines to use smaller 8GB version instead.
-                    # wget -qO- https://genome-idx.s3.amazonaws.com/kraken/k2_pluspfp_8gb_20210127.tar.gz | tar -C $DIR -xzv</code></pre>
-                    <p>Next go to the database/ directory and build the Kraken database. This might take a while (depends on the size of the downloaded database):</p>
-                    <pre><code>#current location: pigx_sarscov2_ww/
-                    cd databases/
-                    DBNAME=kraken_db
-                    kraken2-build --use-ftp --download-taxonomy --db $DBNAME # if this fails, you might want to try it without the --use-ftp flag
-                    kraken2-build --build --db $DBNAME</code></pre>
-                    <p>Kraken might tell you that it can’t find a library subdirectory. If that’s the case it should be fine though.<br />
-                    This folder should now contain at least these files: hash.k2d, opts.k2d and taxo.k2d.</p>
+                    <p>There are several libraries of genomes that can be used to classify the (unaligned) reads. It is up to you which one to use, but be sure that they fulfill the necessities stated by Kraken2 <a href="https://github.com/DerrickWood/kraken2/wiki/Manual#kraken-2-databases">Kraken2 manual</a>. For an overall overview we recommend to use the Plus-PFP library provided <a href="https://benlangmead.github.io/aws-indexes/k2">here</a>. If the classification is not of concern or only the viruses are of interest, we recommend using a smaller one. This will speed up the pipeline. It is also possible to have multiple Kraken2 databases installed, just be sure to provide the correct location to the settings file.</p>
+                    <p>After downloading and unpacking the database files, use <code>kraken2-build</code> to download the taxonomy data and build the database.</p>
                     <h3 id="krona-database">Krona database</h3>
-                    <p>Krona Tools needs two files, which have to be installed in the <code>databases/krona_db/</code>. Also this might take a while:</p>
-                    <pre><code>#current location: pigx_sarscov2_ww/databases/
-                    DBNAME=krona_db/
-                    mkdir -p $DBNAME
-                    KRONA=$(dirname $(which ktImportTaxonomy))/../share/krona-tools/ # this is just a workaround until tool paths are declared
-                    $KRONA/updateTaxonomy.sh $DBNAME # the scripts are stored a priori in that folder
-                    $KRONA/updateAccessions.sh $DBNAME</code></pre>
+                    <p>Krona Tools needs two files, which are fetched with the <code>updateTaxonomy.sh</code> and <code>updateAccessions.sh</code> scripts that come with Krona.</p>
                     <h3 id="vep-database">VEP database</h3>
                     <p>Just download the <code>SARS_CoV_2</code> database for VEP (variant effect predictor) and unpack it in the <code>databases/vep_db/</code> directory.</p>
-                    <pre><code>#current location: pigx_sarscov2_ww/databases/
-                    DBNAME=vep_db/
-                    mkdir -p $DBNAME
-                    wget -qO- ftp://ftp.ensemblgenomes.org/pub/viruses/variation/indexed_vep_cache/sars_cov_2_vep_101_ASM985889v3.tar.gz | tar -C $DBNAME -xzv</code></pre>
                     <h3 id="sigmut-database">Sigmut database</h3>
                     <p>Necessary files are provided in <code>databases/sigmut_db/</code> for the current main Variants of Concern. Users can add files with new variants if/when necessary.</p>
                     <h1 id="quick-start">Quick Start</h1>
@@ -194,7 +170,7 @@
                     </ul>
                     <p>Both files are described below.</p>
                     <p>In order to generate template settings and sample sheet files, type</p>
-                    <div class="sourceCode" id="cb12"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="ex">pigx-sars-cov2-ww</span> --init</span></code></pre></div>
+                    <div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="ex">pigx-sars-cov2-ww</span> --init</span></code></pre></div>
                     <p>in the shell, and a boilerplate <code>sample_sheet.csv</code> and <code>settings.yaml</code> will be written to your current directory. An example for both files is provided in the <code>tests/</code> directory.</p>
                     <h2 id="sample-sheet">Sample sheet</h2>
                     <p>The sample sheet is a tabular file (<code>csv</code> format) describing the experiment. The table has the following columns:</p>
@@ -278,9 +254,9 @@
                     <p>The workflow may be executed locally (on a single computer), or, if a Sun Grid Engine-compatible HPC environment is available, supports cluster execution. In order to enable cluster execution, specify <code>submit-to-cluster: yes</code> in the settings file.</p>
                     <h2 id="parallel-execution">Parallel execution</h2>
                     <p>If the workflow is run on a cluster, or a single computer with sufficient resources, some of the tasks may be computed in parallel. To specify the allowed level or parallelism, set the <code>jobs</code> setting under <code>execution</code> in the settings file. For instance,</p>
-                    <div class="sourceCode" id="cb13"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="fu">execution</span><span class="kw">:</span></span>
-                    <span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">submit-to-cluster</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
-                    <span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a><span class="at">  </span><span class="fu">jobs</span><span class="kw">:</span><span class="at"> </span><span class="dv">40</span></span></code></pre></div>
+                    <div class="sourceCode" id="cb10"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="fu">execution</span><span class="kw">:</span></span>
+                    <span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">submit-to-cluster</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
+                    <span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a><span class="at">  </span><span class="fu">jobs</span><span class="kw">:</span><span class="at"> </span><span class="dv">40</span></span></code></pre></div>
                     <p>in the settings file, will submit up to 40 simultaneous compute jobs on the cluster.</p>
                     <h1 id="troubleshooting">Troubleshooting</h1>
                     <p>If you have any questions please e-mail: <a href="mailto:pigx@googlegroups.com" class="email">pigx@googlegroups.com</a> or use the web form to ask questions <a href="https://groups.google.com/forum/#!forum/pigx/" class="uri">https://groups.google.com/forum/#!forum/pigx/</a>.</p>
