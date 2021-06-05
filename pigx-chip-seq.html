@@ -716,7 +716,7 @@
                     <span id="cb22-3"><a href="#cb22-3" aria-hidden="true"></a><span class="ex">If</span> you are sure that no other instances of snakemake are running on this directory, the remaining lock was likely caused by a kill signal or a power loss. It can be removed with the --unlock argument.</span></code></pre></div>
                     <p>What happend and what should I do?</p>
                     <p><strong>A:</strong> The pipeline crashed at some point, possible reasons are mentioned by the error. Do as the error message proposes and pass the <code>--unlock</code> argument once and then run the pipeline again without <code>--unlock</code>.</p>
-                    <p><strong>Q:</strong> command name? In my installation, the command appears to be pigx-chipseq and not pigx chipseq as the docs say.</p>
+                    <p><strong>Q:</strong> command name? In my installation, the command appears to be <code>pigx-chipseq</code> and not <code>pigx chipseq</code> as the docs say.</p>
                     <p><strong>A:</strong> The command that you have to use depends on the way the pipeline was installed, either as part of the pigx bundle (<code>guix install pigx</code>) or as a single pipeline (<code>guix install pigx-chipseq</code>)</p>
                     <p><strong>Q:</strong> The docs mention how to deal with technical replicates, but how should biological replicates be handled?</p>
                     <p><strong>A:</strong> Usually biological replicates are kept seperately, which means you should give them distinct names in the sample sheet to allow for distinct alignments, and then for peak-calling you pick up the sample names from the sample sheet to reenter them in the ‘analysis’ section of the settings file.</p>
