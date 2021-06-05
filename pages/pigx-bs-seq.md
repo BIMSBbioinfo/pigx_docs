@@ -162,25 +162,25 @@ configure the execution of PiGx-bsseq.
   - detailed settings which only need to be adjusted by experienced users
   
 #### Methylation-calling Settings
-    
-    - minimum number of read-hits required for calling methylation (10)
-    - minimum mapping quality required for calling methylation (10)
+  
+  - minimum number of read-hits required for calling methylation (10)
+  - minimum mapping quality required for calling methylation (10)
 
 #### export-bigwig:
-    - decide for each cytosine methylation context wether merge strands and wether to export to bigwig
+  - decide for each cytosine methylation context wether merge strands and wether to export to bigwig
     
 #### differential-methylation:
-    - number of cpu threads for differential methylation (1)
-    - significance threshold for detection of DMC
-    - effect size for detection of DMC
-    - annotation files are optional for the report, but 
-    - `CpGfile`:  file (with path) specifying CpG annotations for differential methylation (genome/cpgIslandExt.hg19.bed.gz).
-    - `refGenfile`: file (with path) specifying reference genes for differential methylation (genome/refGene.hg19.bed.gz).
-    - `webfetch`: Boolean instruction as to whether PiGx should attempt to fetch the above files from the internet if they are unavailable locally (no).
+  - number of cpu threads for differential methylation (1)
+  - significance threshold for detection of DMC
+  - effect size for detection of DMC
+  - annotation files are optional for the report, but 
+  - `CpGfile`:  file (with path) specifying CpG annotations for differential methylation (genome/cpgIslandExt.hg19.bed.gz).
+  - `refGenfile`: file (with path) specifying reference genes for differential methylation (genome/refGene.hg19.bed.gz).
+  - `webfetch`: Boolean instruction as to whether PiGx should attempt to fetch the above files from the internet if they are unavailable locally (no).
 
 
 ### Differential Methylation (DM) analyis
-	- specify which of the treatment groups defined in the sample sheet should be compare against each other
+  - specify which of the treatment groups defined in the sample sheet should be compare against each other
 
 
 The section described here comprise most of the settings that a 
