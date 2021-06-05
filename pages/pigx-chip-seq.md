@@ -52,55 +52,9 @@ script about them with variables.  Run `./configure --help` for a list
 of all variables and options.
 
 You can prepare a suitable environment with Conda or with [GNU
-Guix](https://gnu.org/s/guix).  If you do not use one of these package
-managers, you will need to ensure that the following software is
-installed:
-
-<details>
-<summary>Software dependencies</summary>
-
-- R
-    - argparser
-    - biocparallel
-    - biostrings
-    - chipseq
-    - data.table
-    - dyplr
-    - genomation
-    - genomicalignments
-    - genomicranges
-    - rsamtools
-    - rtracklayer
-    - s4vectors
-    - stringr
-    - jsonlite
-    - heatmaply
-    - htmlwidgets
-    - ggplot2
-    - ggrepel
-    - plotly
-    - rmarkdown
-- python
-    - snakemake
-    - wrapper
-    - pyyaml
-    - pytest
-    - xlrd
-    - magic
-- pandoc
-- fastqc
-- multiqc
-- trim-galore
-- bowtie
-- macs2
-- idr
-- samtools
-- bedtools
-- bedToBigBed
-- bamToBed
-
-
-</details>
+Guix](https://gnu.org/s/guix).  Inspect the
+[configure.ac](https://github.com/BIMSBbioinfo/pigx_chipseq/blob/master/configure.ac)
+file for an up-to-date list of required packages.
 
 ### Via Guix
 
