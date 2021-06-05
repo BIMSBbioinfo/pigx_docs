@@ -153,10 +153,10 @@ in the shell, and a boilerplate `sample_sheet.csv` and `settings.yaml` will be w
 
 The sample sheet is a tabular file (`csv` format) describing the experiment. The table has the following columns:
 
-| SampleName | Read               | Read2              | date               | location_name      | coordinates_lat    | coordinates_long   |
-| ------     | -------            | --------           | --------           | --------           |  --------          |  --------          |
-| Test0      | Test0_R1.fastq     | Test0_R2.fastq     | 2021-01-01T08:00:00| Berlin             | 52.3646054650197   | 13.5098643274129   |
-| Test2      | Test2_R1.fastq     | Test2_R2.fastq     | 2021-01-03T08:00:00| Munich             | 48.2084486780314   | 11.6282300407931   |
+| SampleName | Read           | Read2          | date                | location_name | coordinates_lat | coordinates_long |
+| ------     | -------        | --------       | --------            | --------      | --------        | --------         |
+| Test0      | Test0_R1.fastq | Test0_R2.fastq | 2021-01-01T08:00:00 | Berlin        | 52.364          | 13.509           |
+| Test2      | Test2_R1.fastq | Test2_R2.fastq | 2021-01-03T08:00:00 | Munich        | 48.208          | 11.628           |
 
 - _SampleName_ is the name for the sample
 - _Read_ & _Read2_ are the fastq file names of paired end reads
