@@ -545,7 +545,7 @@ is not supported
 Then you have to install `glibc-locales`
 
 ```
-guix package -i glibc-locales
+guix install glibc-locales
 ```
 and export this global variable to use these guix locales:
 
