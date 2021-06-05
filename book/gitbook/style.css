@@ -900,3 +900,8 @@ h1:first-of-type:before {
 }
 
 @media all and (max-width: 760px) { #content h1:before { display: none; } };
+
+
+code span.co { color: #333; }
+code span.fu { color: #0000ff; }
+code span.kw { color: black; }
