@@ -97,9 +97,9 @@
               <div id="book-search-results">
                 <div class="search-noresults">
                   <section class="normal markdown-section">
-                    <h1 id="pigx-chip-seq">PiGX ChIP-seq</h1>
+                    <h1 id="pigx-chip-seq">PiGx ChIP-seq</h1>
                     <h1 id="introduction">Introduction</h1>
-                    <p>PiGX ChIPseq is an analysis pipeline for preprocessing, peak calling and reporting for ChIP sequencing experiments. It is easy to use and produces high quality reports. The inputs are <code>fastq</code> files containing reads from the sequencing experiment, and a configuration file which describes the experiment. In addition to quality control of the experiment, the pipeline enables to set up multiple peak calling analysis and allows the generation of a UCSC track hub in an easily configurable manner.</p>
+                    <p>PiGx ChIPseq is an analysis pipeline for preprocessing, peak calling and reporting for ChIP sequencing experiments. It is easy to use and produces high quality reports. The inputs are <code>fastq</code> files containing reads from the sequencing experiment, and a configuration file which describes the experiment. In addition to quality control of the experiment, the pipeline enables to set up multiple peak calling analysis and allows the generation of a UCSC track hub in an easily configurable manner.</p>
                     <h2 id="workflow">Workflow</h2>
                     <p>PiGx ChIPseq implements best practices for preprocessing and analysis of ChIPseq data. Figure 1 provides an overview of the different steps of the pipeline, as well as the outputs.</p>
                     <p>First, raw reads are trimmed using <a href="https://www.bioinformatics.babraham.ac.uk/projects/trim_galore/">TrimGalore!</a> to ensure a minimum read quality, and removal of adapter sequences. Next, reads are aligned to a reference genome using <a href="http://bowtie-bio.sourceforge.net/bowtie2/">Bowtie2</a>, and peaks are called for any combination of samples using <a href="https://github.com/taoliu/MACS">MACS2</a>. The reproducibility of peaks among experiments is controlled using <a href="https://github.com/nboley/idr">IDR</a>. Coverage <code>bigWig</code> files are calculated for the aligned reads using <a href="https://bioconductor.org/packages/release/bioc/html/rtracklayer.html">rtracklayer</a>, and peak files are converted to <code>bigBed</code> format files using <code>bedToBigBed</code>, to be integrated together into a UCSC track hub to be viewed in the <a href="https://genome.ucsc.edu/">UCSC Genome Browser</a>. Finally, quality metrics are calculated for the ChIP experiments, such as inter strand cross correlation and GC content, and signal profiles are calculated for genomic features using <a href="http://bioinformatics.mdc-berlin.de/genomation/">genomation</a>. Together with the frequency of reads in peaks and the distribution of peaks in genomic features these metrics are used to compile a custom ChIP quality control report.</p>
@@ -703,7 +703,7 @@
 
                     #######################################################</code></pre>
                     <p>Then you have to install <code>glibc-locales</code></p>
-                    <pre><code>guix package -i glibc-locales</code></pre>
+                    <pre><code>guix install glibc-locales</code></pre>
                     <p>and export this global variable to use these guix locales:</p>
                     <pre><code>export GUIX_LOCPATH=$HOME/.guix-profile/lib/locale</code></pre>
                     <p>Or you might consider adding this directly to your <code>~/.bashrc</code> or <code>~/.bash_profile</code>.</p>
