@@ -573,7 +573,7 @@ What happend and what should I do?
 __A:__ The pipeline crashed at some point, possible reasons are mentioned by the error. Do as the error message proposes and pass the `--unlock` argument once and then run the pipeline again without `--unlock`.  
 
 __Q:__ command name?
-In my installation, the command appears to be pigx-chipseq and not pigx chipseq as the docs say.
+In my installation, the command appears to be `pigx-chipseq` and not `pigx chipseq` as the docs say.
 
 __A:__ The command that you have to use depends on the way the pipeline was installed, either as part of the pigx bundle (`guix install pigx`) or as a single pipeline (`guix install pigx-chipseq`)
 
