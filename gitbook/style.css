@@ -879,3 +879,29 @@ body{text-rendering:optimizeLegibility;font-smoothing:antialiased;font-family:"H
 #book-search-results.no-results .search-results .no-results {
   display: block;
 }
+
+h1 { counter-increment: heading1; }
+h1:before {
+    color: #93a1a1;
+    content: counter(heading1);
+    position: absolute;
+    margin-left: -2em;
+    display: block;
+    text-align: right;
+    padding-left: .5em;
+}
+
+/* do not count the title */
+h1:first-of-type {
+    counter-set: heading1;
+}
+h1:first-of-type:before {
+    content: "";
+}
+
+@media all and (max-width: 760px) { #content h1:before { display: none; } };
+
+
+code span.co { color: #333; }
+code span.fu { color: #0000ff; }
+code span.kw { color: black; }
