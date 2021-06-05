@@ -245,7 +245,7 @@ of the pipeline in a single HTML report, which may be found under the
 ## Taxonomic classification
 
 This report provides an overview of the species found in the provided
-wastewater samples apart from SARS-Cov-2.  The SARS-CoV-2 enriched
+wastewater samples apart from SARS-CoV-2.  The SARS-CoV-2 enriched
 wastewater samples are aligned to the virus genome. It provides
 insight about possible biases and contamination of the samples. In
 case of abundance of species very similar to SARS-CoV-2 only the
