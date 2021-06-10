@@ -21,10 +21,12 @@ To investigate the abundance of other existing species in the wastewater samples
 * VEP reports per sample as *TXT* / *HTML*: report files show the [VEP output](https://www.ensembl.org/info/docs/tools/vep/vep_formats.html#output)
   including the uploading variants, consequenting amino acid changes and consequences for the corresponding protein
 * Kraken2 files per sample *(txt)*: provides an overview of all found species in the unaligned reads together with the NCBI taxonomy ID
-* log files for all major analysis steps performed by the pipeline
+
 
 
 # Installation
+
+## Through Guix
 
 Pre-built binaries for PiGx are available through [GNU Guix](https://gnu.org/s/guix), the functional package manager for reproducible, user-controlled software management. 
 You can install the PiGx SARS-CoV-2 pipeline with
@@ -32,6 +34,8 @@ You can install the PiGx SARS-CoV-2 pipeline with
 ```sh
 guix install pigx-sars-cov2-ww
 ```
+
+## From Source
 
 If you want to install PiGx SARS-CoV-2 from source, please clone this repository and change directory accordingly:
 
@@ -46,7 +50,7 @@ To fetch code that is common to all PiGx pipelines run this:
 git submodule update --init
 ```
 
-Before setting everything up, though, make sure [all dependencies](https://github.com/BIMSBbioinfo/pigx_sarscov2_ww/blob/main/manifest.scm) are met by either installing them manually, or by entering the provided reproducible Guix environment. If you are using Guix we definitely recommend the latter. This command spawns a sub-shell in which all dependencies are available at exactly the same versions that we used to develop the pipeline:
+Before setting everything up, though, make sure [all dependencies](https://github.com/BIMSBbioinfo/pigx_sarscov2_ww/blob/main/manifest.scm) are met by either installing them manually, or by entering the provided reproducible Guix environment. If you are using Guix we definitely recommend the latter. This command spawns a sub-shell in which all dependencies are available at exactly the same versions that we used to develop the pipeline. Be aware that Git for example won't work in this environment:
 
 ```sh
 USE_GUIX_INFERIOR=t guix environment --pure -m manifest.scm --preserve=GUIX_LOCPATH
@@ -115,7 +119,7 @@ Necessary files are provided in `databases/sigmut_db/` for the current main Vari
 
 # Quick Start
 
-To check whether the pipeline and the databases have been properly set up, run the pipeline on a minimal test dataset.
+To check whether the pipeline and the databases have been properly set up, run the pipeline on a minimal test dataset. 
 
 1. Download the test data
 
@@ -127,7 +131,7 @@ To check whether the pipeline and the databases have been properly set up, run t
 
 3. Run the pipeline
 
-    `pigx-sars-cov2-ww -s .tests/settings.yaml .tests/sample_sheet.csv`
+    `pigx-sars-cov2-ww -s ./tests/settings.yaml ./tests/sample_sheet.csv`
 
 Inside `tests/` a new directory `output` is created, which includes specific directories containing output data for the respective step of the pipeline.    The `tests/output/reports/index.html` gives the overview over all merged reports for the test data. 
 
@@ -215,7 +219,7 @@ in the settings file, will submit up to 40 simultaneous compute jobs on the clus
 
 # Output description
 
-PiGx SARS-CoV-2 wastewater creates an output directory, as specified in the settings file, that contains all of the following outputs.
+PiGx SARS-CoV-2 wastewater creates an output directory (for details see [here](#output-folder-structure)), as specified in the settings file, that contains all of the following outputs and more.
 
 ## Time series reports
 
@@ -267,6 +271,21 @@ characterising variants of concern (VOC) of SARS-CoV-2 provided by
 [outbreak.info](https://outbreak.info/situation-reports) and
 [CoVariant.org](https://covariants.org/variants/S.501Y.V1).
 
+## Output directory Structure
+
+The pipeline will create a specific directory structure in the location provided in the [settings](##settings-file). The respective contents are explained below:
+
+
+| directory    | description                                                                                                                  |
+|--------------|------------------------------------------------------------------------------------------------------------------------------|
+|   coverage   | CSV files of amplicons covered and read coverage                                                                             |
+|    kraken    | taxonomic classification files with NCBI taxonomy ID for unaligned reads generated with Kraken2                              |
+|    logs      | detailed output from execution of each step of the pipeline                                                                  |
+| mapped_reads | BAM and SAM files for aligned and unaligned reads against SARS-CoV-2                                                         |
+|  pigx_work   | PiGx related scripts                                                                                                         |
+|   report     | HTML files for reports descibed [here](#output-description)                                                                  | 
+| trimmed_reads| fastq files for trimmed reads                                                                                                |
+|   variants   | detected single nucleotide variants (SNVs) from the aligned reads in VCF/ CSV files and VEP output files as plain text/ HTML |
 
 # Troubleshooting
 
