@@ -26,12 +26,16 @@ To investigate the abundance of other existing species in the wastewater samples
 
 # Installation
 
+## Through Guix
+
 Pre-built binaries for PiGx are available through [GNU Guix](https://gnu.org/s/guix), the functional package manager for reproducible, user-controlled software management. 
 You can install the PiGx SARS-CoV-2 pipeline with
 
 ```sh
 guix install pigx-sars-cov2-ww
 ```
+
+## From Source
 
 If you want to install PiGx SARS-CoV-2 from source, please clone this repository and change directory accordingly:
 
@@ -46,7 +50,7 @@ To fetch code that is common to all PiGx pipelines run this:
 git submodule update --init
 ```
 
-Before setting everything up, though, make sure [all dependencies](https://github.com/BIMSBbioinfo/pigx_sarscov2_ww/blob/main/manifest.scm) are met by either installing them manually, or by entering the provided reproducible Guix environment. If you are using Guix we definitely recommend the latter. This command spawns a sub-shell in which all dependencies are available at exactly the same versions that we used to develop the pipeline:
+Before setting everything up, though, make sure [all dependencies](https://github.com/BIMSBbioinfo/pigx_sarscov2_ww/blob/main/manifest.scm) are met by either installing them manually, or by entering the provided reproducible Guix environment. If you are using Guix we definitely recommend the latter. This command spawns a sub-shell in which all dependencies are available at exactly the same versions that we used to develop the pipeline. Be aware that Git for example won't work in this environment:
 
 ```sh
 USE_GUIX_INFERIOR=t guix environment --pure -m manifest.scm --preserve=GUIX_LOCPATH
@@ -115,7 +119,7 @@ Necessary files are provided in `databases/sigmut_db/` for the current main Vari
 
 # Quick Start
 
-To check whether the pipeline and the databases have been properly set up, run the pipeline on a minimal test dataset.
+To check whether the pipeline and the databases have been properly set up, run the pipeline on a minimal test dataset. 
 
 1. Download the test data
 
