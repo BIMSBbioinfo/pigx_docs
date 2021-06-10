@@ -21,7 +21,7 @@ To investigate the abundance of other existing species in the wastewater samples
 * VEP reports per sample as *TXT* / *HTML*: report files show the [VEP output](https://www.ensembl.org/info/docs/tools/vep/vep_formats.html#output)
   including the uploading variants, consequenting amino acid changes and consequences for the corresponding protein
 * Kraken2 files per sample *(txt)*: provides an overview of all found species in the unaligned reads together with the NCBI taxonomy ID
-* log files for all major analysis steps performed by the pipeline
+
 
 
 # Installation
@@ -215,7 +215,7 @@ in the settings file, will submit up to 40 simultaneous compute jobs on the clus
 
 # Output description
 
-PiGx SARS-CoV-2 wastewater creates an output directory, as specified in the settings file, that contains all of the following outputs.
+PiGx SARS-CoV-2 wastewater creates an output directory (for details see [here](#output-folder-structure)), as specified in the settings file, that contains all of the following outputs and more.
 
 ## Time series reports
 
@@ -229,7 +229,7 @@ samples across given time points and locations.  The abundance values
 for the variants are derived by deconvolution.  The frequencies of the
 mutations are the output of [LoFreq](https://csb5.github.io/lofreq/).
 
-## Quality control
+### Quality control
 
 A quality control report is generated for each sample.  It includes
 reports on amplicon coverage and read coverage, as well as general
@@ -242,7 +242,7 @@ particularly useful, collating quality control metrics from many steps
 of the pipeline in a single HTML report, which may be found under the
 `multiqc` directory in the PiGx output folder.
 
-## Taxonomic classification
+### Taxonomic classification
 
 This report provides an overview of the species found in the provided
 wastewater samples apart from SARS-CoV-2.  The SARS-CoV-2 enriched
@@ -254,7 +254,7 @@ identification/alignment of SARS-CoV-2 could be biased or
 impossible. In case of a high percentage of read matching SARS-CoV-2 a
 refining of trimming parameters should be considered.
 
-## Variant report
+### Variant report
 
 This report shows the variant analysis of SARS-CoV-2 from wastewater
 samples. Mutations are identified by single-nucleotide-variant (SNV)
@@ -267,6 +267,31 @@ characterising variants of concern (VOC) of SARS-CoV-2 provided by
 [outbreak.info](https://outbreak.info/situation-reports) and
 [CoVariant.org](https://covariants.org/variants/S.501Y.V1).
 
+## Output Folder Structure
+
+The pipeline will create a specific directory structure in the, the respective contents are explained below:
+
+```
+|-- coverage
+|-- kraken
+|-- logs
+|-- mapped_reads
+|-- pigx_work
+|-- report
+|-- trimmed_reads
+|-- variants
+```
+
+| Folder    | description |
+|---------|-------------|
+|   coverage     | CSV files of amplicons covered and read coverage |
+|    kraken    | taxonomic classification files with NCBI taxonomy ID for unaligned reads generated with Kraken2 |
+|    logs    | detailed output from execution of each step of the pipeline |
+|    mapped_reads    | BAM and SAM files for aligned and unaligned reads against SARS-CoV-2 |
+|     pigx_work   | pigx related scripts  |
+|     report   | html files for reports descibed [here](#output-description)|
+|   trimmed_reads     | fastq files for trimmed reads |
+|   variants     | detected single nucleotide variants (SNVs) from the aligned reads in VCF/ CSV files and VEP output files as TXT/HTML |
 
 # Troubleshooting
 
