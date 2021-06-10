@@ -233,7 +233,7 @@ samples across given time points and locations.  The abundance values
 for the variants are derived by deconvolution.  The frequencies of the
 mutations are the output of [LoFreq](https://csb5.github.io/lofreq/).
 
-### Quality control
+## Quality control
 
 A quality control report is generated for each sample.  It includes
 reports on amplicon coverage and read coverage, as well as general
@@ -246,7 +246,7 @@ particularly useful, collating quality control metrics from many steps
 of the pipeline in a single HTML report, which may be found under the
 `multiqc` directory in the PiGx output folder.
 
-### Taxonomic classification
+## Taxonomic classification
 
 This report provides an overview of the species found in the provided
 wastewater samples apart from SARS-CoV-2.  The SARS-CoV-2 enriched
@@ -258,7 +258,7 @@ identification/alignment of SARS-CoV-2 could be biased or
 impossible. In case of a high percentage of read matching SARS-CoV-2 a
 refining of trimming parameters should be considered.
 
-### Variant report
+## Variant report
 
 This report shows the variant analysis of SARS-CoV-2 from wastewater
 samples. Mutations are identified by single-nucleotide-variant (SNV)
@@ -271,31 +271,21 @@ characterising variants of concern (VOC) of SARS-CoV-2 provided by
 [outbreak.info](https://outbreak.info/situation-reports) and
 [CoVariant.org](https://covariants.org/variants/S.501Y.V1).
 
-## Output Folder Structure
+## Output directory Structure
 
-The pipeline will create a specific directory structure in the, the respective contents are explained below:
+The pipeline will create a specific directory structure in the location provided in the [settings](##settings-file). The respective contents are explained below:
 
-```
-|-- coverage
-|-- kraken
-|-- logs
-|-- mapped_reads
-|-- pigx_work
-|-- report
-|-- trimmed_reads
-|-- variants
-```
 
-| Folder    | description |
-|---------|-------------|
-|   coverage     | CSV files of amplicons covered and read coverage |
-|    kraken    | taxonomic classification files with NCBI taxonomy ID for unaligned reads generated with Kraken2 |
-|    logs    | detailed output from execution of each step of the pipeline |
-|    mapped_reads    | BAM and SAM files for aligned and unaligned reads against SARS-CoV-2 |
-|     pigx_work   | pigx related scripts  |
-|     report   | html files for reports descibed [here](#output-description)|
-|   trimmed_reads     | fastq files for trimmed reads |
-|   variants     | detected single nucleotide variants (SNVs) from the aligned reads in VCF/ CSV files and VEP output files as TXT/HTML |
+| directory    | description                                                                                                                  |
+|--------------|------------------------------------------------------------------------------------------------------------------------------|
+|   coverage   | CSV files of amplicons covered and read coverage                                                                             |
+|    kraken    | taxonomic classification files with NCBI taxonomy ID for unaligned reads generated with Kraken2                              |
+|    logs      | detailed output from execution of each step of the pipeline                                                                  |
+| mapped_reads | BAM and SAM files for aligned and unaligned reads against SARS-CoV-2                                                         |
+|  pigx_work   | PiGx related scripts                                                                                                         |
+|   report     | HTML files for reports descibed [here](#output-description)                                                                  | 
+| trimmed_reads| fastq files for trimmed reads                                                                                                |
+|   variants   | detected single nucleotide variants (SNVs) from the aligned reads in VCF/ CSV files and VEP output files as plain text/ HTML |
 
 # Troubleshooting
 
