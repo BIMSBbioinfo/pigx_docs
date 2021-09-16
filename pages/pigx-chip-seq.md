@@ -27,42 +27,27 @@ _Figure 1: An overview of the PiGx ChIPseq workflow_
 
 # Installation
 
-You can install this pipeline with all its dependencies using GNU Guix:
 
-    guix install pigx-chipseq
+Pre-built binaries for PiGx are available through [GNU Guix](https://guix.gnu.org/), the functional package manager for reproducible, user-controlled software management. Install the complete pipeline bundle with the following command:
 
-You can also install it from source manually.  You can find the
-[latest
-release](https://github.com/BIMSBbioinfo/pigx_chipseq/releases/latest)
-here.  PiGx uses the GNU build system.  Please make sure that all
-required dependencies are installed and then follow these steps after
-unpacking the latest release tarball:
+```sh
+guix install pigx
+```
+
+You can also install just the ChIPseq pipeline with
+
+```sh
+guix install pigx-chipseq
+```
+
+You can also install it from source manually.  PiGx uses the GNU build system.  
+Please make sure that all [required dependencies](#manage-dependencies-for-manual-installation) are installed and then follow 
+these steps after unpacking the 
+[latest release tarball](https://github.com/BIMSBbioinfo/pigx_chipseq/releases/latest):
 
 ```sh
 ./configure --prefix=/some/where
 make install
-```
-
-## Dependencies
-
-By default the `configure` script expects tools to be in a directory
-listed in the `PATH` environment variable.  If the tools are installed
-in a location that is not on the `PATH` you can tell the `configure`
-script about them with variables.  Run `./configure --help` for a list
-of all variables and options.
-
-You can prepare a suitable environment with Conda or with [GNU
-Guix](https://gnu.org/s/guix).  Inspect the
-[configure.ac](https://github.com/BIMSBbioinfo/pigx_chipseq/blob/master/configure.ac)
-file for an up-to-date list of required packages.
-
-### Via Guix
-
-Assuming you have Guix installed, the following command spawns a
-sub-shell in which all dependencies are available:
-
-```sh
-guix environment -l guix.scm
 ```
 
 # Quick Start
@@ -513,6 +498,25 @@ Or you might consider adding this directly to your `~/.bashrc` or `~/.bash_profi
 echo -e "# use guix locales\nexport GUIX_LOCPATH="'$HOME'"/.guix-profile/lib/locale"  >>  ~/.bashrc
 ```
 
+## Manage dependencies for manual installation
+
+By default the `configure` script expects tools to be in a directory
+listed in the `PATH` environment variable.  If the tools are installed
+in a location that is not on the `PATH` you can tell the `configure`
+script about them with variables.  Run `./configure --help` for a list
+of all variables and options.
+
+You can prepare a suitable environment with Conda or with [GNU
+Guix](https://gnu.org/s/guix).  Inspect the
+[configure.ac](https://github.com/BIMSBbioinfo/pigx_chipseq/blob/master/configure.ac)
+file for an up-to-date list of required packages.
+
+Assuming you have Guix installed, the following command spawns a
+sub-shell in which all dependencies are available:
+
+```sh
+guix environment -l guix.scm
+```
 
 # FAQ
 
