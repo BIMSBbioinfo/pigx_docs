@@ -136,10 +136,13 @@ Inside `tests/` a new directory `output` is created, which includes specific dir
 
 In order to run the pipeline, you need to supply
 
-- a sample sheet
-- a settings file.
+- a sample sheet (CSV format): containing information about sampling date and location  
+- a settings file (YAML format) for specifying the experimental setup and optional custom parameter adjustments  
+- a mutation sheet containing the lineages of interest and their signature mutations in nucleotide notation (CSV format)  
+- a BED file containing the genomic coordinates of the mutation sites (see below for details)  
+- the reference genome of the target species in fasta format (so far the pipeline is only optimized for SARS-CoV-2, others might work too but not yet tested)  
+- a BED file containing the PCR primer locations (e.g the primers suggested from ARTIC protocols)
 
-Both files are described below.
 
 In order to generate template settings and sample sheet files, type
 
@@ -181,6 +184,22 @@ The settings file contains parameters (in YAML format) to configure the executio
 - _krona-db-dir_, the location of the krona database (must be prepared by the user)
 - _sigmut-db-dir_, the location of the signature mutations database (provided at databases/sigmut_db/)
 - _vep-db-dir_, the location of `sars_cov_2` database for VEP (must be prepared by the user)
+
+## Mutation sheet 
+The mutation sheet should contain one column of siganture mutations in nucleotide-NT (not protein/aminoacid mutation) format per lineage that shall be tracked and analysed by deconvolution. There is no upper or lower limit for the number of signature mutations per lineage. However, please note that the deconvolution results are more robust and precise with a higher number of mutations. (Tested with 10-30 mutations per lineage).
+
+## Mutation BED file
+The BED file for testing if the mutation sites are covered should have 4 columns:  
+1. chromosome name  
+2. start - 5bp **before** the mutation location  
+3. end - 5bp **after** the mutation location  
+4. name with the original location of the mutation in the format of: name_MutationLocation_name, e.g: "nCoV-2019_210_SigmutLocation" 
+A row in the BED file should look like:  
+`NC_045512.2	205	215	nCoV-2019_210_SigmutLocation`  
+Please see the example file within the test directory for a detailed example.
+
+## Primer BED file  
+The primer file is needed for trimming with fastp. It should have 6 columns following BED files standards. An example file can be found in the test directory. 
 
 **Trimming**:
 
