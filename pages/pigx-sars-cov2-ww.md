@@ -1,13 +1,20 @@
-# PiGx SARS-CoV-2 wastewater
+# PiGx SARS-CoV-2
 
 # Introduction
 
-PiGx SARS-CoV-2 is a pipeline for analysing data from sequenced wastewater samples and identifying given variants-of-concern of SARS-CoV-2. Currently wastewater samples are used, which are enriched for SARS-CoV-2. The pipeline can be used for continuous sampling. The output of the PiGx SARS-CoV-2 pipeline is summarized in a report which provides an intuitive visual overview about the development of variant abundance over time and location. Additionally there will be more detailed reports per sample, which cover the quality control of the samples, the detected variants and a taxonomic classification of all unaligned reads. This version of the pipeline was designed to work with target sequencing (PCR-based) and tested with data generated using the [ARTIC nCoV-2019 primers](https://github.com/artic-network/artic-ncov2019/tree/master/primer_schemes/nCoV-2019/V3).
+PiGx SARS-CoV-2 is a pipeline for analysing data from sequenced wastewater samples and identifying a provided set of lineages of SARS-CoV-2 characterized by signature mutations. Currently wastewater samples are used, which are enriched for SARS-CoV-2. The pipeline can be used for continuous sampling. The output of the PiGx SARS-CoV-2 pipeline is summarized in a report which provides an intuitive visual overview about the development of lineage abundance and single significantly increasing mutations over time and location. Additionally there will be more detailed reports per sample, which cover the quality control of the samples, the detected variants and a taxonomic classification of all unaligned reads. This version of the pipeline was designed to work with paired-end amplicon sequencing data e.g. following the ARtIc protocols [ARTIC nCoV-2019 primers](https://github.com/artic-network/artic-ncov2019/tree/master/primer_schemes/nCoV-2019/V3).
 
 ## Workflow
 
-First the raw reads are trimmed by using [Prinseq](http://prinseq.sourceforge.net/) to improve alignment rates and mutation calling. Next, the trimmed reads are aligned to the reference genome of SARS-CoV-2 using [BWA](https://github.com/lh3/bwa), and the results are *SAM*/*BAM* files of **aligned** and **unaligned reads**. Following the alignment a quality check on raw and processed reads is performed by using [MultiQC](https://multiqc.info/). Calling the variants and inferring SNVs (single nucleotide polymorphisms) on the **aligned reads** is done with [LoFreq](https://csb5.github.io/lofreq/). Mutations are annotated with [VEP](https://covid-19.ensembl.org/index.html). Estimation of Variants of Concern (VOC) frequencies are done by deconvolution. 
-To investigate the abundance of other existing species in the wastewater samples the **unaligned reads** will be taxonomicly classified with [Kraken2](https://github.com/DerrickWood/kraken2). The Kraken2 requires a database of the genomes against the reads are getting aligned, therefore keep in mind that you can only find those species which are included in the chosen database. For documentation how to set this up, see: [Prepare databases](#prepare-databases). For a better and interactive visualization of all species present in the wastewater [Krona](https://github.com/marbl/Krona/wiki) is used. Also here a small step of setting up a database is needed before running the pipeline, see: [Prepare databases](#prepare-databases). 
+In the first step the pipeline takes the raw reads and the additional information about used primers and adapters to perform extensive quality control. Primer trimming is done with [iVAR](https://github.com/andersen-lab/ivar) and [fastp](https://github.com/OpenGene/fastp) is used for adapter trimming and filtering. Next, the trimmed reads are aligned to the reference genome of SARS-CoV-2 using [BWA](https://github.com/lh3/bwa), and the results are *SAM*/*BAM* files of **aligned** and **unaligned reads**. Following the alignment a quality check on raw and processed reads is performed by using [MultiQC](https://multiqc.info/). Furthermore samples are checked for genome coverage and how many of the provided signature mutation sites are covered. Based on this every samples gets a quality score. Samples with genome coverage below 90% are reported as discarded samples, as they are not included in time series analysises and summaries.
+
+Calling the variants and inferring SNVs (single nucleotide polymorphisms) on the **aligned reads** is done with [LoFreq](https://csb5.github.io/lofreq/). Mutations are annotated with [VEP](https://covid-19.ensembl.org/index.html). Estimation of lineage frequencies is done by deconvolution (see Methods in the realted publication for details). 
+To investigate the abundance of RNA matching other existing species in the wastewater samples the **unaligned reads** will be taxonomicly classified with [Kraken2](https://github.com/DerrickWood/kraken2). Kraken2 requires a database downloaded locally of the genomes against the reads are getting aligned. For documentation how to set this up, see: [Prepare databases](#prepare-databases). For a better and interactive visualization of all species present in the wastewater [Krona](https://github.com/marbl/Krona/wiki) is used. Also here a small step of setting up a database is needed before running the pipeline, see: [Prepare databases](#prepare-databases).
+Interactive reports are generated using [R-markdown](https://rmarkdown.rstudio.com/) and [plotly for R](https://plotly.com/r/) for visualizations. 
+
+### Pooling of samples for time series analysis and plots
+
+For summarizing across daytime and location, the lineage frequencies are pooled by calculating the weighted average using the total number of reads of each sample as weights. The mutation frequencies are pooled by using the simple mean setting removal of missing values to FALSE.
 
 ## Output
 
@@ -66,9 +73,10 @@ of the environment please address them by their absolute file name.
 Inside the environment you can then perform the usual build steps:
 
 ```sh
-./bootstrap.sh
-./configure --prefix=/some/where
-make install
+./bootstrap.sh # to generate the "configure" script
+./configure
+make
+make check
 ```
 
 At this point you are able to run PiGx SARS-CoV-2. To see all available options type `--help`.
