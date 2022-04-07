@@ -37,14 +37,14 @@ Pre-built binaries for PiGx are available through [GNU Guix](https://gnu.org/s/g
 You can install the PiGx SARS-CoV-2 pipeline with
 
 ```sh
-guix install pigx-sars-cov2-ww
+guix install pigx-sars-cov-2
 ```
 
 If you want to install PiGx SARS-CoV-2 from source, please clone this repository and change directory accordingly:
 
 ```sh
-git clone https://github.com/BIMSBbioinfo/pigx_sarscov2_ww.git
-cd pigx_sarscov2_ww
+git clone https://github.com/BIMSBbioinfo/pigx_sars-cov-2.git
+cd pigx_sars-cov-2
 ```
 
 To fetch code that is common to all PiGx pipelines run this:
@@ -53,7 +53,7 @@ To fetch code that is common to all PiGx pipelines run this:
 git submodule update --init
 ```
 
-Before setting everything up, though, make sure [all dependencies](https://github.com/BIMSBbioinfo/pigx_sarscov2_ww/blob/main/manifest.scm) are met by either installing them manually, or by entering the provided reproducible Guix environment. If you are using Guix we definitely recommend the latter. This command spawns a sub-shell in which all dependencies are available at exactly the same versions that we used to develop the pipeline:
+Before setting everything up, though, make sure [all dependencies](https://github.com/BIMSBbioinfo/pigx_sars-cov-2/blob/main/manifest.scm) are met by either installing them manually, or by entering the provided reproducible Guix environment. If you are using Guix we definitely recommend the latter. This command spawns a sub-shell in which all dependencies are available at exactly the same versions that we used to develop the pipeline:
 
 ```sh
 USE_GUIX_INFERIOR=t guix environment --pure -m manifest.scm --preserve=GUIX_LOCPATH
@@ -82,7 +82,7 @@ make check
 At this point you are able to run PiGx SARS-CoV-2. To see all available options type `--help`.
 
 ```sh
-pigx-sars-cov2-ww --help
+pigx-sars-cov-2 --help
 ```
 
 ## Prepare databases
@@ -94,8 +94,8 @@ and configuration of all default databases.  After installing the
 pipeline you can run the script like this:
 
 ```sh
-prefix="$(dirname pigx-sars-cov2-ww)/../"
-$prefix/libexec/pigx_sars-cov2-ww/scripts/download_databases.sh
+prefix="$(dirname pigx-sars-cov-2)/../"
+$prefix/libexec/pigx_sars-cov-2/scripts/download_databases.sh
 ```
 
 
@@ -127,7 +127,7 @@ To check whether the pipeline and the databases have been properly set up, run t
 
 1. Download the test data
 
-    `git clone https://github.com/BIMSBbioinfo/pigx_sarscov2_ww sarscov2-test`
+    `git clone https://github.com/BIMSBbioinfo/pigx_sars-cov-2 sarscov2-test`
 
 2. Enter the directory
 
@@ -135,7 +135,7 @@ To check whether the pipeline and the databases have been properly set up, run t
 
 3. Run the pipeline
 
-    `pigx-sars-cov2-ww -s .tests/settings.yaml .tests/sample_sheet.csv`
+    `pigx-sars-cov-2 -s .tests/settings.yaml .tests/sample_sheet.csv`
 
 Inside `tests/` a new directory `output` is created, which includes specific directories containing output data for the respective step of the pipeline.    The `tests/output/reports/index.html` gives the overview over all merged reports for the test data. 
 
@@ -155,7 +155,7 @@ In order to run the pipeline, you need to supply
 In order to generate template settings and sample sheet files, type
 
 ```sh
-pigx-sars-cov2-ww --init
+pigx-sars-cov-2 --init
 ```
 
 in the shell, and a boilerplate `sample_sheet.csv` and `settings.yaml` will be written to your current directory. An example for both files is provided in the `tests/` directory.
@@ -220,7 +220,7 @@ that are shorter than the product of read-length and the cut-off factor are remo
 
 # Running the pipeline
 
-PiGx SARS-CoV-2 wastewater is executed using the command `pigx-sars-cov2-ww -s settings.yaml sample_sheet.csv`. See `pigx-sars-cov2-ww --help` for information about additional command line arguments.
+PiGx SARS-CoV-2 wastewater is executed using the command `pigx-sars-cov-2 -s settings.yaml sample_sheet.csv`. See `pigx-sars-cov-2 --help` for information about additional command line arguments.
 
 The `execution` section of the settings file provides some control over the execution of the pipeline.
 
