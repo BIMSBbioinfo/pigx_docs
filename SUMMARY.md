@@ -37,7 +37,7 @@
     * [Output description](pigx-scrna-seq.md#output-description)
     * [Troubleshooting](pigx-scrna-seq.md#troubleshooting)
     * [Questions](pigx-scrna-seq.md#questions)
-* [PiGx SARS-CoV-2 wastewater](pigx-sars-cov-2.md)
+* [PiGx SARS-CoV-2](pigx-sars-cov-2.md)
     * [Introduction](pigx-sars-cov-2.md#introduction)
     * [Installation](pigx-sars-cov-2.md#installation)
     * [Quick start](pigx-sars-cov-2.md#quick-start)
