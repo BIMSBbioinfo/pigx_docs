@@ -70,15 +70,15 @@
           <li><a href="pigx-scrna-seq.html#troubleshooting">Troubleshooting</a></li>
           <li><a href="pigx-scrna-seq.html#questions">Questions</a></li>
           </ul></li>
-          <li><a href="pigx-sars-cov2-ww.html">PiGx SARS-CoV-2 wastewater</a>
+          <li><a href="pigx-sars-cov-2.html">PiGx SARS-CoV-2</a>
           <ul>
-          <li><a href="pigx-sars-cov2-ww.html#introduction">Introduction</a></li>
-          <li><a href="pigx-sars-cov2-ww.html#installation">Installation</a></li>
-          <li><a href="pigx-sars-cov2-ww.html#quick-start">Quick start</a></li>
-          <li><a href="pigx-sars-cov2-ww.html#preparing-the-input">Preparing the input</a></li>
-          <li><a href="pigx-sars-cov2-ww.html#running-the-pipeline">Running the pipeline</a></li>
-          <li><a href="pigx-sars-cov2-ww.html#output-description">Output description</a></li>
-          <li><a href="pigx-sars-cov2-ww.html#troubleshooting">Troubleshooting</a></li>
+          <li><a href="pigx-sars-cov-2.html#introduction">Introduction</a></li>
+          <li><a href="pigx-sars-cov-2.html#installation">Installation</a></li>
+          <li><a href="pigx-sars-cov-2.html#quick-start">Quick start</a></li>
+          <li><a href="pigx-sars-cov-2.html#preparing-the-input">Preparing the input</a></li>
+          <li><a href="pigx-sars-cov-2.html#running-the-pipeline">Running the pipeline</a></li>
+          <li><a href="pigx-sars-cov-2.html#output-description">Output description</a></li>
+          <li><a href="pigx-sars-cov-2.html#troubleshooting">Troubleshooting</a></li>
           </ul></li>
           </ul>
         </nav>
@@ -115,11 +115,11 @@
                     <p>You can install this pipeline and all of its dependencies through GNU Guix:</p>
                     <pre><code>guix install pigx-scrnaseq</code></pre>
                     <p>You can also install it manually from source. You can find the <a href="https://github.com/BIMSBbioinfo/pigx_scrnaseq/releases/latest">latest release</a> here. PiGx uses the GNU build system. Please make sure that all required dependencies are installed and then follow these steps after unpacking the latest release tarball:</p>
-                    <div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="ex">./configure</span>                         <span class="kw">\</span></span>
-                    <span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>    <span class="ex">--prefix</span>=/some/where            <span class="kw">\</span></span>
-                    <span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>    <span class="va">DROPSEQJAR=</span>/path/to/dropseq.jar <span class="kw">\</span></span>
-                    <span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>    <span class="va">PICARDJAR=</span>/path/to/picard.jar</span>
-                    <span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a><span class="fu">make</span> install</span></code></pre></div>
+                    <div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./configure</span>                         <span class="dt">\</span></span>
+                    <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">--prefix</span><span class="op">=</span>/some/where            <span class="dt">\</span></span>
+                    <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    DROPSEQJAR=/path/to/dropseq.jar <span class="dt">\</span></span>
+                    <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    PICARDJAR=/path/to/picard.jar</span>
+                    <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> install</span></code></pre></div>
                     <h2 id="via-conda">Via Conda</h2>
                     <ul>
                     <li>Download pigx_scrnaseq source code
@@ -144,7 +144,7 @@
                     </ul>
                     <h2 id="via-guix">Via Guix</h2>
                     <p>Assuming you have Guix installed, the following command spawns a sub-shell in which all dependencies are available:</p>
-                    <div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="ex">guix</span> environment -l guix.scm</span></code></pre></div>
+                    <div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">guix</span> environment <span class="at">-l</span> guix.scm</span></code></pre></div>
                     <p>If you do not use one of these package managers, you will need to ensure that the following software is installed:</p>
                     <details>
                     <summary>Software dependencies</summary>
@@ -161,11 +161,11 @@
                     <p>During the configure step path to the <strong>.jar</strong> files needs to be provided.</p>
                     <h1 id="quick-start">Quick Start</h1>
                     <p>To check wether the pipeline was properly installed, run PiGx scRNAseq on a minimal test dataset, which can be found on the following <a href="https://github.com/BIMSBbioinfo/pigx_scrnaseq/releases/download/v0.0.3/test_data.tgz">link</a> Once downloaded run these commands to extract the data:</p>
-                    <div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="fu">mkdir</span> test_dir</span>
-                    <span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="fu">tar</span> -xzf test_data.tar.gz --directory test_dir/</span>
-                    <span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="bu">cd</span> test_dir</span></code></pre></div>
+                    <div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> test_dir</span>
+                    <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xzf</span> test_data.tar.gz <span class="at">--directory</span> test_dir/</span>
+                    <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> test_dir</span></code></pre></div>
                     <p>The tarball includes a settings file and a sample sheet file. The pipeline can now be started with the following command:</p>
-                    <div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="ex">pigx</span> scrnaseq -s test_dir/settings.yaml test_dir/sample_sheet.csv</span></code></pre></div>
+                    <div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pigx</span> scrnaseq <span class="at">-s</span> test_dir/settings.yaml test_dir/sample_sheet.csv</span></code></pre></div>
                     <p>The output of the pipeline is located inside <code>test_dir/out</code> directory.</p>
                     <p>The <code>scRNA-Seq.report.html</code> inside the <code>Mapped</code> directory gives a general overview about the single cell experiments.</p>
                     <h1 id="preparing-the-input">Preparing the input</h1>
@@ -176,7 +176,7 @@
                     </ul>
                     <p>both files are described below.</p>
                     <p>To generate template <code>sample_sheet.csv</code> and <code>settings.yaml</code> files, in your current directory, type the following command in the shell:</p>
-                    <div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="ex">pigx</span> scrnaseq --init</span></code></pre></div>
+                    <div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pigx</span> scrnaseq <span class="at">--init</span></span></code></pre></div>
                     <h2 id="sample-sheet">Sample Sheet</h2>
                     <p>The sample sheet is a tabular file describing the experiment. The table has the following columns:</p>
                     <table>
@@ -218,29 +218,29 @@
                     <li><p>covariates</p></li>
                     </ul>
                     <p>In order to get started, enter <code>pigx-scrnaseq --init-settings my_settings.yaml</code>. This will create a file called <code>my_settings.yaml</code> with the default structure. The file will look like this:</p>
-                    <div class="sourceCode" id="cb7"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="fu">locations</span><span class="kw">:</span></span>
-                    <span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">output-dir</span><span class="kw">:</span><span class="at"> out/</span></span>
-                    <span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a><span class="at">  </span><span class="fu">reads-dir</span><span class="kw">:</span><span class="at"> sample_data/reads/</span></span>
-                    <span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a><span class="at">  </span><span class="fu">tempdir</span><span class="kw">:</span></span>
-                    <span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a></span>
-                    <span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a><span class="fu">covariates</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;covariate1, covariate2, ...&#39;</span></span>
-                    <span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a></span>
-                    <span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a><span class="fu">annotation</span><span class="kw">:</span></span>
-                    <span id="cb7-9"><a href="#cb7-9" aria-hidden="true"></a><span class="at">  </span><span class="fu">primary</span><span class="kw">:</span></span>
-                    <span id="cb7-10"><a href="#cb7-10" aria-hidden="true"></a><span class="at">    </span><span class="fu">genome</span><span class="kw">:</span></span>
-                    <span id="cb7-11"><a href="#cb7-11" aria-hidden="true"></a><span class="at">      </span><span class="fu">name</span><span class="kw">:</span><span class="at"> hg19</span></span>
-                    <span id="cb7-12"><a href="#cb7-12" aria-hidden="true"></a><span class="at">      </span><span class="fu">fasta</span><span class="kw">:</span><span class="at"> sample_data/genome.fa</span></span>
-                    <span id="cb7-13"><a href="#cb7-13" aria-hidden="true"></a><span class="at">    </span><span class="fu">gtf</span><span class="kw">:</span><span class="at"> sample_data/genome.gtf</span></span>
-                    <span id="cb7-14"><a href="#cb7-14" aria-hidden="true"></a></span>
-                    <span id="cb7-15"><a href="#cb7-15" aria-hidden="true"></a><span class="fu">execution</span><span class="kw">:</span></span>
-                    <span id="cb7-16"><a href="#cb7-16" aria-hidden="true"></a><span class="at">  </span><span class="fu">submit-to-cluster</span><span class="kw">:</span><span class="at"> </span><span class="ch">no</span></span>
-                    <span id="cb7-17"><a href="#cb7-17" aria-hidden="true"></a><span class="at">  </span><span class="fu">jobs</span><span class="kw">:</span><span class="at"> </span><span class="dv">6</span></span>
-                    <span id="cb7-18"><a href="#cb7-18" aria-hidden="true"></a><span class="at">  </span><span class="fu">nice</span><span class="kw">:</span><span class="at"> </span><span class="dv">19</span></span></code></pre></div>
+                    <div class="sourceCode" id="cb7"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">locations</span><span class="kw">:</span></span>
+                    <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">output-dir</span><span class="kw">:</span><span class="at"> out/</span></span>
+                    <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">reads-dir</span><span class="kw">:</span><span class="at"> sample_data/reads/</span></span>
+                    <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">tempdir</span><span class="kw">:</span></span>
+                    <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+                    <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">covariates</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;covariate1, covariate2, ...&#39;</span></span>
+                    <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+                    <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">annotation</span><span class="kw">:</span></span>
+                    <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">primary</span><span class="kw">:</span></span>
+                    <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">genome</span><span class="kw">:</span></span>
+                    <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">name</span><span class="kw">:</span><span class="at"> hg19</span></span>
+                    <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">fasta</span><span class="kw">:</span><span class="at"> sample_data/genome.fa</span></span>
+                    <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">gtf</span><span class="kw">:</span><span class="at"> sample_data/genome.gtf</span></span>
+                    <span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+                    <span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="fu">execution</span><span class="kw">:</span></span>
+                    <span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">submit-to-cluster</span><span class="kw">:</span><span class="at"> </span><span class="ch">no</span></span>
+                    <span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">jobs</span><span class="kw">:</span><span class="at"> </span><span class="dv">6</span></span>
+                    <span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">nice</span><span class="kw">:</span><span class="at"> </span><span class="dv">19</span></span></code></pre></div>
                     <h1 id="running-the-pipeline">Running the pipeline</h1>
                     <p>To run PiGx on your experimental data, first prepare the sample sheet and settings file (see <a href="#preparing-input">above</a>), and then from the terminal type</p>
-                    <div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a>$ <span class="ex">pigx-scrnaseq</span> -s settings.yaml sample_sheet.csv</span></code></pre></div>
+                    <div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pigx-scrnaseq <span class="at">-s</span> settings.yaml sample_sheet.csv</span></code></pre></div>
                     <p>If you are not sure wether you set everything up correctly, use the dryrun option which will only show what work would be performed, but does not actually run the pipeline.</p>
-                    <div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a>$ <span class="ex">pigx-scrnaseq</span> -s settings.yaml sample_sheet.csv -n </span></code></pre></div>
+                    <div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pigx-scrnaseq <span class="at">-s</span> settings.yaml sample_sheet.csv <span class="at">-n</span> </span></code></pre></div>
                     <p>To see all available options type the <code>--help</code> option</p>
                     <h1 id="output-description">Output Description</h1>
                     <p>PiGx scRNA-seq creates an output folder, with a specific directory structure (for details see <a href="#output-folder-structure">here</a>), with the following results:</p>
@@ -322,9 +322,9 @@
                     <p>PiGx scRNA-seq comes with sensible defaults for resource requests when running on a cluster, but based on the genome version and other parameters, these might not be sufficient and your cluster might terminate your jobs. The cluster resource requests may be overridden in the settings file. See the execution section of the settings file created with <code>pigx scrnaseq --init=settings</code>.</p>
                     <h1 id="troubleshooting">Troubleshooting</h1>
                     <p><strong>Q:</strong> I get the following error:</p>
-                    <div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="ex">Error</span>: Directory cannot be locked. Please make sure that no other Snakemake process is trying to create the same files in the following directory:</span>
-                    <span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a><span class="ex">/home/agosdsc/projects/pigx_scrnaseq/test_dir/out</span></span>
-                    <span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a><span class="ex">If</span> you are sure that no other instances of snakemake are running on this directory, the remaining lock was likely caused by a kill signal or a power loss. It can be removed with the --unlock argument.</span></code></pre></div>
+                    <div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Error:</span> Directory cannot be locked. Please make sure that no other Snakemake process is trying to create the same files in the following directory:</span>
+                    <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/agosdsc/projects/pigx_scrnaseq/test_dir/out</span></span>
+                    <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">If</span> you are sure that no other instances of snakemake are running on this directory, the remaining lock was likely caused by a kill signal or a power loss. It can be removed with the <span class="at">--unlock</span> argument.</span></code></pre></div>
                     <p>What happend and what should I do?</p>
                     <p><strong>A:</strong> The pipeline crashed at some point, possible reasons are mentioned by the error. Do as the error message proposes and pass the <code>--unlock</code> argument once and then run the pipeline again without <code>--unlock</code>.</p>
                     <h1 id="questions">Questions</h1>

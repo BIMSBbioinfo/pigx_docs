@@ -70,15 +70,15 @@
           <li><a href="pigx-scrna-seq.html#troubleshooting">Troubleshooting</a></li>
           <li><a href="pigx-scrna-seq.html#questions">Questions</a></li>
           </ul></li>
-          <li><a href="pigx-sars-cov2-ww.html">PiGx SARS-CoV-2 wastewater</a>
+          <li><a href="pigx-sars-cov-2.html">PiGx SARS-CoV-2</a>
           <ul>
-          <li><a href="pigx-sars-cov2-ww.html#introduction">Introduction</a></li>
-          <li><a href="pigx-sars-cov2-ww.html#installation">Installation</a></li>
-          <li><a href="pigx-sars-cov2-ww.html#quick-start">Quick start</a></li>
-          <li><a href="pigx-sars-cov2-ww.html#preparing-the-input">Preparing the input</a></li>
-          <li><a href="pigx-sars-cov2-ww.html#running-the-pipeline">Running the pipeline</a></li>
-          <li><a href="pigx-sars-cov2-ww.html#output-description">Output description</a></li>
-          <li><a href="pigx-sars-cov2-ww.html#troubleshooting">Troubleshooting</a></li>
+          <li><a href="pigx-sars-cov-2.html#introduction">Introduction</a></li>
+          <li><a href="pigx-sars-cov-2.html#installation">Installation</a></li>
+          <li><a href="pigx-sars-cov-2.html#quick-start">Quick start</a></li>
+          <li><a href="pigx-sars-cov-2.html#preparing-the-input">Preparing the input</a></li>
+          <li><a href="pigx-sars-cov-2.html#running-the-pipeline">Running the pipeline</a></li>
+          <li><a href="pigx-sars-cov-2.html#output-description">Output description</a></li>
+          <li><a href="pigx-sars-cov-2.html#troubleshooting">Troubleshooting</a></li>
           </ul></li>
           </ul>
         </nav>
@@ -121,12 +121,12 @@
                     </ul>
                     <h1 id="installation">Installation</h1>
                     <p>Pre-built binaries for PiGx are available through <a href="https://gnu.org/software/guix">GNU Guix</a>, the functional package manager for reproducible, user-controlled software management. Install the complete pipeline bundle with the following command:</p>
-                    <div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="ex">guix</span> install pigx</span></code></pre></div>
+                    <div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">guix</span> install pigx</span></code></pre></div>
                     <p>You can also install just the RNAseq pipeline with</p>
-                    <div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="ex">guix</span> install pigx-rnaseq</span></code></pre></div>
+                    <div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">guix</span> install pigx-rnaseq</span></code></pre></div>
                     <p>If you want to install PiGx RNAseq from source, please make sure that all required dependencies (see “requirements.txt”) are installed and then follow the common GNU build system steps after unpacking the <a href="https://github.com/BIMSBbioinfo/pigx_rnaseq/releases/latest">latest release tarball</a>:</p>
-                    <div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="ex">./configure</span> --prefix=/some/where</span>
-                    <span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="fu">make</span> install</span></code></pre></div>
+                    <div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./configure</span> <span class="at">--prefix</span><span class="op">=</span>/some/where</span>
+                    <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> install</span></code></pre></div>
                     <h1 id="quick-start">Quick start</h1>
                     <ol>
                     <li><p>Download the zipped test data folder from <a href="https://github.com/BIMSBbioinfo/pigx_rnaseq/releases/download/v0.0.3/test_data-0.0.3.tgz">here</a>:</p></li>
@@ -145,7 +145,7 @@
                     </ul>
                     <p>both files are described below.</p>
                     <p>In order to generate template settings and sample sheet files, type</p>
-                    <div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="ex">pigx</span> rnaseq --init</span></code></pre></div>
+                    <div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pigx</span> rnaseq <span class="at">--init</span></span></code></pre></div>
                     <p>in the shell, and a boilerplate <code>sample_sheet.csv</code> and <code>settings.yaml</code> will be written to your current directory.</p>
                     <h2 id="sample-sheet">Sample sheet</h2>
                     <p>The sample sheet is a tabular file (<code>csv</code> format) describing the experiment. The table has the following columns:</p>
@@ -214,27 +214,27 @@
                     <li>Which covariates to include in the DE analysis (from additional columns in the sample sheet)</li>
                     </ul>
                     <p>In order to get started, enter <code>pigx-rnaseq --init=settings my_settings.yaml</code>. This will create a file called <code>my_settings.yaml</code> with the default structure. The file will look like this:</p>
-                    <div class="sourceCode" id="cb5"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="fu">locations</span><span class="kw">:</span></span>
-                    <span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">reads-dir</span><span class="kw">:</span><span class="at"> sample_data/reads/</span></span>
-                    <span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a><span class="at">  </span><span class="fu">output-dir</span><span class="kw">:</span><span class="at"> output/</span></span>
-                    <span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a><span class="at">  </span><span class="fu">genome-fasta</span><span class="kw">:</span><span class="at"> sample_data/sample.fasta</span></span>
-                    <span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a><span class="at">  </span><span class="fu">cdna-fasta</span><span class="kw">:</span><span class="at"> sample_data/sample.cdna.fasta</span></span>
-                    <span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a><span class="at">  </span><span class="fu">gtf-file</span><span class="kw">:</span><span class="at"> sample_data/sample.gtf</span></span>
-                    <span id="cb5-7"><a href="#cb5-7" aria-hidden="true"></a></span>
-                    <span id="cb5-8"><a href="#cb5-8" aria-hidden="true"></a><span class="fu">organism</span><span class="kw">:</span><span class="at"> hsapiens</span></span>
-                    <span id="cb5-9"><a href="#cb5-9" aria-hidden="true"></a></span>
-                    <span id="cb5-10"><a href="#cb5-10" aria-hidden="true"></a><span class="fu">DEanalyses</span><span class="kw">:</span></span>
-                    <span id="cb5-11"><a href="#cb5-11" aria-hidden="true"></a><span class="co">  #names of analyses can be anything but they have to be unique for each combination of case control group comparisons.</span></span>
-                    <span id="cb5-12"><a href="#cb5-12" aria-hidden="true"></a><span class="at">  </span><span class="fu">analysis1</span><span class="kw">:</span></span>
-                    <span id="cb5-13"><a href="#cb5-13" aria-hidden="true"></a><span class="co">    #if multiple sample names are provided, they must be separated by comma</span></span>
-                    <span id="cb5-14"><a href="#cb5-14" aria-hidden="true"></a><span class="at">    </span><span class="fu">case_sample_groups</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;HBR&quot;</span></span>
-                    <span id="cb5-15"><a href="#cb5-15" aria-hidden="true"></a><span class="at">    </span><span class="fu">control_sample_groups</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;UHR&quot;</span></span>
-                    <span id="cb5-16"><a href="#cb5-16" aria-hidden="true"></a><span class="at">    </span><span class="fu">covariates</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;&#39;</span></span>
-                    <span id="cb5-17"><a href="#cb5-17" aria-hidden="true"></a></span>
-                    <span id="cb5-18"><a href="#cb5-18" aria-hidden="true"></a><span class="fu">execution</span><span class="kw">:</span></span>
-                    <span id="cb5-19"><a href="#cb5-19" aria-hidden="true"></a><span class="at">  </span><span class="fu">submit-to-cluster</span><span class="kw">:</span><span class="at"> </span><span class="ch">no</span></span>
-                    <span id="cb5-20"><a href="#cb5-20" aria-hidden="true"></a><span class="at">  </span><span class="fu">jobs</span><span class="kw">:</span><span class="at"> </span><span class="dv">6</span></span>
-                    <span id="cb5-21"><a href="#cb5-21" aria-hidden="true"></a><span class="at">  </span><span class="fu">nice</span><span class="kw">:</span><span class="at"> </span><span class="dv">19</span></span></code></pre></div>
+                    <div class="sourceCode" id="cb5"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">locations</span><span class="kw">:</span></span>
+                    <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">reads-dir</span><span class="kw">:</span><span class="at"> sample_data/reads/</span></span>
+                    <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">output-dir</span><span class="kw">:</span><span class="at"> output/</span></span>
+                    <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">genome-fasta</span><span class="kw">:</span><span class="at"> sample_data/sample.fasta</span></span>
+                    <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">cdna-fasta</span><span class="kw">:</span><span class="at"> sample_data/sample.cdna.fasta</span></span>
+                    <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">gtf-file</span><span class="kw">:</span><span class="at"> sample_data/sample.gtf</span></span>
+                    <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+                    <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">organism</span><span class="kw">:</span><span class="at"> hsapiens</span></span>
+                    <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+                    <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">DEanalyses</span><span class="kw">:</span></span>
+                    <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">  #names of analyses can be anything but they have to be unique for each combination of case control group comparisons.</span></span>
+                    <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">analysis1</span><span class="kw">:</span></span>
+                    <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">    #if multiple sample names are provided, they must be separated by comma</span></span>
+                    <span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">case_sample_groups</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;HBR&quot;</span></span>
+                    <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">control_sample_groups</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;UHR&quot;</span></span>
+                    <span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">covariates</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;&#39;</span></span>
+                    <span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+                    <span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="fu">execution</span><span class="kw">:</span></span>
+                    <span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">submit-to-cluster</span><span class="kw">:</span><span class="at"> </span><span class="ch">no</span></span>
+                    <span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">jobs</span><span class="kw">:</span><span class="at"> </span><span class="dv">6</span></span>
+                    <span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">nice</span><span class="kw">:</span><span class="at"> </span><span class="dv">19</span></span></code></pre></div>
                     <h3 id="reference-and-annotations">Reference and annotations</h3>
                     <p>The user must supply paths pointing to a reference genome for the organism, as well as annotated genes and a transcriptome reference. These might for example be downloaded from <a href="https://www.ensembl.org/info/data/ftp/index.html">Ensembl</a>. The reference genomoe is listed under <em>DNA</em> <code>FASTA</code>, the gene annotations under <em>Gene sets</em> <code>GTF</code>, and the transcriptome reference sequence is specified under <em>cDNA</em> <code>FASTA</code>. The user is free to choose any resource for these annotation files, however it is very important to note that the chromosome naming styles must match between different annotation files (e.g. chromosome 21 is named as <em>chr21</em> in UCSC style, but <em>21</em> in NCBI/Ensemble style).</p>
                     <h3 id="organism-for-go-term-analysis">Organism (for GO-term analysis)</h3>
@@ -243,10 +243,10 @@
                     <p>The section named <code>DEanalyses</code> in the settings file allows the user to specify a number of differential expression analyses to be performed. In the example above, <code>analysis1</code> will be the name of the only analysis specified. In that analysis, samples with <code>sample_type</code> <em>HBR</em> will be compared with those with <code>sample_type</code> <em>UHR</em>, with no covariates included in the analysis.</p>
                     <h4 id="using-multiple-sample_types-as-cases-or-controls">Using multiple <code>sample_type</code>s as cases or controls</h4>
                     <p>The user may include more than one <code>sample_type</code> as the controls or cases for any DE analysis by specifiying a comma-spearated list. For example, the following block specified an analysis which compares samples belonging to <em>mut1</em> and <em>mut2</em> to the <em>WT</em> samples:</p>
-                    <div class="sourceCode" id="cb6"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="fu">DEanalyses</span><span class="kw">:</span></span>
-                    <span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">two_cases_analysis</span><span class="kw">:</span></span>
-                    <span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a><span class="at">    </span><span class="fu">case_sample_groups</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;mut1,mut2&quot;</span></span>
-                    <span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a><span class="at">    </span><span class="fu">case_control_groups</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;WT&quot;</span></span></code></pre></div>
+                    <div class="sourceCode" id="cb6"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DEanalyses</span><span class="kw">:</span></span>
+                    <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">two_cases_analysis</span><span class="kw">:</span></span>
+                    <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">case_sample_groups</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;mut1,mut2&quot;</span></span>
+                    <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">case_control_groups</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;WT&quot;</span></span></code></pre></div>
                     <p>The same may be done to specify several <code>sample_type</code>s for the controls.</p>
                     <h4 id="covariates-in-de-analysis">Covariates in DE analysis</h4>
                     <p>Any number of additional columns may be added to the sample sheet and used as covariates in the DE analysis. The following sample sheet includes a column indicating the sex of the sample:</p>
@@ -292,13 +292,13 @@
                     </tbody>
                     </table>
                     <p>With the use of the following block in the settings file, the sex will be used as a covariate in the differential expression analysis:</p>
-                    <div class="sourceCode" id="cb7"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="fu">DEanalyses</span><span class="kw">:</span></span>
-                    <span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">analysis_with_covariate</span><span class="kw">:</span></span>
-                    <span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a><span class="at">    </span><span class="fu">case_sample_groups</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;treatment&quot;</span></span>
-                    <span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a><span class="at">    </span><span class="fu">case_control_groups</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;control&quot;</span></span>
-                    <span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a><span class="at">    </span><span class="fu">covariates</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;sex&quot;</span></span></code></pre></div>
+                    <div class="sourceCode" id="cb7"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DEanalyses</span><span class="kw">:</span></span>
+                    <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">analysis_with_covariate</span><span class="kw">:</span></span>
+                    <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">case_sample_groups</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;treatment&quot;</span></span>
+                    <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">case_control_groups</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;control&quot;</span></span>
+                    <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">covariates</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;sex&quot;</span></span></code></pre></div>
                     <p>Multiple covariates may be specified by providing a comma-separated list, such as</p>
-                    <div class="sourceCode" id="cb8"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="fu">covariates</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;sex,age,smoking_history&quot;</span></span></code></pre></div>
+                    <div class="sourceCode" id="cb8"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">covariates</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;sex,age,smoking_history&quot;</span></span></code></pre></div>
                     <p><strong>Warning</strong>: It is important to be aware of a common error that is thrown by <em>DESeq2</em> when additional covariates are listed. In some cases, one or more covariates contain redundant information, or perfectly confounded by other covariates that are used to construct a design formula. In such cases, <em>DESeq2</em> will throw this error: “the model matrix is not full rank, so the model cannot be fit as specified.”. This error signals the user to re-consider the list of covariates used and eliminate those that are redundant from this list. For more information on this topic, please refer to the vignette from <em>DESeq2</em>, <a href="https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html">here</a>.</p>
                     <h1 id="running-the-pipeline">Running the pipeline</h1>
                     <p>PiGx RNAseq is executed using the command <code>pigx-rnaseq -s settings.yaml sample_sheet.csv</code>. See <code>pigx-rnaseq --help</code> for information about additional command line arguments.</p>
@@ -307,9 +307,9 @@
                     <p>The workflow may be executed locally (on a single computer), or, if a Sun Grid Engine-compatible HPC environment is available, supports cluster execution. In order to enable cluster execution, specify <code>submit-to-cluster: yes</code> in the settings file.</p>
                     <h2 id="parallel-execution">Parallel execution</h2>
                     <p>If the workflow is run on a cluster, or a single computer with sufficient resources, some of the tasks may be computed in parallel. To specify the allowed level or parallelism, set the <code>jobs</code> setting under <code>execution</code> in the settings file. For instance,</p>
-                    <div class="sourceCode" id="cb9"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="fu">execution</span><span class="kw">:</span></span>
-                    <span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">submit-to-cluster</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
-                    <span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a><span class="at">  </span><span class="fu">jobs</span><span class="kw">:</span><span class="at"> </span><span class="dv">40</span></span></code></pre></div>
+                    <div class="sourceCode" id="cb9"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">execution</span><span class="kw">:</span></span>
+                    <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">submit-to-cluster</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
+                    <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">jobs</span><span class="kw">:</span><span class="at"> </span><span class="dv">40</span></span></code></pre></div>
                     <p>in the settings file, will submit up to 40 simultaneous compute jobs on the cluster.</p>
                     <h1 id="output-description">Output description</h1>
                     <p>PiGx RNAseq creates an output folder, as specified in the settings file, that contains all of the following outputs.</p>
@@ -344,13 +344,13 @@
                     </tbody>
                     </table>
                     <p>The read counting step using <em>GenomicAlignments::summarizeOverlaps</em> can be configured by modifying the <code>counting</code> section of the <code>settings.yaml</code> file. By default, the reads that align to the <em>exon</em> features are grouped together via <em>gene_id</em> assuming no strand-speficity, assuming the input files are in <em>bam</em> format ordered by alignment coordinates. A counting mode of <em>Union</em> is chosen by default.</p>
-                    <div class="sourceCode" id="cb10"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="fu">counting</span><span class="kw">:</span></span>
-                    <span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">counting_mode</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Union&quot;</span><span class="co"> # other options are &quot;IntersectionStrict&quot; and &quot;IntersectionNotEmpty&quot;</span></span>
-                    <span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a><span class="at">  </span><span class="fu">count_nonunique</span><span class="kw">:</span><span class="at"> </span><span class="ch">TRUE</span><span class="co"> # boolean (see inter.feature argument of summarizeOverlaps)</span></span>
-                    <span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a><span class="at">  </span><span class="fu">strandedness</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;unspecific&quot;</span><span class="co"> # other options are &quot;forward&quot; and &quot;reverse&quot; for strand-specific read-counting</span></span>
-                    <span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a><span class="at">  </span><span class="fu">feature</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;exon&quot;</span></span>
-                    <span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a><span class="at">  </span><span class="fu">group_feature_by</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;gene_id&quot;</span></span>
-                    <span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a><span class="at">  </span><span class="fu">yield_size</span><span class="kw">:</span><span class="at"> </span><span class="dv">2000000</span><span class="co"> # how many reads to process at a time (this impacts memory consumption)</span></span></code></pre></div>
+                    <div class="sourceCode" id="cb10"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">counting</span><span class="kw">:</span></span>
+                    <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">counting_mode</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Union&quot;</span><span class="co"> # other options are &quot;IntersectionStrict&quot; and &quot;IntersectionNotEmpty&quot;</span></span>
+                    <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">count_nonunique</span><span class="kw">:</span><span class="at"> </span><span class="ch">TRUE</span><span class="co"> # boolean (see inter.feature argument of summarizeOverlaps)</span></span>
+                    <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">strandedness</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;unspecific&quot;</span><span class="co"> # other options are &quot;forward&quot; and &quot;reverse&quot; for strand-specific read-counting</span></span>
+                    <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">feature</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;exon&quot;</span></span>
+                    <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">group_feature_by</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;gene_id&quot;</span></span>
+                    <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">yield_size</span><span class="kw">:</span><span class="at"> </span><span class="dv">2000000</span><span class="co"> # how many reads to process at a time (this impacts memory consumption)</span></span></code></pre></div>
                     <p>The arguments in the <code>counting</code> section can be modified. To find out more about the arguments for read counting, please refer to the <a href="https://bioconductor.org/packages/release/bioc/vignettes/GenomicAlignments/inst/doc/summarizeOverlaps.pdf">GenomicAlignments::summarizeOverlaps function</a>.</p>
                     <h3 id="normalized-counts-tables">Normalized counts tables</h3>
                     <p>In order to enable comparison of gene/transcript expression across all samples outside of the context of differential expression analysis, PiGx RNAseq produces normalized counts tables using two normalizatoin procedures:</p>

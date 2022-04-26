@@ -1,0 +1,421 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="">
+    <link rel="stylesheet" href="gitbook/style.css">
+    <link rel="stylesheet" href="gitbook/website.css">
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  </head>
+  <body>
+    <div class="book">
+      <div class="book-summary">
+        <div id="book-search-input" role="search">
+          <input type="text" placeholder="Type to search" />
+        </div>
+        
+        <nav class="summary" id="TOC" role="doc-toc">
+          <h1 id="summary">Summary</h1>
+          <ul>
+          <li><a href="README.html">Introduction</a></li>
+          <li><a href="pigx-rna-seq.html">PiGx RNA-seq</a>
+          <ul>
+          <li><a href="pigx-rna-seq.html#introduction">Introduction</a></li>
+          <li><a href="pigx-rna-seq.html#installation">Installation</a></li>
+          <li><a href="pigx-rna-seq.html#quick-start">Quick start</a></li>
+          <li><a href="pigx-rna-seq.html#preparing-the-input">Preparing the input</a></li>
+          <li><a href="pigx-rna-seq.html#running-the-pipeline">Running the pipeline</a></li>
+          <li><a href="pigx-rna-seq.html#output-description">Output description</a></li>
+          <li><a href="pigx-rna-seq.html#troubleshooting">Troubleshooting</a></li>
+          <li><a href="pigx-rna-seq.html#questions">Questions</a></li>
+          </ul></li>
+          <li><a href="pigx-chip-seq.html#pigx-chip-seq">PiGx ChIP-seq</a>
+          <ul>
+          <li><a href="pigx-chip-seq.html#introduction">Introduction</a></li>
+          <li><a href="pigx-chip-seq.html#installation">Installation</a></li>
+          <li><a href="pigx-chip-seq.html#quick-start">Quick Start</a></li>
+          <li><a href="pigx-chip-seq.html#preparing-input">Preparing Input</a></li>
+          <li><a href="pigx-chip-seq.html#running-the-pipeline">Running the Pipeline</a></li>
+          <li><a href="pigx-chip-seq.html#output-description">Output Description</a></li>
+          <li><a href="pigx-chip-seq.html#troubleshooting">Troubleshooting</a></li>
+          <li><a href="pigx-chip-seq.html#questions">Questions</a></li>
+          </ul></li>
+          <li><a href="pigx-bs-seq.html">PiGx BS-seq</a>
+          <ul>
+          <li><a href="pigx-bs-seq.html#introduction">Introduction</a></li>
+          <li><a href="pigx-bs-seq.html#installation">Installation</a></li>
+          <li><a href="pigx-bs-seq.html#quick-start">Quick start</a></li>
+          <li><a href="pigx-bs-seq.html#preparing-the-input">Preparing the input</a></li>
+          <li><a href="pigx-bs-seq.html#running-the-pipeline">Running the pipeline</a></li>
+          <li><a href="pigx-bs-seq.html#output-description">Output description</a></li>
+          <li><a href="pigx-bs-seq.html#troubleshooting">Troubleshooting</a></li>
+          <li><a href="pigx-bs-seq.html#questions">Questions</a></li>
+          </ul></li>
+          <li><a href="pigx-scrna-seq.html">PiGx scRNA-seq</a>
+          <ul>
+          <li><a href="pigx-scrna-seq.html#introduction">Introduction</a></li>
+          <li><a href="pigx-scrna-seq.html#installation">Installation</a></li>
+          <li><a href="pigx-scrna-seq.html#quick-start">Quick start</a></li>
+          <li><a href="pigx-scrna-seq.html#preparing-the-input">Preparing the input</a></li>
+          <li><a href="pigx-scrna-seq.html#running-the-pipeline">Running the pipeline</a></li>
+          <li><a href="pigx-scrna-seq.html#output-description">Output description</a></li>
+          <li><a href="pigx-scrna-seq.html#troubleshooting">Troubleshooting</a></li>
+          <li><a href="pigx-scrna-seq.html#questions">Questions</a></li>
+          </ul></li>
+          <li><a href="pigx-sars-cov-2.html">PiGx SARS-CoV-2</a>
+          <ul>
+          <li><a href="pigx-sars-cov-2.html#introduction">Introduction</a></li>
+          <li><a href="pigx-sars-cov-2.html#installation">Installation</a></li>
+          <li><a href="pigx-sars-cov-2.html#quick-start">Quick start</a></li>
+          <li><a href="pigx-sars-cov-2.html#preparing-the-input">Preparing the input</a></li>
+          <li><a href="pigx-sars-cov-2.html#running-the-pipeline">Running the pipeline</a></li>
+          <li><a href="pigx-sars-cov-2.html#output-description">Output description</a></li>
+          <li><a href="pigx-sars-cov-2.html#troubleshooting">Troubleshooting</a></li>
+          </ul></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="book-body">
+        <div class="body-inner">
+          <div class="book-header" role="navigation">
+            <!-- Title -->
+            <h1>
+              <i class="fa fa-circle-o-notch fa-spin"></i>
+              <a href="." ></a>
+            </h1>
+          </div>
+          <div class="page-wrapper" tabindex="-1" role="main">
+            <div class="page-inner">
+              <div id="book-search-results">
+                <div class="search-noresults">
+                  <section class="normal markdown-section">
+                    <h1 id="pigx-sars-cov-2">PiGx SARS-CoV-2</h1>
+                    <h1 id="introduction">Introduction</h1>
+                    <p>PiGx SARS-CoV-2 is a pipeline for analysing data from sequenced wastewater samples and identifying a provided set of lineages of SARS-CoV-2 characterized by signature mutations. Currently wastewater samples are used, which are enriched for SARS-CoV-2. The pipeline can be used for continuous sampling. The output of the PiGx SARS-CoV-2 pipeline is summarized in a report which provides an intuitive visual overview about the development of lineage abundance and single significantly increasing mutations over time and location. Additionally there will be more detailed reports per sample, which cover the quality control of the samples, the detected variants and a taxonomic classification of all unaligned reads. This version of the pipeline was designed to work with paired-end amplicon sequencing data e.g. following the ARtIc protocols <a href="https://github.com/artic-network/artic-ncov2019/tree/master/primer_schemes/nCoV-2019/V3">ARTIC nCoV-2019 primers</a>.</p>
+                    <h2 id="workflow">Workflow</h2>
+                    <p>In the first step the pipeline takes the raw reads and the additional information about used primers and adapters to perform extensive quality control. Primer trimming is done with <a href="https://github.com/andersen-lab/ivar">iVAR</a> and <a href="https://github.com/OpenGene/fastp">fastp</a> is used for adapter trimming and filtering. Next, the trimmed reads are aligned to the reference genome of SARS-CoV-2 using <a href="https://github.com/lh3/bwa">BWA</a>, and the results are <em>SAM</em>/<em>BAM</em> files of <strong>aligned</strong> and <strong>unaligned reads</strong>. Following the alignment a quality check on raw and processed reads is performed by using <a href="https://multiqc.info/">MultiQC</a>. Furthermore samples are checked for genome coverage and how many of the provided signature mutation sites are covered. Based on this every samples gets a quality score. Samples with genome coverage below 90% are reported as discarded samples, as they are not included in time series analysises and summaries.</p>
+                    <p>Calling the variants and inferring SNVs (single nucleotide polymorphisms) on the <strong>aligned reads</strong> is done with <a href="https://csb5.github.io/lofreq/">LoFreq</a>. Mutations are annotated with <a href="https://covid-19.ensembl.org/index.html">VEP</a>. Estimation of lineage frequencies is done by deconvolution (see Methods in the realted publication for details). To investigate the abundance of RNA matching other existing species in the wastewater samples the <strong>unaligned reads</strong> will be taxonomicly classified with <a href="https://github.com/DerrickWood/kraken2">Kraken2</a>. Kraken2 requires a database downloaded locally of the genomes against the reads are getting aligned. For documentation how to set this up, see: <a href="#prepare-databases">Prepare databases</a>. For a better and interactive visualization of all species present in the wastewater <a href="https://github.com/marbl/Krona/wiki">Krona</a> is used. Also here a small step of setting up a database is needed before running the pipeline, see: <a href="#prepare-databases">Prepare databases</a>. Interactive reports are generated using <a href="https://rmarkdown.rstudio.com/">R-markdown</a> and <a href="https://plotly.com/r/">plotly for R</a> for visualizations.</p>
+                    <h3 id="pooling-of-samples-for-time-series-analysis-and-plots">Pooling of samples for time series analysis and plots</h3>
+                    <p>For summarizing across daytime and location, the lineage frequencies are pooled by calculating the weighted average using the total number of reads of each sample as weights. The mutation frequencies are pooled by using the simple mean setting removal of missing values to FALSE.</p>
+                    <h2 id="output">Output</h2>
+                    <ul>
+                    <li>overview report including:
+                    <ul>
+                    <li>Visualization of the development of SARS-CoV-2 variants and mutations over time and locations from all samples provided.</li>
+                    <li>Quality Control report per sample: number of covered amplicons, read coverage and MultiQC report for raw and trimmed reads</li>
+                    <li>Variants report per sample: variant analysis of SARS-CoV-2 from each wastewater sample and identification of variants of concern</li>
+                    <li>Taxonomic classification: a table and pie chart of the species found in the unaligned reads</li>
+                    </ul></li>
+                    <li><em>SAM</em> / <em>BAM</em> files per sample: aligned and unaligned reads against SARS-CoV-2</li>
+                    <li><em>VCF</em> / <em>CSV</em> files per sample: listing all detected single nucleotide variants (SNVs) from the aligned reads</li>
+                    <li>VEP reports per sample as <em>TXT</em> / <em>HTML</em>: report files show the <a href="https://www.ensembl.org/info/docs/tools/vep/vep_formats.html#output">VEP output</a> including the uploading variants, consequenting amino acid changes and consequences for the corresponding protein</li>
+                    <li>Kraken2 files per sample <em>(txt)</em>: provides an overview of all found species in the unaligned reads together with the NCBI taxonomy ID</li>
+                    <li>log files for all major analysis steps performed by the pipeline</li>
+                    </ul>
+                    <h1 id="installation">Installation</h1>
+                    <p>Pre-built binaries for PiGx are available through <a href="https://gnu.org/s/guix">GNU Guix</a>, the functional package manager for reproducible, user-controlled software management. You can install the PiGx SARS-CoV-2 pipeline with</p>
+                    <div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">guix</span> install pigx-sars-cov-2</span></code></pre></div>
+                    <p>If you want to install PiGx SARS-CoV-2 from source, please clone this repository and change directory accordingly:</p>
+                    <div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/BIMSBbioinfo/pigx_sars-cov-2.git</span>
+                    <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> pigx_sars-cov-2</span></code></pre></div>
+                    <p>To fetch code that is common to all PiGx pipelines run this:</p>
+                    <div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> submodule update <span class="at">--init</span></span></code></pre></div>
+                    <p>Before setting everything up, though, make sure <a href="https://github.com/BIMSBbioinfo/pigx_sars-cov-2/blob/main/manifest.scm">all dependencies</a> are met by either installing them manually, or by entering the provided reproducible Guix environment. If you are using Guix we definitely recommend the latter. This command spawns a sub-shell in which all dependencies are available at exactly the same versions that we used to develop the pipeline:</p>
+                    <div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="va">USE_GUIX_INFERIOR</span><span class="op">=</span>t <span class="ex">guix</span> environment <span class="at">--pure</span> <span class="at">-m</span> manifest.scm <span class="at">--preserve</span><span class="op">=</span>GUIX_LOCPATH</span></code></pre></div>
+                    <p>To use your current Guix channels instead of the fixed set of channels, just omit the <code>USE_GUIX_INFERIOR</code> shell variable:</p>
+                    <div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">guix</span> environment <span class="at">--pure</span> <span class="at">-m</span> manifest.scm <span class="at">--preserve</span><span class="op">=</span>GUIX_LOCPATH</span></code></pre></div>
+                    <p>Note that <code>--pure</code> unsets all environment variables that are not explicitly preserved. To access other executables that are not part of the environment please address them by their absolute file name.</p>
+                    <p>Inside the environment you can then perform the usual build steps:</p>
+                    <div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./bootstrap.sh</span> <span class="co"># to generate the &quot;configure&quot; script</span></span>
+                    <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./configure</span></span>
+                    <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span></span>
+                    <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> check</span></code></pre></div>
+                    <p>At this point you are able to run PiGx SARS-CoV-2. To see all available options type <code>--help</code>.</p>
+                    <div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pigx-sars-cov-2</span> <span class="at">--help</span></span></code></pre></div>
+                    <h2 id="prepare-databases">Prepare databases</h2>
+                    <p>Before the pipeline can work, three databases must be downloaded and their location will need to be provided in the settings file. Depending on the size of the databases this can take some time. One database (signature mutations, <code>sigmut_db</code>) is already included.</p>
+                    <p>We provide the script <code>download_databases.sh</code> to automate the download and configuration of all default databases. After installing the pipeline you can run the script like this:</p>
+                    <div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="va">prefix</span><span class="op">=</span><span class="st">&quot;</span><span class="va">$(</span><span class="fu">dirname</span> pigx-sars-cov-2<span class="va">)</span><span class="st">/../&quot;</span></span>
+                    <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="va">$prefix</span><span class="ex">/libexec/pigx_sars-cov-2/scripts/download_databases.sh</span></span></code></pre></div>
+                    <p>Read on for details if you want to download the databases manually.</p>
+                    <h3 id="kraken2-database">Kraken2 database</h3>
+                    <p>There are several libraries of genomes that can be used to classify the (unaligned) reads. It is up to you which one to use, but be sure that they fulfill the necessities stated by Kraken2 <a href="https://github.com/DerrickWood/kraken2/wiki/Manual#kraken-2-databases">Kraken2 manual</a>. For an overall overview we recommend to use the Plus-PFP library provided <a href="https://benlangmead.github.io/aws-indexes/k2">here</a>. If the classification is not of concern or only the viruses are of interest, we recommend using a smaller one. This will speed up the pipeline. It is also possible to have multiple Kraken2 databases installed, just be sure to provide the correct location to the settings file.</p>
+                    <p>After downloading and unpacking the database files, use <code>kraken2-build</code> to download the taxonomy data and build the database.</p>
+                    <h3 id="krona-database">Krona database</h3>
+                    <p>Krona Tools needs two files, which are fetched with the <code>updateTaxonomy.sh</code> and <code>updateAccessions.sh</code> scripts that come with Krona.</p>
+                    <h3 id="vep-database">VEP database</h3>
+                    <p>Just download the <code>SARS_CoV_2</code> database for VEP (variant effect predictor) and unpack it in the <code>databases/vep_db/</code> directory.</p>
+                    <h3 id="sigmut-database">Sigmut database</h3>
+                    <p>Necessary files are provided in <code>databases/sigmut_db/</code> for the current main Variants of Concern. Users can add files with new variants if/when necessary.</p>
+                    <h1 id="quick-start">Quick Start</h1>
+                    <p>To check whether the pipeline and the databases have been properly set up, run the pipeline on a minimal test dataset.</p>
+                    <ol>
+                    <li><p>Download the test data</p>
+                    <p><code>git clone https://github.com/BIMSBbioinfo/pigx_sars-cov-2 sarscov2-test</code></p></li>
+                    <li><p>Enter the directory</p>
+                    <p><code>cd sarscov2-test</code></p></li>
+                    <li><p>Run the pipeline</p>
+                    <p><code>pigx-sars-cov-2 -s .tests/settings.yaml .tests/sample_sheet.csv</code></p></li>
+                    </ol>
+                    <p>Inside <code>tests/</code> a new directory <code>output</code> is created, which includes specific directories containing output data for the respective step of the pipeline. The <code>tests/output/reports/index.html</code> gives the overview over all merged reports for the test data.</p>
+                    <h1 id="preparing-the-input">Preparing the input</h1>
+                    <p>In order to run the pipeline, you need to supply</p>
+                    <ul>
+                    <li>a sample sheet (CSV format): containing information about sampling date and location<br />
+                    </li>
+                    <li>a settings file (YAML format) for specifying the experimental setup and optional custom parameter adjustments<br />
+                    </li>
+                    <li>a mutation sheet containing the lineages of interest and their signature mutations in nucleotide notation (CSV format)<br />
+                    </li>
+                    <li>a BED file containing the genomic coordinates of the mutation sites (see below for details)<br />
+                    </li>
+                    <li>the reference genome of the target species in fasta format (so far the pipeline is only optimized for SARS-CoV-2, others might work too but not yet tested)<br />
+                    </li>
+                    <li>a BED file containing the PCR primer locations (e.g the primers suggested from ARTIC protocols)</li>
+                    </ul>
+                    <p>In order to generate template settings and sample sheet files, type</p>
+                    <div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pigx-sars-cov-2</span> <span class="at">--init</span></span></code></pre></div>
+                    <p>in the shell, and a boilerplate <code>sample_sheet.csv</code> and <code>settings.yaml</code> will be written to your current directory. An example for both files is provided in the <code>tests/</code> directory.</p>
+                    <h2 id="sample-sheet">Sample sheet</h2>
+                    <p>The sample sheet is a tabular file (<code>csv</code> format) describing the experiment. The table has the following columns:</p>
+                    <table>
+                    <thead>
+                    <tr class="header">
+                    <th>SampleName</th>
+                    <th>Read</th>
+                    <th>Read2</th>
+                    <th>date</th>
+                    <th>location_name</th>
+                    <th>coordinates_lat</th>
+                    <th>coordinates_long</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="odd">
+                    <td>Test0</td>
+                    <td>Test0_R1.fastq</td>
+                    <td>Test0_R2.fastq</td>
+                    <td>2021-01-01T08:00:00</td>
+                    <td>Berlin</td>
+                    <td>52.364</td>
+                    <td>13.509</td>
+                    </tr>
+                    <tr class="even">
+                    <td>Test2</td>
+                    <td>Test2_R1.fastq</td>
+                    <td>Test2_R2.fastq</td>
+                    <td>2021-01-03T08:00:00</td>
+                    <td>Munich</td>
+                    <td>48.208</td>
+                    <td>11.628</td>
+                    </tr>
+                    </tbody>
+                    </table>
+                    <ul>
+                    <li><em>SampleName</em> is the name for the sample</li>
+                    <li><em>Read</em> &amp; <em>Read2</em> are the fastq file names of paired end reads
+                    <ul>
+                    <li>the location of these files is specified in the settings file</li>
+                    <li>single-end data is not yet supported</li>
+                    <li>compressed (<code>.gz</code>) reads are not yet supported</li>
+                    </ul></li>
+                    <li><em>date</em> is a date/time in ISO format (<code>yyyy-mm-ddThh:mm:ss</code>)</li>
+                    <li><em>location_name</em> is the name of the location and should be unique per coordinates</li>
+                    <li><em>coordinates_lat</em> &amp; <em>coordinates_long</em> correspond the latitude and longitude of the location name</li>
+                    </ul>
+                    <h2 id="settings-file">Settings file</h2>
+                    <p>The settings file contains parameters (in YAML format) to configure the execution of the PiGx SARS-CoV-2 pipeline. It specifies:</p>
+                    <p><strong>Locations</strong>:</p>
+                    <ul>
+                    <li><em>output-dir</em>, the location of the outputs for the pipeline</li>
+                    <li><em>reads-dir</em>, the location of the reads (directory where <code>fastq</code> files are)</li>
+                    <li><em>reference-fasta</em>, the <code>fasta</code> file with the reference genome (must be prepared by the user)</li>
+                    <li><em>amplicons-bed</em>, the amplicons <code>bed</code> file for coronavirus (must be prepared by the user)</li>
+                    <li><em>kraken-db-dir</em>, the location of the kraken database (must be prepared by the user)</li>
+                    <li><em>krona-db-dir</em>, the location of the krona database (must be prepared by the user)</li>
+                    <li><em>sigmut-db-dir</em>, the location of the signature mutations database (provided at databases/sigmut_db/)</li>
+                    <li><em>vep-db-dir</em>, the location of <code>sars_cov_2</code> database for VEP (must be prepared by the user)</li>
+                    </ul>
+                    <h2 id="mutation-sheet">Mutation sheet</h2>
+                    <p>The mutation sheet should contain one column of siganture mutations in nucleotide-NT (not protein/aminoacid mutation) format per lineage that shall be tracked and analysed by deconvolution. There is no upper or lower limit for the number of signature mutations per lineage. However, please note that the deconvolution results are more robust and precise with a higher number of mutations. (Tested with 10-30 mutations per lineage).</p>
+                    <h2 id="mutation-bed-file">Mutation BED file</h2>
+                    <p>The BED file for testing if the mutation sites are covered should have 4 columns:</p>
+                    <ol>
+                    <li>chromosome name<br />
+                    </li>
+                    <li>start - 5bp <strong>before</strong> the mutation location<br />
+                    </li>
+                    <li>end - 5bp <strong>after</strong> the mutation location<br />
+                    </li>
+                    <li>name with the original location of the mutation in the format of: name_MutationLocation_name, e.g: “nCoV-2019_210_SigmutLocation” A row in the BED file should look like:<br />
+                    <code>NC_045512.2    205 215 nCoV-2019_210_SigmutLocation</code><br />
+                    Please see the example file within the test directory for a detailed example.</li>
+                    </ol>
+                    <h2 id="primer-bed-file">Primer BED file</h2>
+                    <p>The primer file is needed for trimming with fastp. It should have 6 columns following BED files standards. An example file can be found in the test directory.</p>
+                    <p><strong>Trimming</strong>:</p>
+                    <p>These settings are used to filter raw reads when trimming. Reads that are shorter than the product of read-length and the cut-off factor are removed.</p>
+                    <ul>
+                    <li><em>read-length</em> specifies the length of the basepairs</li>
+                    <li><em>cut-off</em> specifies the cut-off factor</li>
+                    </ul>
+                    <h1 id="running-the-pipeline">Running the pipeline</h1>
+                    <p>PiGx SARS-CoV-2 wastewater is executed using the command <code>pigx-sars-cov-2 -s settings.yaml sample_sheet.csv</code>. See <code>pigx-sars-cov-2 --help</code> for information about additional command line arguments.</p>
+                    <p>The <code>execution</code> section of the settings file provides some control over the execution of the pipeline.</p>
+                    <h2 id="local--cluster-execution">Local / cluster execution</h2>
+                    <p>The workflow may be executed locally (on a single computer), or, if a Sun Grid Engine-compatible HPC environment is available, supports cluster execution. In order to enable cluster execution, specify <code>submit-to-cluster: yes</code> in the settings file.</p>
+                    <h2 id="parallel-execution">Parallel execution</h2>
+                    <p>If the workflow is run on a cluster, or a single computer with sufficient resources, some of the tasks may be computed in parallel. To specify the allowed level or parallelism, set the <code>jobs</code> setting under <code>execution</code> in the settings file. For instance,</p>
+                    <div class="sourceCode" id="cb10"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">execution</span><span class="kw">:</span></span>
+                    <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">submit-to-cluster</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
+                    <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">jobs</span><span class="kw">:</span><span class="at"> </span><span class="dv">40</span></span></code></pre></div>
+                    <p>in the settings file, will submit up to 40 simultaneous compute jobs on the cluster.</p>
+                    <h1 id="output-description">Output description</h1>
+                    <p>PiGx SARS-CoV-2 wastewater creates an output directory, as specified in the settings file, that contains all of the following outputs.</p>
+                    <h2 id="time-series-reports">Time series reports</h2>
+                    <p>This pipeline performs mutation analysis of SARS-CoV-2 and reports and quantifies the occurrence of <em>variants of concern</em> (VOC) and signature mutations by which they are characterised.</p>
+                    <p>The visualizations in the time series report provide an overview of the evolution of VOCs and signature mutations found in the analyzed samples across given time points and locations. The abundance values for the variants are derived by deconvolution. The frequencies of the mutations are the output of <a href="https://csb5.github.io/lofreq/">LoFreq</a>.</p>
+                    <h2 id="quality-control">Quality control</h2>
+                    <p>A quality control report is generated for each sample. It includes reports on amplicon coverage and read coverage, as well as general quality control and preprocessing metrics.</p>
+                    <p>General quality control metrics are computed using <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FastQC</a> and <a href="https://multiqc.info/">MultiQC</a>. The MultiQC report is particularly useful, collating quality control metrics from many steps of the pipeline in a single HTML report, which may be found under the <code>multiqc</code> directory in the PiGx output folder.</p>
+                    <h2 id="taxonomic-classification">Taxonomic classification</h2>
+                    <p>This report provides an overview of the species found in the provided wastewater samples apart from SARS-CoV-2. The SARS-CoV-2 enriched wastewater samples are aligned to the virus genome. It provides insight about possible biases and contamination of the samples. In case of abundance of species very similar to SARS-CoV-2 only the taxonomic family will be reported which could indicate that an identification/alignment of SARS-CoV-2 could be biased or impossible. In case of a high percentage of read matching SARS-CoV-2 a refining of trimming parameters should be considered.</p>
+                    <h2 id="variant-report">Variant report</h2>
+                    <p>This report shows the variant analysis of SARS-CoV-2 from wastewater samples. Mutations are identified by single-nucleotide-variant (SNV) calling performed by <a href="https://csb5.github.io/lofreq/">LoFreq</a>. Translated to amino acid mutations by using <a href="https://covid-19.ensembl.org/info/docs/tools/vep/index.html">Ensemble VEP - COVID-19</a>. The list of found mutations (including synonymous and non-synonymous mutations) were matched against lists of signature mutations characterising variants of concern (VOC) of SARS-CoV-2 provided by <a href="https://outbreak.info/situation-reports">outbreak.info</a> and <a href="https://covariants.org/variants/S.501Y.V1">CoVariant.org</a>.</p>
+                    <h1 id="troubleshooting">Troubleshooting</h1>
+                    <p>If you have any questions please e-mail: <a href="mailto:pigx@googlegroups.com" class="email">pigx@googlegroups.com</a> or use the web form to ask questions <a href="https://groups.google.com/forum/#!forum/pigx/" class="uri">https://groups.google.com/forum/#!forum/pigx/</a>.</p>
+                    <p>If you run into any bugs, please open an issue here: <a href="https://github.com/BIMSBbioinfo/pigx_rnaseq/issues" class="uri">https://github.com/BIMSBbioinfo/pigx_rnaseq/issues</a>.</p>
+                  </section>
+                </div>
+                <div class="search-results">
+                  <div class="has-results">
+                    <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+                    <ul class="search-results-list"></ul>
+                  </div>
+                  <div class="no-results">
+                    <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+          gitbook.page.hasChanged(
+            {
+              "page":
+              {
+                "title":"",
+                "level":"1.1",
+                "depth":1,
+                "next":{},
+                "dir":"ltr"
+              },
+              "config":
+              {
+                "gitbook":"*",
+                "theme":"default",
+                "variables":{},
+                "plugins":[],
+                "pluginsConfig":
+                {
+                  "highlight":{},
+                  "search":{},
+                  "lunr": {
+                    "maxIndexSize":1000000,
+                    "ignoreSpecialCharacters":false
+                  },
+                  "sharing": {
+                    "facebook":true,
+                    "twitter":true,
+                    "google":false,
+                    "weibo":false,
+                    "instapaper":false,
+                    "vk":false,
+                    "all":[
+                      "facebook",
+                      "google",
+                      "twitter",
+                      "weibo",
+                      "instapaper"
+                    ]},
+                  "fontsettings": {
+                    "theme":"white",
+                    "family":"sans",
+                    "size":2
+                  },
+                  "theme-default": {
+                    "styles": {
+                      "website":"styles/website.css",
+                      "pdf":"styles/pdf.css",
+                      "epub":"styles/epub.css",
+                      "mobi":"styles/mobi.css",
+                      "ebook":"styles/ebook.css",
+                      "print":"styles/print.css"
+                    },
+                    "showLevel":false
+                  }
+                },
+                "structure": {
+                  "langs":"LANGS.md",
+                  "readme":"README.md",
+                  "glossary":"GLOSSARY.md",
+                  "summary":"SUMMARY.md"
+                },
+                "pdf": {
+                  "pageNumbers":true,
+                  "fontSize":12,
+                  "fontFamily":"Arial",
+                  "paperSize":"a4",
+                  "chapterMark":"pagebreak",
+                  "pageBreaksBefore":"/",
+                  "margin": {
+                    "right":62,"left":62,"top":56,"bottom":56
+                  }
+                },
+                "styles": {
+                  "website":"styles/website.css",
+                  "pdf":"styles/pdf.css",
+                  "epub":"styles/epub.css",
+                  "mobi":"styles/mobi.css",
+                  "ebook":"styles/ebook.css",
+                  "print":"styles/print.css"
+                }
+              },
+              "file": {
+                "path":"",
+                "mtime":"",
+                "type":"markdown"
+              },
+              "gitbook": {
+                "version":"3.2.3",
+                "time":"2019-07-08T15:24:30.549Z"
+              },
+              "basePath":".",
+              "book": {"language":""}});
+        });
+    </script>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+    <script src="gitbook/gitbook-plugin-search/search.js"></script>
+    <script src="gitbook/gitbook-plugin-lunr/lunr.js"></script>
+    <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+    <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
+    <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+  </body>
+</html>

@@ -70,15 +70,15 @@
           <li><a href="pigx-scrna-seq.html#troubleshooting">Troubleshooting</a></li>
           <li><a href="pigx-scrna-seq.html#questions">Questions</a></li>
           </ul></li>
-          <li><a href="pigx-sars-cov2-ww.html">PiGx SARS-CoV-2 wastewater</a>
+          <li><a href="pigx-sars-cov-2.html">PiGx SARS-CoV-2</a>
           <ul>
-          <li><a href="pigx-sars-cov2-ww.html#introduction">Introduction</a></li>
-          <li><a href="pigx-sars-cov2-ww.html#installation">Installation</a></li>
-          <li><a href="pigx-sars-cov2-ww.html#quick-start">Quick start</a></li>
-          <li><a href="pigx-sars-cov2-ww.html#preparing-the-input">Preparing the input</a></li>
-          <li><a href="pigx-sars-cov2-ww.html#running-the-pipeline">Running the pipeline</a></li>
-          <li><a href="pigx-sars-cov2-ww.html#output-description">Output description</a></li>
-          <li><a href="pigx-sars-cov2-ww.html#troubleshooting">Troubleshooting</a></li>
+          <li><a href="pigx-sars-cov-2.html#introduction">Introduction</a></li>
+          <li><a href="pigx-sars-cov-2.html#installation">Installation</a></li>
+          <li><a href="pigx-sars-cov-2.html#quick-start">Quick start</a></li>
+          <li><a href="pigx-sars-cov-2.html#preparing-the-input">Preparing the input</a></li>
+          <li><a href="pigx-sars-cov-2.html#running-the-pipeline">Running the pipeline</a></li>
+          <li><a href="pigx-sars-cov-2.html#output-description">Output description</a></li>
+          <li><a href="pigx-sars-cov-2.html#troubleshooting">Troubleshooting</a></li>
           </ul></li>
           </ul>
         </nav>
@@ -115,25 +115,22 @@
                     <li>ChIP QC Report</li>
                     </ul>
                     <h1 id="installation">Installation</h1>
-                    <p>You can install this pipeline with all its dependencies using GNU Guix:</p>
-                    <pre><code>guix install pigx-chipseq</code></pre>
-                    <p>You can also install it from source manually. You can find the <a href="https://github.com/BIMSBbioinfo/pigx_chipseq/releases/latest">latest release</a> here. PiGx uses the GNU build system. Please make sure that all required dependencies are installed and then follow these steps after unpacking the latest release tarball:</p>
-                    <div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="ex">./configure</span> --prefix=/some/where</span>
-                    <span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="fu">make</span> install</span></code></pre></div>
-                    <h2 id="dependencies">Dependencies</h2>
-                    <p>By default the <code>configure</code> script expects tools to be in a directory listed in the <code>PATH</code> environment variable. If the tools are installed in a location that is not on the <code>PATH</code> you can tell the <code>configure</code> script about them with variables. Run <code>./configure --help</code> for a list of all variables and options.</p>
-                    <p>You can prepare a suitable environment with Conda or with <a href="https://gnu.org/s/guix">GNU Guix</a>. Inspect the <a href="https://github.com/BIMSBbioinfo/pigx_chipseq/blob/master/configure.ac">configure.ac</a> file for an up-to-date list of required packages.</p>
-                    <h3 id="via-guix">Via Guix</h3>
-                    <p>Assuming you have Guix installed, the following command spawns a sub-shell in which all dependencies are available:</p>
-                    <div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="ex">guix</span> environment -l guix.scm</span></code></pre></div>
+                    <p>Pre-built binaries for PiGx are available through <a href="https://guix.gnu.org/">GNU Guix</a>, the functional package manager for reproducible, user-controlled software management. Install the complete pipeline bundle with the following command:</p>
+                    <div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">guix</span> install pigx</span></code></pre></div>
+                    <p>You can also install just the ChIPseq pipeline with</p>
+                    <div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">guix</span> install pigx-chipseq</span></code></pre></div>
+                    <p>You can also install it from source manually. PiGx uses the GNU build system.<br />
+                    Please make sure that all <a href="#manage-dependencies-for-manual-installation">required dependencies</a> are installed and then follow these steps after unpacking the <a href="https://github.com/BIMSBbioinfo/pigx_chipseq/releases/latest">latest release tarball</a>:</p>
+                    <div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./configure</span> <span class="at">--prefix</span><span class="op">=</span>/some/where</span>
+                    <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> install</span></code></pre></div>
                     <h1 id="quick-start">Quick Start</h1>
                     <p>To check wether the pipeline was properly installed, run PiGx ChIPseq on a minimal test dataset, which we provide <a href="https://github.com/BIMSBbioinfo/pigx_chipseq/releases/download/v0.0.14/test_data.tar.gz">here</a>.</p>
                     <p>Once downloaded run these commands to extract the data:</p>
-                    <div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="fu">mkdir</span> test_dir</span>
-                    <span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="fu">tar</span> -xzf test_data.tar.gz --directory test_dir/</span>
-                    <span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="bu">cd</span> test_dir</span></code></pre></div>
+                    <div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> test_dir</span>
+                    <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xzf</span> test_data.tar.gz <span class="at">--directory</span> test_dir/</span>
+                    <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> test_dir</span></code></pre></div>
                     <p>Along with the data this tarball includes a settings file and a sample sheet file. The pipeline can now be started using this command, which takes about 3 minutes to finish (system with 4 cores and 32GB of RAM).</p>
-                    <div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="ex">pigx</span> chipseq -s test_dir/settings.yaml test_dir/sample_sheet.csv</span></code></pre></div>
+                    <div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pigx</span> chipseq <span class="at">-s</span> test_dir/settings.yaml test_dir/sample_sheet.csv</span></code></pre></div>
                     <p>Inside <code>test_dir</code> a new directory <code>out</code> is created, which includes specific directories containing output data for the respective step of the pipeline.</p>
                     <p>The <code>ChIP_Seq_Report.html</code> inside the <code>Reports</code> directory gives a general overview about the ChIP experiment and the peak calling.</p>
                     <h1 id="preparing-input">Preparing Input</h1>
@@ -144,7 +141,7 @@
                     </ul>
                     <p>both files are described below.</p>
                     <p>In order to generate template settings and sample sheet files, type</p>
-                    <div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="ex">pigx</span> chipseq --init</span></code></pre></div>
+                    <div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pigx</span> chipseq <span class="at">--init</span></span></code></pre></div>
                     <p>in the shell, and a boilerplate <code>sample_sheet.csv</code> and <code>settings.yaml</code> will be written to your current directory.</p>
                     <h2 id="sample-sheet">Sample Sheet</h2>
                     <p>The sample sheet is a tabular file in <code>csv</code> format or an exel table (<code>xls</code>/<code>xlsx</code>) defining the samples used in any subsequent analysis.</p>
@@ -193,7 +190,7 @@
                     </ul></li>
                     </ul>
                     <p>The creation of the sample sheet is straight forward using the following command:</p>
-                    <div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="ex">pigx</span> chipseq --init=sample-sheet</span></code></pre></div>
+                    <div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pigx</span> chipseq <span class="at">--init</span><span class="op">=</span>sample-sheet</span></code></pre></div>
                     <p>This creates a template that can be filled with your own samples.</p>
                     <h4 id="technical-replicates">Technical Replicates</h4>
                     <p>The sample sheet offers support for technical replicates, by repeating the sample name (first column) for different input files (second,third column). The quality check will be performed for any input file and replicates will be merged during the mapping.</p>
@@ -221,7 +218,7 @@
                     <h2 id="settings-file">Settings File</h2>
                     <p>The settings file is a file in yaml format specifying general settings and the details of the analysis.</p>
                     <p>The settings file is straight forward using the following command:</p>
-                    <div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="ex">pigx</span> chipseq --init=settings</span></code></pre></div>
+                    <div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pigx</span> chipseq <span class="at">--init</span><span class="op">=</span>settings</span></code></pre></div>
                     <p>This settings file will have all lines commented out, you have to remove the trailing <code>#</code> from <strong>Locations</strong>, <strong>General</strong> and <strong>Analysis</strong> sections, then you can be modified it to fit your analysis.</p>
                     <p>It has the following <strong>required</strong> sections:</p>
                     <h3 id="locations">Locations</h3>
@@ -308,34 +305,34 @@
                     <h3 id="execution">Execution</h3>
                     <p>The <code>execution</code> section in the settings file allows the user to specify whether the pipeline is to be submitted to a cluster, or run locally, and the degree of parallelism. For a full list of possible parameters, see the execution section of the settings file created with <code>pigx chipseq --init=settings</code>.</p>
                     <p>A minimal settings file could look like this, but please consider that no analysis will be performed without adding <a href="#analysis-sections">analysis information</a> :</p>
-                    <div class="sourceCode" id="cb9"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="fu">locations</span><span class="kw">:</span></span>
-                    <span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">input-dir</span><span class="kw">:</span><span class="at"> in/reads/</span></span>
-                    <span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a><span class="at">  </span><span class="fu">output-dir</span><span class="kw">:</span><span class="at"> out/</span></span>
-                    <span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a><span class="at">  </span><span class="fu">genome-file</span><span class="kw">:</span><span class="at"> genome/my_genome.fa</span></span>
-                    <span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a><span class="at">  </span><span class="fu">index-dir</span><span class="kw">:</span></span>
-                    <span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a><span class="at">  </span><span class="fu">gff-file</span><span class="kw">:</span><span class="at"> genome/mm_chr19.gtf</span></span>
-                    <span id="cb9-7"><a href="#cb9-7" aria-hidden="true"></a></span>
-                    <span id="cb9-8"><a href="#cb9-8" aria-hidden="true"></a><span class="fu">general</span><span class="kw">:</span></span>
-                    <span id="cb9-9"><a href="#cb9-9" aria-hidden="true"></a><span class="at">  </span><span class="fu">assembly</span><span class="kw">:</span><span class="at"> hg19</span></span>
-                    <span id="cb9-10"><a href="#cb9-10" aria-hidden="true"></a><span class="at">  </span><span class="fu">params</span><span class="kw">:</span></span>
-                    <span id="cb9-11"><a href="#cb9-11" aria-hidden="true"></a><span class="at">    </span><span class="fu">extend</span><span class="kw">:</span><span class="at"> </span><span class="dv">200</span></span>
-                    <span id="cb9-12"><a href="#cb9-12" aria-hidden="true"></a><span class="at">    </span><span class="fu">scale_bw</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;yes&#39;</span></span>
-                    <span id="cb9-13"><a href="#cb9-13" aria-hidden="true"></a><span class="at">    </span><span class="fu">bowtie2</span><span class="kw">:</span></span>
-                    <span id="cb9-14"><a href="#cb9-14" aria-hidden="true"></a><span class="at">        </span><span class="fu">k</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
-                    <span id="cb9-15"><a href="#cb9-15" aria-hidden="true"></a><span class="at">    </span><span class="fu">idr</span><span class="kw">:</span></span>
-                    <span id="cb9-16"><a href="#cb9-16" aria-hidden="true"></a><span class="at">        </span><span class="fu">idr-threshold</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.1</span></span>
-                    <span id="cb9-17"><a href="#cb9-17" aria-hidden="true"></a><span class="at">    </span><span class="fu">macs2</span><span class="kw">:</span></span>
-                    <span id="cb9-18"><a href="#cb9-18" aria-hidden="true"></a><span class="at">        </span><span class="fu">g</span><span class="kw">:</span><span class="at"> hs</span></span>
-                    <span id="cb9-19"><a href="#cb9-19" aria-hidden="true"></a><span class="at">        </span><span class="fu">keep-dup</span><span class="kw">:</span><span class="at"> auto</span></span>
-                    <span id="cb9-20"><a href="#cb9-20" aria-hidden="true"></a><span class="at">        </span><span class="fu">q</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.05</span></span>
-                    <span id="cb9-21"><a href="#cb9-21" aria-hidden="true"></a><span class="at">    </span><span class="fu">extract_signal</span><span class="kw">:</span></span>
-                    <span id="cb9-22"><a href="#cb9-22" aria-hidden="true"></a><span class="at">        </span><span class="fu">expand_peak</span><span class="kw">:</span><span class="at"> </span><span class="dv">200</span></span>
-                    <span id="cb9-23"><a href="#cb9-23" aria-hidden="true"></a><span class="at">        </span><span class="fu">bin_num</span><span class="kw">:</span><span class="at"> </span><span class="dv">20</span></span>
-                    <span id="cb9-24"><a href="#cb9-24" aria-hidden="true"></a></span>
-                    <span id="cb9-25"><a href="#cb9-25" aria-hidden="true"></a><span class="fu">execution</span><span class="kw">:</span></span>
-                    <span id="cb9-26"><a href="#cb9-26" aria-hidden="true"></a><span class="at">  </span><span class="fu">submit-to-cluster</span><span class="kw">:</span><span class="at"> </span><span class="ch">no</span></span>
-                    <span id="cb9-27"><a href="#cb9-27" aria-hidden="true"></a><span class="at">  </span><span class="fu">jobs</span><span class="kw">:</span><span class="at"> </span><span class="dv">6</span></span>
-                    <span id="cb9-28"><a href="#cb9-28" aria-hidden="true"></a><span class="at">  </span><span class="fu">nice</span><span class="kw">:</span><span class="at"> </span><span class="dv">19</span></span></code></pre></div>
+                    <div class="sourceCode" id="cb9"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">locations</span><span class="kw">:</span></span>
+                    <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">input-dir</span><span class="kw">:</span><span class="at"> in/reads/</span></span>
+                    <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">output-dir</span><span class="kw">:</span><span class="at"> out/</span></span>
+                    <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">genome-file</span><span class="kw">:</span><span class="at"> genome/my_genome.fa</span></span>
+                    <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">index-dir</span><span class="kw">:</span></span>
+                    <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">gff-file</span><span class="kw">:</span><span class="at"> genome/mm_chr19.gtf</span></span>
+                    <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+                    <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">general</span><span class="kw">:</span></span>
+                    <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">assembly</span><span class="kw">:</span><span class="at"> hg19</span></span>
+                    <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">params</span><span class="kw">:</span></span>
+                    <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">extend</span><span class="kw">:</span><span class="at"> </span><span class="dv">200</span></span>
+                    <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">scale_bw</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;yes&#39;</span></span>
+                    <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">bowtie2</span><span class="kw">:</span></span>
+                    <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">k</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
+                    <span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">idr</span><span class="kw">:</span></span>
+                    <span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">idr-threshold</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.1</span></span>
+                    <span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">macs2</span><span class="kw">:</span></span>
+                    <span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">g</span><span class="kw">:</span><span class="at"> hs</span></span>
+                    <span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">keep-dup</span><span class="kw">:</span><span class="at"> auto</span></span>
+                    <span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">q</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.05</span></span>
+                    <span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">extract_signal</span><span class="kw">:</span></span>
+                    <span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">expand_peak</span><span class="kw">:</span><span class="at"> </span><span class="dv">200</span></span>
+                    <span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">bin_num</span><span class="kw">:</span><span class="at"> </span><span class="dv">20</span></span>
+                    <span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
+                    <span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="fu">execution</span><span class="kw">:</span></span>
+                    <span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">submit-to-cluster</span><span class="kw">:</span><span class="at"> </span><span class="ch">no</span></span>
+                    <span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">jobs</span><span class="kw">:</span><span class="at"> </span><span class="dv">6</span></span>
+                    <span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">nice</span><span class="kw">:</span><span class="at"> </span><span class="dv">19</span></span></code></pre></div>
                     <h3 id="analysis-sections">Analysis Sections</h3>
                     <p>The analysis part of the setting file describes the experiment. It has following sections:</p>
                     <table>
@@ -377,66 +374,66 @@
                     <p>The creation of these sections is straight forward considering the following snippets as template. Comments and examples within the snippets provide guidance of what is possible and what to take care of.</p>
                     <h4 id="peak-calling">Peak Calling</h4>
                     <p>The previously defined samples are used for subsequent peak calling analysis to detect regions of enriched binding. In this section any number of comparisons can be defined, while multiple combinations and variations are possible. In terms of peak calling the <strong>ChIP</strong> (also called treatment) is the sample in which we want to detect enriched regions compared to the <strong>Cont(rol)</strong> (or background) sample. Each analysis can be run with a unique set of parameters and default parameters for all analysis can be defined in the <a href="#settings-file">settings file</a> , check available parameters and description <a href="https://github.com/taoliu/MACS">here</a>. For more information have a look at the publication for the software we are using “Zhang et al. Model-based Analysis of ChIP-Seq (MACS). Genome Biol (2008) vol. 9 (9) pp. R137”.</p>
-                    <div class="sourceCode" id="cb10"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="co"># define peak calling analysis</span></span>
-                    <span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a><span class="fu">peak_calling</span><span class="kw">:</span></span>
-                    <span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a><span class="co">    # analysis can have any name, but the names have to be unique </span></span>
-                    <span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a><span class="at">    </span><span class="fu">Peaks1</span><span class="kw">:</span><span class="at"> </span></span>
-                    <span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a><span class="co">        # sample(s) to be used as treatment sample </span></span>
-                    <span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a><span class="at">        </span><span class="fu">ChIP</span><span class="kw">:</span><span class="at"> ChIP1</span></span>
-                    <span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a><span class="co">        # sample(s) to be used as control sample</span></span>
-                    <span id="cb10-8"><a href="#cb10-8" aria-hidden="true"></a><span class="at">        </span><span class="fu">Cont</span><span class="kw">:</span><span class="at"> Cont1</span></span>
-                    <span id="cb10-9"><a href="#cb10-9" aria-hidden="true"></a><span class="at">        </span><span class="fu">params</span><span class="kw">:</span></span>
-                    <span id="cb10-10"><a href="#cb10-10" aria-hidden="true"></a><span class="at">            </span><span class="fu">macs2</span><span class="kw">:</span></span>
-                    <span id="cb10-11"><a href="#cb10-11" aria-hidden="true"></a><span class="co">                # each analysis can be adjusted independently</span></span>
-                    <span id="cb10-12"><a href="#cb10-12" aria-hidden="true"></a><span class="co">                # add/modify available parameters of the analysis</span></span>
-                    <span id="cb10-13"><a href="#cb10-13" aria-hidden="true"></a><span class="at">                </span><span class="fu">nomodel</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;&#39;</span></span>
-                    <span id="cb10-14"><a href="#cb10-14" aria-hidden="true"></a><span class="at">                </span><span class="fu">extsize</span><span class="kw">:</span><span class="at"> </span><span class="dv">300</span></span>
-                    <span id="cb10-15"><a href="#cb10-15" aria-hidden="true"></a><span class="at">    </span><span class="fu">Peaks2</span><span class="kw">:</span></span>
-                    <span id="cb10-16"><a href="#cb10-16" aria-hidden="true"></a><span class="at">        </span><span class="fu">ChIP</span><span class="kw">:</span><span class="at"> ChIP2</span></span>
-                    <span id="cb10-17"><a href="#cb10-17" aria-hidden="true"></a><span class="at">        </span><span class="fu">Cont</span><span class="kw">:</span><span class="at"> Cont2</span></span>
-                    <span id="cb10-18"><a href="#cb10-18" aria-hidden="true"></a><span class="at">        </span><span class="fu">params</span><span class="kw">:</span></span>
-                    <span id="cb10-19"><a href="#cb10-19" aria-hidden="true"></a><span class="at">            </span><span class="fu">macs2</span><span class="kw">:</span></span>
-                    <span id="cb10-20"><a href="#cb10-20" aria-hidden="true"></a><span class="co">                # each analysis can be adjusted independently</span></span>
-                    <span id="cb10-21"><a href="#cb10-21" aria-hidden="true"></a><span class="at">                </span><span class="fu">nomodel</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;&#39;</span></span>
-                    <span id="cb10-22"><a href="#cb10-22" aria-hidden="true"></a><span class="at">                </span><span class="fu">extsize</span><span class="kw">:</span><span class="at"> </span><span class="dv">147</span></span>
-                    <span id="cb10-23"><a href="#cb10-23" aria-hidden="true"></a><span class="at">    </span><span class="fu">Peaks4</span><span class="kw">:</span></span>
-                    <span id="cb10-24"><a href="#cb10-24" aria-hidden="true"></a><span class="at">        </span><span class="fu">ChIP</span><span class="kw">:</span></span>
-                    <span id="cb10-25"><a href="#cb10-25" aria-hidden="true"></a><span class="co">            # multiple samples can be used as treatment</span></span>
-                    <span id="cb10-26"><a href="#cb10-26" aria-hidden="true"></a><span class="at">            </span><span class="kw">-</span><span class="at"> ChIP1</span></span>
-                    <span id="cb10-27"><a href="#cb10-27" aria-hidden="true"></a><span class="at">            </span><span class="kw">-</span><span class="at"> ChIP2</span></span>
-                    <span id="cb10-28"><a href="#cb10-28" aria-hidden="true"></a><span class="at">        </span><span class="fu">Cont</span><span class="kw">:</span></span>
-                    <span id="cb10-29"><a href="#cb10-29" aria-hidden="true"></a><span class="co">            # multiple samples can be used as control</span></span>
-                    <span id="cb10-30"><a href="#cb10-30" aria-hidden="true"></a><span class="at">            </span><span class="kw">-</span><span class="at"> Cont1</span></span>
-                    <span id="cb10-31"><a href="#cb10-31" aria-hidden="true"></a><span class="at">            </span><span class="kw">-</span><span class="at"> Cont2</span></span>
-                    <span id="cb10-32"><a href="#cb10-32" aria-hidden="true"></a><span class="at">        </span><span class="fu">params</span><span class="kw">:</span></span>
-                    <span id="cb10-33"><a href="#cb10-33" aria-hidden="true"></a><span class="at">            </span><span class="fu">macs2</span><span class="kw">:</span></span>
-                    <span id="cb10-34"><a href="#cb10-34" aria-hidden="true"></a><span class="at">                </span><span class="fu">nomodel</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;&#39;</span></span>
-                    <span id="cb10-35"><a href="#cb10-35" aria-hidden="true"></a></span>
-                    <span id="cb10-36"><a href="#cb10-36" aria-hidden="true"></a><span class="at">    </span><span class="fu">Peaks5</span><span class="kw">:</span></span>
-                    <span id="cb10-37"><a href="#cb10-37" aria-hidden="true"></a><span class="co">        # the number of samples per group can differ </span></span>
-                    <span id="cb10-38"><a href="#cb10-38" aria-hidden="true"></a><span class="at">        </span><span class="fu">ChIP</span><span class="kw">:</span><span class="at"> ChIP2</span></span>
-                    <span id="cb10-39"><a href="#cb10-39" aria-hidden="true"></a><span class="at">        </span><span class="fu">Cont</span><span class="kw">:</span></span>
-                    <span id="cb10-40"><a href="#cb10-40" aria-hidden="true"></a><span class="at">            </span><span class="kw">-</span><span class="at"> Cont1</span></span>
-                    <span id="cb10-41"><a href="#cb10-41" aria-hidden="true"></a><span class="at">            </span><span class="kw">-</span><span class="at"> Cont2</span></span>
-                    <span id="cb10-42"><a href="#cb10-42" aria-hidden="true"></a><span class="at">        </span><span class="fu">params</span><span class="kw">:</span></span>
-                    <span id="cb10-43"><a href="#cb10-43" aria-hidden="true"></a><span class="at">            </span><span class="fu">macs2</span><span class="kw">:</span></span>
-                    <span id="cb10-44"><a href="#cb10-44" aria-hidden="true"></a><span class="at">                </span><span class="fu">nomodel</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;&#39;</span></span>
-                    <span id="cb10-45"><a href="#cb10-45" aria-hidden="true"></a></span>
-                    <span id="cb10-46"><a href="#cb10-46" aria-hidden="true"></a><span class="at">    </span><span class="fu">Peaks6</span><span class="kw">:</span></span>
-                    <span id="cb10-47"><a href="#cb10-47" aria-hidden="true"></a><span class="co">        # analysis can be performed without control</span></span>
-                    <span id="cb10-48"><a href="#cb10-48" aria-hidden="true"></a><span class="at">        </span><span class="fu">ChIP</span><span class="kw">:</span><span class="at"> ChIP1</span></span>
-                    <span id="cb10-49"><a href="#cb10-49" aria-hidden="true"></a><span class="at">        </span><span class="fu">Cont</span><span class="kw">:</span></span>
-                    <span id="cb10-50"><a href="#cb10-50" aria-hidden="true"></a><span class="at">        </span><span class="fu">params</span><span class="kw">:</span></span>
-                    <span id="cb10-51"><a href="#cb10-51" aria-hidden="true"></a><span class="at">            </span><span class="fu">macs2</span><span class="kw">:</span></span>
-                    <span id="cb10-52"><a href="#cb10-52" aria-hidden="true"></a><span class="at">                </span><span class="fu">nomodel</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;&#39;</span></span></code></pre></div>
+                    <div class="sourceCode" id="cb10"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define peak calling analysis</span></span>
+                    <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">peak_calling</span><span class="kw">:</span></span>
+                    <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">    # analysis can have any name, but the names have to be unique </span></span>
+                    <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">Peaks1</span><span class="kw">:</span><span class="at"> </span></span>
+                    <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">        # sample(s) to be used as treatment sample </span></span>
+                    <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">ChIP</span><span class="kw">:</span><span class="at"> ChIP1</span></span>
+                    <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">        # sample(s) to be used as control sample</span></span>
+                    <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">Cont</span><span class="kw">:</span><span class="at"> Cont1</span></span>
+                    <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">params</span><span class="kw">:</span></span>
+                    <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">macs2</span><span class="kw">:</span></span>
+                    <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">                # each analysis can be adjusted independently</span></span>
+                    <span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">                # add/modify available parameters of the analysis</span></span>
+                    <span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="at">                </span><span class="fu">nomodel</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;&#39;</span></span>
+                    <span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="at">                </span><span class="fu">extsize</span><span class="kw">:</span><span class="at"> </span><span class="dv">300</span></span>
+                    <span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">Peaks2</span><span class="kw">:</span></span>
+                    <span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">ChIP</span><span class="kw">:</span><span class="at"> ChIP2</span></span>
+                    <span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">Cont</span><span class="kw">:</span><span class="at"> Cont2</span></span>
+                    <span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">params</span><span class="kw">:</span></span>
+                    <span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">macs2</span><span class="kw">:</span></span>
+                    <span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="co">                # each analysis can be adjusted independently</span></span>
+                    <span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="at">                </span><span class="fu">nomodel</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;&#39;</span></span>
+                    <span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="at">                </span><span class="fu">extsize</span><span class="kw">:</span><span class="at"> </span><span class="dv">147</span></span>
+                    <span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">Peaks4</span><span class="kw">:</span></span>
+                    <span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">ChIP</span><span class="kw">:</span></span>
+                    <span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="co">            # multiple samples can be used as treatment</span></span>
+                    <span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="kw">-</span><span class="at"> ChIP1</span></span>
+                    <span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="kw">-</span><span class="at"> ChIP2</span></span>
+                    <span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">Cont</span><span class="kw">:</span></span>
+                    <span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="co">            # multiple samples can be used as control</span></span>
+                    <span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="kw">-</span><span class="at"> Cont1</span></span>
+                    <span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="kw">-</span><span class="at"> Cont2</span></span>
+                    <span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">params</span><span class="kw">:</span></span>
+                    <span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">macs2</span><span class="kw">:</span></span>
+                    <span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a><span class="at">                </span><span class="fu">nomodel</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;&#39;</span></span>
+                    <span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a></span>
+                    <span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">Peaks5</span><span class="kw">:</span></span>
+                    <span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a><span class="co">        # the number of samples per group can differ </span></span>
+                    <span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">ChIP</span><span class="kw">:</span><span class="at"> ChIP2</span></span>
+                    <span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">Cont</span><span class="kw">:</span></span>
+                    <span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="kw">-</span><span class="at"> Cont1</span></span>
+                    <span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="kw">-</span><span class="at"> Cont2</span></span>
+                    <span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">params</span><span class="kw">:</span></span>
+                    <span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">macs2</span><span class="kw">:</span></span>
+                    <span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a><span class="at">                </span><span class="fu">nomodel</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;&#39;</span></span>
+                    <span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a></span>
+                    <span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">Peaks6</span><span class="kw">:</span></span>
+                    <span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a><span class="co">        # analysis can be performed without control</span></span>
+                    <span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">ChIP</span><span class="kw">:</span><span class="at"> ChIP1</span></span>
+                    <span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">Cont</span><span class="kw">:</span></span>
+                    <span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">params</span><span class="kw">:</span></span>
+                    <span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">macs2</span><span class="kw">:</span></span>
+                    <span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a><span class="at">                </span><span class="fu">nomodel</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;&#39;</span></span></code></pre></div>
                     <h4 id="optional-idr">(<em>optional</em>) IDR</h4>
                     <p>Assuming that the some samples are (biological/technical) replicates, in order to measure the consistency between them use the irreproducible discovery rate (IDR) “Li, Q., Brown, J. B., Huang, H., &amp; Bickel, P. J. (2011). Measuring reproducibility of high-throughput experiments. The annals of applied statistics, 5(3), 1752-1779.”, which is in general a good (but very stringent) quality control.</p>
-                    <div class="sourceCode" id="cb11"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a><span class="fu">idr</span><span class="kw">:</span></span>
-                    <span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a><span class="co">    # idr analysis can have any name, but the names have to be unique </span></span>
-                    <span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a><span class="at">    </span><span class="fu">ChIP_IDR</span><span class="kw">:</span></span>
-                    <span id="cb11-4"><a href="#cb11-4" aria-hidden="true"></a><span class="co">        # define the pair of samples, add more combinations for more replicates</span></span>
-                    <span id="cb11-5"><a href="#cb11-5" aria-hidden="true"></a><span class="at">        </span><span class="fu">ChIP1</span><span class="kw">:</span><span class="at"> Peaks1</span></span>
-                    <span id="cb11-6"><a href="#cb11-6" aria-hidden="true"></a><span class="at">        </span><span class="fu">ChIP2</span><span class="kw">:</span><span class="at"> Peaks2</span></span></code></pre></div>
+                    <div class="sourceCode" id="cb11"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">idr</span><span class="kw">:</span></span>
+                    <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">    # idr analysis can have any name, but the names have to be unique </span></span>
+                    <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">ChIP_IDR</span><span class="kw">:</span></span>
+                    <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">        # define the pair of samples, add more combinations for more replicates</span></span>
+                    <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">ChIP1</span><span class="kw">:</span><span class="at"> Peaks1</span></span>
+                    <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">ChIP2</span><span class="kw">:</span><span class="at"> Peaks2</span></span></code></pre></div>
                     <h4 id="optional-hub">(<em>optional</em>) Hub</h4>
                     <p>In the <em>hub</em> section the general layout of a <a href="https://genome.ucsc.edu/goldenpath/help/hgTrackHubHelp.html#Intro">UCSC Track Hubs</a> is described with some minimal items. The track hub is generated from the processed data and allows the visual inspection of results at a UCSC genome browser (for supported genomes).</p>
                     <p><strong>IMPORTANT</strong>: In order to use the hub feature, make sure you downloaded the reference genome in UCSC style (see <a href="#reference-and-annotations">here</a> for instructions ).</p>
@@ -488,47 +485,47 @@
                     </tbody>
                     </table>
                     <p>This is a small example how this could look like:</p>
-                    <div class="sourceCode" id="cb12"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="fu">hub</span><span class="kw">:</span></span>
-                    <span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> PiGx_Hub</span></span>
-                    <span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a><span class="at">    </span><span class="fu">shortLabel</span><span class="kw">:</span><span class="at"> PiGx_Short</span></span>
-                    <span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a><span class="at">    </span><span class="fu">longLabel</span><span class="kw">:</span><span class="at"> PiGx_Hub_Long</span></span>
-                    <span id="cb12-5"><a href="#cb12-5" aria-hidden="true"></a><span class="at">    </span><span class="fu">email</span><span class="kw">:</span><span class="at"> my.mail@domain.com</span></span>
-                    <span id="cb12-6"><a href="#cb12-6" aria-hidden="true"></a><span class="at">    </span><span class="fu">descriptionUrl</span><span class="kw">:</span><span class="at"> pigx_hub.html</span></span>
-                    <span id="cb12-7"><a href="#cb12-7" aria-hidden="true"></a><span class="at">    </span><span class="fu">super_tracks</span><span class="kw">:</span></span>
-                    <span id="cb12-8"><a href="#cb12-8" aria-hidden="true"></a><span class="co">        # track groups can have any name, but the names have to be unique </span></span>
-                    <span id="cb12-9"><a href="#cb12-9" aria-hidden="true"></a><span class="at">        </span><span class="fu">Tracks1</span><span class="kw">:</span></span>
-                    <span id="cb12-10"><a href="#cb12-10" aria-hidden="true"></a><span class="co">            # tracks can have any name, but the names have to be unique </span></span>
-                    <span id="cb12-11"><a href="#cb12-11" aria-hidden="true"></a><span class="at">            </span><span class="fu">track11</span><span class="kw">:</span></span>
-                    <span id="cb12-12"><a href="#cb12-12" aria-hidden="true"></a><span class="co">                # to add peaks as a track, define &quot;type: macs&quot; </span></span>
-                    <span id="cb12-13"><a href="#cb12-13" aria-hidden="true"></a><span class="at">                </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Peaks1</span></span>
-                    <span id="cb12-14"><a href="#cb12-14" aria-hidden="true"></a><span class="at">                </span><span class="fu">type</span><span class="kw">:</span><span class="at"> macs</span></span>
-                    <span id="cb12-15"><a href="#cb12-15" aria-hidden="true"></a><span class="at">            </span><span class="fu">track12</span><span class="kw">:</span></span>
-                    <span id="cb12-16"><a href="#cb12-16" aria-hidden="true"></a><span class="co">                # to add coverage signal as a track, define &quot;type: bigwig&quot;</span></span>
-                    <span id="cb12-17"><a href="#cb12-17" aria-hidden="true"></a><span class="at">                </span><span class="fu">name</span><span class="kw">:</span><span class="at"> ChIP1</span></span>
-                    <span id="cb12-18"><a href="#cb12-18" aria-hidden="true"></a><span class="at">                </span><span class="fu">type</span><span class="kw">:</span><span class="at"> bigWig</span></span>
-                    <span id="cb12-19"><a href="#cb12-19" aria-hidden="true"></a><span class="co">            # descriptive longer label for track group is</span></span>
-                    <span id="cb12-20"><a href="#cb12-20" aria-hidden="true"></a><span class="co">            # displayed as description in track settings</span></span>
-                    <span id="cb12-21"><a href="#cb12-21" aria-hidden="true"></a><span class="at">            </span><span class="fu">long_label</span><span class="kw">:</span><span class="at"> Tracks1_long</span></span></code></pre></div>
+                    <div class="sourceCode" id="cb12"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hub</span><span class="kw">:</span></span>
+                    <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> PiGx_Hub</span></span>
+                    <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">shortLabel</span><span class="kw">:</span><span class="at"> PiGx_Short</span></span>
+                    <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">longLabel</span><span class="kw">:</span><span class="at"> PiGx_Hub_Long</span></span>
+                    <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">email</span><span class="kw">:</span><span class="at"> my.mail@domain.com</span></span>
+                    <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">descriptionUrl</span><span class="kw">:</span><span class="at"> pigx_hub.html</span></span>
+                    <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">super_tracks</span><span class="kw">:</span></span>
+                    <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">        # track groups can have any name, but the names have to be unique </span></span>
+                    <span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">Tracks1</span><span class="kw">:</span></span>
+                    <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">            # tracks can have any name, but the names have to be unique </span></span>
+                    <span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">track11</span><span class="kw">:</span></span>
+                    <span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co">                # to add peaks as a track, define &quot;type: macs&quot; </span></span>
+                    <span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="at">                </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Peaks1</span></span>
+                    <span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="at">                </span><span class="fu">type</span><span class="kw">:</span><span class="at"> macs</span></span>
+                    <span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">track12</span><span class="kw">:</span></span>
+                    <span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co">                # to add coverage signal as a track, define &quot;type: bigwig&quot;</span></span>
+                    <span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="at">                </span><span class="fu">name</span><span class="kw">:</span><span class="at"> ChIP1</span></span>
+                    <span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="at">                </span><span class="fu">type</span><span class="kw">:</span><span class="at"> bigWig</span></span>
+                    <span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co">            # descriptive longer label for track group is</span></span>
+                    <span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="co">            # displayed as description in track settings</span></span>
+                    <span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">long_label</span><span class="kw">:</span><span class="at"> Tracks1_long</span></span></code></pre></div>
                     <h4 id="optional-feature-combination">(<em>optional</em>) Feature Combination</h4>
                     <p>To find the combination of enriched binding regions, which is shared among a set of <em>peak calling</em> and/or <em>idr</em> analysis results, define a feature in the <em>feature_combination</em> section. Only items defined in the <em>peak_calling</em> and <em>idr</em> sections can be used here.</p>
-                    <div class="sourceCode" id="cb13"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="fu">feature_combination</span><span class="kw">:</span></span>
-                    <span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a><span class="co">    # features can have any name, but the names have to be unique</span></span>
-                    <span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a><span class="at">    </span><span class="fu">Feature1</span><span class="kw">:</span></span>
-                    <span id="cb13-4"><a href="#cb13-4" aria-hidden="true"></a><span class="co">        # define feature based on only one result</span></span>
-                    <span id="cb13-5"><a href="#cb13-5" aria-hidden="true"></a><span class="at">        </span><span class="kw">-</span><span class="at"> ChIP_IDR</span></span>
-                    <span id="cb13-6"><a href="#cb13-6" aria-hidden="true"></a><span class="at">    </span><span class="fu">Feature2</span><span class="kw">:</span></span>
-                    <span id="cb13-7"><a href="#cb13-7" aria-hidden="true"></a><span class="co">        # define feature based on more than one result</span></span>
-                    <span id="cb13-8"><a href="#cb13-8" aria-hidden="true"></a><span class="at">        </span><span class="kw">-</span><span class="at"> Peaks6</span></span>
-                    <span id="cb13-9"><a href="#cb13-9" aria-hidden="true"></a><span class="at">        </span><span class="kw">-</span><span class="at"> Peaks5</span></span>
-                    <span id="cb13-10"><a href="#cb13-10" aria-hidden="true"></a><span class="at">    </span><span class="fu">Feature3</span><span class="kw">:</span></span>
-                    <span id="cb13-11"><a href="#cb13-11" aria-hidden="true"></a><span class="co">        # define feature based on different analysis types</span></span>
-                    <span id="cb13-12"><a href="#cb13-12" aria-hidden="true"></a><span class="at">        </span><span class="kw">-</span><span class="at"> ChIP_IDR</span></span>
-                    <span id="cb13-13"><a href="#cb13-13" aria-hidden="true"></a><span class="at">        </span><span class="kw">-</span><span class="at"> Peaks5</span></span></code></pre></div>
+                    <div class="sourceCode" id="cb13"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">feature_combination</span><span class="kw">:</span></span>
+                    <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">    # features can have any name, but the names have to be unique</span></span>
+                    <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">Feature1</span><span class="kw">:</span></span>
+                    <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">        # define feature based on only one result</span></span>
+                    <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> ChIP_IDR</span></span>
+                    <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">Feature2</span><span class="kw">:</span></span>
+                    <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">        # define feature based on more than one result</span></span>
+                    <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> Peaks6</span></span>
+                    <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> Peaks5</span></span>
+                    <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">Feature3</span><span class="kw">:</span></span>
+                    <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">        # define feature based on different analysis types</span></span>
+                    <span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> ChIP_IDR</span></span>
+                    <span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> Peaks5</span></span></code></pre></div>
                     <h1 id="running-the-pipeline">Running the pipeline</h1>
                     <p>To run PiGx on your experimental data, first prepare the sample sheet and settings file (see <a href="#preparing-input">above</a>), and then from the terminal type</p>
-                    <div class="sourceCode" id="cb14"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a>$ <span class="ex">pigx-chipseq</span> -s settings.yaml sample_sheet.csv</span></code></pre></div>
+                    <div class="sourceCode" id="cb14"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pigx-chipseq <span class="at">-s</span> settings.yaml sample_sheet.csv</span></code></pre></div>
                     <p>If you are not sure wether you set everything up correctly, use the dryrun option which will only show what work would be performed, but does not actually run the pipeline.</p>
-                    <div class="sourceCode" id="cb15"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a>$ <span class="ex">pigx-chipseq</span> -s settings.yaml sample_sheet.csv -n </span></code></pre></div>
+                    <div class="sourceCode" id="cb15"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pigx-chipseq <span class="at">-s</span> settings.yaml sample_sheet.csv <span class="at">-n</span> </span></code></pre></div>
                     <p>To see all available options type the <code>--help</code> option</p>
                     <h1 id="output-description">Output Description</h1>
                     <p>PiGx ChIPseq creates an output folder, with a specific directory structure (for details see <a href="#output-folder-structure">here</a>) that contains the following outputs and more.</p>
@@ -664,11 +661,16 @@
                     <pre><code>export GUIX_LOCPATH=$HOME/.guix-profile/lib/locale</code></pre>
                     <p>Or you might consider adding this directly to your <code>~/.bashrc</code> or <code>~/.bash_profile</code>.</p>
                     <pre><code>echo -e &quot;# use guix locales\nexport GUIX_LOCPATH=&quot;&#39;$HOME&#39;&quot;/.guix-profile/lib/locale&quot;  &gt;&gt;  ~/.bashrc</code></pre>
+                    <h2 id="manage-dependencies-for-manual-installation">Manage dependencies for manual installation</h2>
+                    <p>By default the <code>configure</code> script expects tools to be in a directory listed in the <code>PATH</code> environment variable. If the tools are installed in a location that is not on the <code>PATH</code> you can tell the <code>configure</code> script about them with variables. Run <code>./configure --help</code> for a list of all variables and options.</p>
+                    <p>You can prepare a suitable environment with Conda or with <a href="https://gnu.org/s/guix">GNU Guix</a>. Inspect the <a href="https://github.com/BIMSBbioinfo/pigx_chipseq/blob/master/configure.ac">configure.ac</a> file for an up-to-date list of required packages.</p>
+                    <p>Assuming you have Guix installed, the following command spawns a sub-shell in which all dependencies are available:</p>
+                    <div class="sourceCode" id="cb22"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">guix</span> environment <span class="at">-l</span> guix.scm</span></code></pre></div>
                     <h1 id="faq">FAQ</h1>
                     <p><strong>Q:</strong> I get the following error:</p>
-                    <div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true"></a><span class="ex">Error</span>: Directory cannot be locked. Please make sure that no other Snakemake process is trying to create the same files in the following directory:</span>
-                    <span id="cb22-2"><a href="#cb22-2" aria-hidden="true"></a><span class="ex">/home/agosdsc/projects/pigx_chipseq/test_dir/out</span></span>
-                    <span id="cb22-3"><a href="#cb22-3" aria-hidden="true"></a><span class="ex">If</span> you are sure that no other instances of snakemake are running on this directory, the remaining lock was likely caused by a kill signal or a power loss. It can be removed with the --unlock argument.</span></code></pre></div>
+                    <div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Error:</span> Directory cannot be locked. Please make sure that no other Snakemake process is trying to create the same files in the following directory:</span>
+                    <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/agosdsc/projects/pigx_chipseq/test_dir/out</span></span>
+                    <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="ex">If</span> you are sure that no other instances of snakemake are running on this directory, the remaining lock was likely caused by a kill signal or a power loss. It can be removed with the <span class="at">--unlock</span> argument.</span></code></pre></div>
                     <p>What happend and what should I do?</p>
                     <p><strong>A:</strong> The pipeline crashed at some point, possible reasons are mentioned by the error. Do as the error message proposes and pass the <code>--unlock</code> argument once and then run the pipeline again without <code>--unlock</code>.</p>
                     <p><strong>Q:</strong> command name? In my installation, the command appears to be <code>pigx-chipseq</code> and not <code>pigx chipseq</code> as the docs say.</p>
@@ -676,15 +678,15 @@
                     <p><strong>Q:</strong> The docs mention how to deal with technical replicates, but how should biological replicates be handled?</p>
                     <p><strong>A:</strong> Usually biological replicates are kept seperately, which means you should give them distinct names in the sample sheet to allow for distinct alignments, and then for peak-calling you pick up the sample names from the sample sheet to reenter them in the ‘analysis’ section of the settings file.</p>
                     <p><strong>Q:</strong> I get an error when trying to run the pipeline:</p>
-                    <div class="sourceCode" id="cb23"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true"></a><span class="ex">SystemExit</span> in line 26 of /gnu/store/ik8kz81k720a8sy8nc4119jy5njb98gd-pigx-chipseq-0.0.20/libexec/pigx_chipseq/scripts/Check_Config.py:</span>
-                    <span id="cb23-2"><a href="#cb23-2" aria-hidden="true"></a><span class="ex">ERROR</span>: Config file is not properly formated:</span>
-                    <span id="cb23-3"><a href="#cb23-3" aria-hidden="true"></a><span class="ex">Genome</span> fasta headers contain whitespaces.</span>
-                    <span id="cb23-4"><a href="#cb23-4" aria-hidden="true"></a> <span class="ex">Please</span> reformat the headers</span>
-                    <span id="cb23-5"><a href="#cb23-5" aria-hidden="true"></a></span>
-                    <span id="cb23-6"><a href="#cb23-6" aria-hidden="true"></a>  <span class="ex">File</span> <span class="st">&quot;/gnu/store/ik8kz81k720a8sy8nc4119jy5njb98gd-pigx-chipseq-0.0.20/libexec/pigx_chipseq/Snake_ChIPseq.py&quot;</span>, line 38, in <span class="op">&lt;</span>module<span class="op">&gt;</span></span>
-                    <span id="cb23-7"><a href="#cb23-7" aria-hidden="true"></a>  <span class="ex">File</span> <span class="st">&quot;/gnu/store/ik8kz81k720a8sy8nc4119jy5njb98gd-pigx-chipseq-0.0.20/libexec/pigx_chipseq/scripts/Check_Config.py&quot;</span>, line 26, in validate_config</span></code></pre></div>
+                    <div class="sourceCode" id="cb24"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">SystemExit</span> in line 26 of /gnu/store/ik8kz81k720a8sy8nc4119jy5njb98gd-pigx-chipseq-0.0.20/libexec/pigx_chipseq/scripts/Check_Config.py:</span>
+                    <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ERROR:</span> Config file is not properly formated:</span>
+                    <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Genome</span> fasta headers contain whitespaces.</span>
+                    <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a> <span class="ex">Please</span> reformat the headers</span>
+                    <span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+                    <span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="ex">File</span> <span class="st">&quot;/gnu/store/ik8kz81k720a8sy8nc4119jy5njb98gd-pigx-chipseq-0.0.20/libexec/pigx_chipseq/Snake_ChIPseq.py&quot;</span>, line 38, in <span class="op">&lt;</span>module<span class="op">&gt;</span></span>
+                    <span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="ex">File</span> <span class="st">&quot;/gnu/store/ik8kz81k720a8sy8nc4119jy5njb98gd-pigx-chipseq-0.0.20/libexec/pigx_chipseq/scripts/Check_Config.py&quot;</span>, line 26, in validate_config</span></code></pre></div>
                     <p><strong>A:</strong> Our pipeline does not like if in the FASTA headers of the reference genome there is more information than the chromosome name, so please use this oneliner to format your genome-file:</p>
-                    <div class="sourceCode" id="cb24"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true"></a><span class="fu">cat</span> refGenome.fa  <span class="kw">|</span> <span class="fu">awk</span> <span class="st">&#39;{ print $1}’ &gt;  refGenome_noWhiteSpace.fa</span></span></code></pre></div>
+                    <div class="sourceCode" id="cb25"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> refGenome.fa  <span class="kw">|</span> <span class="fu">awk</span> <span class="st">&#39;{ print $1}’ &gt;  refGenome_noWhiteSpace.fa</span></span></code></pre></div>
                     <h1 id="questions">Questions</h1>
                     <p>If you have further questions please e-mail: <a href="mailto:pigx@googlegroups.com" class="email">pigx@googlegroups.com</a> or use the web form to ask questions <a href="https://groups.google.com/forum/#!forum/pigx/" class="uri">https://groups.google.com/forum/#!forum/pigx/</a></p>
                   </section>

@@ -70,15 +70,15 @@
           <li><a href="pigx-scrna-seq.html#troubleshooting">Troubleshooting</a></li>
           <li><a href="pigx-scrna-seq.html#questions">Questions</a></li>
           </ul></li>
-          <li><a href="pigx-sars-cov2-ww.html">PiGx SARS-CoV-2 wastewater</a>
+          <li><a href="pigx-sars-cov-2.html">PiGx SARS-CoV-2</a>
           <ul>
-          <li><a href="pigx-sars-cov2-ww.html#introduction">Introduction</a></li>
-          <li><a href="pigx-sars-cov2-ww.html#installation">Installation</a></li>
-          <li><a href="pigx-sars-cov2-ww.html#quick-start">Quick start</a></li>
-          <li><a href="pigx-sars-cov2-ww.html#preparing-the-input">Preparing the input</a></li>
-          <li><a href="pigx-sars-cov2-ww.html#running-the-pipeline">Running the pipeline</a></li>
-          <li><a href="pigx-sars-cov2-ww.html#output-description">Output description</a></li>
-          <li><a href="pigx-sars-cov2-ww.html#troubleshooting">Troubleshooting</a></li>
+          <li><a href="pigx-sars-cov-2.html#introduction">Introduction</a></li>
+          <li><a href="pigx-sars-cov-2.html#installation">Installation</a></li>
+          <li><a href="pigx-sars-cov-2.html#quick-start">Quick start</a></li>
+          <li><a href="pigx-sars-cov-2.html#preparing-the-input">Preparing the input</a></li>
+          <li><a href="pigx-sars-cov-2.html#running-the-pipeline">Running the pipeline</a></li>
+          <li><a href="pigx-sars-cov-2.html#output-description">Output description</a></li>
+          <li><a href="pigx-sars-cov-2.html#troubleshooting">Troubleshooting</a></li>
           </ul></li>
           </ul>
         </nav>
@@ -128,12 +128,12 @@
                     </ul>
                     <h1 id="installation">Installation</h1>
                     <p>Pre-built binaries for PiGx are available through <a href="https://gnu.org/software/guix">GNU Guix</a>, the functional package manager for reproducible, user-controlled software management. Install the complete pipeline bundle with the following command:</p>
-                    <div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="ex">guix</span> install pigx</span></code></pre></div>
+                    <div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">guix</span> install pigx</span></code></pre></div>
                     <p>You can install this BSseq pipeline with:</p>
-                    <div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="ex">guix</span> install pigx-bsseq</span></code></pre></div>
+                    <div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">guix</span> install pigx-bsseq</span></code></pre></div>
                     <p>You can also install it from source manually. You can find the <a href="https://github.com/BIMSBbioinfo/pigx_bsseq/releases/latest">latest release</a> here. PiGx uses the GNU build system. Please make sure that all required dependencies are installed and then follow these steps after unpacking the latest release tarball:</p>
-                    <div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="ex">./configure</span> --prefix=/some/where</span>
-                    <span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="fu">make</span> install</span></code></pre></div>
+                    <div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./configure</span> <span class="at">--prefix</span><span class="op">=</span>/some/where</span>
+                    <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> install</span></code></pre></div>
                     <h1 id="quick-start">Quick start</h1>
                     <ol>
                     <li><p>Download the zipped test data:</p>
@@ -151,7 +151,7 @@
                     </ul>
                     <p>both files are described below.</p>
                     <p>In order to generate template settings and sample sheet files, type</p>
-                    <div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="ex">pigx</span> bsseq --init</span></code></pre></div>
+                    <div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pigx</span> bsseq <span class="at">--init</span></span></code></pre></div>
                     <p>in the shell, and a boilerplate <code>sample_sheet.csv</code> and <code>settings.yaml</code> will be written to your current directory.</p>
                     <h2 id="sample-sheet">Sample Sheet</h2>
                     <p>The sample sheet is a tabular file (<code>csv</code> format) describing the experiment. The table has the following columns:</p>
@@ -242,62 +242,62 @@
                     <li>specify which of the treatment groups defined in the sample sheet should be compare against each other</li>
                     </ul>
                     <p>The section described here comprise most of the settings that a typical user might want to access, while more advanced settings provided as defaults in <em>execution</em> section will not need to be modified by most users.</p>
-                    <div class="sourceCode" id="cb5"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="fu">general</span><span class="kw">:</span></span>
-                    <span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">assembly</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;&#39;</span></span>
-                    <span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a><span class="co">  # use one or both bisulfite aligners</span></span>
-                    <span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a><span class="co">  # bwameth is faster and uses less resources</span></span>
-                    <span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a><span class="at">  </span><span class="fu">use_bwameth</span><span class="kw">:</span><span class="at"> </span><span class="ch">True</span></span>
-                    <span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a><span class="co">  # bismark is gold standard and uses sensible defaults  </span></span>
-                    <span id="cb5-7"><a href="#cb5-7" aria-hidden="true"></a><span class="at">  </span><span class="fu">use_bismark</span><span class="kw">:</span><span class="at"> </span><span class="ch">True</span></span>
-                    <span id="cb5-8"><a href="#cb5-8" aria-hidden="true"></a><span class="at">  </span><span class="fu">methylation-calling</span><span class="kw">:</span></span>
-                    <span id="cb5-9"><a href="#cb5-9" aria-hidden="true"></a><span class="at">    </span><span class="fu">minimum-coverage</span><span class="kw">:</span><span class="at"> </span><span class="dv">10</span></span>
-                    <span id="cb5-10"><a href="#cb5-10" aria-hidden="true"></a><span class="at">    </span><span class="fu">minimum-quality</span><span class="kw">:</span><span class="at"> </span><span class="dv">10</span></span>
-                    <span id="cb5-11"><a href="#cb5-11" aria-hidden="true"></a><span class="co">    # this applies to bwameth only</span></span>
-                    <span id="cb5-12"><a href="#cb5-12" aria-hidden="true"></a><span class="at">    </span><span class="fu">keep-singleton</span><span class="kw">:</span><span class="at"> </span><span class="ch">False</span></span>
-                    <span id="cb5-13"><a href="#cb5-13" aria-hidden="true"></a><span class="at">    </span><span class="fu">keep-Dups</span><span class="kw">:</span><span class="at"> Auto</span><span class="co">                 # can be Auto/True/False, Auto decides based on protocol</span></span>
-                    <span id="cb5-14"><a href="#cb5-14" aria-hidden="true"></a><span class="at">  </span><span class="fu">export-bigwig</span><span class="kw">:</span></span>
-                    <span id="cb5-15"><a href="#cb5-15" aria-hidden="true"></a><span class="at">    </span><span class="fu">context</span><span class="kw">:</span></span>
-                    <span id="cb5-16"><a href="#cb5-16" aria-hidden="true"></a><span class="at">      </span><span class="fu">cpg</span><span class="kw">:</span><span class="at"> </span></span>
-                    <span id="cb5-17"><a href="#cb5-17" aria-hidden="true"></a><span class="at">        </span><span class="fu">export</span><span class="kw">:</span><span class="at"> </span><span class="ch">True</span></span>
-                    <span id="cb5-18"><a href="#cb5-18" aria-hidden="true"></a><span class="co">        # join both strands and summarize coverage/methylation? </span></span>
-                    <span id="cb5-19"><a href="#cb5-19" aria-hidden="true"></a><span class="at">        </span><span class="fu">destrand</span><span class="kw">:</span><span class="at"> </span><span class="ch">True</span></span>
-                    <span id="cb5-20"><a href="#cb5-20" aria-hidden="true"></a><span class="at">      </span><span class="fu">chg</span><span class="kw">:</span><span class="at"> </span></span>
-                    <span id="cb5-21"><a href="#cb5-21" aria-hidden="true"></a><span class="at">        </span><span class="fu">export</span><span class="kw">:</span><span class="at"> </span><span class="ch">False</span></span>
-                    <span id="cb5-22"><a href="#cb5-22" aria-hidden="true"></a><span class="at">        </span><span class="fu">destrand</span><span class="kw">:</span><span class="at"> </span><span class="ch">False</span></span>
-                    <span id="cb5-23"><a href="#cb5-23" aria-hidden="true"></a><span class="at">      </span><span class="fu">chh</span><span class="kw">:</span><span class="at"> </span></span>
-                    <span id="cb5-24"><a href="#cb5-24" aria-hidden="true"></a><span class="at">        </span><span class="fu">export</span><span class="kw">:</span><span class="at"> </span><span class="ch">False</span></span>
-                    <span id="cb5-25"><a href="#cb5-25" aria-hidden="true"></a><span class="at">        </span><span class="fu">destrand</span><span class="kw">:</span><span class="at"> </span><span class="ch">False</span></span>
-                    <span id="cb5-26"><a href="#cb5-26" aria-hidden="true"></a><span class="at">  </span><span class="fu">reports</span><span class="kw">:</span></span>
-                    <span id="cb5-27"><a href="#cb5-27" aria-hidden="true"></a><span class="at">    </span><span class="fu">TSS_plotlength</span><span class="kw">:</span><span class="at"> </span><span class="dv">5000</span></span>
-                    <span id="cb5-28"><a href="#cb5-28" aria-hidden="true"></a><span class="at">  </span><span class="fu">differential-methylation</span><span class="kw">:</span></span>
-                    <span id="cb5-29"><a href="#cb5-29" aria-hidden="true"></a><span class="at">    </span><span class="fu">cores</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
-                    <span id="cb5-30"><a href="#cb5-30" aria-hidden="true"></a><span class="at">    </span><span class="fu">qvalue</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.01</span></span>
-                    <span id="cb5-31"><a href="#cb5-31" aria-hidden="true"></a><span class="at">    </span><span class="fu">difference</span><span class="kw">:</span><span class="at"> </span><span class="dv">25</span></span>
-                    <span id="cb5-32"><a href="#cb5-32" aria-hidden="true"></a><span class="at">    </span><span class="fu">annotation</span><span class="kw">:</span></span>
-                    <span id="cb5-33"><a href="#cb5-33" aria-hidden="true"></a><span class="co">      # download cpgIsland-bedfile or refGenes-bedfile automatically if not given?</span></span>
-                    <span id="cb5-34"><a href="#cb5-34" aria-hidden="true"></a><span class="at">      </span><span class="fu">cpgIsland-bedfile</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;&#39;</span></span>
-                    <span id="cb5-35"><a href="#cb5-35" aria-hidden="true"></a><span class="at">      </span><span class="fu">refGenes-bedfile</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;&#39;</span></span>
-                    <span id="cb5-36"><a href="#cb5-36" aria-hidden="true"></a><span class="at">      </span><span class="fu">webfetch</span><span class="kw">:</span><span class="at">   </span><span class="ch">no</span></span>
-                    <span id="cb5-37"><a href="#cb5-37" aria-hidden="true"></a></span>
-                    <span id="cb5-38"><a href="#cb5-38" aria-hidden="true"></a></span>
-                    <span id="cb5-39"><a href="#cb5-39" aria-hidden="true"></a><span class="fu">DManalyses</span><span class="kw">:</span></span>
-                    <span id="cb5-40"><a href="#cb5-40" aria-hidden="true"></a><span class="co">  # The names of analyses can be anything but they have to be unique</span></span>
-                    <span id="cb5-41"><a href="#cb5-41" aria-hidden="true"></a><span class="co">  # for each combination of case control group comparisons.</span></span>
-                    <span id="cb5-42"><a href="#cb5-42" aria-hidden="true"></a></span>
-                    <span id="cb5-43"><a href="#cb5-43" aria-hidden="true"></a><span class="at">  </span><span class="fu">analysis1</span><span class="kw">:</span></span>
-                    <span id="cb5-44"><a href="#cb5-44" aria-hidden="true"></a><span class="at">    </span><span class="fu">treatment_sample_groups</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;MED1&quot;</span></span>
-                    <span id="cb5-45"><a href="#cb5-45" aria-hidden="true"></a><span class="at">    </span><span class="fu">control_sample_groups</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;H2O&quot;</span></span>
-                    <span id="cb5-46"><a href="#cb5-46" aria-hidden="true"></a></span>
-                    <span id="cb5-47"><a href="#cb5-47" aria-hidden="true"></a></span>
-                    <span id="cb5-48"><a href="#cb5-48" aria-hidden="true"></a><span class="at"> </span><span class="fu">multipleTreat</span><span class="kw">:</span></span>
-                    <span id="cb5-49"><a href="#cb5-49" aria-hidden="true"></a><span class="co">    # If multiple sample groups are provided, they must be separated by comma.</span></span>
-                    <span id="cb5-50"><a href="#cb5-50" aria-hidden="true"></a><span class="at">   </span><span class="fu">treatment_sample_groups</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;MED2,MED1&quot;</span></span>
-                    <span id="cb5-51"><a href="#cb5-51" aria-hidden="true"></a><span class="at">   </span><span class="fu">control_sample_groups</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;H2O&quot;</span></span>
-                    <span id="cb5-52"><a href="#cb5-52" aria-hidden="true"></a></span>
-                    <span id="cb5-53"><a href="#cb5-53" aria-hidden="true"></a><span class="at"> </span><span class="fu">withinGroup</span><span class="kw">:</span></span>
-                    <span id="cb5-54"><a href="#cb5-54" aria-hidden="true"></a><span class="co">   # For within group comparison (all vs all), give the same groups to treatment and control.</span></span>
-                    <span id="cb5-55"><a href="#cb5-55" aria-hidden="true"></a><span class="at">   </span><span class="fu">treatment_sample_groups</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;MED2,MED1,H2O&quot;</span></span>
-                    <span id="cb5-56"><a href="#cb5-56" aria-hidden="true"></a><span class="at">   </span><span class="fu">control_sample_groups</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;MED2,MED1,H2O&quot;</span><span class="er">V</span></span></code></pre></div>
+                    <div class="sourceCode" id="cb5"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">general</span><span class="kw">:</span></span>
+                    <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">assembly</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;&#39;</span></span>
+                    <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">  # use one or both bisulfite aligners</span></span>
+                    <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">  # bwameth is faster and uses less resources</span></span>
+                    <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">use_bwameth</span><span class="kw">:</span><span class="at"> </span><span class="ch">True</span></span>
+                    <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">  # bismark is gold standard and uses sensible defaults  </span></span>
+                    <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">use_bismark</span><span class="kw">:</span><span class="at"> </span><span class="ch">True</span></span>
+                    <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">methylation-calling</span><span class="kw">:</span></span>
+                    <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">minimum-coverage</span><span class="kw">:</span><span class="at"> </span><span class="dv">10</span></span>
+                    <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">minimum-quality</span><span class="kw">:</span><span class="at"> </span><span class="dv">10</span></span>
+                    <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">    # this applies to bwameth only</span></span>
+                    <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">keep-singleton</span><span class="kw">:</span><span class="at"> </span><span class="ch">False</span></span>
+                    <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">keep-Dups</span><span class="kw">:</span><span class="at"> Auto</span><span class="co">                 # can be Auto/True/False, Auto decides based on protocol</span></span>
+                    <span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">export-bigwig</span><span class="kw">:</span></span>
+                    <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">context</span><span class="kw">:</span></span>
+                    <span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">cpg</span><span class="kw">:</span><span class="at"> </span></span>
+                    <span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">export</span><span class="kw">:</span><span class="at"> </span><span class="ch">True</span></span>
+                    <span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">        # join both strands and summarize coverage/methylation? </span></span>
+                    <span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">destrand</span><span class="kw">:</span><span class="at"> </span><span class="ch">True</span></span>
+                    <span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">chg</span><span class="kw">:</span><span class="at"> </span></span>
+                    <span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">export</span><span class="kw">:</span><span class="at"> </span><span class="ch">False</span></span>
+                    <span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">destrand</span><span class="kw">:</span><span class="at"> </span><span class="ch">False</span></span>
+                    <span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">chh</span><span class="kw">:</span><span class="at"> </span></span>
+                    <span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">export</span><span class="kw">:</span><span class="at"> </span><span class="ch">False</span></span>
+                    <span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">destrand</span><span class="kw">:</span><span class="at"> </span><span class="ch">False</span></span>
+                    <span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">reports</span><span class="kw">:</span></span>
+                    <span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">TSS_plotlength</span><span class="kw">:</span><span class="at"> </span><span class="dv">5000</span></span>
+                    <span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">differential-methylation</span><span class="kw">:</span></span>
+                    <span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">cores</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
+                    <span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">qvalue</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.01</span></span>
+                    <span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">difference</span><span class="kw">:</span><span class="at"> </span><span class="dv">25</span></span>
+                    <span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">annotation</span><span class="kw">:</span></span>
+                    <span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="co">      # download cpgIsland-bedfile or refGenes-bedfile automatically if not given?</span></span>
+                    <span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">cpgIsland-bedfile</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;&#39;</span></span>
+                    <span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">refGenes-bedfile</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;&#39;</span></span>
+                    <span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">webfetch</span><span class="kw">:</span><span class="at">   </span><span class="ch">no</span></span>
+                    <span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a></span>
+                    <span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a></span>
+                    <span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="fu">DManalyses</span><span class="kw">:</span></span>
+                    <span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="co">  # The names of analyses can be anything but they have to be unique</span></span>
+                    <span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="co">  # for each combination of case control group comparisons.</span></span>
+                    <span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a></span>
+                    <span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">analysis1</span><span class="kw">:</span></span>
+                    <span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">treatment_sample_groups</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;MED1&quot;</span></span>
+                    <span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">control_sample_groups</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;H2O&quot;</span></span>
+                    <span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a></span>
+                    <span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a></span>
+                    <span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="fu">multipleTreat</span><span class="kw">:</span></span>
+                    <span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a><span class="co">    # If multiple sample groups are provided, they must be separated by comma.</span></span>
+                    <span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a><span class="at">   </span><span class="fu">treatment_sample_groups</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;MED2,MED1&quot;</span></span>
+                    <span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a><span class="at">   </span><span class="fu">control_sample_groups</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;H2O&quot;</span></span>
+                    <span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a></span>
+                    <span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="fu">withinGroup</span><span class="kw">:</span></span>
+                    <span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a><span class="co">   # For within group comparison (all vs all), give the same groups to treatment and control.</span></span>
+                    <span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a><span class="at">   </span><span class="fu">treatment_sample_groups</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;MED2,MED1,H2O&quot;</span></span>
+                    <span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a><span class="at">   </span><span class="fu">control_sample_groups</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;MED2,MED1,H2O&quot;</span><span class="er">V</span></span></code></pre></div>
                     <h1 id="running-the-pipeline">Running the pipeline</h1>
                     <p>After editting the above input files, the bsseq pipeline can be executed with the command: <code>pigx-bsseq [sample sheet] -s [settings file]</code> with further options, described in the README (for example, the flag <code>--dry-run</code> can be added to confirm valid input settings before execution).</p>
                     <h2 id="analysis">Analysis</h2>
