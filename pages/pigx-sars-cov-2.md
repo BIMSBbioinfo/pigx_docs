@@ -145,8 +145,7 @@ pigx-sars-cov-2 --help
 
 Before the pipeline can work, three databases must be downloaded and their
 location will need to be provided in the settings file. Depending on the size of
-the databases this can take some time. One database (signature mutations,
-`sigmut_db`) is already included.
+the databases this can take some time.
 
 We provide the script `download_databases.sh` to automate the download and
 configuration of all default databases. After installing the pipeline you can
@@ -184,11 +183,6 @@ Krona Tools needs two files, which are fetched with the `updateTaxonomy.sh` and
 
 Just download the `SARS_CoV_2` database for VEP (variant effect predictor) and
 unpack it in the `databases/vep_db/` directory.
-
-### Sigmut database
-
-Necessary files are provided in `databases/sigmut_db/` for the current main
-Variants of Concern. Users can add files with new variants if/when necessary.
 
 # Quick Start
 
@@ -278,8 +272,6 @@ execution of the PiGx SARS-CoV-2 pipeline. It specifies:
   user)
 * *krona-db-dir*, the location of the krona database (must be prepared by the
   user)
-* *sigmut-db-dir*, the location of the signature mutations database (provided at
-  databases/sigmut_db/)
 * *vep-db-dir*, the location of `sars_cov_2` database for VEP (must be prepared
   by the user)
 
