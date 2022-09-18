@@ -13,7 +13,8 @@ generated are more detailed reports per sample, which cover the quality control
 of the samples, the detected variants and a taxonomic classification of all
 unaligned reads. This version of the pipeline was designed to work with
 paired-end amplicon sequencing data e.g. following the ARtIc protocols
-[ARTIC nCoV-2019 primers](https://github.com/artic-network/artic-ncov2019/tree/master/primer_schemes/nCoV-2019/V3).
+[ARTIC nCoV-2019 primers](https://github.com/artic-network/artic-ncov2019/tree/master/primer_schemes/nCoV-2019/V3),
+but single-end sequencing reads are supported as well.
 
 ## Workflow
 
@@ -29,8 +30,9 @@ alignment a quality check on raw and processed reads is performed by using
 [MultiQC](https://multiqc.info/). Furthermore samples are checked for genome
 coverage and how many of the provided signature mutation sites are covered.
 Based on this every samples gets a quality score. Samples with genome coverage
-below 90% are reported as discarded samples, as they are not included in time
-series analysises and summaries.
+below a user defined percentage threshold (default: 90%) are reported as
+discarded samples, as they are not included in time series analysises and
+summaries.
 
 Calling the variants and inferring single nucleotide polymorphisms (SNVs) on the
 **aligned reads** is done with [LoFreq](https://csb5.github.io/lofreq/).
@@ -246,8 +248,7 @@ table has the following columns:
 * *SampleName* is the name for the sample
 * *Read* & *Read2* are the fastq file names of paired end reads
   * the location of these files is specified in the settings file
-  * single-end data is not yet supported
-  * compressed (`.gz`) reads are not yet supported
+  * in the case of single-end data, leave the `Read2` column **empty**
 * *date* is a date/time in ISO format (`yyyy-mm-ddThh:mm:ss`)
 * *location_name* is the name of the location and should be unique per
   coordinates
@@ -262,7 +263,8 @@ execution of the PiGx SARS-CoV-2 pipeline. It specifies:
 **Locations**:
 
 * *output-dir*, the location of the outputs for the pipeline
-* *reads-dir*, the location of the reads (directory where `fastq` files are)
+* *input-dir*, the location of the input files, the files therin should match
+  the file suffix given under control/start.
 * *reference-fasta*, the `fasta` file with the reference genome (must be
   prepared by the user)
 * *amplicons-bed*, the amplicons `bed` file for coronavirus (must be prepared by
