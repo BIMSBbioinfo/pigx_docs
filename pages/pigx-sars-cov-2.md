@@ -209,19 +209,19 @@ the test data.
 
 In order to run the pipeline, you need to supply
 
-* a sample sheet (CSV format): containing information about sampling date and  
+* Sample sheet (CSV format): containing information about sampling date and  
   location
-* a settings file (YAML format) for specifying the experimental setup and
+* Settings file (YAML format) for specifying the experimental setup and
   optional custom parameter adjustments  
-* a mutation sheet containing the lineages of interest and their signature
+* Mutation sheet containing the lineages of interest and their signature
   mutations in nucleotide notation (CSV format)  
-* a BED file containing the genomic coordinates of the mutation sites (see below
-  for details)  
-* the reference genome of the target species in fasta format (so far the
+* Mutation BED file containing the genomic coordinates of the mutation sites
+  (see below for details)  
+* Reference genome of the target species in fasta format (so far the
   pipeline is only optimized for SARS-CoV-2, others might work too but not yet  
   tested)
-* a BED file containing the PCR primer locations (e.g the primers suggested from
-  ARTIC protocols)
+* Primer BED file containing the PCR primer locations (e.g the primers suggested
+  from ARTIC protocols)
 
 In order to generate template settings and sample sheet files, type
 
