@@ -9,7 +9,7 @@ enriched for SARS-CoV-2. The pipeline can be used for continuous sampling. The
 output of the PiGx SARS-CoV-2 pipeline is summarized in a report which provides
 an intuitive visual overview about the development of lineage abundance and
 single significantly increasing mutations over time and location. Additionally
-there will be more detailed reports per sample, which cover the quality control
+generated are more detailed reports per sample, which cover the quality control
 of the samples, the detected variants and a taxonomic classification of all
 unaligned reads. This version of the pipeline was designed to work with
 paired-end amplicon sequencing data e.g. following the ARtIc protocols
@@ -32,7 +32,7 @@ Based on this every samples gets a quality score. Samples with genome coverage
 below 90% are reported as discarded samples, as they are not included in time
 series analysises and summaries.
 
-Calling the variants and inferring SNVs (single nucleotide polymorphisms) on the
+Calling the variants and inferring single nucleotide polymorphisms (SNVs) on the
 **aligned reads** is done with [LoFreq](https://csb5.github.io/lofreq/).
 Mutations are annotated with [VEP](https://covid-19.ensembl.org/index.html).
 Estimation of lineage frequencies is done by deconvolution (see Methods in the
@@ -53,8 +53,7 @@ setting up a database is needed before running the pipeline, see:
 
 For summarizing across daytime and location, the lineage frequencies are pooled
 by calculating the weighted average using the total number of reads of each
-sample as weights. The mutation frequencies are pooled by using the simple mean
-setting removal of missing values to FALSE.
+sample as weights (missing samples are removed).
 
 ## Output
 
