@@ -304,14 +304,6 @@ The primer file is needed for trimming with fastp. It should have 6 columns
 following BED files standards. An example file can be found in the test
 directory.
 
-**Trimming**:
-
-These settings are used to filter raw reads when trimming. Reads that are
-shorter than the product of read-length and the cut-off factor are removed.
-
-* *read-length* specifies the length of the basepairs
-* *cut-off* specifies the cut-off factor
-
 # Running the pipeline
 
 PiGx SARS-CoV-2 wastewater is executed using the command
