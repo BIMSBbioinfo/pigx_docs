@@ -20,7 +20,7 @@ paired-end amplicon sequencing data e.g. following the ARtIc protocols
 In the first step the pipeline takes the raw reads and the additional
 information about used primers and adapters to perform extensive quality
 control. Primer trimming is done with
-[iVAR](https://github.com/andersen-lab/ivar) and
+[iVAR](https://github.com/andersen-lab/ivar), and
 [fastp](https://github.com/OpenGene/fastp) is used for adapter trimming and
 filtering. Next, the trimmed reads are aligned to the reference genome of
 SARS-CoV-2 using [BWA](https://github.com/lh3/bwa), and the results are
@@ -58,7 +58,7 @@ setting removal of missing values to FALSE.
 
 ## Output
 
-* overview report including:
+* Overview report including:
   * Visualization of the development of SARS-CoV-2 variants and mutations over
      time and locations from all samples provided.
   * Quality Control report per sample: number of covered amplicons, read
@@ -76,7 +76,7 @@ setting removal of missing values to FALSE.
   consequences for the corresponding protein
 * Kraken2 files per sample *(txt)*: provides an overview of all found species in
   the unaligned reads together with the NCBI taxonomy ID
-* log files for all major analysis steps performed by the pipeline
+* Log files for all major analysis steps performed by the pipeline
 
 # Installation
 
@@ -370,7 +370,7 @@ of the pipeline in a single HTML report, which may be found under the
 ## Taxonomic classification
 
 This report provides an overview of the species found in the provided
-wastewater samples apart from SARS-CoV-2.  The SARS-CoV-2 enriched
+wastewater samples apart from SARS-CoV-2. The SARS-CoV-2 enriched
 wastewater samples are aligned to the virus genome. It provides
 insight about possible biases and contamination of the samples. In
 case of abundance of species very similar to SARS-CoV-2 only the
