@@ -67,21 +67,22 @@ sample as weights (missing samples are removed).
   * Visualization of the development of SARS-CoV-2 variants and mutations over
      time and locations from all samples provided.
   * Quality Control report per sample: number of covered amplicons, read
-     coverage and MultiQC report for raw and trimmed reads
+     coverage and MultiQC report for raw and trimmed reads.
   * Variants report per sample: variant analysis of SARS-CoV-2 from each
-     wastewater sample and identification of variants of concern
+     wastewater sample and identification of variants of concern.
   * Taxonomic classification: a table and pie chart of the species found in the
-     unaligned reads
-* *SAM* / *BAM* files per sample: aligned and unaligned reads against SARS-CoV-2
+     unaligned reads.
+* *SAM* / *BAM* files per sample: aligned and unaligned reads against
+  SARS-CoV-2.
 * *VCF* / *CSV* files per sample: listing all detected single nucleotide
-  variants (SNVs) from the aligned reads
+  variants (SNVs) from the aligned reads.
 * VEP reports per sample as *TXT* / *HTML*: report files show the
   [VEP output](https://www.ensembl.org/info/docs/tools/vep/vep_formats.html#output)
   including the uploading variants, consequenting amino acid changes and
-  consequences for the corresponding protein
+  consequences for the corresponding protein.
 * Kraken2 files per sample *(txt)*: provides an overview of all found species in
-  the unaligned reads together with the NCBI taxonomy ID
-* Log files for all major analysis steps performed by the pipeline
+  the unaligned reads together with the NCBI taxonomy ID.
+* Log files for all major analysis steps performed by the pipeline.
 
 # Installation
 
