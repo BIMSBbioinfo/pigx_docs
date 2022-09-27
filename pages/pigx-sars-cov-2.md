@@ -205,7 +205,7 @@ Per default the pipeline uses the indexed cache archive at
 which only needs to be unpacked to the target directory. Currently this is the
 only available chache file.
 
-# Quick Start
+# Quick start
 
 To check whether the pipeline and the databases have been properly set up, run
 the pipeline on a minimal test dataset.
@@ -220,12 +220,12 @@ the pipeline on a minimal test dataset.
 
 3. Run the pipeline
 
-    `pigx-sars-cov-2 -s .tests/settings.yaml .tests/sample_sheet.csv`
+    `pigx-sars-cov-2 -s tests/tests/setup_test_settings.yaml tests/sample_sheet.csv`
 
-Inside `tests/` a new directory `output` is created, which includes specific
-directories containing output data for the respective step of the pipeline. The
-`tests/output/reports/index.html` gives the overview over all merged reports for
-the test data.
+Inside `tests/` a new directory `output_setup_test` is created, which includes
+specific directories containing output data for the respective step of the
+pipeline. The `tests/output/reports/index.html` gives the overview over all
+merged reports for the test data.
 
 # Preparing the input
 
