@@ -144,18 +144,30 @@ pigx-sars-cov-2 --help
 
 ## Prepare databases
 
-Before the pipeline can work, three databases must be downloaded and their
-location will need to be provided in the settings file. Depending on the size of
-the databases this can take some time.
+Before the pipeline can work, three databases must be downloaded to a location
+specified in the settings file. Depending on the size of the databases this can
+take some time.
 
-We provide the script `download_databases.sh` to automate the download and
-configuration of all default databases. After installing the pipeline you can
-run the script like this:
+Without any user intervention, this will happen automatically via snakemake
+rules. This behaviour is controlled via parameters in the settings file. See the
+[Settings file](#settings-file) section for details.
+
+Alternatively, the databases may be downloaded maunally via the
+`download_databases.sh` scripts accessible like so:
 
 ```sh
 prefix="$(dirname pigx-sars-cov-2)/../"
 $prefix/libexec/pigx_sars-cov-2/scripts/download_databases.sh
 ```
+
+However, the `download_databases.sh` script does not offer the flexibility of
+downloading the databases automatically with user defined parameters, unless it
+is manually edited.
+
+*Note: The directory that the databases will be downloaded to needs to match the
+database directories given in the settings file, else the pipeline will download
+the databases to the given directory again, unnecessarily using up space. This
+should be the case by default though.*
 
 Read on for details if you want to download the databases manually.
 
@@ -166,24 +178,32 @@ There are several libraries of genomes that can be used to classify the
 fulfill the necessities stated by Kraken2
 [Kraken2 manual](https://github.com/DerrickWood/kraken2/wiki/Manual#kraken-2-databases).
 For an overall overview we recommend to use the Plus-PFP library provided
-[here](https://benlangmead.github.io/aws-indexes/k2). If the classification is
-not of concern or only the viruses are of interest, we recommend using a smaller
-one. This will speed up the pipeline. It is also possible to have multiple
-Kraken2 databases installed, just be sure to provide the correct location to the
-settings file.
+[here](https://benlangmead.github.io/aws-indexes/k2), which is also the default
+library used in the pipeline. If the classification is not of concern or only
+the viruses are of interest, we recommend using a smaller one. This will speed
+up the pipeline. It is also possible to have multiple Kraken2 databases
+installed, just be sure to provide the correct location to the settings file.
 
 After downloading and unpacking the database files, use `kraken2-build` to
 download the taxonomy data and build the database.
 
 ### Krona database
 
-Krona Tools needs two files, which are fetched with the `updateTaxonomy.sh` and
-`updateAccessions.sh` scripts that come with Krona.
+The way we use Krona, we only need the taxonomy database, as downloaded via
+their `updateTaxonomy.sh` script.
 
 ### VEP database
 
-Just download the `SARS_CoV_2` database for VEP (variant effect predictor) and
-unpack it in the `databases/vep_db/` directory.
+For our use of VEP in the pipeline, we need a pre-indexed cache of the VEP
+database of transcript models. This is the main point of the pipeline that
+determines which virus can be analysed with the pipeline. Currently, VEP only
+has data on SARS-CoV-2. But the VEP cache is the only point strictly determining
+which virus the pipeline can deal with.
+
+Per default the pipeline uses the indexed cache archive at
+`http://ftp.ensemblgenomes.org/pub/viruses/variation/indexed_vep_cache/sars_cov_2_vep_101_ASM985889v3.tar.gz`,
+which only needs to be unpacked to the target directory. Currently this is the
+only available chache file.
 
 # Quick Start
 
