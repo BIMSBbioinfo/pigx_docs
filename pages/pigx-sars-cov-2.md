@@ -319,16 +319,13 @@ execution of the PiGx SARS-CoV-2 pipeline. It specifies:
 * *output-dir*, path to the output directory for the pipeline.
 * *input-dir*, path to the direcotry containing the input files, the files
   therin should match the file suffix given under control/start.
-* *reference-fasta*, the `fasta` file with the reference genome (must be
-  prepared by the user)
-* *primers-bed*, the path to the `bed` file giving primer locations (must be
-  prepared by the user, see [Primer BED file](#primer-bed-file) section)
-* *kraken-db-dir*, the location of the kraken database (downloaded if not
-  present, see [Database](#prepare-databases) section)
-* *krona-db-dir*, the location of the krona database (downloaded if not present,
-  see [Database](#prepare-databases) section)
-* *vep-db-dir*, the location of `sars_cov_2` database for VEP (downloaded if not
-  present, see [Database](#prepare-databases) section)
+* *reference-fasta* path to the [Mutation sheet](#mutation-sheet)
+* *primers-bed* path to the [Primer BED file](#primer-bed-file)
+* *mutations-bed* path to the [Mutation BED file](#mutation-bed-file)
+* *mutation-sheet* path to the [Mutation table](#mutation-sheet)
+* *kraken-db-dir* path to the [Kraken2 database](#kraken2-database)
+* *krona-db-dir* path to the [Krona database](#krona-database)
+* *vep-db-dir* path to the cache of the [VEP database](#vep-database)
 
 # Running the pipeline
 
