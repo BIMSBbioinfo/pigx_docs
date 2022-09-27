@@ -275,27 +275,6 @@ table has the following columns:
 * *coordinates_lat* & *coordinates_long* correspond the latitude and longitude
   of the location name
 
-## Settings file
-
-The settings file contains parameters (in YAML format) to configure the
-execution of the PiGx SARS-CoV-2 pipeline. It specifies:
-
-**Locations**:
-
-* *output-dir*, the location of the outputs for the pipeline
-* *input-dir*, the location of the input files, the files therin should match
-  the file suffix given under control/start.
-* *reference-fasta*, the `fasta` file with the reference genome (must be
-  prepared by the user)
-* *amplicons-bed*, the amplicons `bed` file for coronavirus (must be prepared by
-  the user)
-* *kraken-db-dir*, the location of the kraken database (must be prepared by the
-  user)
-* *krona-db-dir*, the location of the krona database (must be prepared by the
-  user)
-* *vep-db-dir*, the location of `sars_cov_2` database for VEP (must be prepared
-  by the user)
-
 ## Mutation sheet
 
 The mutation sheet should contain one column of siganture mutations in
@@ -324,6 +303,27 @@ Please see the example file within the test directory for a detailed example.
 The primer file is needed for trimming with fastp. It should have 6 columns
 following BED files standards. An example file can be found in the test
 directory.
+
+## Settings file
+
+The settings file contains parameters (in YAML format) to configure the
+execution of the PiGx SARS-CoV-2 pipeline. It specifies:
+
+**Locations**:
+
+* *output-dir*, the location of the outputs for the pipeline
+* *input-dir*, the location of the input files, the files therin should match
+  the file suffix given under control/start.
+* *reference-fasta*, the `fasta` file with the reference genome (must be
+  prepared by the user)
+* *amplicons-bed*, the amplicons `bed` file for coronavirus (must be prepared by
+  the user)
+* *kraken-db-dir*, the location of the kraken database (must be prepared by the
+  user)
+* *krona-db-dir*, the location of the krona database (must be prepared by the
+  user)
+* *vep-db-dir*, the location of `sars_cov_2` database for VEP (must be prepared
+  by the user)
 
 # Running the pipeline
 
