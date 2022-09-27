@@ -316,6 +316,8 @@ execution of the PiGx SARS-CoV-2 pipeline. It specifies:
 
 ### Locations
 
+Paths to various input files and directories needed by the pipeline.
+
 * *output-dir* output directory for the pipeline.
 * *input-dir* direcotry containing the input files, the files therin should
   match the file suffix given under control/start.
