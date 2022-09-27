@@ -301,11 +301,13 @@ columns:
 `NC_045512.2 205 215 nCoV-2019_210_SigmutLocation`  
 Please see the example file within the test directory for a detailed example.
 
-## Primer BED file  
+## Primer BED file
 
-The primer file is needed for trimming with fastp. It should have 6 columns
-following BED files standards. An example file can be found in the test
-directory.
+The primer file contains the locations of primer sequences on the reads, i.e. it
+defines where in the genomes primer sequences *may* occurr. This is determined
+by the primer scheme used in generating the sequencing reads. It is required by
+fastp for primer trimming. An example file can be found in the test directory
+(`nCoV-2019_NCref.bed`).
 
 ## Settings file
 
