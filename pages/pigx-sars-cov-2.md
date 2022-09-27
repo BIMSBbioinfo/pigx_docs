@@ -4,18 +4,18 @@
 
 PiGx SARS-CoV-2 is a pipeline for detecting viral lineages in sequencing data
 obtained from enriched wastewater samples. It was developed with SARS-CoV-2 as
-its main target virus, but other targets are possible. The viral lineages are
-provided by the user together with their characteristic signature mutations. The
-pipeline is very flexible, allowing the user to choose from multiple input and
-output files, and giving them fine control about parameters used by the
-individual tools. PiGx SARS-CoV-2 has been developed with a focus on reproucible
-outputs, and it can be used for continuous sampling. The output of the PiGx
-SARS-CoV-2 pipeline is summarized in a report which provides an intuitive visual
-overview about the development of lineage abundance and single significantly
-increasing mutations over time and location. In addition, the pipeline will
-generate more detailed reports per sample, which cover the quality control of
-the samples, the detected variants, and a taxonomic classification of all
-unaligned reads. This version of the pipeline was designed to work with
+its target virus, but other targets are theoretically possible. The viral
+lineages are provided by the user together with their characteristic signature
+mutations. The pipeline is very flexible, allowing the user to choose from
+multiple input and output files, and giving them fine control about parameters
+used by the individual tools. PiGx SARS-CoV-2 has been developed with a focus on
+reproucible outputs, and it can be used for continuous sampling. The output of
+the PiGx SARS-CoV-2 pipeline is summarized in a report which provides an
+intuitive visual overview about the development of lineage abundance and single
+significantly increasing mutations over time and location. In addition, the
+pipeline will generate more detailed reports per sample, which cover the quality
+control of the samples, the detected variants, and a taxonomic classification of
+all unaligned reads. This version of the pipeline was designed to work with
 paired-end amplicon sequencing data e.g. following the ARtIc protocols
 [ARTIC nCoV-2019 primers](https://github.com/artic-network/artic-ncov2019/tree/master/primer_schemes/nCoV-2019/V3),
 but single-end sequencing reads are supported as well.
