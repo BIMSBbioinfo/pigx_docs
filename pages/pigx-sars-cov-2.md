@@ -316,19 +316,19 @@ execution of the PiGx SARS-CoV-2 pipeline. It specifies:
 
 **Locations**:
 
-* *output-dir*, the location of the outputs for the pipeline
-* *input-dir*, the location of the input files, the files therin should match
-  the file suffix given under control/start.
+* *output-dir*, path to the output directory for the pipeline.
+* *input-dir*, path to the direcotry containing the input files, the files
+  therin should match the file suffix given under control/start.
 * *reference-fasta*, the `fasta` file with the reference genome (must be
   prepared by the user)
-* *amplicons-bed*, the amplicons `bed` file for coronavirus (must be prepared by
-  the user)
-* *kraken-db-dir*, the location of the kraken database (must be prepared by the
-  user)
-* *krona-db-dir*, the location of the krona database (must be prepared by the
-  user)
-* *vep-db-dir*, the location of `sars_cov_2` database for VEP (must be prepared
-  by the user)
+* *primers-bed*, the path to the `bed` file giving primer locations (must be
+  prepared by the user, see [Primer BED file](#primer-bed-file) section)
+* *kraken-db-dir*, the location of the kraken database (downloaded if not
+  present, see [Database](#prepare-databases) section)
+* *krona-db-dir*, the location of the krona database (downloaded if not present,
+  see [Database](#prepare-databases) section)
+* *vep-db-dir*, the location of `sars_cov_2` database for VEP (downloaded if not
+  present, see [Database](#prepare-databases) section)
 
 # Running the pipeline
 
