@@ -277,12 +277,15 @@ table has the following columns:
 
 ## Mutation sheet
 
-The mutation sheet should contain one column of siganture mutations in
-nucleotide-NT (not protein/aminoacid mutation) format per lineage that shall be
-tracked and analysed by deconvolution. There is no upper or lower limit for the
-number of signature mutations per lineage. However, please note that the
-deconvolution results are more robust and precise with a higher number of
-mutations. (Tested with 10-30 mutations per lineage).
+The mutation sheet should contain one column of siganture mutations per lineage
+that shall be tracked and analysed by deconvolution. They should be given in the
+format `GENE:RxxxV`, where `GENE` is the name of the gene in which the mutation
+is found, `R` is a string of reference nucleotides in upper case, `xxx` is the
+first reference nucleotides position (a number), and `V` is a string of variant
+nucleotides, also in upper case. There is no upper or lower limit for the number
+of signature mutations per lineage. However, please note that the deconvolution
+results are more robust and precise with a higher number of mutations. (Tested
+with 10-30 mutations per lineage).
 
 ## Mutation BED file
 
