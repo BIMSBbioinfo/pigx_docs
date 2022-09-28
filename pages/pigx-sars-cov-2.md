@@ -314,7 +314,7 @@ fastp for primer trimming. An example file can be found in the test directory
 The settings file contains parameters (in YAML format) to configure the
 execution of the PiGx SARS-CoV-2 pipeline. It specifies:
 
-### Locations
+### `locations`
 
 Paths to various input files and directories needed by the pipeline.
 
