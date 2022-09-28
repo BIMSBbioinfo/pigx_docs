@@ -306,7 +306,7 @@ Please see the example file within the test directory for a detailed example.
 The primer file contains the locations of primer sequences on the reads, i.e. it
 defines where in the genomes primer sequences *may* occurr. This is determined
 by the primer scheme used in generating the sequencing reads. It is required by
-fastp for primer trimming. An example file can be found in the test directory
+iVar for primer trimming. An example file can be found in the test directory
 (`nCoV-2019_NCref.bed`).
 
 ## Settings file
