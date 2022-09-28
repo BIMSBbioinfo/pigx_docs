@@ -312,7 +312,22 @@ fastp for primer trimming. An example file can be found in the test directory
 ## Settings file
 
 The settings file contains parameters (in YAML format) to configure the
-execution of the PiGx SARS-CoV-2 pipeline. It specifies:
+execution of the PiGx SARS-CoV-2 pipeline. There are generally two settings
+files at play:
+
+1. The pipeline interal settings file (source: `etc/settings.yaml`, installed:
+   `$prefix/share/pigx_sars-cov-2/settings.yaml`), containing default settings.
+   This file is not supposed to be modified by the user.
+2. An analysis specific, user provided settings file containing changes to the
+   default settings. These are generally paths to the input files, databases,
+   etc.
+
+When the pipeline is executed, both settings files are combined into a run
+specific config file (`config.json`), used by the internal `snakemake` workflow
+manager. It is always generated in the place the `pigx-sars-cov-2` program was
+called and will be overwritten on subsequent calls.
+
+Below are all the parameters listed that the settings file contains.
 
 ### `locations`
 
