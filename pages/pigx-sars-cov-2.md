@@ -27,8 +27,8 @@ information about used primers and adapters to perform extensive quality
 control. Primer trimming is done with
 [iVAR](https://github.com/andersen-lab/ivar), and
 [fastp](https://github.com/OpenGene/fastp) is used for adapter trimming and
-filtering. Next, the trimmed reads are aligned to the reference genome of
-SARS-CoV-2 using [BWA](https://github.com/lh3/bwa), and the results are
+quality filtering. Next, the trimmed reads are aligned to the reference genome
+of SARS-CoV-2 using [BWA](https://github.com/lh3/bwa), and the results are
 *SAM*/*BAM* files of **aligned** and **unaligned reads**. Following the
 alignment a quality check on raw and processed reads is performed by using
 [MultiQC](https://multiqc.info/). Furthermore samples are checked for genome
