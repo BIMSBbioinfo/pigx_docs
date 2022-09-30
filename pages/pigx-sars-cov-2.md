@@ -175,7 +175,7 @@ Read on for details if you want to download the databases manually.
 There are several libraries of genomes that can be used to classify the
 (unaligned) reads. It is up to you which one to use, but be sure that they
 fulfill the necessities stated by Kraken2
-[Kraken2 manual](https://github.com/DerrickWood/kraken2/wiki/Manual#kraken-2-databases).
+([Kraken2 manual](https://github.com/DerrickWood/kraken2/wiki/Manual#kraken-2-databases)).
 For an overall overview we recommend to use the Plus-PFP library provided
 [here](https://benlangmead.github.io/aws-indexes/k2), which is also the default
 library used in the pipeline. If the classification is not of concern or only
