@@ -222,8 +222,8 @@ the pipeline on a minimal test dataset.
 
 Inside `tests/` a new directory `output_setup_test` is created, which includes
 specific directories containing output data for the respective step of the
-pipeline. The `tests/output/reports/index.html` gives the overview over all
-merged reports for the test data.
+pipeline. The `tests/output_setup_test/reports/index.html` gives the overview
+over all merged reports for the test data.
 
 # Preparing the input
 
