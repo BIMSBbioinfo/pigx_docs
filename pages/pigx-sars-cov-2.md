@@ -47,11 +47,11 @@ other existing species in the wastewater samples the **unaligned reads** will be
 taxonomicly classified with [Kraken2](https://github.com/DerrickWood/kraken2).
 Kraken2 requires a database downloaded locally of the genomes against the reads
 are getting aligned. For documentation how to set this up, see:
-[Prepare databases](#prepare-databases). For a better and interactive
+[Prepare databases](#preparing-the-databases). For a better and interactive
 visualization of all species present in the wastewater
 [Krona](https://github.com/marbl/Krona/wiki) is used. Also here a small step of
 setting up a database is needed before running the pipeline, see:
-[Prepare databases](#prepare-databases). Interactive reports are generated using
+[Prepare databases](#preparing-the-databases). Interactive reports are generated using
 [R-markdown](https://rmarkdown.rstudio.com/) and
 [plotly for R](https://plotly.com/r/) for visualizations.
 
@@ -142,7 +142,7 @@ type `--help`.
 pigx-sars-cov-2 --help
 ```
 
-## Prepare databases
+## Preparing the databases
 
 Before the pipeline can work, three databases must be downloaded to a location
 specified in the settings file. Depending on the size of the databases this can
