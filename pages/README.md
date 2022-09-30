@@ -32,4 +32,5 @@ Akalin A**. [PiGx: Reproducible genomics analysis pipelines with GNU Guix.](http
 - Jan Dohmen [Contributor to SARS-CoV-2]
 - Miriam Faxel [Contributor to SARS-CoV-2]
 - Rafael Cuadrat [Contributor to SARS-CoV-2]
+- Jonas Freimuth [Contributor to SARS-CoV-2]
 - Altuna Akalin [Concept design, supervision]
