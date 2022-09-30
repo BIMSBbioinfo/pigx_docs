@@ -34,9 +34,8 @@ alignment a quality check on raw and processed reads is performed by using
 [MultiQC](https://multiqc.info/). Furthermore samples are checked for genome
 coverage and how many of the provided signature mutation sites are covered.
 Based on this every samples gets a quality score. Samples with genome coverage
-below a user defined percentage threshold (default: 90%) are reported as
-discarded samples, as they are not included in time series analysises and
-summaries.
+below a user defined percentage threshold are reported as discarded samples, as
+they are not included in time series analysises and summaries.
 
 Calling the variants and inferring single nucleotide polymorphisms (SNVs) on the
 **aligned reads** is done with [LoFreq](https://csb5.github.io/lofreq/).
