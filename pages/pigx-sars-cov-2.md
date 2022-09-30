@@ -444,7 +444,7 @@ Parameters for rule vep. See documentation about vep arguments `--species`,
 `--buffer_size`, and `--distance` respectively in the vep
 [documentation](https://grch37.ensembl.org/info/docs/tools/vep/script/vep_options.html).
 
-##### `species
+##### `species`
 
 Needs to match with the downloaded VEP database cache. The `vep` default is
 "homo_sapiens", which is unlikely to be of use for this pipeline.
