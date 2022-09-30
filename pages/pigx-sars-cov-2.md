@@ -180,8 +180,7 @@ For an overall overview we recommend to use the Plus-PFP library provided
 [here](https://benlangmead.github.io/aws-indexes/k2), which is also the default
 library used in the pipeline. If the classification is not of concern or only
 the viruses are of interest, we recommend using a smaller one. This will speed
-up the pipeline. It is also possible to have multiple Kraken2 databases
-installed, just be sure to provide the correct location to the settings file.
+up the pipeline.
 
 After downloading and unpacking the database files, use `kraken2-build` to
 download the taxonomy data and build the database.
