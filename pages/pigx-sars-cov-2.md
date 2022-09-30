@@ -344,6 +344,354 @@ Paths to various input files and directories needed by the pipeline.
 * *krona-db-dir* [Krona database](#krona-database)
 * *vep-db-dir* [VEP database](#vep-database)
 
+### `databases`
+
+Settings controlling the download and subsequent processing of databases needed
+for the pipeline. If the databases are already present, none of these settings
+will have any effect.
+
+When prebuilt archives are to be used, the pipeline can download them both via
+`ftp` and `http`/`https`. If no protocol is included, `http`/`https` is assumed.
+
+*Note: Generally the official databases will be used except when running
+`make check`/`make distcheck` without the databases pre-installed at the default
+location. In that case the settings file at `tests/settings.yaml` will be used,
+which configures the pipeline to use database archives prebuilt by us. This is
+to ensure the github actions can run smoothly. In order to build the archives,
+at least 1GB of disk space is necessary, which is not given on a github action
+runner.*
+
+#### `kraken2`
+
+The kraken2 database download is the most complex of the three database
+downloads. The download is done via one of the database archive file provided at
+the [Index Zone](https://benlangmead.github.io/aws-indexes/k2), except in the
+case outlined above.  
+When no downsampling should occur, the database archive is extracted and used
+as-is. In the other case, everything except the hash file (`hash.k2d`) is
+extracted, the taxonomy is downloaded, and the database is built on disk. The
+taxonomy files are removed afterwards as they are not used again and only take
+up space after database building, at least for our purposes.
+
+##### `archive-url`
+
+The url the kraken2 archive will be downloaded from. The default archive is the
+very large database including protozoa and fungi in addition to the standard
+database.
+
+When prebuilt archives are to be used, the pipeline can download them both via
+`ftp` and `http`/`https`. If no protocol is included, `http`/`https` is assumed.  
+
+Default: https://genome-idx.s3.amazonaws.com/kraken/k2_pluspfp_20210127.tar.gz
+
+##### `downsample-db`
+
+Whether or not downsampling of the `hash.k2d` file should occurr.  
+
+Default: false
+
+##### `max-db-size-bytes`
+
+If downsampling should occurr, what is the maximum allowable size in bytes? The
+resulting file may be smaller than the given value. The value is passed on
+directly to `kraken2-build` under the `--max-db-size` option. Will only have an
+effect of `downsample_db` is true.
+
+Default: 250000000
+
+#### `krona`
+
+The Krona database download is fairly simple. Either the Krona internal download
+script `updateTaxnomy.sh`
+([Documentation](https://github.com/marbl/Krona/wiki/Installing)) is used, or a
+prebuilt archive is downloaded.
+
+##### `use-prebuilt`
+
+Whether or not a prebuilt archive should be downloaded instead of running the
+update taxonomy script.  
+  
+Default: false
+
+##### `archive-url`
+
+If a prebuilt archive should be downloaded, this tells the pipeline where to
+find it.
+
+When prebuilt archives are to be used, the pipeline can download them both via
+`ftp` and `http`/`https`. If no protocol is included, `http`/`https` is assumed.
+
+Default: ""
+
+#### `vep`
+
+The vep download is the simplest. The database is always in a compressed
+archive.
+
+##### `archive-url`
+
+Location from where the archive will be downloaded.
+
+When prebuilt archives are to be used, the pipeline can download them both via
+`ftp` and `http`/`https`. If no protocol is included, `http`/`https` is assumed.
+  
+Default: ftp://ftp.ensemblgenomes.org/pub/viruses/variation/indexed_vep_cache/sars_cov_2_vep_101_ASM985889v3.tar.gz
+
+### `parameters`
+
+#### `vep`
+
+Parameters for rule vep. See documentation about vep arguments `--species`,
+`--buffer_size`, and `--distance` respectively in the vep
+[documentation](https://grch37.ensembl.org/info/docs/tools/vep/script/vep_options.html).
+
+##### `species
+
+Needs to match with the downloaded VEP database cache. The `vep` default is
+"homo_sapiens", which is unlikely to be of use for this pipeline.
+  
+Directly passed to the `vep` parameter `--species`.
+  
+Default: sars_cov_2
+
+##### `buffer-size`
+
+Number of variants in memory at one time. Trades off between run time and memory
+usage. The higher, the faster.
+  
+Directly passed to the `vep` parameter `--buffer-size`.
+  
+Default: 5000
+
+##### `transcript-distance`
+
+Up- and downstream distance of a gene and a transcript which will be classified
+as an up- or downstream variant.
+  
+Directly passed to the `vep` parameter `--distance`.
+  
+Default: 5000
+
+##### `db-version`
+
+This specifies a database version, which is needed when the database version
+differs from the `vep` executable version. By default, `vep` looks for a
+database version matching its own. This is needed even when using a offline
+database cache like this pipeline does. Therefore this needs to be adjusted
+when changing the `vep` database used.
+  
+Directly passed to the `vep` parameter `--distance`.
+  
+Default: 101
+
+#### `ivar_trimming`
+
+Parameters for rule `ivar_primer_trim`. See documentation about ivar arguments
+`-q`, `-m`, and `-s` respectively in the iVar
+[documentation](https://andersen-lab.github.io/ivar/html/manualpage.html).
+  
+`ivar` trimms primers from alignment BED files by first removing the sections
+listed in a second primer BED file, and then performing quality trimming by
+sliding a window along each read from 5' to 3' end, clipping the read if the
+average window quality drops below a given cutoff.
+
+##### `quality-cutoff`
+
+If the average base call quality in the sliding window drops below this value,
+the read will be trimmed to the last base of sufficient average window quality.  
+
+Directly passed to the `ivar` parameter `-q`.  
+
+Default: 15
+
+##### `length-cutoff`
+
+Read length threshold, if a read is shorter than this after trimming, it will be
+discarded.  
+
+Directly passed to the `ivar` parameter `-m`.  
+Default: 30
+
+##### `window-width`
+
+Number of bases in the sliding window, i.e. the window width.
+  
+Directly passed to the `ivar` parameter `-qs`.
+  
+Default: 4
+
+#### `reporting`
+
+These paramerters are used to set quality control filters for the reports.
+
+##### `mutation-coverage-threshold`
+
+Results from samples without sufficient coverage measures are not included in
+the visualizations or the linear regression calculations.
+  
+Default: 90
+
+#### `deconvolution`
+
+##### `method`
+
+Control the deconvolution method used.
+Possible options are:
+
+* `rlm`:
+  Robust linear regression as implemented in the `MASS` package, executed
+  via the `deconvR` package.
+* `nnls`:
+  Non-negative least squares (`deconvR`).
+* `qp`:
+  Quadratic programming (`deconvR`).
+* `svr`:
+  Support vector regression (`deconvR`).
+
+Prepending "weighted_" to the chosen method will add weighting of bulk mutation
+abundances per variant by the inverse of the proportion of detected mutations to
+known mutations. This biases the abundance of variants with high proportions
+towards higher values, and coversely biases the abundence regression is of
+variants with low proportions towards lower values.
+  
+Default: weighted_rlm
+
+##### `mutation-depth-threshold`
+
+Minimum sequencing per mutation for it to be used in the analysis.
+  
+Default: 100
+
+## `control`
+
+The following settings control from which point the pipeline starts, which
+path it follows (i.e. which rules are executed on the way) and where it stops.
+
+##### `start`
+
+Start points for the analysis
+
+* fastq(.gz): Raw reads in (gzipped) FASTQ format
+* bam: Unfiltered alignments
+* vcf: Variant calling files. *Note: Ideally these should have been generated by
+  lofreq. The minimum requirement is that the INFO fields "AF" and "DP" are
+  present. (More details on [here](https://samtools.github.io/hts-specs/))*
+
+When using a non-default target, not all rules will be able to run and it won't
+be possible to generate all reports. The main reasons for this are the missing
+quality control statistics that are necessary mainly for the final report, and
+the missing unalinged read files when starting after the alignment step.
+
+Default: fastq.gz
+
+##### `targets`
+
+Desired results of the analysis. Multiple targets at the same time is possible.
+
+* help: Print all rules and their descriptions.
+* final_reports: Produce a comprehensive report. This is the default target.
+* devonvolution: Run deconvolution for all provided samples and create a summary
+  table containing abundances from all samples.
+* lofreq: Call variants and produce .vcf file and overview .csv file.
+* multiqc: Create MultiQC reports for including raw and trimmed reads.
+  
+Default: - final_reports
+
+##### `run-ivar-primer-trimming`
+
+Whether the primer trimming step should be performed.
+  
+Default: yes
+
+#### `execution`
+
+Settings directly related to the program execution itself.
+
+##### `jobs`
+
+The number of jobs allowed to be executed at one time. If executed locally this
+specifies the maximum number of cores used at a time. May not extend to the
+number of jobs used by individual tools. See section `--cores` & `--jobs` in the
+[snakemake docs](https://snakemake.readthedocs.io/en/stable/executing/cli.html#all-options)
+
+Default: 6
+
+##### `submit-to-cluster`
+
+Whether cluster specific settings will be respected, and a qsub submission
+call should be executed.
+  
+Default: no
+
+##### `cluster`
+
+Settings specific to executing the pipeline on a computing cluster. None of
+these are relevant when `submit-to-cluster` is "no".
+
+###### `missing-file-timeout`
+
+How long before a rule output file is declared missing and the pipeline stopped.
+
+When executing the pipeline on a cluster, file system latency can be higher
+than when the pipeline is executed on a single server. Therefore the time
+snakemake waits before declaring a rule output file as missing and stopping
+needs to be adjusted.
+  
+Default: 120
+
+###### `stack`
+
+Stack memory used for each rule. We recommend leaving it as it is, unless you
+really know what you are doing.
+  
+Default: 128M
+
+###### `queue`
+
+The name of a specific queue the whole pipeline should be submitted to.
+  
+Default: all
+
+###### `contact-email`
+
+How the cluster administration may contact you.
+  
+Default: none
+
+###### `args`
+
+Additional arguments passed to `qsub`, as a single string.
+  
+Default: ''
+
+##### `rules`
+
+Per rule submission settings. Give the rule name as a heading to configure
+that specific rule.
+
+###### `__default__`
+
+Default settings used in absence of rule specific settings.
+  
+* `threads`: Number of threads. Default is 1.
+* `memory`: RAM available for the rule, with unit (e.g. "90K", "5M"). In the
+  case of no unit, unit M is assumed. Default is 4G.
+
+### `tools`
+
+Overwrites for locations of specific tools used. Each tool has its own
+subheading, i.e. "bwa", and the following settings:
+
+#### `executable`
+
+Path to the executable file for the tool, defaults to the system installation.
+
+#### `arguments`
+
+Additional arguments to the tool as one string. Only use this if you know
+what you are doing, these may cause conflicts with the arguments supplied in
+each rule.
+
 # Running the pipeline
 
 PiGx SARS-CoV-2 wastewater is executed using the command
