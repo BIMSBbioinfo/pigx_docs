@@ -100,7 +100,7 @@
                   <section class="normal markdown-section">
                     <h1 id="pigx-sars-cov-2">PiGx SARS-CoV-2</h1>
                     <h1 id="introduction">Introduction</h1>
-                    <p>PiGx SARS-CoV-2 is a pipeline for detecting viral lineages in sequencing data obtained from enriched wastewater samples. It was developed with SARS-CoV-2 as its target virus, but other targets are theoretically possible. The viral lineages are provided by the user together with their characteristic signature mutations. The pipeline is very flexible, allowing the user to choose from multiple input and output files, and giving them fine control about parameters used by the individual tools. PiGx SARS-CoV-2 has been developed with a focus on reproucible outputs, and it can be used for continuous sampling. The output of the PiGx SARS-CoV-2 pipeline is summarized in a report which provides an intuitive visual overview about the development of lineage abundance and single significantly increasing mutations over time and location. In addition, the pipeline will generate more detailed reports per sample, which cover the quality control of the samples, the detected variants, and a taxonomic classification of all unaligned reads. This version of the pipeline was designed to work with paired-end amplicon sequencing data e.g. following the ARtIc protocols <a href="https://github.com/artic-network/artic-ncov2019/tree/master/primer_schemes/nCoV-2019/V3">ARTIC nCoV-2019 primers</a>, but single-end sequencing reads are supported as well.</p>
+                    <p>PiGx SARS-CoV-2 is a pipeline for detecting viral lineages in sequencing data obtained from enriched wastewater samples. It was developed with SARS-CoV-2 as its target virus, but other targets are theoretically possible. The viral lineages are provided by the user together with their characteristic signature mutations. The pipeline is very flexible, allowing the user to choose from multiple input and output files, and giving them fine control about parameters used by the individual tools. PiGx SARS-CoV-2 has been developed with a focus on reproucible outputs, and it can be used for continuous sampling. The output of the PiGx SARS-CoV-2 pipeline is summarized in a report which provides an intuitive visual overview about the development of lineage abundance and single significantly increasing mutations over time and location. In addition, the pipeline will generate more detailed reports per sample, which cover the quality control of the samples, the detected variants, and a taxonomic classification of all unaligned reads. This version of the pipeline was designed to work with paired-end amplicon sequencing data e.g. following the ARtIc protocols <a href="https://github.com/artic-network/artic-ncov2019/tree/master/primer_schemes/nCoV-2019/V3">ARTIC nCoV-2019 primers</a>, but single-end sequencing reads are supported as well.</p>
                     <h2 id="workflow">Workflow</h2>
                     <p>In the first step the pipeline takes the raw reads and the additional information about used primers and adapters to perform extensive quality control. Primer trimming is done with <a href="https://github.com/andersen-lab/ivar">iVAR</a>, and <a href="https://github.com/OpenGene/fastp">fastp</a> is used for adapter trimming and quality filtering. Next, the trimmed reads are aligned to the reference genome of SARS-CoV-2 using <a href="https://github.com/lh3/bwa">BWA</a>, and the results are <em>SAM</em>/<em>BAM</em> files of <strong>aligned</strong> and <strong>unaligned reads</strong>. Following the alignment a quality check on raw and processed reads is performed by using <a href="https://multiqc.info/">MultiQC</a>. Furthermore samples are checked for genome coverage and how many of the provided signature mutation sites are covered. Based on this every samples gets a quality score. Samples with genome coverage below a user defined percentage threshold are reported as discarded samples, as they are not included in time series analysises and summaries.</p>
                     <p>Calling the variants and inferring single nucleotide polymorphisms (SNVs) on the <strong>aligned reads</strong> is done with <a href="https://csb5.github.io/lofreq/">LoFreq</a>. Mutations are annotated with <a href="https://covid-19.ensembl.org/index.html">VEP</a>. Estimation of lineage frequencies is done by deconvolution (see Methods in the realted publication for details). To investigate the abundance of RNA matching other existing species in the wastewater samples the <strong>unaligned reads</strong> will be taxonomicly classified with <a href="https://github.com/DerrickWood/kraken2">Kraken2</a>. Kraken2 requires a database downloaded locally of the genomes against the reads are getting aligned. For documentation how to set this up, see: <a href="#preparing-the-databases">Prepare databases</a>. For a better and interactive visualization of all species present in the wastewater <a href="https://github.com/marbl/Krona/wiki">Krona</a> is used. Also here a small step of setting up a database is needed before running the pipeline, see: <a href="#preparing-the-databases">Prepare databases</a>. Interactive reports are generated using <a href="https://rmarkdown.rstudio.com/">R-markdown</a> and <a href="https://plotly.com/r/">plotly for R</a> for visualizations.</p>
@@ -162,7 +162,7 @@
                     <p>Per default the pipeline uses the indexed cache archive at <code>http://ftp.ensemblgenomes.org/pub/viruses/variation/indexed_vep_cache/sars_cov_2_vep_101_ASM985889v3.tar.gz</code>, which only needs to be unpacked to the target directory. Currently this is the only available chache file.</p>
                     <h1 id="quick-start">Quick start</h1>
                     <p>To check whether the pipeline and the databases have been properly set up, run the pipeline on a minimal test dataset. If you installed the pipeline from source, start at step 3.</p>
-                    <ol>
+                    <ol type="1">
                     <li><p>Download the test data</p>
                     <p><code>git clone https://github.com/BIMSBbioinfo/pigx_sars-cov-2 sarscov2-test</code></p></li>
                     <li><p>Enter the directory</p>
@@ -176,12 +176,9 @@
                     <ul>
                     <li>Sample sheet (CSV format): containing information about sampling date and<br />
                     location</li>
-                    <li>Settings file (YAML format) for specifying the experimental setup and optional custom parameter adjustments<br />
-                    </li>
-                    <li>Mutation sheet containing the lineages of interest and their signature mutations in nucleotide notation (CSV format)<br />
-                    </li>
-                    <li>Mutation BED file containing the genomic coordinates of the mutation sites (see below for details)<br />
-                    </li>
+                    <li>Settings file (YAML format) for specifying the experimental setup and optional custom parameter adjustments</li>
+                    <li>Mutation sheet containing the lineages of interest and their signature mutations in nucleotide notation (CSV format)</li>
+                    <li>Mutation BED file containing the genomic coordinates of the mutation sites (see below for details)</li>
                     <li>Reference genome of the target species in fasta format (so far the pipeline is only optimized for SARS-CoV-2, others might work too but not yet<br />
                     tested)</li>
                     <li>Primer BED file containing the PCR primer locations (e.g the primers suggested from ARTIC protocols)</li>
@@ -240,22 +237,19 @@
                     <h2 id="mutation-bed-file">Mutation BED file</h2>
                     <p>The BED file for testing if the mutation sites are covered should have 4<br />
                     columns:</p>
-                    <ol>
-                    <li>chromosome name<br />
-                    </li>
-                    <li>start - 5bp <strong>before</strong> the mutation location<br />
-                    </li>
-                    <li>end - 5bp <strong>after</strong> the mutation location<br />
-                    </li>
+                    <ol type="1">
+                    <li>chromosome name</li>
+                    <li>start - 5bp <strong>before</strong> the mutation location</li>
+                    <li>end - 5bp <strong>after</strong> the mutation location</li>
                     <li>name with the original location of the mutation in the format of: name_MutationLocation_name, e.g: “nCoV-2019_210_SigmutLocation” A row in the BED file should look like:<br />
                     <code>NC_045512.2 205 215 nCoV-2019_210_SigmutLocation</code><br />
                     Please see the example file within the test directory for a detailed example.</li>
                     </ol>
                     <h2 id="primer-bed-file">Primer BED file</h2>
-                    <p>The primer file contains the locations of primer sequences on the reads, i.e. it defines where in the genomes primer sequences <em>may</em> occurr. This is determined by the primer scheme used in generating the sequencing reads. It is required by iVar for primer trimming. An example file can be found in the test directory (<code>nCoV-2019_NCref.bed</code>).</p>
+                    <p>The primer file contains the locations of primer sequences on the reads, i.e. it defines where in the genomes primer sequences <em>may</em> occurr. This is determined by the primer scheme used in generating the sequencing reads. It is required by iVar for primer trimming. An example file can be found in the test directory (<code>nCoV-2019_NCref.bed</code>).</p>
                     <h2 id="settings-file">Settings file</h2>
                     <p>The settings file contains parameters (in YAML format) to configure the execution of the PiGx SARS-CoV-2 pipeline. There are generally two settings files at play:</p>
-                    <ol>
+                    <ol type="1">
                     <li>The pipeline interal settings file (source: <code>etc/settings.yaml</code>, installed: <code>$prefix/share/pigx_sars-cov-2/settings.yaml</code>), containing default settings. This file is not supposed to be modified by the user.</li>
                     <li>An analysis specific, user provided settings file containing changes to the default settings. These are generally paths to the input files, databases, etc.</li>
                     </ol>
@@ -263,370 +257,170 @@
                     <details>
                       <summary>Detailed settings explanation.</summary>
 
-                    ### `locations`
-
-                    Paths to various input files and directories needed by the pipeline.
-
-                    * *output-dir* output directory for the pipeline.
-                    * *input-dir* direcotry containing the input files, the files therin should
-                      match the file suffix given under control/start.
-                    * *reference-fasta* [Mutation sheet](#mutation-sheet)
-                    * *primers-bed* [Primer BED file](#primer-bed-file)
-                    * *mutations-bed* [Mutation BED file](#mutation-bed-file)
-                    * *mutation-sheet* [Mutation table](#mutation-sheet)
-                    * *kraken-db-dir* [Kraken2 database](#kraken2-database)
-                    * *krona-db-dir* [Krona database](#krona-database)
-                    * *vep-db-dir* [VEP database](#vep-database)
-
-                    ### `databases`
-
-                    Settings controlling the download and subsequent processing of databases needed
-                    for the pipeline. If the databases are already present, none of these settings
-                    will have any effect.
-
-                    When prebuilt archives are to be used, the pipeline can download them both via
-                    `ftp` and `http`/`https`. If no protocol is included, `http`/`https` is assumed.
-
-                    *Note: Generally the official databases will be used except when running
-                    `make check`/`make distcheck` without the databases pre-installed at the default
-                    location. In that case the settings file at `tests/settings.yaml` will be used,
-                    which configures the pipeline to use database archives prebuilt by us. This is
-                    to ensure the github actions can run smoothly. In order to build the archives,
-                    at least 1GB of disk space is necessary, which is not given on a github action
-                    runner.*
-
-                    #### `kraken2`
-
-                    The kraken2 database download is the most complex of the three database
-                    downloads. The download is done via one of the database archive file provided at
-                    the [Index Zone](https://benlangmead.github.io/aws-indexes/k2), except in the
-                    case outlined above.  
-                    When no downsampling should occur, the database archive is extracted and used
-                    as-is. In the other case, everything except the hash file (`hash.k2d`) is
-                    extracted, the taxonomy is downloaded, and the database is built on disk. The
-                    taxonomy files are removed afterwards as they are not used again and only take
-                    up space after database building, at least for our purposes.
-
-                    ##### `archive-url`
-
-                    The url the kraken2 archive will be downloaded from. The default archive is the
-                    very large database including protozoa and fungi in addition to the standard
-                    database.
-
-                    When prebuilt archives are to be used, the pipeline can download them both via
-                    `ftp` and `http`/`https`. If no protocol is included, `http`/`https` is assumed.  
-
-                    Default: https://genome-idx.s3.amazonaws.com/kraken/k2_pluspfp_20210127.tar.gz
-
-                    ##### `downsample-db`
-
-                    Whether or not downsampling of the `hash.k2d` file should occurr.  
-
-                    Default: false
-
-                    ##### `max-db-size-bytes`
-
-                    If downsampling should occurr, what is the maximum allowable size in bytes? The
-                    resulting file may be smaller than the given value. The value is passed on
-                    directly to `kraken2-build` under the `--max-db-size` option. Will only have an
-                    effect of `downsample_db` is true.
-
-                    Default: 250000000
-
-                    #### `krona`
-
-                    The Krona database download is fairly simple. Either the Krona internal download
-                    script `updateTaxnomy.sh`
-                    ([Documentation](https://github.com/marbl/Krona/wiki/Installing)) is used, or a
-                    prebuilt archive is downloaded.
-
-                    ##### `use-prebuilt`
-
-                    Whether or not a prebuilt archive should be downloaded instead of running the
-                    update taxonomy script.  
-                      
-                    Default: false
-
-                    ##### `archive-url`
-
-                    If a prebuilt archive should be downloaded, this tells the pipeline where to
-                    find it.
-
-                    When prebuilt archives are to be used, the pipeline can download them both via
-                    `ftp` and `http`/`https`. If no protocol is included, `http`/`https` is assumed.
-
-                    Default: ""
-
-                    #### `vep`
-
-                    The vep download is the simplest. The database is always in a compressed
-                    archive.
-
-                    ##### `archive-url`
-
-                    Location from where the archive will be downloaded.
-
-                    When prebuilt archives are to be used, the pipeline can download them both via
-                    `ftp` and `http`/`https`. If no protocol is included, `http`/`https` is assumed.
-                      
-                    Default: ftp://ftp.ensemblgenomes.org/pub/viruses/variation/indexed_vep_cache/sars_cov_2_vep_101_ASM985889v3.tar.gz
-
-                    ### `parameters`
-
-                    #### `vep`
-
-                    Parameters for rule vep. See documentation about vep arguments `--species`,
-                    `--buffer_size`, and `--distance` respectively in the vep
-                    [documentation](https://grch37.ensembl.org/info/docs/tools/vep/script/vep_options.html).
-
-                    ##### `species`
-
-                    Needs to match with the downloaded VEP database cache. The `vep` default is
-                    "homo_sapiens", which is unlikely to be of use for this pipeline.
-                      
-                    Directly passed to the `vep` parameter `--species`.
-                      
-                    Default: sars_cov_2
-
-                    ##### `buffer-size`
-
-                    Number of variants in memory at one time. Trades off between run time and memory
-                    usage. The higher, the faster.
-                      
-                    Directly passed to the `vep` parameter `--buffer-size`.
-                      
-                    Default: 5000
-
-                    ##### `transcript-distance`
-
-                    Up- and downstream distance of a gene and a transcript which will be classified
-                    as an up- or downstream variant.
-                      
-                    Directly passed to the `vep` parameter `--distance`.
-                      
-                    Default: 5000
-
-                    ##### `db-version`
-
-                    This specifies a database version, which is needed when the database version
-                    differs from the `vep` executable version. By default, `vep` looks for a
-                    database version matching its own. This is needed even when using a offline
-                    database cache like this pipeline does. Therefore this needs to be adjusted
-                    when changing the `vep` database used.
-                      
-                    Directly passed to the `vep` parameter `--distance`.
-                      
-                    Default: 101
-
-                    #### `ivar_trimming`
-
-                    Parameters for rule `ivar_primer_trim`. See documentation about ivar arguments
-                    `-q`, `-m`, and `-s` respectively in the iVar
-                    [documentation](https://andersen-lab.github.io/ivar/html/manualpage.html).
-                      
-                    `ivar` trimms primers from alignment BED files by first removing the sections
-                    listed in a second primer BED file, and then performing quality trimming by
-                    sliding a window along each read from 5' to 3' end, clipping the read if the
-                    average window quality drops below a given cutoff.
-
-                    ##### `quality-cutoff`
-
-                    If the average base call quality in the sliding window drops below this value,
-                    the read will be trimmed to the last base of sufficient average window quality.  
-
-                    Directly passed to the `ivar` parameter `-q`.  
-
-                    Default: 15
-
-                    ##### `length-cutoff`
-
-                    Read length threshold, if a read is shorter than this after trimming, it will be
-                    discarded.  
-
-                    Directly passed to the `ivar` parameter `-m`.  
-                    Default: 30
-
-                    ##### `window-width`
-
-                    Number of bases in the sliding window, i.e. the window width.
-                      
-                    Directly passed to the `ivar` parameter `-qs`.
-                      
-                    Default: 4
-
-                    #### `reporting`
-
-                    These paramerters are used to set quality control filters for the reports.
-
-                    ##### `mutation-coverage-threshold`
-
-                    Results from samples without sufficient coverage measures are not included in
-                    the visualizations or the linear regression calculations.
-                      
-                    Default: 90
-
-                    #### `deconvolution`
-
-                    ##### `method`
-
-                    Control the deconvolution method used.
-                    Possible options are:
-
-                    * `rlm`:
-                      Robust linear regression as implemented in the `MASS` package, executed
-                      via the `deconvR` package.
-                    * `nnls`:
-                      Non-negative least squares (`deconvR`).
-                    * `qp`:
-                      Quadratic programming (`deconvR`).
-                    * `svr`:
-                      Support vector regression (`deconvR`).
-
-                    Prepending "weighted_" to the chosen method will add weighting of bulk mutation
-                    abundances per variant by the inverse of the proportion of detected mutations to
-                    known mutations. This biases the abundance of variants with high proportions
-                    towards higher values, and coversely biases the abundence regression is of
-                    variants with low proportions towards lower values.
-                      
-                    Default: weighted_rlm
-
-                    ##### `mutation-depth-threshold`
-
-                    Minimum sequencing per mutation for it to be used in the analysis.
-                      
-                    Default: 100
-
-                    ## `control`
-
-                    The following settings control from which point the pipeline starts, which
-                    path it follows (i.e. which rules are executed on the way) and where it stops.
-
-                    ##### `start`
-
-                    Start points for the analysis
-
-                    * fastq(.gz): Raw reads in (gzipped) FASTQ format
-                    * bam: Unfiltered alignments
-                    * vcf: Variant calling files. *Note: Ideally these should have been generated by
-                      lofreq. The minimum requirement is that the INFO fields "AF" and "DP" are
-                      present. (More details on [here](https://samtools.github.io/hts-specs/))*
-
-                    When using a non-default target, not all rules will be able to run and it won't
-                    be possible to generate all reports. The main reasons for this are the missing
-                    quality control statistics that are necessary mainly for the final report, and
-                    the missing unalinged read files when starting after the alignment step.
-
-                    Default: fastq.gz
-
-                    ##### `targets`
-
-                    Desired results of the analysis. Multiple targets at the same time is possible.
-
-                    * help: Print all rules and their descriptions.
-                    * final_reports: Produce a comprehensive report. This is the default target.
-                    * devonvolution: Run deconvolution for all provided samples and create a summary
-                      table containing abundances from all samples.
-                    * lofreq: Call variants and produce .vcf file and overview .csv file.
-                    * multiqc: Create MultiQC reports for including raw and trimmed reads.
-                      
-                    Default: - final_reports
-
-                    ##### `run-ivar-primer-trimming`
-
-                    Whether the primer trimming step should be performed.
-                      
-                    Default: yes
-
-                    #### `execution`
-
-                    Settings directly related to the program execution itself.
-
-                    ##### `jobs`
-
-                    The number of jobs allowed to be executed at one time. If executed locally this
-                    specifies the maximum number of cores used at a time. May not extend to the
-                    number of jobs used by individual tools. See section `--cores` & `--jobs` in the
-                    [snakemake docs](https://snakemake.readthedocs.io/en/stable/executing/cli.html#all-options)
-
-                    Default: 6
-
-                    ##### `submit-to-cluster`
-
-                    Whether cluster specific settings will be respected, and a qsub submission
-                    call should be executed.
-                      
-                    Default: no
-
-                    ##### `cluster`
-
-                    Settings specific to executing the pipeline on a computing cluster. None of
-                    these are relevant when `submit-to-cluster` is "no".
-
-                    ###### `missing-file-timeout`
-
-                    How long before a rule output file is declared missing and the pipeline stopped.
-
-                    When executing the pipeline on a cluster, file system latency can be higher
-                    than when the pipeline is executed on a single server. Therefore the time
-                    snakemake waits before declaring a rule output file as missing and stopping
-                    needs to be adjusted.
-                      
-                    Default: 120
-
-                    ###### `stack`
-
-                    Stack memory used for each rule. We recommend leaving it as it is, unless you
-                    really know what you are doing.
-                      
-                    Default: 128M
-
-                    ###### `queue`
-
-                    The name of a specific queue the whole pipeline should be submitted to.
-                      
-                    Default: all
-
-                    ###### `contact-email`
-
-                    How the cluster administration may contact you.
-                      
-                    Default: none
-
-                    ###### `args`
-
-                    Additional arguments passed to `qsub`, as a single string.
-                      
-                    Default: ''
-
-                    ##### `rules`
-
-                    Per rule submission settings. Give the rule name as a heading to configure
-                    that specific rule.
-
-                    ###### `__default__`
-
-                    Default settings used in absence of rule specific settings.
-                      
-                    * `threads`: Number of threads. Default is 1.
-                    * `memory`: RAM available for the rule, with unit (e.g. "90K", "5M"). In the
-                      case of no unit, unit M is assumed. Default is 4G.
-
-                    ### `tools`
-
-                    Overwrites for locations of specific tools used. Each tool has its own
-                    subheading, i.e. "bwa", and the following settings:
-
-                    #### `executable`
-
-                    Path to the executable file for the tool, defaults to the system installation.
-
-                    #### `arguments`
-
-                    Additional arguments to the tool as one string. Only use this if you know
-                    what you are doing, these may cause conflicts with the arguments supplied in
-                    each rule.
-
+                    <h3 id="locations"><code>locations</code></h3>
+                    <p>Paths to various input files and directories needed by the pipeline.</p>
+                    <ul>
+                    <li><em>output-dir</em> output directory for the pipeline.</li>
+                    <li><em>input-dir</em> direcotry containing the input files, the files therin should match the file suffix given under control/start.</li>
+                    <li><em>reference-fasta</em> <a href="#mutation-sheet">Mutation sheet</a></li>
+                    <li><em>primers-bed</em> <a href="#primer-bed-file">Primer BED file</a></li>
+                    <li><em>mutations-bed</em> <a href="#mutation-bed-file">Mutation BED file</a></li>
+                    <li><em>mutation-sheet</em> <a href="#mutation-sheet">Mutation table</a></li>
+                    <li><em>kraken-db-dir</em> <a href="#kraken2-database">Kraken2 database</a></li>
+                    <li><em>krona-db-dir</em> <a href="#krona-database">Krona database</a></li>
+                    <li><em>vep-db-dir</em> <a href="#vep-database">VEP database</a></li>
+                    </ul>
+                    <h3 id="databases"><code>databases</code></h3>
+                    <p>Settings controlling the download and subsequent processing of databases needed for the pipeline. If the databases are already present, none of these settings will have any effect.</p>
+                    <p>When prebuilt archives are to be used, the pipeline can download them both via <code>ftp</code> and <code>http</code>/<code>https</code>. If no protocol is included, <code>http</code>/<code>https</code> is assumed.</p>
+                    <p><em>Note: Generally the official databases will be used except when running <code>make check</code>/<code>make distcheck</code> without the databases pre-installed at the default location. In that case the settings file at <code>tests/settings.yaml</code> will be used, which configures the pipeline to use database archives prebuilt by us. This is to ensure the github actions can run smoothly. In order to build the archives, at least 1GB of disk space is necessary, which is not given on a github action runner.</em></p>
+                    <h4 id="kraken2"><code>kraken2</code></h4>
+                    <p>The kraken2 database download is the most complex of the three database downloads. The download is done via one of the database archive file provided at the <a href="https://benlangmead.github.io/aws-indexes/k2">Index Zone</a>, except in the case outlined above.<br />
+                    When no downsampling should occur, the database archive is extracted and used as-is. In the other case, everything except the hash file (<code>hash.k2d</code>) is extracted, the taxonomy is downloaded, and the database is built on disk. The taxonomy files are removed afterwards as they are not used again and only take up space after database building, at least for our purposes.</p>
+                    <h5 id="archive-url"><code>archive-url</code></h5>
+                    <p>The url the kraken2 archive will be downloaded from. The default archive is the very large database including protozoa and fungi in addition to the standard database.</p>
+                    <p>When prebuilt archives are to be used, the pipeline can download them both via <code>ftp</code> and <code>http</code>/<code>https</code>. If no protocol is included, <code>http</code>/<code>https</code> is assumed.</p>
+                    <p>Default: <a href="https://genome-idx.s3.amazonaws.com/kraken/k2_pluspfp_20210127.tar.gz">https://genome-idx.s3.amazonaws.com/kraken/k2_pluspfp_20210127.tar.gz</a></p>
+                    <h5 id="downsample-db"><code>downsample-db</code></h5>
+                    <p>Whether or not downsampling of the <code>hash.k2d</code> file should occurr.</p>
+                    <p>Default: false</p>
+                    <h5 id="max-db-size-bytes"><code>max-db-size-bytes</code></h5>
+                    <p>If downsampling should occurr, what is the maximum allowable size in bytes? The resulting file may be smaller than the given value. The value is passed on directly to <code>kraken2-build</code> under the <code>--max-db-size</code> option. Will only have an effect of <code>downsample_db</code> is true.</p>
+                    <p>Default: 250000000</p>
+                    <h4 id="krona"><code>krona</code></h4>
+                    <p>The Krona database download is fairly simple. Either the Krona internal download script <code>updateTaxnomy.sh</code> (<a href="https://github.com/marbl/Krona/wiki/Installing">Documentation</a>) is used, or a prebuilt archive is downloaded.</p>
+                    <h5 id="use-prebuilt"><code>use-prebuilt</code></h5>
+                    <p>Whether or not a prebuilt archive should be downloaded instead of running the update taxonomy script.</p>
+                    <p>Default: false</p>
+                    <h5 id="archive-url-1"><code>archive-url</code></h5>
+                    <p>If a prebuilt archive should be downloaded, this tells the pipeline where to find it.</p>
+                    <p>When prebuilt archives are to be used, the pipeline can download them both via <code>ftp</code> and <code>http</code>/<code>https</code>. If no protocol is included, <code>http</code>/<code>https</code> is assumed.</p>
+                    <p>Default: ““</p>
+                    <h4 id="vep"><code>vep</code></h4>
+                    <p>The vep download is the simplest. The database is always in a compressed archive.</p>
+                    <h5 id="archive-url-2"><code>archive-url</code></h5>
+                    <p>Location from where the archive will be downloaded.</p>
+                    <p>When prebuilt archives are to be used, the pipeline can download them both via <code>ftp</code> and <code>http</code>/<code>https</code>. If no protocol is included, <code>http</code>/<code>https</code> is assumed.</p>
+                    <p>Default: <a href="ftp://ftp.ensemblgenomes.org/pub/viruses/variation/indexed_vep_cache/sars_cov_2_vep_101_ASM985889v3.tar.gz">ftp://ftp.ensemblgenomes.org/pub/viruses/variation/indexed_vep_cache/sars_cov_2_vep_101_ASM985889v3.tar.gz</a></p>
+                    <h3 id="parameters"><code>parameters</code></h3>
+                    <h4 id="vep-1"><code>vep</code></h4>
+                    <p>Parameters for rule vep. See documentation about vep arguments <code>--species</code>, <code>--buffer_size</code>, and <code>--distance</code> respectively in the vep <a href="https://grch37.ensembl.org/info/docs/tools/vep/script/vep_options.html">documentation</a>.</p>
+                    <h5 id="species"><code>species</code></h5>
+                    <p>Needs to match with the downloaded VEP database cache. The <code>vep</code> default is “homo_sapiens”, which is unlikely to be of use for this pipeline.</p>
+                    <p>Directly passed to the <code>vep</code> parameter <code>--species</code>.</p>
+                    <p>Default: sars_cov_2</p>
+                    <h5 id="buffer-size"><code>buffer-size</code></h5>
+                    <p>Number of variants in memory at one time. Trades off between run time and memory usage. The higher, the faster.</p>
+                    <p>Directly passed to the <code>vep</code> parameter <code>--buffer-size</code>.</p>
+                    <p>Default: 5000</p>
+                    <h5 id="transcript-distance"><code>transcript-distance</code></h5>
+                    <p>Up- and downstream distance of a gene and a transcript which will be classified as an up- or downstream variant.</p>
+                    <p>Directly passed to the <code>vep</code> parameter <code>--distance</code>.</p>
+                    <p>Default: 5000</p>
+                    <h5 id="db-version"><code>db-version</code></h5>
+                    <p>This specifies a database version, which is needed when the database version differs from the <code>vep</code> executable version. By default, <code>vep</code> looks for a database version matching its own. This is needed even when using a offline database cache like this pipeline does. Therefore this needs to be adjusted when changing the <code>vep</code> database used.</p>
+                    <p>Directly passed to the <code>vep</code> parameter <code>--distance</code>.</p>
+                    <p>Default: 101</p>
+                    <h4 id="ivar_trimming"><code>ivar_trimming</code></h4>
+                    <p>Parameters for rule <code>ivar_primer_trim</code>. See documentation about ivar arguments <code>-q</code>, <code>-m</code>, and <code>-s</code> respectively in the iVar <a href="https://andersen-lab.github.io/ivar/html/manualpage.html">documentation</a>.</p>
+                    <p><code>ivar</code> trimms primers from alignment BED files by first removing the sections listed in a second primer BED file, and then performing quality trimming by sliding a window along each read from 5’ to 3’ end, clipping the read if the average window quality drops below a given cutoff.</p>
+                    <h5 id="quality-cutoff"><code>quality-cutoff</code></h5>
+                    <p>If the average base call quality in the sliding window drops below this value, the read will be trimmed to the last base of sufficient average window quality.</p>
+                    <p>Directly passed to the <code>ivar</code> parameter <code>-q</code>.</p>
+                    <p>Default: 15</p>
+                    <h5 id="length-cutoff"><code>length-cutoff</code></h5>
+                    <p>Read length threshold, if a read is shorter than this after trimming, it will be discarded.</p>
+                    <p>Directly passed to the <code>ivar</code> parameter <code>-m</code>.<br />
+                    Default: 30</p>
+                    <h5 id="window-width"><code>window-width</code></h5>
+                    <p>Number of bases in the sliding window, i.e. the window width.</p>
+                    <p>Directly passed to the <code>ivar</code> parameter <code>-qs</code>.</p>
+                    <p>Default: 4</p>
+                    <h4 id="reporting"><code>reporting</code></h4>
+                    <p>These paramerters are used to set quality control filters for the reports.</p>
+                    <h5 id="mutation-coverage-threshold"><code>mutation-coverage-threshold</code></h5>
+                    <p>Results from samples without sufficient coverage measures are not included in the visualizations or the linear regression calculations.</p>
+                    <p>Default: 90</p>
+                    <h4 id="deconvolution"><code>deconvolution</code></h4>
+                    <h5 id="method"><code>method</code></h5>
+                    <p>Control the deconvolution method used. Possible options are:</p>
+                    <ul>
+                    <li><code>rlm</code>: Robust linear regression as implemented in the <code>MASS</code> package, executed via the <code>deconvR</code> package.</li>
+                    <li><code>nnls</code>: Non-negative least squares (<code>deconvR</code>).</li>
+                    <li><code>qp</code>: Quadratic programming (<code>deconvR</code>).</li>
+                    <li><code>svr</code>: Support vector regression (<code>deconvR</code>).</li>
+                    </ul>
+                    <p>Prepending “weighted_” to the chosen method will add weighting of bulk mutation abundances per variant by the inverse of the proportion of detected mutations to known mutations. This biases the abundance of variants with high proportions towards higher values, and coversely biases the abundence regression is of variants with low proportions towards lower values.</p>
+                    <p>Default: weighted_rlm</p>
+                    <h5 id="mutation-depth-threshold"><code>mutation-depth-threshold</code></h5>
+                    <p>Minimum sequencing per mutation for it to be used in the analysis.</p>
+                    <p>Default: 100</p>
+                    <h2 id="control"><code>control</code></h2>
+                    <p>The following settings control from which point the pipeline starts, which path it follows (i.e. which rules are executed on the way) and where it stops.</p>
+                    <h5 id="start"><code>start</code></h5>
+                    <p>Start points for the analysis</p>
+                    <ul>
+                    <li>fastq(.gz): Raw reads in (gzipped) FASTQ format</li>
+                    <li>bam: Unfiltered alignments</li>
+                    <li>vcf: Variant calling files. <em>Note: Ideally these should have been generated by lofreq. The minimum requirement is that the INFO fields “AF” and “DP” are present. (More details on <a href="https://samtools.github.io/hts-specs/">here</a>)</em></li>
+                    </ul>
+                    <p>When using a non-default target, not all rules will be able to run and it won’t be possible to generate all reports. The main reasons for this are the missing quality control statistics that are necessary mainly for the final report, and the missing unalinged read files when starting after the alignment step.</p>
+                    <p>Default: fastq.gz</p>
+                    <h5 id="targets"><code>targets</code></h5>
+                    <p>Desired results of the analysis. Multiple targets at the same time is possible.</p>
+                    <ul>
+                    <li>help: Print all rules and their descriptions.</li>
+                    <li>final_reports: Produce a comprehensive report. This is the default target.</li>
+                    <li>devonvolution: Run deconvolution for all provided samples and create a summary table containing abundances from all samples.</li>
+                    <li>lofreq: Call variants and produce .vcf file and overview .csv file.</li>
+                    <li>multiqc: Create MultiQC reports for including raw and trimmed reads.</li>
+                    </ul>
+                    <p>Default: - final_reports</p>
+                    <h5 id="run-ivar-primer-trimming"><code>run-ivar-primer-trimming</code></h5>
+                    <p>Whether the primer trimming step should be performed.</p>
+                    <p>Default: yes</p>
+                    <h4 id="execution"><code>execution</code></h4>
+                    <p>Settings directly related to the program execution itself.</p>
+                    <h5 id="jobs"><code>jobs</code></h5>
+                    <p>The number of jobs allowed to be executed at one time. If executed locally this specifies the maximum number of cores used at a time. May not extend to the number of jobs used by individual tools. See section <code>--cores</code> &amp; <code>--jobs</code> in the <a href="https://snakemake.readthedocs.io/en/stable/executing/cli.html#all-options">snakemake docs</a></p>
+                    <p>Default: 6</p>
+                    <h5 id="submit-to-cluster"><code>submit-to-cluster</code></h5>
+                    <p>Whether cluster specific settings will be respected, and a qsub submission call should be executed.</p>
+                    <p>Default: no</p>
+                    <h5 id="cluster"><code>cluster</code></h5>
+                    <p>Settings specific to executing the pipeline on a computing cluster. None of these are relevant when <code>submit-to-cluster</code> is “no”.</p>
+                    <h6 id="missing-file-timeout"><code>missing-file-timeout</code></h6>
+                    <p>How long before a rule output file is declared missing and the pipeline stopped.</p>
+                    <p>When executing the pipeline on a cluster, file system latency can be higher than when the pipeline is executed on a single server. Therefore the time snakemake waits before declaring a rule output file as missing and stopping needs to be adjusted.</p>
+                    <p>Default: 120</p>
+                    <h6 id="stack"><code>stack</code></h6>
+                    <p>Stack memory used for each rule. We recommend leaving it as it is, unless you really know what you are doing.</p>
+                    <p>Default: 128M</p>
+                    <h6 id="queue"><code>queue</code></h6>
+                    <p>The name of a specific queue the whole pipeline should be submitted to.</p>
+                    <p>Default: all</p>
+                    <h6 id="contact-email"><code>contact-email</code></h6>
+                    <p>How the cluster administration may contact you.</p>
+                    <p>Default: none</p>
+                    <h6 id="args"><code>args</code></h6>
+                    <p>Additional arguments passed to <code>qsub</code>, as a single string.</p>
+                    <p>Default: ’’</p>
+                    <h5 id="rules"><code>rules</code></h5>
+                    <p>Per rule submission settings. Give the rule name as a heading to configure that specific rule.</p>
+                    <h6 id="__default__"><code>__default__</code></h6>
+                    <p>Default settings used in absence of rule specific settings.</p>
+                    <ul>
+                    <li><code>threads</code>: Number of threads. Default is 1.</li>
+                    <li><code>memory</code>: RAM available for the rule, with unit (e.g. “90K”, “5M”). In the case of no unit, unit M is assumed. Default is 4G.</li>
+                    </ul>
+                    <h3 id="tools"><code>tools</code></h3>
+                    <p>Overwrites for locations of specific tools used. Each tool has its own subheading, i.e. “bwa”, and the following settings:</p>
+                    <h4 id="executable"><code>executable</code></h4>
+                    <p>Path to the executable file for the tool, defaults to the system installation.</p>
+                    <h4 id="arguments"><code>arguments</code></h4>
+                    <p>Additional arguments to the tool as one string. Only use this if you know what you are doing, these may cause conflicts with the arguments supplied in each rule.</p>
                     </details>
+
                     <h1 id="running-the-pipeline">Running the pipeline</h1>
                     <p>PiGx SARS-CoV-2 wastewater is executed using the command <code>pigx-sars-cov-2 -s settings.yaml sample_sheet.csv</code>. See <code>pigx-sars-cov-2 --help</code> for information about additional command line arguments.</p>
                     <p>The <code>execution</code> section of the settings file provides some control over the execution of the pipeline.</p>
@@ -653,96 +447,75 @@
                     <details>
                       <summary>All outputs with their locations.</summary>
 
-                    *Given locations are relative to the output directory. `SAMPLE` indicates a
-                    variable part of a path that will be replaced with a sample name. `VIRUS`
-                    will be replaced with the virus being investigated.*
-
-                    * Overview reports:
-                      * Summary and visualization of the development of SARS-CoV-2 variants and
-                        mutations over time and locations from all samples provided
-                        (`report/index.html`).
-                      * Quality Control reports per sample:
-                        * Overall QC report with number of covered amplicons, read coverage, etc
-                          (`report/SAMPLE.qc_report_per_sample.html`).
-                        * MultiQC report per sample for raw and trimmed reads along with several
-                          supplementary files (`report/multiqc/SAMPLE/*`).
-                        * FASTQC reports per sample and read for raw reads, adapter trimmed reads,
-                          and aligned reads, along with an archive of supplementary files
-                          (`report/fastqc/SAMPLE/*`).
-                        * FASTP reports per sample on adapter trimming statistics
-                          (`fastp/SAMPLE/*`).
-                      * Per sample variant report: variant analysis of SARS-CoV-2 from each
-                        wastewater sample and identification of variants of concern
-                        (`report/SAMPLE.qc_report_per_sample.html`).
-                      * Taxonomic classification of unaligned reads: Overview over taxa inferred
-                        from all the sequencing reads not aligning to the reference genome
-                        (`report/SAMPLE.taxonomic_classification.html`).
-                    * Alignments:
-                      * Per sample aligned reads: Reads aligned against the
-                        reference genome, at various stages of trimming and sorting, along with
-                        their index files (`mapped_reads/SAMPLE_aligned.(bam|sam|bai)`).
-                      * Per sample unaligned reads: Reads not aligning to the
-                        reference genome (`mapped_reads/SAMPLE_unalingned.(bam|fastq)`).
-                    * SNV files:
-                      * Per sample files listing all detected single nucleotide variants (SNVs) from
-                        the aligned reads (also parsed to csv, `variants/SAMPLE_snv.(vcf|csv)`).
-                    * VEP reports:
-                      * Per sample report files constituting the
-                        [VEP output](https://www.ensembl.org/info/docs/tools/vep/vep_formats.html#output)
-                        including the variants uploaded to the VEP database, resulting amino acid
-                        changes and consequences for the corresponding protein.
-                        * Raw VEP output (`variants/SAMPLE_vep_VIRUS.txt`).
-                        * Report with detailed run statistics
-                          (`variants/SAMPLE_vep_VIRUS.txt_summary.html`).
-                        * Warnings generated by vep during the run
-                          (`variants/SAMPLE_vep_VIRUS.txt_warnings.txt`)
-                        * File with most of the raw output parsed into a comma separated table for
-                          downstream processing (`variants/SAMPLE_vep_VIRUS_parsed.csv`).
-                    * Deconvoluted variant abundances:
-                      * Per sample abundance of each of the VOCs as
-                        * a regular table (`variants/SAMPLE_variant_abundance.csv`),
-                        * in a single row together with metadata (used later to construct summary,
-                          `variants/SAMPLE_variants_with_meta.csv`).
-                      * Overall summary table of per sample variant abundances with
-                        sample metadata (`variants/data_variant_plot.csv`).
-                    * Mutation abundances:
-                      * Per sample abundance of each signature mutation found and meeting the read
-                        depth threshold criterium as a single row together with metadata (used later
-                        to construct summary, `mutations/SAMPLE_mutations.csv`).
-                      * Overall summary table *CSV* file of per sample mutation abundances with
-                        sample metadata.
-                      * Mutation data of non-signature mutations meeting the read depth threshold
-                        (`mutations/SAMPLE_non_sigmuts.csv`).
-                    * Sample quality:
-                      * Per sample tables of read depth at each signature mutation locus, derived
-                        from the *untrimmed* alignment (`coverage/SAMPLE_genome_cov.tsv`).
-                      * Per sample tables giving coverage statistics of the *untrimmed* alignment
-                        (`coverage/SAMPLE_mut_cov.tsv`).
-                      * Per sample tables aggregating the statistics of genome and mutation coverage
-                        files in a sample quality table (single row for downstream use,
-                        `coverage/SAMPLE_quality.csv`).
-                      * Overall table concatenating the per sample quality rows into one table
-                        (`coverage/sample_quality_table.csv`).
-                    * Adapter-trimmed reads (`trimmed_reads/SAMPLE_trimmed.fastq.gz`).
-                    * Kraken2 raw output: provides an overview of all found species in the unaligned
-                      reads together with the NCBI taxonomy ID
-                      (`kraken/SAMPLE_classified_unaligned_reads.txt`).
-                    * Per sample Krona diagram of taxa proportions in unaligned reads
-                      (`report/SAMPLE.Krona_report.html`).
-                    * Mutation count summary table containing count statistics for mutations
-                      overall and per sample (`mutation_counts.csv`).
-                    * Raw table of per mutation linear model coefficients and their p-values,
-                      generated by the `mutation_regression.R` script
-                      (`unfiltered_mutations_sig.csv`).
-                    * Sample summary table containing various statistics about each sample
-                      (`overview_QC.csv`).
-                    * Log files for all major analysis steps performed by the pipeline
-                      (`logs/*.log`).
-
+                    <p><em>Given locations are relative to the output directory. <code>SAMPLE</code> indicates a variable part of a path that will be replaced with a sample name. <code>VIRUS</code> will be replaced with the virus being investigated.</em></p>
+                    <ul>
+                    <li>Overview reports:
+                    <ul>
+                    <li>Summary and visualization of the development of SARS-CoV-2 variants and mutations over time and locations from all samples provided (<code>report/index.html</code>).</li>
+                    <li>Quality Control reports per sample:
+                    <ul>
+                    <li>Overall QC report with number of covered amplicons, read coverage, etc (<code>report/SAMPLE.qc_report_per_sample.html</code>).</li>
+                    <li>MultiQC report per sample for raw and trimmed reads along with several supplementary files (<code>report/multiqc/SAMPLE/*</code>).</li>
+                    <li>FASTQC reports per sample and read for raw reads, adapter trimmed reads, and aligned reads, along with an archive of supplementary files (<code>report/fastqc/SAMPLE/*</code>).</li>
+                    <li>FASTP reports per sample on adapter trimming statistics (<code>fastp/SAMPLE/*</code>).</li>
+                    </ul></li>
+                    <li>Per sample variant report: variant analysis of SARS-CoV-2 from each wastewater sample and identification of variants of concern (<code>report/SAMPLE.qc_report_per_sample.html</code>).</li>
+                    <li>Taxonomic classification of unaligned reads: Overview over taxa inferred from all the sequencing reads not aligning to the reference genome (<code>report/SAMPLE.taxonomic_classification.html</code>).</li>
+                    </ul></li>
+                    <li>Alignments:
+                    <ul>
+                    <li>Per sample aligned reads: Reads aligned against the reference genome, at various stages of trimming and sorting, along with their index files (<code>mapped_reads/SAMPLE_aligned.(bam|sam|bai)</code>).</li>
+                    <li>Per sample unaligned reads: Reads not aligning to the reference genome (<code>mapped_reads/SAMPLE_unalingned.(bam|fastq)</code>).</li>
+                    </ul></li>
+                    <li>SNV files:
+                    <ul>
+                    <li>Per sample files listing all detected single nucleotide variants (SNVs) from the aligned reads (also parsed to csv, <code>variants/SAMPLE_snv.(vcf|csv)</code>).</li>
+                    </ul></li>
+                    <li>VEP reports:
+                    <ul>
+                    <li>Per sample report files constituting the <a href="https://www.ensembl.org/info/docs/tools/vep/vep_formats.html#output">VEP output</a> including the variants uploaded to the VEP database, resulting amino acid changes and consequences for the corresponding protein.
+                    <ul>
+                    <li>Raw VEP output (<code>variants/SAMPLE_vep_VIRUS.txt</code>).</li>
+                    <li>Report with detailed run statistics (<code>variants/SAMPLE_vep_VIRUS.txt_summary.html</code>).</li>
+                    <li>Warnings generated by vep during the run (<code>variants/SAMPLE_vep_VIRUS.txt_warnings.txt</code>)</li>
+                    <li>File with most of the raw output parsed into a comma separated table for downstream processing (<code>variants/SAMPLE_vep_VIRUS_parsed.csv</code>).</li>
+                    </ul></li>
+                    </ul></li>
+                    <li>Deconvoluted variant abundances:
+                    <ul>
+                    <li>Per sample abundance of each of the VOCs as
+                    <ul>
+                    <li>a regular table (<code>variants/SAMPLE_variant_abundance.csv</code>),</li>
+                    <li>in a single row together with metadata (used later to construct summary, <code>variants/SAMPLE_variants_with_meta.csv</code>).</li>
+                    </ul></li>
+                    <li>Overall summary table of per sample variant abundances with sample metadata (<code>variants/data_variant_plot.csv</code>).</li>
+                    </ul></li>
+                    <li>Mutation abundances:
+                    <ul>
+                    <li>Per sample abundance of each signature mutation found and meeting the read depth threshold criterium as a single row together with metadata (used later to construct summary, <code>mutations/SAMPLE_mutations.csv</code>).</li>
+                    <li>Overall summary table <em>CSV</em> file of per sample mutation abundances with sample metadata.</li>
+                    <li>Mutation data of non-signature mutations meeting the read depth threshold (<code>mutations/SAMPLE_non_sigmuts.csv</code>).</li>
+                    </ul></li>
+                    <li>Sample quality:
+                    <ul>
+                    <li>Per sample tables of read depth at each signature mutation locus, derived from the <em>untrimmed</em> alignment (<code>coverage/SAMPLE_genome_cov.tsv</code>).</li>
+                    <li>Per sample tables giving coverage statistics of the <em>untrimmed</em> alignment (<code>coverage/SAMPLE_mut_cov.tsv</code>).</li>
+                    <li>Per sample tables aggregating the statistics of genome and mutation coverage files in a sample quality table (single row for downstream use, <code>coverage/SAMPLE_quality.csv</code>).</li>
+                    <li>Overall table concatenating the per sample quality rows into one table (<code>coverage/sample_quality_table.csv</code>).</li>
+                    </ul></li>
+                    <li>Adapter-trimmed reads (<code>trimmed_reads/SAMPLE_trimmed.fastq.gz</code>).</li>
+                    <li>Kraken2 raw output: provides an overview of all found species in the unaligned reads together with the NCBI taxonomy ID (<code>kraken/SAMPLE_classified_unaligned_reads.txt</code>).</li>
+                    <li>Per sample Krona diagram of taxa proportions in unaligned reads (<code>report/SAMPLE.Krona_report.html</code>).</li>
+                    <li>Mutation count summary table containing count statistics for mutations overall and per sample (<code>mutation_counts.csv</code>).</li>
+                    <li>Raw table of per mutation linear model coefficients and their p-values, generated by the <code>mutation_regression.R</code> script (<code>unfiltered_mutations_sig.csv</code>).</li>
+                    <li>Sample summary table containing various statistics about each sample (<code>overview_QC.csv</code>).</li>
+                    <li>Log files for all major analysis steps performed by the pipeline (<code>logs/*.log</code>).</li>
+                    </ul>
                     </details>
+
                     <h1 id="troubleshooting">Troubleshooting</h1>
-                    <p>If you have any questions please e-mail: <a href="mailto:pigx@googlegroups.com" class="email">pigx@googlegroups.com</a> or use the web form to ask questions <a href="https://groups.google.com/forum/#!forum/pigx/" class="uri">https://groups.google.com/forum/#!forum/pigx/</a>.</p>
-                    <p>If you run into any bugs, please open an issue here: <a href="https://github.com/BIMSBbioinfo/pigx_rnaseq/issues" class="uri">https://github.com/BIMSBbioinfo/pigx_rnaseq/issues</a>.</p>
+                    <p>If you have any questions please e-mail: <a href="mailto:pigx@googlegroups.com">pigx@googlegroups.com</a> or use the web form to ask questions <a href="https://groups.google.com/forum/#!forum/pigx/">https://groups.google.com/forum/#!forum/pigx/</a>.</p>
+                    <p>If you run into any bugs, please open an issue here: <a href="https://github.com/BIMSBbioinfo/pigx_rnaseq/issues">https://github.com/BIMSBbioinfo/pigx_rnaseq/issues</a>.</p>
                   </section>
                 </div>
                 <div class="search-results">
