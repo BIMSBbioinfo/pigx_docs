@@ -151,7 +151,7 @@ Without any user intervention, this will happen automatically via snakemake
 rules. This behaviour is controlled via parameters in the settings file. See the
 [Settings file](#settings-file) section for details.
 
-Alternatively, the databases may be downloaded maunally via the
+Alternatively, the databases may be downloaded manually via the
 `download_databases.sh` scripts accessible like so:
 
 ```sh
