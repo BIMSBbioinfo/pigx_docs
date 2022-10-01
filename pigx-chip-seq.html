@@ -224,11 +224,6 @@
                     <h3 id="locations">Locations</h3>
                     <p>Here you define paths to be used in the pipeline, some of the items are required and some optional (can stay blank):</p>
                     <table>
-                    <colgroup>
-                    <col style="width: 28%" />
-                    <col style="width: 31%" />
-                    <col style="width: 40%" />
-                    </colgroup>
                     <thead>
                     <tr class="header">
                     <th>item</th>
@@ -273,15 +268,10 @@
                     <ul>
                     <li><a href="https://www.ensembl.org/info/data/ftp/index.html">Ensembl</a>, where the reference genomoe is listed under <em>DNA</em> <code>FASTA</code>, the gene annotations under <em>Gene sets</em> <code>GTF</code>.</li>
                     </ul>
-                    <p>The user is free to choose any resource for these annotation files, however it is very important to note that the chromosome naming styles must match between different annotation files (e.g. chromosome 21 is named as <em>chr21</em> in UCSC style, but <em>21</em> in NCBI/Ensemble style).</p>
+                    <p>The user is free to choose any resource for these annotation files, however it is very important to note that the chromosome naming styles must match between different annotation files (e.g. chromosome 21 is named as <em>chr21</em> in UCSC style, but <em>21</em> in NCBI/Ensemble style).</p>
                     <h3 id="general">General</h3>
                     <p>These are settings which apply to all analysis (unless adjusted in single analysis):</p>
                     <table>
-                    <colgroup>
-                    <col style="width: 28%" />
-                    <col style="width: 31%" />
-                    <col style="width: 40%" />
-                    </colgroup>
                     <thead>
                     <tr class="header">
                     <th>item</th>
@@ -293,7 +283,7 @@
                     <tr class="odd">
                     <td><em>assembly</em></td>
                     <td>yes</td>
-                    <td>version of reference genome (e.g. hg19,mm9, …)</td>
+                    <td>version of reference genome (e.g. hg19,mm9, …)</td>
                     </tr>
                     <tr class="even">
                     <td><em>params</em></td>
@@ -336,11 +326,6 @@
                     <h3 id="analysis-sections">Analysis Sections</h3>
                     <p>The analysis part of the setting file describes the experiment. It has following sections:</p>
                     <table>
-                    <colgroup>
-                    <col style="width: 28%" />
-                    <col style="width: 31%" />
-                    <col style="width: 40%" />
-                    </colgroup>
                     <thead>
                     <tr class="header">
                     <th>section</th>
@@ -373,7 +358,7 @@
                     </table>
                     <p>The creation of these sections is straight forward considering the following snippets as template. Comments and examples within the snippets provide guidance of what is possible and what to take care of.</p>
                     <h4 id="peak-calling">Peak Calling</h4>
-                    <p>The previously defined samples are used for subsequent peak calling analysis to detect regions of enriched binding. In this section any number of comparisons can be defined, while multiple combinations and variations are possible. In terms of peak calling the <strong>ChIP</strong> (also called treatment) is the sample in which we want to detect enriched regions compared to the <strong>Cont(rol)</strong> (or background) sample. Each analysis can be run with a unique set of parameters and default parameters for all analysis can be defined in the <a href="#settings-file">settings file</a> , check available parameters and description <a href="https://github.com/taoliu/MACS">here</a>. For more information have a look at the publication for the software we are using “Zhang et al. Model-based Analysis of ChIP-Seq (MACS). Genome Biol (2008) vol. 9 (9) pp. R137”.</p>
+                    <p>The previously defined samples are used for subsequent peak calling analysis to detect regions of enriched binding. In this section any number of comparisons can be defined, while multiple combinations and variations are possible. In terms of peak calling the <strong>ChIP</strong> (also called treatment) is the sample in which we want to detect enriched regions compared to the <strong>Cont(rol)</strong> (or background) sample. Each analysis can be run with a unique set of parameters and default parameters for all analysis can be defined in the <a href="#settings-file">settings file</a> , check available parameters and description <a href="https://github.com/taoliu/MACS">here</a>. For more information have a look at the publication for the software we are using “Zhang et al. Model-based Analysis of ChIP-Seq (MACS). Genome Biol (2008) vol. 9 (9) pp. R137”.</p>
                     <div class="sourceCode" id="cb10"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define peak calling analysis</span></span>
                     <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">peak_calling</span><span class="kw">:</span></span>
                     <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">    # analysis can have any name, but the names have to be unique </span></span>
@@ -439,11 +424,6 @@
                     <p><strong>IMPORTANT</strong>: In order to use the hub feature, make sure you downloaded the reference genome in UCSC style (see <a href="#reference-and-annotations">here</a> for instructions ).</p>
                     <p>The required items to define the hub are the following:</p>
                     <table>
-                    <colgroup>
-                    <col style="width: 28%" />
-                    <col style="width: 31%" />
-                    <col style="width: 40%" />
-                    </colgroup>
                     <thead>
                     <tr class="header">
                     <th>item</th>
@@ -548,10 +528,6 @@
                     |-- Trimmed
                     |-- UCSC_HUB</code></pre>
                     <table>
-                    <colgroup>
-                    <col style="width: 40%" />
-                    <col style="width: 59%" />
-                    </colgroup>
                     <thead>
                     <tr class="header">
                     <th>Folder</th>
@@ -688,7 +664,7 @@
                     <p><strong>A:</strong> Our pipeline does not like if in the FASTA headers of the reference genome there is more information than the chromosome name, so please use this oneliner to format your genome-file:</p>
                     <div class="sourceCode" id="cb25"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> refGenome.fa  <span class="kw">|</span> <span class="fu">awk</span> <span class="st">&#39;{ print $1}’ &gt;  refGenome_noWhiteSpace.fa</span></span></code></pre></div>
                     <h1 id="questions">Questions</h1>
-                    <p>If you have further questions please e-mail: <a href="mailto:pigx@googlegroups.com" class="email">pigx@googlegroups.com</a> or use the web form to ask questions <a href="https://groups.google.com/forum/#!forum/pigx/" class="uri">https://groups.google.com/forum/#!forum/pigx/</a></p>
+                    <p>If you have further questions please e-mail: <a href="mailto:pigx@googlegroups.com">pigx@googlegroups.com</a> or use the web form to ask questions <a href="https://groups.google.com/forum/#!forum/pigx/">https://groups.google.com/forum/#!forum/pigx/</a></p>
                   </section>
                 </div>
                 <div class="search-results">

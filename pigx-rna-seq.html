@@ -128,7 +128,7 @@
                     <div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./configure</span> <span class="at">--prefix</span><span class="op">=</span>/some/where</span>
                     <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> install</span></code></pre></div>
                     <h1 id="quick-start">Quick start</h1>
-                    <ol>
+                    <ol type="1">
                     <li><p>Download the zipped test data folder from <a href="https://github.com/BIMSBbioinfo/pigx_rnaseq/releases/download/v0.0.3/test_data-0.0.3.tgz">here</a>:</p></li>
                     <li><p>Unzip the archive</p>
                     <p><code>tar -xzvf test_data.tgz</code></p></li>
@@ -206,7 +206,7 @@
                     </ul>
                     <p><strong>Organism</strong> (for GO-term analysis using <code>gProfileR</code>):</p>
                     <ul>
-                    <li>Just append the species name to the initial of the genus name of the organism (e.g. hsapiens, mmusculus, celegans, dmelanogaster).</li>
+                    <li>Just append the species name to the initial of the genus name of the organism (e.g. hsapiens, mmusculus, celegans, dmelanogaster).</li>
                     </ul>
                     <p><strong>Differential Expression (DE) analyses</strong> to perform:</p>
                     <ul>
@@ -236,7 +236,7 @@
                     <span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">jobs</span><span class="kw">:</span><span class="at"> </span><span class="dv">6</span></span>
                     <span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">nice</span><span class="kw">:</span><span class="at"> </span><span class="dv">19</span></span></code></pre></div>
                     <h3 id="reference-and-annotations">Reference and annotations</h3>
-                    <p>The user must supply paths pointing to a reference genome for the organism, as well as annotated genes and a transcriptome reference. These might for example be downloaded from <a href="https://www.ensembl.org/info/data/ftp/index.html">Ensembl</a>. The reference genomoe is listed under <em>DNA</em> <code>FASTA</code>, the gene annotations under <em>Gene sets</em> <code>GTF</code>, and the transcriptome reference sequence is specified under <em>cDNA</em> <code>FASTA</code>. The user is free to choose any resource for these annotation files, however it is very important to note that the chromosome naming styles must match between different annotation files (e.g. chromosome 21 is named as <em>chr21</em> in UCSC style, but <em>21</em> in NCBI/Ensemble style).</p>
+                    <p>The user must supply paths pointing to a reference genome for the organism, as well as annotated genes and a transcriptome reference. These might for example be downloaded from <a href="https://www.ensembl.org/info/data/ftp/index.html">Ensembl</a>. The reference genomoe is listed under <em>DNA</em> <code>FASTA</code>, the gene annotations under <em>Gene sets</em> <code>GTF</code>, and the transcriptome reference sequence is specified under <em>cDNA</em> <code>FASTA</code>. The user is free to choose any resource for these annotation files, however it is very important to note that the chromosome naming styles must match between different annotation files (e.g. chromosome 21 is named as <em>chr21</em> in UCSC style, but <em>21</em> in NCBI/Ensemble style).</p>
                     <h3 id="organism-for-go-term-analysis">Organism (for GO-term analysis)</h3>
                     <p>GO term analysis is performed based on the organism specified in the settings file. Some popular organisms include <code>hsapiens</code>, <code>mmusculus</code>, <code>celegans</code>, <code>dmelanogaster</code>. The full list of organism IDs is available on the <em>gProfiler</em> documentation, <a href="https://biit.cs.ut.ee/gprofiler/help.cgi?help_id=64">here</a>.</p>
                     <h3 id="deanalysis">DEanalysis</h3>
@@ -318,10 +318,6 @@
                     <h2 id="gene-expression">Gene expression</h2>
                     <p>PiGx RNAseq produces three variants of gene expression count matrices:</p>
                     <table>
-                    <colgroup>
-                    <col style="width: 46%" />
-                    <col style="width: 53%" />
-                    </colgroup>
                     <thead>
                     <tr class="header">
                     <th>Kind of count matrix</th>
@@ -376,7 +372,7 @@
                     <h4 id="disappearing-jobs-on-the-cluster">Disappearing jobs on the cluster</h4>
                     <p>PiGx RNAseq comes with sensible defaults for resource requests when running on a cluster, but based on the genome version and other parameters, these might not be sufficient and your cluster might terminate your jobs. The cluster resource requests may be overridden in the settings file. See <code>etc/settings.yaml</code> for a full list.</p>
                     <h1 id="questions">Questions</h1>
-                    <p>If you have further questions please e-mail: <a href="mailto:pigx@googlegroups.com" class="email">pigx@googlegroups.com</a> or use the web form to ask questions <a href="https://groups.google.com/forum/#!forum/pigx/" class="uri">https://groups.google.com/forum/#!forum/pigx/</a></p>
+                    <p>If you have further questions please e-mail: <a href="mailto:pigx@googlegroups.com">pigx@googlegroups.com</a> or use the web form to ask questions <a href="https://groups.google.com/forum/#!forum/pigx/">https://groups.google.com/forum/#!forum/pigx/</a></p>
                   </section>
                 </div>
                 <div class="search-results">

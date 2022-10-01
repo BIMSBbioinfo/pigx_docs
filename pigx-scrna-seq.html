@@ -124,23 +124,25 @@
                     <ul>
                     <li>Download pigx_scrnaseq source code
                     <ul>
-                    <li><p>run:</p>
+                    <li>run:</li>
+                    </ul>
                     <blockquote>
-                    <p>git clone <a href="https://github.com/BIMSBbioinfo/pigx_scrnaseq.git" class="uri">https://github.com/BIMSBbioinfo/pigx_scrnaseq.git</a></p>
+                    <p>git clone <a href="https://github.com/BIMSBbioinfo/pigx_scrnaseq.git">https://github.com/BIMSBbioinfo/pigx_scrnaseq.git</a></p>
                     </blockquote></li>
-                    </ul></li>
-                    <li>Download and install Anaconda from <a href="https://www.anaconda.com/download" class="uri">https://www.anaconda.com/download</a></li>
+                    <li>Download and install Anaconda from <a href="https://www.anaconda.com/download">https://www.anaconda.com/download</a></li>
                     <li>Locate the ‘environment.yml’ file in the source code.
                     <ul>
-                    <li><p>run:</p>
+                    <li>run:</li>
+                    </ul>
                     <blockquote>
                     <p>conda env create -f environment.yml #provide path to the environment.yml file</p>
-                    </blockquote></li>
-                    <li><p>activate the environment:</p>
+                    </blockquote>
+                    <ul>
+                    <li>activate the environment:</li>
+                    </ul>
                     <blockquote>
                     <p>source activate pigx_scrnaseq</p>
                     </blockquote></li>
-                    </ul></li>
                     </ul>
                     <h2 id="via-guix">Via Guix</h2>
                     <p>Assuming you have Guix installed, the following command spawns a sub-shell in which all dependencies are available:</p>
@@ -150,11 +152,12 @@
                     <summary>Software dependencies</summary>
 
                     </details>
+
                     <h2 id="dependencies">Dependencies</h2>
                     <p>By default the <code>configure</code> script expects tools to be in a directory listed in the <code>PATH</code> environment variable. If the tools are installed in a location that is not on the <code>PATH</code> you can tell the <code>configure</code> script about them with variables. Run <code>./configure --help</code> for a list of all variables and options.</p>
                     <p>You can prepare a suitable environment with Conda or with <a href="https://gnu.org/s/guix">GNU Guix</a>.</p>
                     <p>The pipeline currently depends on two external java programs, which can be found on the following links:</p>
-                    <ol>
+                    <ol type="1">
                     <li><p><a href="https://github.com/broadinstitute/picard/releases/tag/2.18.0">Picard tools</a></p></li>
                     <li><p><a href="http://mccarrolllab.com/download/1276/">Dropseq tools</a></p></li>
                     </ol>
@@ -200,7 +203,7 @@
                     <ul>
                     <li>location of these files is specified in <code>settings.yaml</code></li>
                     </ul></li>
-                    <li><em>library</em> - sequencing platform on which the experiment was performed (i.e. dropseq)</li>
+                    <li><em>library</em> - sequencing platform on which the experiment was performed (i.e. dropseq)</li>
                     <li><em>covariates</em> - variables which describe the samples. For example: replicate, time, hour post infection, tissue …</li>
                     </ul>
                     <p>Additional columns may be included which may be used as covariates in the differential expression analysis (sex, age, different treatments).</p>
@@ -214,7 +217,7 @@
                     <li>The location of the <code>fasta</code> file with the reference genome (must be prepared by the user)</li>
                     <li>The location of a <code>GTF</code> file with genome annotations</li>
                     </ul></li>
-                    <li><p>Genome assembly name (i.e. mm10)</p></li>
+                    <li><p>Genome assembly name (i.e. mm10)</p></li>
                     <li><p>covariates</p></li>
                     </ul>
                     <p>In order to get started, enter <code>pigx-scrnaseq --init-settings my_settings.yaml</code>. This will create a file called <code>my_settings.yaml</code> with the default structure. The file will look like this:</p>
@@ -328,7 +331,7 @@
                     <p>What happend and what should I do?</p>
                     <p><strong>A:</strong> The pipeline crashed at some point, possible reasons are mentioned by the error. Do as the error message proposes and pass the <code>--unlock</code> argument once and then run the pipeline again without <code>--unlock</code>.</p>
                     <h1 id="questions">Questions</h1>
-                    <p>If you have further questions please e-mail: <a href="mailto:pigx@googlegroups.com" class="email">pigx@googlegroups.com</a> or use the web form to ask questions <a href="https://groups.google.com/forum/#!forum/pigx/" class="uri">https://groups.google.com/forum/#!forum/pigx/</a></p>
+                    <p>If you have further questions please e-mail: <a href="mailto:pigx@googlegroups.com">pigx@googlegroups.com</a> or use the web form to ask questions <a href="https://groups.google.com/forum/#!forum/pigx/">https://groups.google.com/forum/#!forum/pigx/</a></p>
                   </section>
                 </div>
                 <div class="search-results">
