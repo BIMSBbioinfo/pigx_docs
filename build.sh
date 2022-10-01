@@ -21,7 +21,7 @@ for file in $(ls -1 pages); do
 
     # Build web pages
     # TODO: level should be taken from SUMMARY
-    pandoc -f markdown_github+smart \
+    pandoc -f gfm+smart \
            -t html \
            -V level="1.1" \
            -V navigation="$(cat book/SUMMARY.html)" \
