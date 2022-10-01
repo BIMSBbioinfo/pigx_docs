@@ -206,7 +206,8 @@ only available chache file.
 # Quick start
 
 To check whether the pipeline and the databases have been properly set up, run
-the pipeline on a minimal test dataset.
+the pipeline on a minimal test dataset. If you installed the pipeline from
+source, start at step 3.
 
 1. Download the test data
 
@@ -216,7 +217,11 @@ the pipeline on a minimal test dataset.
 
     `cd sarscov2-test`
 
-3. Run the pipeline
+3. Run the pipeline using a preconfigured settings file. If you installed the
+   pipeline from source, the database location will be set to whatever dir was
+   specified during the configure step. If you installed the databases manually,
+   you will need to also adjust the database paths in the test settings file
+   accordingly.
 
     `pigx-sars-cov-2 -s tests/tests/setup_test_settings.yaml tests/sample_sheet.csv`
 
