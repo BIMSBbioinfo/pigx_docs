@@ -161,14 +161,14 @@
                     <p>For our use of VEP in the pipeline, we need a pre-indexed cache of the VEP database of transcript models. This is the main point of the pipeline that determines which virus can be analysed with the pipeline. Currently, VEP only has data on SARS-CoV-2. But the VEP cache is the only point strictly determining which virus the pipeline can deal with.</p>
                     <p>Per default the pipeline uses the indexed cache archive at <code>http://ftp.ensemblgenomes.org/pub/viruses/variation/indexed_vep_cache/sars_cov_2_vep_101_ASM985889v3.tar.gz</code>, which only needs to be unpacked to the target directory. Currently this is the only available chache file.</p>
                     <h1 id="quick-start">Quick start</h1>
-                    <p>To check whether the pipeline and the databases have been properly set up, run the pipeline on a minimal test dataset.</p>
+                    <p>To check whether the pipeline and the databases have been properly set up, run the pipeline on a minimal test dataset. If you installed the pipeline from source, start at step 3.</p>
                     <ol>
                     <li><p>Download the test data</p>
                     <p><code>git clone https://github.com/BIMSBbioinfo/pigx_sars-cov-2 sarscov2-test</code></p></li>
                     <li><p>Enter the directory</p>
                     <p><code>cd sarscov2-test</code></p></li>
-                    <li><p>Run the pipeline</p>
-                    <p><code>pigx-sars-cov-2 -s tests/tests/setup_test_settings.yaml tests/sample_sheet.csv</code></p></li>
+                    <li><p>Run the pipeline using a preconfigured settings file. If you installed the pipeline from source, the database location will be set to whatever dir was specified during the configure step. If you installed the databases manually, you will need to also adjust the database paths in the test settings file accordingly.</p>
+                    <p><code>pigx-sars-cov-2 -s tests/setup_test_settings.yaml tests/sample_sheet.csv</code></p></li>
                     </ol>
                     <p>Inside <code>tests/</code> a new directory <code>output_setup_test</code> is created, which includes specific directories containing output data for the respective step of the pipeline. The <code>tests/output_setup_test/reports/index.html</code> gives the overview over all merged reports for the test data.</p>
                     <h1 id="preparing-the-input">Preparing the input</h1>
