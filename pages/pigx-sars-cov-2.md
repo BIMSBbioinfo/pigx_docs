@@ -223,7 +223,7 @@ source, start at step 3.
    you will need to also adjust the database paths in the test settings file
    accordingly.
 
-    `pigx-sars-cov-2 -s tests/tests/setup_test_settings.yaml tests/sample_sheet.csv`
+    `pigx-sars-cov-2 -s tests/setup_test_settings.yaml tests/sample_sheet.csv`
 
 Inside `tests/` a new directory `output_setup_test` is created, which includes
 specific directories containing output data for the respective step of the
