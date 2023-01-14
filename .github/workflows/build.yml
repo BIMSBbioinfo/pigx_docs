@@ -6,10 +6,13 @@ jobs:
     name: compile book from markdown
     runs-on: ubuntu-latest
     steps:
-      - name: Install nodejs
-        run: |
-          sudo apt update
-          sudo apt install nodejs
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.13.x
+          cache: npm
       - name: Install pandoc
         run: |
           curl -fLo /tmp/pandoc-2.10.1-1-amd64.deb https://github.com/jgm/pandoc/releases/download/2.10.1/pandoc-2.10.1-1-amd64.deb
