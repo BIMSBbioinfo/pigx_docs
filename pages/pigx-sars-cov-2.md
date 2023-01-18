@@ -331,7 +331,7 @@ manager. It is always generated in the place the `pigx-sars-cov-2` program was
 called and will be overwritten on subsequent calls.
 
 <details>
-  <summary>Detailed settings explanation.</summary>
+  <summary>Click <i>here</i> for a detailed settings explanation.</summary>
 
 ### `locations`
 
