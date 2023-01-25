@@ -19,17 +19,4 @@ Edit the .md files using markdown syntax and run **bash
 build.sh**. This will regenerate the book and store the files in the
 `book` directory.
 
-Checkout the **gh-pages** branch.  The contents of this branch are
-served by GitHub pages.  Synchronize the contents of the `book`
-directory with the root directory of that branch, commit the changes
-and push them.
-
-```{sh}
-bash build.sh
-... # commit your changes
-git checkout gh-pages
-rsync -azvhr book/ ./
-... # stage the changed files
-git commit -m 'Update book'
-git push origin gh-pages
-```
+Updating the github pages should happen automatically with the `publish` action.
